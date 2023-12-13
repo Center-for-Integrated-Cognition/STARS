@@ -1,0 +1,56 @@
+alias ms production matches
+alias msw production matches --wmes
+
+#srand 1
+
+soar max-elaborations 500
+#soar max-nil-output-cycles 100
+
+#stats --track 
+
+decide indifferent-selection -g
+decide indifferent-selection -e 0
+decide indifferent-selection -x
+
+decide set-random-seed
+#decide set-random-seed 5
+#production optimize-attribute object 20
+#production optimize-attribute predicate 40
+#production optimize-attribute property 9
+#production optimize-attribute relation 8
+#production optimize-attribute name 1
+
+###### CHUNKING #####
+chunk only
+chunk add-osk off
+
+soar max-goal-depth 200
+chunk max-chunks 1500
+#explain all on
+#explain justifications on
+
+chunk singleton state problem-space identifier
+chunk singleton state task-operator identifier
+chunk singleton state world identifier
+chunk singleton identifier objects identifier
+chunk singleton identifier predicates identifier
+
+
+###### SEMANTIC MEMORY ######
+smem --set learning on
+smem --set initial-variable-id 999000
+#smem --set activation-mode maximal-constraint 
+
+
+###### EPISODIC MEMORY ######
+
+# Switch comments to turn on/off
+epmem --set learning on
+
+epmem --set trigger dc
+epmem --set phase output
+epmem --set graph-match on
+
+
+###### SVS ######
+svs --enable

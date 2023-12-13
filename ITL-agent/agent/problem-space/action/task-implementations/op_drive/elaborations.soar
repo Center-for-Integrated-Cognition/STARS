@@ -1,0 +1,46 @@
+### Custom goal handling for going through a door
+
+# Drive through the door
+sp {op_drive1*elaborate*through-door
+   (state <s> ^name op_drive1
+              ^task-operator.arg2 <arg2>)
+   (<arg2> ^arg-type partial-predicate
+           ^handle through1
+           ^2 <door>)
+   (<door> ^predicates.category door1)
+-->
+   (<s> ^through-door <door>)
+}
+
+# If the person said go through the door, make the desired-waypoint an adjacent one
+sp {op_drive1*elaborate*desired-waypoint*through*door
+   (state <s> ^name op_drive1
+              ^through-door <door>
+              ^world.robot.current-waypoint.next <wp>)
+-->
+   (<s> ^desired-waypoint <wp>)
+}
+
+# If the person said 'drive forward one meter', we copy the distance measure
+sp {op_drive1*elaborate*distance*from*operator
+   (state <s> ^name op_drive1
+              ^task-operator.arg1 <arg1>)
+   (<arg1> ^arg-type measure)
+-->
+   (<s> ^distance <arg1>)
+}
+
+
+# If driving through a door: goal satisfied when the go-to-waypoint command finishes
+sp {op_drive1*through-door*apply*pop-task-segment*op_go-to-waypoint1*mark*goal*satisfied
+   (state <s> ^name op_drive1
+              ^problem-space.execution-type external
+              ^operator <o>
+              ^through-door <door>
+              ^desired <des>)
+   (<o> ^name pop-task-segment
+        ^segment.task-operator.name op_go-to-waypoint1)
+-->
+   (<des> ^satisfied true)
+}
+

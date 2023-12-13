@@ -1,0 +1,29 @@
+data type;object handle;response;prompt type;mismatch type;mismatch;detail
+unviable_response;pen1_instance_10;the goal is that the pen is in the desk drawer and the drawer is closed;initial_prompt;uninterpretable;parser;NA
+unviable_response;pen1_instance_10;the goal is that the pen is in the pen holder on the desk;initial_prompt;unknown-word;holder;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the trash can and the trash can is closed;initial_prompt;uninterpretable;parser;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the trash and the trash is closed;initial_prompt;affordance-mismatch;closed;garbage1
+unviable_response;pencil1_instance_12;the goal is that the pencil is in the desk drawer and the drawer is closed;initial_prompt;uninterpretable;parser;NA
+unviable_response;pencil1_instance_12;the goal is that the pencil is in the pencil cup on the desk and the desk is clean;initial_prompt;uninterpretable;parser;NA
+unviable_response;folder1_instance_13;the goal is that the folder is in the desk drawer and the drawer is closed;initial_prompt;uninterpretable;parser;NA
+unviable_response;book1_instance_14;the goal is that the book is on the shelf;initial_prompt;ungrounded-object;shelf1;NA
+unviable_response;book1_instance_14;the goal is that the book is on the shelf and the shelf is closed;initial_prompt;ungrounded-object;shelf1;NA
+unviable_response;book1_instance_14;the goal is that the book is in the bookshelf and the bookshelf is closed;initial_prompt;affordance-mismatch;closed;bookshelf1
+unviable_response;tissue1_instance_15;the goal is that the tissue is in the trash can and the trash can is closed;initial_prompt;uninterpretable;parser;NA
+unviable_response;tissue1_instance_15;the goal is that the tissue is in the trashcan and the trashcan is closed;initial_prompt;unknown-word;trashcan;NA
+unviable_response;tissue1_instance_15;the goal is that the tissue is in the wastebasket and the wastebasket is in the closet;initial_prompt;unknown-word;wastebasket;NA
+unviable_response;sprite-can1_instance_16;the goal is that the sprite-can is in the recycling bin and the recycling bin is closed;initial_prompt;affordance-mismatch;closed;bin1
+unviable_response;sprite-can1_instance_16;the goal is that the sprite-can is in the trash and the office is clean;initial_prompt;uninterpretable;parser;NA
+unviable_response;dictionary1_instance_17;the goal is that the dictionary is on the shelf;initial_prompt;ungrounded-object;shelf1;NA
+unviable_response;dictionary1_instance_17;the goal is that the dictionary is on the shelf and the shelf is closed;initial_prompt;ungrounded-object;shelf1;NA
+unviable_response;dictionary1_instance_17;the goal is that the dictionary is on the bookshelf and the bookshelf is closed;initial_prompt;affordance-mismatch;closed;bookshelf1
+unviable_response;dictionary1_instance_17;the goal is that the dictionary is on the bookshelf and the bookshelf is closed;initial_prompt;affordance-mismatch;surface;bookshelf1
+unviable_response;novel1_instance_18;the goal is that the novel is on the bookshelf and the bookshelf is closed;initial_prompt;affordance-mismatch;closed;bookshelf1
+unviable_response;novel1_instance_18;the goal is that the novel is on the bookshelf and the bookshelf is closed;initial_prompt;affordance-mismatch;surface;bookshelf1
+unviable_response;novel1_instance_18;the goal is that the novel is on the shelf and the shelf is organized;initial_prompt;unknown-word;organized;NA
+unviable_response;novel1_instance_18;the goal is that the novel is on the shelf and the shelf is organized;initial_prompt;ungrounded-object;shelf1;NA
+unviable_response;novel1_instance_18;the goal is that the novel is on the shelf and the shelf is closed;initial_prompt;ungrounded-object;shelf1;NA
+unviable_response;plastic-water-bottle1_instance_19;the goal is that the plastic-water-bottle is in the recycling bin and the recycling bin is closed;initial_prompt;affordance-mismatch;closed;bin1
+unviable_response;plastic-water-bottle1_instance_19;the goal is that the plastic-water-bottle is in the recycling bin and the desk is clean;initial_prompt;uninterpretable;parser;NA
+unviable_response;stapler1_instance_8;the goal is that the stapler is in the desk drawer;initial_prompt;uninterpretable;parser;NA
+unviable_response;stapler1_instance_8;the goal is that the stapler is in the desk drawer and the drawer is closed;initial_prompt;uninterpretable;parser;NA

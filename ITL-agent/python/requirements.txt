@@ -1,0 +1,3 @@
+numpy
+openai
+git+https://github.com/amininger/pysoarlib.git@refs/pull/7/head

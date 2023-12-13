@@ -1,0 +1,232 @@
+#   Soar code produced automatically 
+#   from file '..\Lucia\Grammars\Rosie\ecg\xv-words.ecg'.
+
+#   ME construction
+sp {comprehend-word*apply*lexical-access*ME-me
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |me|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name ME
+          ^is <a>
+          ^orth |me|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Pronoun
+          ^first-lex nil)
+   (<a> ^a ME)
+}
+
+#   ME self.features.case <-- "nom" constraint
+sp {comprehend-word*ME-constraint*self-features-case*ASSIGN*nom
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a ME
+          ^orth |me|
+          ^features <l-slot1>)
+   (<l-slot1> ^case { <target> <> |nom| })
+-->
+   (<l-slot1> ^case <target> -
+              ^case |nom|)
+}
+
+#   ME self.features.person <-- "1st" constraint
+sp {comprehend-word*ME-constraint*self-features-person*ASSIGN*1st
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a ME
+          ^orth |me|
+          ^features <l-slot1>)
+   (<l-slot1> ^person { <target> <> |1st| })
+-->
+   (<l-slot1> ^person <target> -
+              ^person |1st|)
+}
+
+#   ME self.m.category <-- @animate constraint
+sp {comprehend-word*ME-constraint*self-m-category*ASSIGN*AT-animate
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a ME
+          ^orth |me|
+          ^m <l-slot1>)
+   (<l-slot1> ^category { <target> <> |animate| })
+-->
+   (<l-slot1> ^category <target> -
+              ^category |animate|)
+}
+
+#   THESE construction
+sp {comprehend-word*apply*lexical-access*THESE-these
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |these|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name THESE
+          ^is <a>
+          ^orth |these|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of NPSpecifier
+          ^first-lex nil)
+   (<a> ^a THESE)
+}
+
+#   ALL construction
+sp {comprehend-word*apply*lexical-access*ALL-all
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |all|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name ALL
+          ^is <a>
+          ^orth |all|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Quantifier
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a ALL)
+   (<e-meaning> ^schema Quantification
+                ^target <meaning>)
+}
+
+#   ALL self.m.type <-- "all" constraint
+sp {comprehend-word*ALL-constraint*self-m-type*ASSIGN*all
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a ALL
+          ^orth |all|
+          ^m <l-slot1>)
+   (<l-slot1> ^type { <target> <> |all| })
+-->
+   (<l-slot1> ^type <target> -
+              ^type |all|)
+}
+
+#   ALL-OF construction
+sp {comprehend-word*apply*lexical-access*ALL-OF-all-of
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |of|
+           ^content <content2>)
+   (<s> ^superstate.comprehension.lex-stack <previous1>)
+   (<previous1> ^word.orth |all|
+                ^word.content <content1>
+                ^previous <previous2>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name ALL-OF
+          ^is <a>
+          ^orth |all of|
+          ^text (concat <content1> | | <content2>)
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Quantifier
+          ^first-lex <previous1>
+          ^evokes <e-meaning>)
+   (<a> ^a ALL-OF)
+   (<e-meaning> ^schema Quantification
+                ^target <meaning>)
+}
+
+#   ALL-OF self.m.type <-- "all" constraint
+sp {comprehend-word*ALL-OF-constraint*self-m-type*ASSIGN*all
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a ALL-OF
+          ^orth |all of|
+          ^m <l-slot1>)
+   (<l-slot1> ^type { <target> <> |all| })
+-->
+   (<l-slot1> ^type <target> -
+              ^type |all|)
+}
+
+#   SOME construction
+sp {comprehend-word*apply*lexical-access*SOME-some
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |some|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name SOME
+          ^is <a>
+          ^orth |some|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Quantifier
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a SOME)
+   (<e-meaning> ^schema Quantification
+                ^target <meaning>)
+}
+
+#   SOME self.m.type <-- "some" constraint
+sp {comprehend-word*SOME-constraint*self-m-type*ASSIGN*some
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a SOME
+          ^orth |some|
+          ^m <l-slot1>)
+   (<l-slot1> ^type { <target> <> |some| })
+-->
+   (<l-slot1> ^type <target> -
+              ^type |some|)
+}
+
+#   AS construction
+sp {comprehend-word*apply*lexical-access*AS-as
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |as|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name AS
+          ^is <a>
+          ^orth |as|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Conjunction
+          ^first-lex nil)
+   (<a> ^a AS)
+}
+

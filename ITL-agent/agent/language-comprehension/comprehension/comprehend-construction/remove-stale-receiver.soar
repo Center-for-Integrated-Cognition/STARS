@@ -1,0 +1,41 @@
+sp {comprehend-construction*propose*remove-stale-receiver-most-recent
+   (state <s> ^name comprehend-construction 
+              ^segment <seg>
+          ^comprehension-structure.words current-word
+         -^comprehension-structure.remove-receiver <uri1>)
+   (<seg> ^retrieved-stack.item <uri1>
+          ^not-merged-receiver <uri1>)
+   (<uri1> ^structure-type <type>
+           ^lt.spelling <spelling>)
+-->
+   (<s> ^operator <op> + =, <)
+   (<op> ^name remove-stale-receiver
+         ^stale-receiver <uri1>)
+}
+
+sp {comprehend-construction*propose*remove-stale-receiver-second-most-recent
+   (state <s> ^name comprehend-construction 
+              ^segment <seg>
+          ^comprehension-structure.words prior-word
+         -^comprehension-structure.remove-receiver <uri1>)
+   (<seg> ^retrieved-stack.prior.item <uri1>
+          ^not-merged-receiver <uri1>)
+   (<uri1> ^structure-type <type>
+           ^lt.spelling <spelling>)
+-->
+   (<s> ^operator <op> + =, <)
+   (<op> ^name remove-stale-receiver
+         ^stale-receiver <uri1>)
+}
+
+sp {apply*remove-stale-receiver
+   (state <s> ^operator <o>
+              ^comprehension-structure <cs>)
+   (<o> ^name remove-stale-receiver
+        ^stale-receiver <uri1>)
+   (<uri1> ^structure-type <st>
+           ^current-word.spelling <pw>)
+-->
+   #(write (crlf) |Remove receiver for word: | <pw> |, type: | <st>)
+   (<cs> ^remove-receiver <uri1>)}
+

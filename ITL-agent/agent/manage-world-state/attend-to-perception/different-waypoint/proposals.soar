@@ -1,0 +1,25 @@
+# If there we are leaving a different waypoint, propose leave-old-waypoint
+sp {attend-to-perception*different-waypoint*propose*leave-old-waypoint
+   (state <s> ^name attend-to-perception
+              ^discrepancy-type different-waypoint
+              ^new-waypoint <new-wp>
+              ^top-state.world.robot.current-waypoint { <old-wp> <> <new-wp> })
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name leave-old-waypoint
+        ^old-waypoint <old-wp>
+        ^new-waypoint <new-wp>)
+}
+
+# If there is no current-waypoint, propose enter-new-waypoint
+sp {attend-to-perception*different-waypoint*propose*enter-new-waypoint
+   (state <s> ^name attend-to-perception
+              ^discrepancy-type different-waypoint
+              ^new-waypoint <wp>
+              ^top-state.world.robot <rob>)
+   (<rob> -^current-waypoint <wp>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name enter-new-waypoint
+        ^new-waypoint <wp>)
+}

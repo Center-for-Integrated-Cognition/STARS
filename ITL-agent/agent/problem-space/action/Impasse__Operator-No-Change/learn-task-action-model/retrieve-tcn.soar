@@ -1,0 +1,13 @@
+sp {learn-task-action-model*retrieve-tcn
+   (state <s> ^name learn-task-action-model
+              ^default-model-learning true
+              ^task-handle <task-handle>)
+-->
+   (<s> ^smem-query <query>)
+   (<query> ^cue <cue>
+            ^destination <s>
+            ^result-name task-concept-network
+            ^depth 160)
+   (<cue> ^handle <task-handle>)
+}
+

@@ -1,0 +1,50 @@
+data type;object handle;response;prompt type;mismatch type;mismatch;detail
+unviable_response;apple-juice1_instance_46;the goal is that the apple-juice is in the fridge, and the fridge is closed;initial_prompt_temp;uninterpretable;parser;NA
+unviable_response;apple-juice1_instance_46;the goal is that the apple-juice is in the fridge, the fridge is closed, and the kitchen is tidy;initial_prompt_temp;uninterpretable;parser;NA
+unviable_response;ceramic-plate1_instance_27;the goal is that the ceramic-plate is in the dishwasher and the dishwasher is turned on;initial_prompt;uninterpretable;parser;NA
+unviable_response;glass-tumbler1_instance_29;the goal is that the glass-tumbler is in the dishwasher and the dishwasher is turned on;initial_prompt;uninterpretable;parser;NA
+unviable_response;glass-tumbler1_instance_29;the goal is that the glass-tumbler is in the sink and the sink is full of soapy water;initial_prompt_temp;unknown-word;soapy;NA
+unviable_response;ketchup1_instance_44;the goal is that there is no ketchup on the table;initial_prompt_temp;uninterpretable;parser;NA
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the bin and the bin is closed;initial_prompt_temp;affordance-mismatch;closed;bin1
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the trash and the trash is closed;initial_prompt;affordance-mismatch;closed;garbage1
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the trashcan and the trashcan is closed;initial_prompt_temp;unknown-word;trashcan;NA
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the bin and the bin is closed;initial_prompt_temp;affordance-mismatch;closed;bin1
+unviable_response;pepsi-can1_instance_15;the goal is that there is no pepsi-can on table and the fridge is closed;initial_prompt_temp;uninterpretable;parser;NA
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the recycling bin and the recycling bin is closed;initial_prompt;affordance-mismatch;closed;bin1
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the recycling-bin and the recycling-bin is closed;initial_prompt_temp;unknown-word;recycling-bin;NA
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the sink and the sink is full of water;initial_prompt;uninterpretable;parser;NA
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the dishwasher and the dishwasher is turned on;initial_prompt_temp;uninterpretable;parser;NA
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the sink and the sink is full of soapy water;initial_prompt_temp;unknown-word;soapy;NA
+unviable_response;plastic-fork1_instance_19;the goal is that the plastic-fork is in the garbage can and the garbage can is closed;initial_prompt_temp;uninterpretable;parser;NA
+unviable_response;plastic-fork1_instance_19;the goal is that the plastic-fork is in the sink and the sink is empty and dry;initial_prompt_temp;unknown-word;dry;NA
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the garbage can and the garbage can is closed;initial_prompt_temp;uninterpretable;parser;NA
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the trashcan and the trashcan is closed;initial_prompt_temp;unknown-word;trashcan;NA
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the trash and the trash is closed;initial_prompt;affordance-mismatch;closed;garbage1
+unviable_response;soda-can1_instance_13;the goal is that the soda-can is in the recycling bin and the recycling bin is closed;initial_prompt_temp;affordance-mismatch;closed;bin1
+unviable_response;soda-can1_instance_13;the goal is that the soda-can is in the trash and the trash is closed;initial_prompt;affordance-mismatch;closed;garbage1
+unviable_response;soda-can1_instance_13;the goal is that the soda-can is in the trash and the trash can is closed;initial_prompt_temp;uninterpretable;parser;NA
+unviable_response;apple-core1_instance_17;the goal is that the apple-core is in the bin and the bin is closed;initial_prompt_temp;affordance-mismatch;closed;bin1
+unviable_response;apple-core1_instance_17;the goal is that the apple-core is in the trash can and the trash can is closed;initial_prompt;uninterpretable;parser;NA
+unviable_response;apple-core1_instance_17;the goal is that the apple-core is in the garbage can and the garbage can is closed;initial_prompt_temp;uninterpretable;parser;NA
+unviable_response;coffee-grinder1_instance_36;the goal is that the coffee-grinder is in the cupboard and the cupboard is shut;initial_prompt_temp;unknown-word;shut;NA
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the bin and the bin is closed;initial_prompt_temp;affordance-mismatch;closed;bin1
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the trash and the trash is closed;initial_prompt;affordance-mismatch;closed;garbage1
+unviable_response;granola-bars1_instance_40;the goal is that the granola-bars are in the food-pantry, and the food-pantry is closed;initial_prompt_temp;unknown-word;food-pantry;NA
+unviable_response;half-and-half1_instance_43;the goal is that the half-and-half is in the fridge, and the fridge is closed;initial_prompt_temp;uninterpretable;parser;NA
+unviable_response;half-and-half1_instance_43;the goal is that half-and-half is in the fridge and the fridge is closed;initial_prompt_temp;uninterpretable;parser;NA
+unviable_response;jar-of-salsa1_instance_45;the goal is that the jar-of-salsa is in the fridge and the counter is clear;initial_prompt_temp;uninterpretable;parser;NA
+unviable_response;mug1_instance_31;the goal is that the mug is in the dishwasher and the dishwasher is turned on;initial_prompt;uninterpretable;parser;NA
+unviable_response;newspaper1_instance_16;the goal is that the newspaper is in the recycling bin and the recycling bin is closed;initial_prompt;affordance-mismatch;closed;bin1
+unviable_response;newspaper1_instance_16;the goal is that the newspaper is in the recycling bin and the bin is closed;initial_prompt_temp;affordance-mismatch;closed;bin1
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the trash and the trash is closed;initial_prompt;affordance-mismatch;closed;garbage1
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the trash can and the trash can is closed;initial_prompt_temp;uninterpretable;parser;NA
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the trash and the trash can is closed;initial_prompt_temp;uninterpretable;parser;NA
+unviable_response;plate1_instance_28;the goal is that the plate is in the dishwasher and the dishwasher is turned on;initial_prompt;uninterpretable;parser;NA
+unviable_response;plate1_instance_28;the goal is that the plate is in the sink and the water is running;initial_prompt_temp;unknown-word;running;NA
+unviable_response;plate1_instance_28;the goal is that the plate is in the sink and the water is running;initial_prompt_temp;ungrounded-object;water1;NA
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the cabinet and the cabinet is closed;initial_prompt_temp;ungrounded-object;cabinet1;NA
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the cabinet and the cabinet is closed;initial_prompt_temp;ungrounded-object;cabinet1;NA
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the cabinet and the cabinet is closed;initial_prompt_temp;ungrounded-object;cabinet1;NA
+unviable_response;metal-fork1_instance_23;the goal is that the metal-fork is in the drawer, the drawer is closed, and the dish rack is empty;initial_prompt_temp;uninterpretable;parser;NA
+unviable_response;mug1_instance_32;the goal is that the mug is in the dishwasher and the dishwasher is turned on;initial_prompt;uninterpretable;parser;NA
+unviable_response;steak-knife1_instance_24;the goal is that the steak-knife is in the knife-block;initial_prompt_temp;unknown-word;knife-block;NA

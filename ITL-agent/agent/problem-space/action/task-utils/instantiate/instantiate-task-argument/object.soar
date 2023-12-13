@@ -1,0 +1,589 @@
+### INSTANTIATE OBJECT
+
+# default-candidate: Elaborate candidate world objects matching the default structure
+
+# If there are no relations, then all world objects are candidates
+sp {task-utils*instantiate-task-operator*elaborate*instantiate-task-argument*object*default-candidate*no*relations
+   (state <s> ^instantiate-task-argument <arg>
+              ^world.objects.object <obj>)
+   (<arg> ^arg-type object
+          ^general-arg-rep.id.default.relation-count 0)
+-->
+   (<arg> ^default-candidate <obj>)
+}
+
+# If there was a relation-constraint on the default representation, 
+#   then only elaborate candidates that satisfy the relation in the world
+sp {task-utils*instantiate-task-operator*elaborate*instantiate-task-argument*object*candidate*matching*relation-constraint
+   (state <s> ^instantiate-task-argument <arg>
+              ^world <w>)
+   (<arg> ^arg-type object
+          ^relation-constraint <rel>)
+   (<rel> ^general-arg-rep.predicate-handle <pred-h>
+          ^obj2-match <obj2>)
+   (<w> ^objects.object <obj1>
+        ^predicates.predicate <pred>)
+   (<pred> ^handle <pred-h>
+           ^instance <i>)
+   (<i> ^1 <obj1> ^2 <obj2>)
+-->
+   (<arg> ^default-candidate <obj1>)
+}
+
+
+### MATCH-TYPE PROCEDURAL: 
+# The object-slot matches a slot on the reference TCN, 
+#    Use that link to instantiate the object (connect to same world object)
+
+## object procedural match depth 1
+sp {task-utils*instantiate-task-operator*propose*instantiate-task-argument*object*matches*procedural*depth*1
+   (state <s> ^instantiate-task-argument <arg>
+              ^reference-tcn-proc.<arg-name> <parg>
+              ^reference-task-op.<arg-name> <op-arg>)
+  (<arg> ^arg-type object
+         ^general-arg-rep.id <obj-slot>
+        -^instantiation)
+  (<parg> ^arg-type object
+          ^id {@ <obj-slot>})
+  (<op-arg> ^arg-type object
+            ^id <obj>)
+-->
+  (<s> ^operator <o> + =)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type procedural
+       ^id <obj>)
+}
+
+## object procedural match depth 2
+sp {task-utils*instantiate-task-operator*propose*instantiate-task-argument*object*matches*procedural*depth*2
+   (state <s> ^instantiate-task-argument <arg>
+              ^reference-tcn-proc.<arg-name> <parg>
+              ^reference-task-op.<arg-name> <op-arg>)
+  (<arg> ^arg-type object
+         ^general-arg-rep.id <obj-slot>
+          -^instantiation)
+  (<parg> ^arg-type partial-predicate
+          ^2 {@ <obj-slot>})
+  (<op-arg> ^arg-type partial-predicate
+            ^2 <obj>)
+-->
+  (<s> ^operator <o> + =)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type procedural
+       ^id <obj>)
+}
+
+## If the argument is marked as abstract, reject procedural match
+sp {task-utils*instantiate-task-operator*reject*instantiate-task-argument*object*procedural*if*abstract
+   (state <s> ^instantiate-task-argument <arg>
+              ^operator <o> +)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^match-type procedural)
+   (<arg> ^general-arg-rep.id.abstract true)
+-->
+  (<s> ^operator <o> -)
+}
+
+## Apply - just use the object given by the procedural link
+sp {task-utils*instantiate-task-operator*apply*instantiate-task-argument*object*procedural*create*instantiation
+  (state <s> ^operator <o>)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type procedural
+       ^id <obj>)
+-->
+  (<arg> ^instantiation <i>)
+  (<i> ^id <obj>)
+}
+
+
+
+
+### MATCH-TYPE DEFAULT: 
+# The default representation on the object slot matches a world object
+
+
+# ENUMERATE: 1-8 OBJECT PREDICATES
+
+## object default match with 1 predicate
+sp {task-utils*instantiate-task-operator*propose*instantiate-task-argument*object*matches*default*1
+   (state <s> ^instantiate-task-argument <arg>)
+   (<arg> ^arg-type object
+          ^default-candidate <obj>
+          ^general-arg-rep.id.default.predicates <def-preds>
+          -^instantiation)
+   (<def-preds> ^<prop1> <pred1>)
+   -{(<def-preds> ^<prop2> { <pred2> <> <pred1> })}
+   (<obj> ^predicates <preds>)
+   (<preds> ^<prop1> <pred1>)
+-->
+  (<s> ^operator <o> + =)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type default
+       ^id <obj>)
+}
+
+## object default match with 2 predicate
+sp {task-utils*instantiate-task-operator*propose*instantiate-task-argument*object*matches*default*2
+   (state <s> ^instantiate-task-argument <arg>)
+   (<arg> ^arg-type object
+          ^default-candidate <obj>
+          ^general-arg-rep.id.default.predicates <def-preds>
+          -^instantiation)
+   (<def-preds> ^<prop1> <pred1>
+                ^<prop2> { <pred2> > <pred1> })
+   -{(<def-preds> ^<prop3> { <pred3> <> <pred1> <> <pred2> })}
+   (<obj> ^predicates <preds>)
+   (<preds> ^<prop1> <pred1>
+            ^<prop2> <pred2>)
+-->
+  (<s> ^operator <o> + =)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type default
+       ^id <obj>)
+}
+
+## object default match with 3 predicate
+sp {task-utils*instantiate-task-operator*propose*instantiate-task-argument*object*matches*default*3
+   (state <s> ^instantiate-task-argument <arg>)
+   (<arg> ^arg-type object
+          ^default-candidate <obj>
+          ^general-arg-rep.id.default.predicates <def-preds>
+          -^instantiation)
+   (<def-preds> ^<prop1> <pred1>
+                ^<prop2> { <pred2> > <pred1> }
+                ^<prop3> { <pred3> > <pred2> })
+   -{(<def-preds> ^<prop4> { <pred4> <> <pred1> <> <pred2> <> <pred3> })}
+   (<obj> ^predicates <preds>)
+   (<preds> ^<prop1> <pred1>
+            ^<prop2> <pred2>
+            ^<prop3> <pred3>)
+-->
+  (<s> ^operator <o> + =)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type default
+       ^id <obj>)
+}
+
+## object default match with 4 predicate
+sp {task-utils*instantiate-task-operator*propose*instantiate-task-argument*object*matches*default*4
+   (state <s> ^instantiate-task-argument <arg>)
+   (<arg> ^arg-type object
+          ^default-candidate <obj>
+          ^general-arg-rep.id.default.predicates <def-preds>
+          -^instantiation)
+   (<def-preds> ^<prop1> <pred1>
+                ^<prop2> { <pred2> > <pred1> }
+                ^<prop3> { <pred3> > <pred2> }
+                ^<prop4> { <pred4> > <pred3> })
+   -{(<def-preds> ^<prop5> { <pred5> <> <pred1> <> <pred2> <> <pred3> <> <pred4> })}
+   (<obj> ^predicates <preds>)
+   (<preds> ^<prop1> <pred1>
+            ^<prop2> <pred2>
+            ^<prop3> <pred3>
+            ^<prop4> <pred4>)
+-->
+  (<s> ^operator <o> + =)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type default
+       ^id <obj>)
+}
+
+## object default match with 5 predicate
+sp {task-utils*instantiate-task-operator*propose*instantiate-task-argument*object*matches*default*5
+   (state <s> ^instantiate-task-argument <arg>)
+   (<arg> ^arg-type object
+          ^default-candidate <obj>
+          ^general-arg-rep.id.default.predicates <def-preds>
+          -^instantiation)
+   (<def-preds> ^<prop1> <pred1>
+                ^<prop2> { <pred2> > <pred1> }
+                ^<prop3> { <pred3> > <pred2> }
+                ^<prop4> { <pred4> > <pred3> }
+                ^<prop5> { <pred5> > <pred4> })
+   -{(<def-preds> ^<prop6> { <pred6> <> <pred1> <> <pred2> <> <pred3> <> <pred4> <> <pred5> })}
+   (<obj> ^predicates <preds>)
+   (<preds> ^<prop1> <pred1>
+            ^<prop2> <pred2>
+            ^<prop3> <pred3>
+            ^<prop4> <pred4>
+            ^<prop5> <pred5>)
+-->
+  (<s> ^operator <o> + =)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type default
+       ^id <obj>)
+}
+
+## object default match with 6 predicate
+sp {task-utils*instantiate-task-operator*propose*instantiate-task-argument*object*matches*default*6
+   (state <s> ^instantiate-task-argument <arg>)
+   (<arg> ^arg-type object
+          ^default-candidate <obj>
+          ^general-arg-rep.id.default.predicates <def-preds>
+          -^instantiation)
+   (<def-preds> ^<prop1> <pred1>
+                ^<prop2> { <pred2> > <pred1> }
+                ^<prop3> { <pred3> > <pred2> }
+                ^<prop4> { <pred4> > <pred3> }
+                ^<prop5> { <pred5> > <pred4> }
+                ^<prop6> { <pred6> > <pred5> })
+   -{(<def-preds> ^<prop7> { <pred7> <> <pred1> <> <pred2> <> <pred3> <> <pred4> <> <pred5> <> <pred6> })}
+   (<obj> ^predicates <preds>)
+   (<preds> ^<prop1> <pred1>
+            ^<prop2> <pred2>
+            ^<prop3> <pred3>
+            ^<prop4> <pred4>
+            ^<prop5> <pred5>
+            ^<prop6> <pred6>)
+-->
+  (<s> ^operator <o> + =)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type default
+       ^id <obj>)
+}
+
+## object default match with 7 predicate
+sp {task-utils*instantiate-task-operator*propose*instantiate-task-argument*object*matches*default*7
+   (state <s> ^instantiate-task-argument <arg>)
+   (<arg> ^arg-type object
+          ^default-candidate <obj>
+          ^general-arg-rep.id.default.predicates <def-preds>
+          -^instantiation)
+   (<def-preds> ^<prop1> <pred1>
+                ^<prop2> { <pred2> > <pred1> }
+                ^<prop3> { <pred3> > <pred2> }
+                ^<prop4> { <pred4> > <pred3> }
+                ^<prop5> { <pred5> > <pred4> }
+                ^<prop6> { <pred6> > <pred5> }
+                ^<prop7> { <pred7> > <pred6> })
+   -{(<def-preds> ^<prop8> { <pred8> <> <pred1> <> <pred2> <> <pred3> <> <pred4> <> <pred5> <> <pred6> <> <pred7> })}
+   (<obj> ^predicates <preds>)
+   (<preds> ^<prop1> <pred1>
+            ^<prop2> <pred2>
+            ^<prop3> <pred3>
+            ^<prop4> <pred4>
+            ^<prop5> <pred5>
+            ^<prop6> <pred6>
+            ^<prop7> <pred7>)
+-->
+  (<s> ^operator <o> + =)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type default
+       ^id <obj>)
+}
+
+## object default match with 8 predicate
+sp {task-utils*instantiate-task-operator*propose*instantiate-task-argument*object*matches*default*8
+   (state <s> ^instantiate-task-argument <arg>)
+   (<arg> ^arg-type object
+          ^default-candidate <obj>
+          ^general-arg-rep.id.default.predicates <def-preds>
+          -^instantiation)
+   (<def-preds> ^<prop1> <pred1>
+                ^<prop2> { <pred2> > <pred1> }
+                ^<prop3> { <pred3> > <pred2> }
+                ^<prop4> { <pred4> > <pred3> }
+                ^<prop5> { <pred5> > <pred4> }
+                ^<prop6> { <pred6> > <pred5> }
+                ^<prop7> { <pred7> > <pred6> }
+                ^<prop8> { <pred8> > <pred7> })
+   -{(<def-preds> ^<prop9> { <pred9> <> <pred1> <> <pred2> <> <pred3> <> <pred4> <> <pred5> <> <pred6> <> <pred7> <> <pred8>})}
+   (<obj> ^predicates <preds>)
+   (<preds> ^<prop1> <pred1>
+            ^<prop2> <pred2>
+            ^<prop3> <pred3>
+            ^<prop4> <pred4>
+            ^<prop5> <pred5>
+            ^<prop6> <pred6>
+            ^<prop7> <pred7>
+            ^<prop8> <pred8>)
+-->
+  (<s> ^operator <o> + =)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type default
+       ^id <obj>)
+}
+
+## If the argument is marked as abstract, reject default match
+sp {task-utils*instantiate-task-operator*reject*instantiate-task-argument*object*default*if*abstract
+   (state <s> ^instantiate-task-argument <arg>
+              ^operator <o> +)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^match-type default)
+   (<arg> ^general-arg-rep.id.abstract true)
+-->
+  (<s> ^operator <o> -)
+}
+
+## Apply - use the matched world object
+sp {task-utils*instantiate-task-operator*apply*instantiate-task-argument*object*default*create*instantiation
+  (state <s> ^operator <o>)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type default
+       ^id <obj>)
+-->
+  (<arg> ^instantiation <i>)
+  (<i> ^id <obj>)
+}
+
+
+
+
+
+### MATCH-TYPE ABSTRACT: 
+# Don't even try to match the world/task, just create a new object representation using the default predicates
+
+
+## object abstract match
+sp {task-utils*instantiate-task-operator*propose*instantiate-task-argument*object*matches*abstract
+  (state <s> ^instantiate-task-argument <arg>)
+   (<arg> ^arg-type object
+          ^general-arg-rep.id.default.predicates <preds>
+          -^instantiation)
+-->
+  (<s> ^operator <o> + =)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type abstract
+       ^default-preds <preds>)
+}
+
+#sp {task-utils*instantiate-task-operator*apply*instantiate-task-argument*object*abstract*TESTING
+#  (state <s> ^operator <o>)
+#  (<o> ^name instantiate-task-argument
+#       ^arg-type object
+#       ^match-type abstract
+#      -^argument.general-arg-rep.id.abstract true)
+#-->
+#   (interrupt)
+#   (write (crlf) |instantiate task object - abstract match for non-abstract object| (crlf))
+#}
+
+## ENUMERATE: 1-8 OBJECT PREDICATES (in smem default rep)
+
+# instantiate-task-argument abstract with 1 predicate
+sp {task-utils*instantiate-task-operator*apply*instantiate-task-argument*object*abstract*1*predicate
+  (state <s> ^operator <o>)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type abstract
+       ^default-preds <def-preds>)
+   (<def-preds> ^<prop1> <pred1>)
+   -{(<def-preds> ^<prop2> { <pred2> <> <pred1> })}
+-->
+  (<arg> ^instantiation <i>)
+  (<i> ^id <obj>)
+  (<obj> ^abstract true
+         ^predicates <preds>)
+  (<preds> ^<prop1> <pred1>)
+}
+
+# instantiate-task-argument abstract with 2 predicates
+sp {task-utils*instantiate-task-operator*apply*instantiate-task-argument*object*abstract*2*predicate
+  (state <s> ^operator <o>)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type abstract
+       ^default-preds <def-preds>)
+   (<def-preds> ^<prop1> <pred1>
+                ^<prop2> { <pred2> > <pred1> })
+   -{(<def-preds> ^<prop3> { <pred3> <> <pred1> <> <pred2> })}
+-->
+  (<arg> ^instantiation <i>)
+  (<i> ^id <obj>)
+  (<obj> ^abstract true
+         ^predicates <preds>)
+   (<preds> ^<prop1> <pred1>
+            ^<prop2> <pred2>)
+}
+
+# instantiate-task-argument abstract with 3 predicates
+sp {task-utils*instantiate-task-operator*apply*instantiate-task-argument*object*abstract*3*predicate
+  (state <s> ^operator <o>)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type abstract
+       ^default-preds <def-preds>)
+   (<def-preds> ^<prop1> <pred1>
+                ^<prop2> { <pred2> > <pred1> }
+                ^<prop3> { <pred3> > <pred2> })
+   -{(<def-preds> ^<prop4> { <pred4> <> <pred1> <> <pred2> <> <pred3> })}
+-->
+  (<arg> ^instantiation <i>)
+  (<i> ^id <obj>)
+  (<obj> ^abstract true
+         ^predicates <preds>)
+   (<preds> ^<prop1> <pred1>
+            ^<prop2> <pred2>
+            ^<prop3> <pred3>)
+}
+
+# instantiate-task-argument abstract with 4 predicates
+sp {task-utils*instantiate-task-operator*apply*instantiate-task-argument*object*abstract*4*predicate
+  (state <s> ^operator <o>)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type abstract
+       ^default-preds <def-preds>)
+   (<def-preds> ^<prop1> <pred1>
+                ^<prop2> { <pred2> > <pred1> }
+                ^<prop3> { <pred3> > <pred2> }
+                ^<prop4> { <pred4> > <pred3> })
+   -{(<def-preds> ^<prop5> { <pred5> <> <pred1> <> <pred2> <> <pred3> <> <pred4> })}
+-->
+  (<arg> ^instantiation <i>)
+  (<i> ^id <obj>)
+  (<obj> ^abstract true
+         ^predicates <preds>)
+   (<preds> ^<prop1> <pred1>
+            ^<prop2> <pred2>
+            ^<prop3> <pred3>
+            ^<prop4> <pred4>)
+}
+
+# instantiate-task-argument abstract with 5 predicates
+sp {task-utils*instantiate-task-operator*apply*instantiate-task-argument*object*abstract*5*predicate
+  (state <s> ^operator <o>)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type abstract
+       ^default-preds <def-preds>)
+   (<def-preds> ^<prop1> <pred1>
+                ^<prop2> { <pred2> > <pred1> }
+                ^<prop3> { <pred3> > <pred2> }
+                ^<prop4> { <pred4> > <pred3> }
+                ^<prop5> { <pred5> > <pred4> })
+   -{(<def-preds> ^<prop6> { <pred6> <> <pred1> <> <pred2> <> <pred3> <> <pred4> <> <pred5> })}
+-->
+  (<arg> ^instantiation <i>)
+  (<i> ^id <obj>)
+  (<obj> ^abstract true
+         ^predicates <preds>)
+   (<preds> ^<prop1> <pred1>
+            ^<prop2> <pred2>
+            ^<prop3> <pred3>
+            ^<prop4> <pred4>
+            ^<prop5> <pred5>)
+}
+
+# instantiate-task-argument abstract with 6 predicates
+sp {task-utils*instantiate-task-operator*apply*instantiate-task-argument*object*abstract*6*predicate
+  (state <s> ^operator <o>)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type abstract
+       ^default-preds <def-preds>)
+   (<def-preds> ^<prop1> <pred1>
+                ^<prop2> { <pred2> > <pred1> }
+                ^<prop3> { <pred3> > <pred2> }
+                ^<prop4> { <pred4> > <pred3> }
+                ^<prop5> { <pred5> > <pred4> }
+                ^<prop6> { <pred6> > <pred5> })
+   -{(<def-preds> ^<prop7> { <pred7> <> <pred1> <> <pred2> <> <pred3> <> <pred4> <> <pred5> <> <pred6> })}
+-->
+  (<arg> ^instantiation <i>)
+  (<i> ^id <obj>)
+  (<obj> ^abstract true
+         ^predicates <preds>)
+   (<preds> ^<prop1> <pred1>
+            ^<prop2> <pred2>
+            ^<prop3> <pred3>
+            ^<prop4> <pred4>
+            ^<prop5> <pred5>
+            ^<prop6> <pred6>)
+}
+
+# instantiate-task-argument abstract with 7 predicates
+sp {task-utils*instantiate-task-operator*apply*instantiate-task-argument*object*abstract*7*predicate
+  (state <s> ^operator <o>)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type abstract
+       ^default-preds <def-preds>)
+   (<def-preds> ^<prop1> <pred1>
+                ^<prop2> { <pred2> > <pred1> }
+                ^<prop3> { <pred3> > <pred2> }
+                ^<prop4> { <pred4> > <pred3> }
+                ^<prop5> { <pred5> > <pred4> }
+                ^<prop6> { <pred6> > <pred5> }
+                ^<prop7> { <pred7> > <pred6> })
+   -{(<def-preds> ^<prop8> { <pred8> <> <pred1> <> <pred2> <> <pred3> <> <pred4> <> <pred5> <> <pred6> <> <pred7> })}
+-->
+  (<arg> ^instantiation <i>)
+  (<i> ^id <obj>)
+  (<obj> ^abstract true
+         ^predicates <preds>)
+   (<preds> ^<prop1> <pred1>
+            ^<prop2> <pred2>
+            ^<prop3> <pred3>
+            ^<prop4> <pred4>
+            ^<prop5> <pred5>
+            ^<prop6> <pred6>
+            ^<prop7> <pred7>)
+}
+
+# instantiate-task-argument abstract with 8 predicates
+sp {task-utils*instantiate-task-operator*apply*instantiate-task-argument*object*abstract*8*predicate
+  (state <s> ^operator <o>)
+  (<o> ^name instantiate-task-argument
+       ^argument <arg>
+       ^arg-type object
+       ^match-type abstract
+       ^default-preds <def-preds>)
+   (<def-preds> ^<prop1> <pred1>
+                ^<prop2> { <pred2> > <pred1> }
+                ^<prop3> { <pred3> > <pred2> }
+                ^<prop4> { <pred4> > <pred3> }
+                ^<prop5> { <pred5> > <pred4> }
+                ^<prop6> { <pred6> > <pred5> }
+                ^<prop7> { <pred7> > <pred5> }
+                ^<prop8> { <pred8> > <pred5> })
+   -{(<def-preds> ^<prop9> { <pred9> <> <pred1> <> <pred2> <> <pred3> <> <pred4> <> <pred5> <> <pred6> <> <pred7> <> <pred8> })}
+-->
+  (<arg> ^instantiation <i>)
+  (<i> ^id <obj>)
+  (<obj> ^abstract true
+         ^predicates <preds>)
+   (<preds> ^<prop1> <pred1>
+            ^<prop2> <pred2>
+            ^<prop3> <pred3>
+            ^<prop4> <pred4>
+            ^<prop5> <pred5>
+            ^<prop6> <pred6>
+            ^<prop7> <pred7>
+            ^<prop8> <pred8>)
+}

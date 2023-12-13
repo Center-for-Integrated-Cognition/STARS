@@ -1,0 +1,8 @@
+Task name: store object. Task context: I am in mailroom. Aware of package of office supplies, package is in mailroom.
+(RESULT)The goal is that the package is on the shelf and the shelf is on the table.(END RESULT)
+Response: No. Shelf is not grabbable.
+(RESULT)The goal is that the package is on the shelf.(END RESULT)
+Response: Ok.
+Steps:
+1. Pick up package
+2. Put package onto shelf

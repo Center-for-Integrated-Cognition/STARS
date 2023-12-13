@@ -1,0 +1,88 @@
+sp {execute*op_put-down1*propose*simulate-put-down-command
+   (state <s> ^name op_put-down1
+              ^problem-space.execution-type external
+              ^agent-params.domain internal
+              ^current-task-segment <seg>)
+   (<seg> ^put-down-command <cmd>)
+   (<cmd> ^name put-down
+         -^status success)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name simulate-put-down-command
+        ^item-type command-operator
+        ^command <cmd>)
+}
+
+sp {execute*op_put-down1*apply*simulate-put-down-command*mark*command*success
+   (state <s> ^name op_put-down1
+              ^operator <o>)
+   (<o> ^name simulate-put-down-command
+        ^command <cmd>)
+-->
+   (<cmd> ^status success)
+}
+
+# Change the holding-object on the simulated input-link
+sp {execute*op_put-down1*apply*simulate-put-down-command*remove*holding-object*arm
+   (state <s> ^name op_put-down1
+              ^agent-params.simulate-perception true
+              ^operator <o>
+              ^top-state.perception-monitor.input-link.self.arm <arm>)
+   (<o> ^name simulate-put-down-command
+        ^command <cmd>)
+   (<cmd> ^object.perception-id <perc-id>)
+   (<arm> ^holding-object <perc-id>)
+-->
+   (<arm> ^holding-object <perc-id> -)
+}
+
+# Add the partial-predicate
+sp {execute*op_put-down1*apply*simulate-put-down-command*add*predicate
+   (state <s> ^name op_put-down1
+              ^operator <o>
+              ^world.predicates.predicate <pred>)
+   (<o> ^name simulate-put-down-command
+        ^command <cmd>)
+   (<cmd> ^object <obj>
+          ^destination <dp>)
+   (<dp> ^handle <pred-h>
+         ^2 <dest>)
+   (<pred> ^handle <pred-h>)
+   -{ (<pred> ^instance <i>)
+      (<i> ^1 <obj> ^2 <dest>) }
+-->
+   (<pred> ^instance <i>)
+   (<i> ^1 <obj> ^2 <dest>)
+}
+
+# If putting on something, add below as well
+sp {execute*op_put-down1*apply*simulate-put-down-command*on1*add*predicate*below
+   (state <s> ^name op_put-down1
+              ^operator <o>
+              ^world.predicates.predicate <pred>)
+   (<o> ^name simulate-put-down-command
+        ^command <cmd>)
+   (<cmd> ^object <obj>
+          ^destination <dp>)
+   (<dp> ^handle on1
+         ^2 <dest>)
+   (<pred> ^handle below1)
+   -{ (<pred> ^instance <i>)
+      (<i> ^1 <dest> ^2 <obj>) }
+-->
+   (<pred> ^instance <i>)
+   (<i> ^1 <dest> ^2 <obj>)
+}
+
+# If not simulating perception, just change the grabbed predicate
+sp {execute*op_put-down1*apply*simulate-put-down-command*add*is-grabbed1*not-grabbed
+   (state <s> ^name op_put-down1
+              ^operator <o>
+             -^agent-params.simulate-perception true)
+   (<o> ^name simulate-put-down-command
+        ^command.object.predicates <preds>)
+   (<preds> ^is-grabbed1 grabbed1)
+-->
+   (<preds> ^is-grabbed1 grabbed1 -
+            ^is-grabbed1 not-grabbed1)
+}

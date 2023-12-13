@@ -1,0 +1,73 @@
+# io.output-link
+#   Remove commands with the status complete
+
+sp {apply*operator*remove*successful*command
+   (state <s> ^operator <op>
+          ^io.output-link <ol>)
+   (<ol> ^{ <cmd-name> << send-message >> } <com>)
+   (<com> ^status <status>)
+-->
+   #(write |OUTPUT LINK STATUS: | <cmd-name> | = | <status> (crlf))
+   (<ol> ^<cmd-name> <com> -)
+}
+
+sp {apply*operator*remove*handled*completed-task
+   (state <s> ^operator <op>
+          ^io.output-link <ol>)
+   (<ol> ^{ <cmd-name> << started-task completed-task scripted-sentence handled-command >> } <com>)
+   (<com> ^handled true)
+-->
+   #(write |OUTPUT LINK STATUS: | <cmd-name> | = | <status> (crlf))
+   (<ol> ^<cmd-name> <com> -)
+}
+
+sp {apply*operator*remove*interrupted*command
+   (state <s> ^operator <op>
+          ^io.output-link <ol>)
+   (<ol> ^{ <cmd-name> << do-control-law face-point >> } <cmd>)
+   (<cmd> ^status interrupted)
+-->
+   (<ol> ^<cmd-name> <cmd> -)
+}
+
+
+# svs.command
+#   Cleans up the svs command link after commands have been  completed
+
+# Remove filters for monitoring new objects that have disappeared
+sp {top-state*apply*any-op*remove*monitor*filters
+   (state <s> ^top-state <s>
+              ^operator <o>
+              ^svs.command <cmd>
+              ^svs.spatial-scene <scene>)
+   (<cmd> ^extract <filter>)
+   (<filter> ^type << monitor_position monitor_volume >>
+             ^a.id <id>)
+   (<scene> -^child.id <id>)
+-->
+   (<cmd> ^extract <filter> -)
+}
+
+# Remove commands which are completed
+sp {top-state*apply*any-op*remove*completed*svs*commands
+   (state <s> ^top-state <s>
+              ^operator <o>
+              ^svs.command <cmd>)
+   (<cmd> ^{<type> <> extract <> extract_once } <val>)
+   (<val> ^status <status>)
+-->
+   (<cmd> ^<type> <val> -)
+}
+
+# smem.command 
+#   Remove store commands when finished
+
+#sp {anystate*apply*any-op*remove*store*commands
+#   (state <s> ^operator <o>
+#              ^smem <smem>)
+#   (<smem> ^command <cmd>
+#           ^result.success <a>)
+#   (<cmd> ^store <a>)
+#-->
+#   (<cmd> ^store <a> -)
+#}

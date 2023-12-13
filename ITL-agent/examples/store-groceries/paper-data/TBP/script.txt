@@ -1,0 +1,6 @@
+Store groceries.
+Repeat the following tasks while an object is in the bag.
+Unload an object that is in the bag.
+You are done.
+Repeat.
+You are done.

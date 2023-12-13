@@ -1,0 +1,134 @@
+####################################################
+# NEW MESSAGE
+# 
+# ^status-type new-message -> interpret-message
+# ^status-info <message>
+
+# Indicates a new message has been put onto interaction.status
+# Propose interpret-message to handle it
+
+sp {interaction*propose*interpret-message
+   (state <s> ^name interaction
+              ^status-type new-message
+              ^status-info <msg>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name interpret-message
+        ^message <msg>)
+}
+
+####################################################
+# FAILURE 
+#
+# status-type failure -> interpret-failure
+# status-info <failure>
+
+# Indicates there was some failure in what the agent was doing
+#   And the agent may need to initiate a new interaction to resolve the issue
+
+
+sp {interaction*propose*interpret-failure
+   (state <s> ^name interaction
+              ^status-type failure
+              ^status-info <failure>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name interpret-failure
+        ^failure <failure>)
+}
+
+####################################################
+# OUTGOING MESSAGE
+#
+# ^change-type outgoing-message -> send-message
+# ^change-info <message>
+
+# Indicate the agent wants to send a message to the instructor
+
+sp {interaction*propose*send-message
+   (state <s> ^name interaction
+              ^change-type outgoing-message
+              ^change-info <msg>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name send-message
+        ^message <msg>)
+}
+
+####################################################
+# NEW SEGMENT INFO
+#
+# ^change-type new-segment-info -> push-segment
+# ^change-info <segment-info>
+
+# Indicates a new segment in the current interaction
+
+# (<s> ^new-segment-info <info>)
+# (<info> ^purpose <p>)
+# (<p> ^type [purpose-type]
+#      ^parameters <params> # Parameters used when satisfying the purpose
+#      ^satisfaction <sat>) # The satisfaction condition for the segment (when to pop)
+
+sp {interaction*propose*push-segment
+   (state <s> ^name interaction
+              ^change-type new-segment-info
+              ^change-info <info>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name push-segment
+        ^new-segment-info <info>)
+}
+
+####################################################
+# TERMINATE SEGMENT
+#
+# ^change-type terminate-segment -> pop-segment
+# ^change-info true
+
+# Indicates that the agent should terminate the current segment
+
+sp {interaction*propose*pop-segment
+   (state <s> ^name interaction
+              ^change-type terminate-segment
+              ^top-state.interaction.stack.segment <seg>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name pop-segment
+        ^segment <seg>)
+}
+
+####################################################
+# CLEAR INTERACTION STACK
+#
+# ^change-type clear-interaction-stack -> pop-segment
+# ^change-info true
+
+# Indicates the agent should clear the current interaction and start over
+
+sp {interaction*propose*pop-segment*clear-stack
+   (state <s> ^name interaction
+              ^change-type clear-interaction-stack
+              ^top-state.interaction.stack.segment <seg>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name pop-segment
+        ^segment <seg>)
+}
+
+###################################################
+# PERFORMED EVENT
+#
+# ^status-type performed -> performed-event
+# ^status-info <info>
+
+# Indicates the agent performed something which might change the interaction state
+
+sp {interaction*propose*performed-event
+   (state <s> ^name interaction
+              ^status-type performed
+              ^status-info <event>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name performed-event
+        ^event <event>)
+}

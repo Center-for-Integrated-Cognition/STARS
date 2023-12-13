@@ -1,0 +1,16 @@
+# If there is a new location object from smem for the new waypoint
+#   create a world object and add it to the world
+
+
+# add the location object
+sp {enter-new-waypoint*propose*add-object-to-world*location
+   (state <s> ^name enter-new-waypoint
+              ^retrieved-location { <loc> <> failure }
+              ^new-location none)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name add-object-to-world
+        ^source-type smem
+        ^source-obj <loc>)
+}
+

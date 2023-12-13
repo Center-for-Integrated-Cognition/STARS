@@ -1,0 +1,14 @@
+Tidy kitchen.
+Repeat the following tasks while an object is on the table.
+Clear an object that is on the table.
+You are done.
+Repeat.
+Repeat the following tasks while an object is on the counter.
+Store an object that is on the counter.
+You are done.
+Repeat.
+Repeat the following tasks while an object is in the dish rack.
+Unload an object that is in the dish rack.
+You are done.
+Repeat.
+You are done.

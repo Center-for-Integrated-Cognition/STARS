@@ -1,0 +1,28 @@
+include-file init-smem/actions.soar
+include-file init-smem/concepts.soar
+include-file init-smem/properties.soar
+include-file init-smem/relations.soar
+
+config-file init-smem/smem-common.txt
+
+template category _HANDLE_ _WORD_ _SUPER_ _AFFORDANCE_* {
+	entity1 entity none1
+		object object entity1
+			block block object grabbable1
+			box1 box object grabbable1
+			ball1 ball object grabbable1
+			furniture1 furniture object
+				table1 table furniture1 surface1
+				pantry1 pantry furniture1 receptacle1
+				counter1 counter furniture1 surface1
+				garbage1 garbage furniture1 receptacle1
+		person person entity1
+		location location entity1
+			room1 room location
+		message message entity1
+			question question message
+			response response message
+			yes1 yes1 message
+			no1 no1 message
+}
+

@@ -1,0 +1,30 @@
+
+
+# Souce file "elaborations.soar"
+source elaborations.soar
+
+
+# Souce file "proposals.soar"
+source proposals.soar
+
+
+# Source child problem space "dialog-event"
+pushd dialog-event
+source dialog-event_source.soar
+popd
+
+# Source child problem space "learning-event"
+pushd learning-event
+source learning-event_source.soar
+popd
+
+pushd task-event
+source task-event_source.soar
+popd
+
+pushd testing-event
+source testing-event_source.soar
+popd
+
+# Souce file "wait-for-response.soar"
+source wait-for-response.soar

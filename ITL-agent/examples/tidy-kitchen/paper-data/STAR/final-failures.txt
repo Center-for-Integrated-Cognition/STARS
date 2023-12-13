@@ -1,0 +1,10 @@
+(L6 ^failure F463 ^failure F449)
+  (F463 ^evaluation E68715 ^handle |33|
+         ^object-desc |a glass-tumbler in the dish rack|
+         ^sentence |the goal is that the glass-tumbler is in the dish rack|)
+    (E68715 ^interpreted true ^issue-count 0)
+  (F449 ^evaluation E67295 ^handle |32| ^object-desc |a mug in the dish rack|
+         ^sentence |the goal is that the mug is in the dish rack|)
+    (E67295 ^interpreted true ^issue-count 0)
+
+

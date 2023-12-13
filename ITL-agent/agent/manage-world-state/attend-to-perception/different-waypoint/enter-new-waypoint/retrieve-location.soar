@@ -1,0 +1,16 @@
+# Tries to find a location in semantic memory matching the given waypoint
+sp {enter-new-waypoint*retrieve-location*elaborate*smem-query
+   (state <s> ^name enter-new-waypoint
+              ^new-waypoint.handle <wp-handle>
+              ^new-location none
+             -^retrieved-location)
+-->
+   (<s> ^smem-query <query>)
+   (<query> ^cue <cue>
+            ^depth 14
+            ^destination <s>
+            ^result-name retrieved-location)
+   (<cue> ^object-instance true
+          ^category location
+          ^waypoint <wp-handle>)
+}

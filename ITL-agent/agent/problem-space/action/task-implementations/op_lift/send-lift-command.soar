@@ -1,0 +1,65 @@
+### send the low-level lift-command to the output-link ###
+
+sp {op_lift1*propose*send-lift-command
+   (state <s> ^name op_lift1)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name send-lift-command
+        ^item-type command-operator
+        ^command-name lift-command)
+}
+
+
+### model send-lift-command (during planning) ###
+
+sp {op_lift1*internal*apply*send-lift-command*mark*status*success
+   (state <s> ^name op_lift1
+              ^problem-space.execution-type internal
+              ^operator <o>
+              ^current-task-segment <seg>)
+   (<o> ^name send-lift-command
+        ^command-name <cmd-name>)
+-->
+   (<seg> ^<cmd-name> <cmd>)
+   (<cmd> ^name lift
+          ^status success)
+}
+
+
+### cozmo ###
+
+sp {op_lift1*external*apply*send-lift-command*cozmo*up
+   (state <s> ^name op_lift1
+              ^problem-space.execution-type external
+              ^operator <o>
+              ^agent-params.domain cozmo
+              ^current-task-segment <seg>
+              ^direction up1
+              ^top-state.io.output-link <out>)
+   (<o> ^name send-lift-command
+        ^command-name <cmd-name>)
+-->
+   (<out> ^move-lift <ml>)
+   (<ml> ^item-type output-command
+         ^height 0.9)
+   (<seg> ^<cmd-name> <ml>)
+}
+
+sp {op_lift1*external*apply*send-lift-command*cozmo*down
+   (state <s> ^name op_lift1
+              ^problem-space.execution-type external
+              ^operator <o>
+              ^agent-params.domain cozmo
+              ^current-task-segment <seg>
+              ^direction down1
+              ^top-state.io.output-link <out>)
+   (<o> ^name send-lift-command
+        ^command-name <cmd-name>)
+-->
+   (<out> ^move-lift <ml>)
+   (<ml> ^item-type output-command
+         ^height 0.0)
+   (<seg> ^<cmd-name> <ml>)
+}
+
+

@@ -1,0 +1,36 @@
+# If there are any implicit-objects, add them to the world
+
+sp {subproblem*execute*propose*add-object-to-world*implicit-object
+   (state <s> ^name <task-name>
+              ^problem-space.subproblem execute
+             -^apply-select-next-goal true
+              ^task-operator.name <task-name>
+              ^current-task-segment.implicit-object <obj>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name add-object-to-world
+        ^source-type tcn-obj-slot
+        ^source-obj <obj>)
+}
+
+sp {subproblem*execute*apply*add-object-to-world*implicit-object*cleaup
+   (state <s> ^problem-space.subproblem execute
+              ^operator.name add-object-to-world
+              ^add-object-result <res>
+              ^current-task-segment <seg>)
+   (<res> ^source-obj <obj>)
+   (<seg> ^implicit-object <obj>)
+-->
+   (<s> ^add-object-result <res> -)
+   (<seg> ^implicit-object <obj> -)
+}
+#JK2022 randomly adds one of the plates to the task-objects based on alphanumeric...
+sp {subproblem*execute*apply*add-object-to-world*add*goal-object
+   (state <s> ^problem-space.subproblem execute
+              ^operator.name add-object-to-world
+              ^add-object-result.world-obj <obj>
+              ^current-task-segment <seg>)
+   (<seg> ^task-objects <objs>)
+-->
+   (<objs> ^goal-object <obj>)
+}

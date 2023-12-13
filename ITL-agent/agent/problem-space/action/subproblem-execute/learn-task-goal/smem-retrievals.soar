@@ -1,0 +1,12 @@
+
+sp {learn-task-goal*elaborate*smem-query*task-concept-network
+   (state <s> ^name learn-task-goal
+              ^task-operator.task-handle <task-handle>)
+-->
+  (<s> ^smem-query <query>)
+  (<query> ^cue.handle <task-handle>
+           ^depth 160
+           ^destination <s>
+           ^result-name task-concept-network)
+}
+

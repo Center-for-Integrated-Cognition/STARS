@@ -1,0 +1,121 @@
+sp {comprehend-word*propose*create-assigner
+   (state <s> ^name << comprehend-word comprehend-construction >>
+              ^current-word <cw>
+              ^comprehension-structure.not-merged-receiver <r-item>
+              ^retrieved-lexical-item <a-lt>)
+   (<a-lt> ^assigners <id>
+          -^super-type)
+  -{(<s> ^comprehension-structure.not-merged-assigner <item>)
+    (<item> ^current-word <cw>
+            ^parent-receiver <r-item>
+            ^lt <id>)}
+   (<r-item> ^lt <a-lt>
+             ^current-word <cw>)
+   (<id> ^structure-type <stype>)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name create-assigner
+         ^lt <id>
+         ^parent-receiver <r-item>)
+}
+
+
+
+# For cases where inherent common structure from a super-type for non-constructions
+# such as different types of verbs (VI, VT, VDT), and determiners that share
+# common structure. Makes the smem structures much simplier.
+
+sp {comprehend-word*propose*create-assigner*super-type
+   (state <s> ^name << comprehend-word comprehend-construction >>
+              ^current-word <cw>
+              ^comprehension-structure.not-merged-receiver <r-item>
+             ^retrieved-lexical-item.super-type <super-t>)
+   (<super-t> ^assigners <id>)
+  -{(<s> ^comprehension-structure.not-merged-assigner <item>)
+    (<item> ^current-word <cw>
+            ^parent-receiver <r-item>
+            ^lt <id>)}
+   (<r-item> ^super-type <super-t>  
+             ^current-word <cw>)
+   (<id> ^structure-type <stype>)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name create-assigner
+         ^lt <id>
+         ^parent-receiver <r-item>)
+}
+
+##################### APPLY ########################3
+
+sp {apply*create-assigner*create-item
+   (state <s> ^operator <op>
+              ^current-word <cw>
+             -^name comprehend-construction
+              ^created-assigners <cax>
+              ^comprehension-structure <cs>)
+   (<op> ^name create-assigner
+         ^lt <lt>
+         ^parent-receiver <r-item>)
+   (<lt> ^structure-type <stype>)
+-->
+   (<s> ^created-assigners <cax> - (+ 1 <cax>))
+   #(write (crlf) | parent-receiver | <r-item> | for | <new-assigner> )
+   (<cs> ^not-merged-assigner <new-assigner>)
+   (<new-assigner> ^current-word <cw>
+                   ^lt <lt>
+                   ^parent-receiver <r-item>
+                   ^structure-type <stype>)}
+#                   ^decision-count (int (cmd stats -d)))}
+
+
+####
+sp {apply*create-assigner*create-item*no-remove
+   (state <s> ^operator <op>
+              ^current-word <cw>
+              ^name comprehend-construction
+              ^created-assigners <cax>
+              ^comprehension-structure <cs>)
+   (<op> ^name create-assigner
+         ^lt <lt>
+         ^parent-receiver <r-item>)
+   (<lt> ^structure-type <stype>)
+   (<cs> -^remove-assigner)
+-->   
+   (<s> ^created-assigners <cax> - (+ 1 <cax>))
+   #(write (crlf) | parent-receiver | <r-item> | for | <new-assigner> )
+   (<cs> ^not-merged-assigner <new-assigner>)
+   (<new-assigner> ^current-word <cw>
+                   ^lt <lt>
+                   ^parent-receiver <r-item>
+                   ^structure-type <stype>)}
+#                   ^decision-count (int (cmd stats -d)))}
+
+####
+## Use old decision count so it stays older (keeps its place in the sentence)
+## than other assigners that
+##  have been created in the mean time
+### This is after a correction - 
+sp {apply*create-assigner*create-item*use-old-time
+  #:interrupt
+   (state <s> ^operator <op>
+              ^current-word <cw>
+              ^name comprehend-construction
+              ^created-assigners <cax>
+              ^comprehension-structure <cs>)
+   (<op> ^name create-assigner
+         ^lt <lt>
+         ^parent-receiver <r-item>)
+   (<lt> ^structure-type <stype>)
+   (<cs> ^remove-assigner.decision-count <dc>
+        -^remove-assigner.decision-count < <dc>)
+-->
+   (<s> ^created-assigners <cax> - (+ 1 <cax>))
+   #(write (crlf) | parent-receiver | <r-item> | for | <new-assigner> )
+   #(write (crlf) | use old decision-count | <dc>)
+   (<cs> ^not-merged-assigner <new-assigner>)
+   (<new-assigner> ^current-word <cw>
+                   ^lt <lt>
+                   ^parent-receiver <r-item>
+                   ^structure-type <stype>
+                   ^decision-count <dc>)}
+

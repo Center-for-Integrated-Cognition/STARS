@@ -1,0 +1,172 @@
+#################################################################
+#
+# interpret-object-definition
+#   Occurs when the instructor says 'This one'
+#
+###################################################################
+
+#######
+# OPERATOR PROPOSAL
+#######
+sp {interpret-message*propose*interpret-object-definition
+   (state <s> ^name interpret-message
+              ^instructor-message <msg>)
+   (<msg> ^message-type object-definition
+         -^interpreted true)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name interpret-object-definition
+        ^message <msg>)
+}
+
+######
+# OPERATOR ELABORATIONS
+######
+
+# object: REQUIRED - the object being described
+sp {interpret-message*elaborate*interpret-object-definition*object
+   (state <s> ^name interpret-message
+              ^operator <o> +)
+   (<o> ^name interpret-object-definition
+        ^message.arg1 <obj>
+       -^goal <obj>
+       -^robot <obj>)
+   (<obj> ^item-type object)
+-->
+   (<o> ^object <obj>)
+}
+
+#####
+# OPERATOR APPLICATION
+#####
+
+sp {interpret-message*elaborate*interpret-object-definition*clarify-argument*elaborate*matches
+  (state <s> ^name interpret-message
+             ^operator <o> +
+             ^current-purpose <p>)
+  (<o> ^name interpret-object-definition
+       ^object <obj>)
+  (<p> ^type clarify-argument
+       ^parameters <params>)
+  (<params> ^arg-name <arg-name>
+            ^task-operator.<arg-name> <arg>)
+  (<arg> ^<att> <obj>)
+  (<obj> ^item-type object)
+-->
+  (<o> ^matches <arg>)
+}
+
+sp {interpret-message*elaborate*interpret-object-definition*clarify-argument*elaborate*doesnt-match
+  (state <s> ^name interpret-message
+             ^operator <o> +
+             ^current-purpose <p>)
+  (<o> ^name interpret-object-definition
+       -^object <obj>)
+  (<p> ^type clarify-argument
+       ^parameters <params>)
+  (<params> ^arg-name <arg-name>
+            ^task-operator.<arg-name> <arg>)
+  (<arg> ^<att> <obj>)
+  (<obj> ^item-type object)
+-->
+  (<o> ^doesnt-match <arg>)
+}
+
+sp {interpret-message*apply*interpret-object-definition*clarify-argument*mark*interpreted
+   (state <s> ^name interpret-message
+              ^operator.name interpret-object-definition
+              ^instructor-message <msg>
+              ^top-state.interaction.stack.segment.purpose.type clarify-argument)
+-->
+   (<s> ^mark-interpreted <msg>)
+}
+
+sp {interpret-message*apply*interpret-object-definition*clarify-argument*no*matches*reask
+   (state <s> ^name interpret-message
+              ^operator <o>
+              ^current-purpose <p>)
+   (<o> ^name interpret-object-definition
+       -^matches)
+   (<p> ^type clarify-argument
+        ^parameters <params>)
+   (<params> ^argument-info <arg-info>)
+-->
+   (<s> ^new-segment-info <info>)
+   (<info> ^purpose <new-p>
+   	       ^originator agent)
+   (<p> ^type clarify-argument
+        ^parameters <params>
+   	    ^satisfaction.dialog-event <de>)
+   (<de> ^type object-definition
+         ^originator instructor)
+   
+   (<s> ^outgoing-message <out-msg>)
+   (<out-msg> ^type multiple-arguments
+              ^argument-info <arg-info>)
+}
+
+sp {interpret-message*apply*interpret-object-definition*clarify-argument*remove
+   (state <s> ^name interpret-message
+              ^operator <o>
+              ^current-purpose <p>)
+   (<o> ^name interpret-object-definition
+        ^matches <any>
+        ^doesnt-match <arg>)
+   (<p> ^type clarify-argument
+        ^parameters.task-operator <aop>)
+   (<aop> ^<arg-name> <arg>)
+-->
+   (<aop> ^<arg-name> <arg> -)
+}
+
+sp {interpret-message*apply*interpret-object-definition*answer*to*ask*add*answer*predicate
+   (state <s> ^name interpret-message
+              ^operator <o>
+              ^instructor-message <msg>
+              ^current-purpose <p>)
+   (<o> ^name interpret-object-definition
+        ^object <obj>)
+   (<p> ^type wait-for-answer
+        ^parameters.current-task-segment <seg>)
+   (<seg> ^task-operator.task-handle ask1)
+-->
+   (<seg> ^answer <obj>)
+   (<s> ^mark-interpreted <msg>)
+}
+
+sp {interpret-message*apply*interpret-object-definition*2*preds*add*answer*object
+   (state <s> ^name interpret-message
+              ^operator <o>
+              ^instructor-message <msg>
+              ^current-purpose <p>)
+   (<p> ^type wait-for-answer
+        ^parameters.current-task-segment <seg>)
+   (<o> ^name interpret-object-definition
+        ^message <msg>)
+   (<msg> ^arg1 <a1>
+          ^arg1 { <a2> > <a1> })
+   (<a1> ^handle <pred1> ^property.handle <prop1>)
+   (<a2> ^handle <pred2> ^property.handle <prop2>)
+-->
+   (<s> ^mark-interpreted <msg>)
+
+   (<seg> ^answer <msg-obj>)
+   (<msg-obj> ^predicates <preds>)
+   (<preds> ^<prop1> <pred1>
+            ^<prop2> <pred2>)
+}
+
+sp {interpret-message*apply*interpret-object-definition*find-missing-object*mark*found-as
+   (state <s> ^name interpret-message
+              ^operator <o>
+              ^instructor-message <msg>
+              ^top-state.interaction.stack.segment.purpose <p>)
+   (<o> ^name interpret-object-definition
+        ^object <obj>)
+   (<p> ^type find-missing-object
+        ^missing-object <missing>)
+-->
+   (<s> ^mark-interpreted <msg>)
+   (<missing> ^found-as <obj>)
+}
+ 

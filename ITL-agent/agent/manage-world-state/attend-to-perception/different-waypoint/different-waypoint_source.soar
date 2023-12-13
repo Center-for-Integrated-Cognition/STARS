@@ -1,0 +1,18 @@
+source elaborations.soar
+source preferences.soar
+
+source same-location.soar
+
+source proposals.soar
+
+pushd leave-old-waypoint
+source leave-old-waypoint_source.soar
+popd
+
+pushd enter-new-waypoint
+source enter-new-waypoint_source.soar
+popd
+
+
+
+

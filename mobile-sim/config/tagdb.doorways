@@ -1,0 +1,21 @@
+classes {
+    c# {
+        labels = ["door", ""];
+        probs = [0.9, 0.1];
+        ids = [1,2,3,4,5,6];
+        mean = 1.0;
+        stddev = 0.0;
+        minRange = 0.5;
+        maxRange = 2.0;
+    }
+
+    c# {
+        labels = ["turn", ""];
+        probs = [1.0, 0.0];
+        ids = [7,8,9,10];
+        mean = 1.0;
+        stddev = 0.0;
+        minRange = 2.0;
+        maxRange = 2.5;
+    }
+}

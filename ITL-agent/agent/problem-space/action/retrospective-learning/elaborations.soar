@@ -1,0 +1,14 @@
+
+sp {retrospective-learning*elaborate*task-handle*superoperator
+   (state <s> ^name retrospective-learning
+              ^superstate.operator.task-handle <h>)
+-->
+   (<s> ^task-handle <h>)
+}
+
+sp {retrospective-learning*elaborate*goal-handle-subs
+   (state <s> ^name retrospective-learning)
+-->
+   (<s> ^goal-handle-subs <subs>)
+}
+

@@ -1,0 +1,26 @@
+sp {interaction*elaborate*status*info
+	(state <s> ^name interaction
+           	 ^superstate.operator <o>)
+    (<o> ^status-info <info>
+         ^status-type <type>)
+-->
+   (<s> ^status-info <info>
+        ^status-type <type>)
+}
+
+sp {interaction*elaborate*change*info
+   (state <s> ^name interaction
+              ^superstate.operator <o>)
+   (<o> ^change-info <change>
+        ^change-type <type>)
+-->
+   (<s> ^change-info <change>
+        ^change-type <type>)
+}
+
+sp {interaction*elaborate*current-segment
+   (state <s> ^name interaction
+              ^top-state.interaction.stack.segment <seg>)
+-->
+   (<s> ^current-segment <seg>)
+}

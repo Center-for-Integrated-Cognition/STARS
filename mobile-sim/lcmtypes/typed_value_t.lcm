@@ -1,0 +1,14 @@
+struct typed_value_t
+{
+	const int32_t TYPE_INT 	  = 1;
+	const int32_t TYPE_DOUBLE = 2;
+	const int32_t TYPE_STRING = 3;
+	const int32_t TYPE_BOOL   = 4;
+	const int32_t TYPE_SHORT  = 5;
+	const int32_t TYPE_LONG   = 6;
+	const int32_t TYPE_BYTE   = 7;
+	const int32_t TYPE_FLOAT  = 8;
+
+	int32_t type;
+	string value;
+}

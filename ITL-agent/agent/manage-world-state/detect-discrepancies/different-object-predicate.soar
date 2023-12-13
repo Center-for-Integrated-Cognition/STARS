@@ -1,0 +1,23 @@
+#########################################################
+#
+# Discrepancy: different-object-predicate
+#   The object-predicate predicate on the object doesn't match the input-link
+# Handling: attend-to-perception/different-object-predicate
+#
+#########################################################
+
+sp {perception-monitor*detect-discrepancies*different-object-predicate
+   (state <s> ^superstate nil
+              ^perception-monitor <perc-mon>)
+   (<perc-mon> ^discrepancies <discs>
+               ^object-monitor.object-info <obj-info>)
+   (<obj-info> ^properties.{ <prop> <> property-info } <pred>
+               ^world-obj.predicates <wm-preds>)
+   (<wm-preds> -^<prop> <pred>)
+-->
+   (<discs> ^different-object-predicate <disc>)
+   (<disc> ^object-info <obj-info>
+           ^property-handle <prop>
+           ^predicate-handle <pred>)
+}
+

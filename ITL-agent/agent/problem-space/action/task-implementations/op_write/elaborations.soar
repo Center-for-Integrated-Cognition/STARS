@@ -1,0 +1,38 @@
+
+sp {op_write1*elaborate*target-object*superoperator
+   (state <s> ^name op_write1
+              ^task-operator.arg2.{2} <obj>)
+-->
+   (<s> ^target-object <obj>)
+}
+
+sp {op_write1*elaborate*target-value*superoperator
+   (state <s> ^name op_write1
+              ^task-operator.arg1 <a1>)
+   (<a1> ^handle <num>)
+-->
+   (<s> ^target-value <num>)
+}
+
+sp {op_write1*elaborate*target-value*superoperator*number
+   (state <s> ^name op_write1
+              ^task-operator.arg1 <a1>)
+   (<a1> ^number <num>)
+-->
+   (<s> ^target-value <num>)
+}
+
+#### CUSTOM GOAL HANDLING ####
+
+sp {op_write1*elaborate*desired
+   (state <s> ^name op_write1
+             -^copy-task-goal
+              ^current-task-segment.current-goal.handle write1goal1
+              ^target-value <val>
+              ^target-object <obj>)
+-->
+   (<s> ^desired <des>)
+   (<des> ^handle write1goal1 ^pred-count 1 ^1 <p1>)
+   (<p1> ^type unary ^handle <val> ^property-handle value ^1 <obj>)
+}
+

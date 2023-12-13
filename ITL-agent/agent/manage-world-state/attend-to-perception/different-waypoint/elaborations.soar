@@ -1,0 +1,17 @@
+sp {attend-to-perception*different-waypoint*elaborate*object*info*from*superoperator
+   (state <s> ^name attend-to-perception
+              ^discrepancy-type different-waypoint
+              ^discrepancy-info.waypoint-handle <wp-handle>)
+-->
+   (<s> ^new-waypoint-handle <wp-handle>)
+}
+
+sp {attend-to-perception*different-waypoint*elaborate*new-waypoint*topstate
+   (state <s> ^name attend-to-perception
+              ^discrepancy-type different-waypoint
+              ^new-waypoint-handle <wp-handle>
+              ^top-state.maps.map.waypoint <wp>)
+   (<wp> ^handle <wp-handle>)
+-->
+   (<s> ^new-waypoint <wp>)
+}

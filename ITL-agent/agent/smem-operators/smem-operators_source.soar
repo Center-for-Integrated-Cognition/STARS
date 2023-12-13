@@ -1,0 +1,10 @@
+
+
+# Souce file "smem-query.soar"
+source smem-query.soar
+
+# Souce file "smem-store.soar"
+source smem-store.soar
+
+# Souce file "smem-retrieve-lti.soar"
+source smem-retrieve-lti.soar

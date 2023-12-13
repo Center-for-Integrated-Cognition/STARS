@@ -1,0 +1,141 @@
+# ENUMERATE: max evaluation depth 10
+sp {selection*propose*increment-current-evaluation-depth*12
+   (state <s> ^name selection
+              ^top-selection true
+             -^remaining-operators <> 0
+             -^current-evaluation-depth > 1
+	     ^superstate.problem-space.learning.type exploration)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name increment-current-evaluation-depth
+         ^current-evaluation-depth 1
+         ^next-evaluation-depth 2)
+}
+
+sp {selection*propose*increment-current-evaluation-depth*23
+   (state <s> ^name selection
+              ^top-selection true
+             -^remaining-operators <> 0
+             -^current-evaluation-depth <> 2
+	     ^superstate.problem-space.learning.type exploration)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name increment-current-evaluation-depth
+         ^current-evaluation-depth 2
+         ^next-evaluation-depth 3)
+}
+sp {selection*propose*increment-current-evaluation-depth*34
+   (state <s> ^name selection
+              ^top-selection true
+             -^remaining-operators <> 0
+             -^current-evaluation-depth  <> 3
+	     ^superstate.problem-space.learning.type exploration)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name increment-current-evaluation-depth
+         ^current-evaluation-depth 3
+         ^next-evaluation-depth 4)
+}
+sp {selection*propose*increment-current-evaluation-depth*45
+   (state <s> ^name selection
+              ^top-selection true
+             -^remaining-operators <> 0
+             -^current-evaluation-depth <> 4
+	     ^superstate.problem-space.learning.type exploration)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name increment-current-evaluation-depth
+         ^current-evaluation-depth 4
+         ^next-evaluation-depth 5)
+}
+sp {selection*propose*increment-current-evaluation-depth*56
+   (state <s> ^name selection
+              ^top-selection true
+             -^remaining-operators <> 0
+             -^current-evaluation-depth <> 5
+	     ^superstate.problem-space.learning.type exploration)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name increment-current-evaluation-depth
+         ^current-evaluation-depth 5
+         ^next-evaluation-depth 6)
+}
+sp {selection*propose*increment-current-evaluation-depth*67
+   (state <s> ^name selection
+              ^top-selection true
+             -^remaining-operators <> 0
+             -^current-evaluation-depth <> 6
+	     ^superstate.problem-space.learning.type exploration)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name increment-current-evaluation-depth
+         ^current-evaluation-depth 6
+         ^next-evaluation-depth 7)
+}
+sp {selection*propose*increment-current-evaluation-depth*78
+   (state <s> ^name selection
+              ^top-selection true
+             -^remaining-operators <> 0
+             -^current-evaluation-depth <> 7
+	     ^superstate.problem-space.learning.type exploration)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name increment-current-evaluation-depth
+         ^current-evaluation-depth 7
+         ^next-evaluation-depth 8)
+}
+sp {selection*propose*increment-current-evaluation-depth*89
+   (state <s> ^name selection
+              ^top-selection true
+             -^remaining-operators <> 0
+             -^current-evaluation-depth <> 8
+	     ^superstate.problem-space.learning.type exploration)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name increment-current-evaluation-depth
+         ^current-evaluation-depth 8
+         ^next-evaluation-depth 9)
+}
+sp {selection*propose*increment-current-evaluation-depth*910
+   (state <s> ^name selection
+              ^top-selection true
+             -^remaining-operators <> 0
+             -^current-evaluation-depth <> 9
+	     ^superstate.problem-space.learning.type exploration)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name increment-current-evaluation-depth
+         ^current-evaluation-depth 9
+         ^next-evaluation-depth 10)
+}
+
+sp {apply*increment-current-evaluation-depth
+   (state <s> ^operator <op>
+              ^item-count <toc>)
+   (<op> ^name increment-current-evaluation-depth
+              ^current-evaluation-depth <ced>
+              ^next-evaluation-depth <ned>)
+-->
+   (<s> ^remaining-operators 0 -
+                             <toc>
+        ^current-evaluation-depth <ced> -
+                                  <ned>)
+}
+sp {apply*increment-current-evalaution*clean-up-evaluations
+   (state <s> ^operator <op>
+              ^evaluation <e2>)
+   (<op> ^name increment-current-evaluation-depth
+         ^current-evaluation-depth <ced>)
+   (<e2> ^value true)
+-->
+   (<s> ^evaluation <e2> -)
+}
+
+sp {Impasse__Operator_Tie*compare*increment-current-evaluation-depth
+   (state <s> ^operator <op1> +
+                        <op2> +)
+   (<op1> ^name increment-current-evaluation-depth)
+   (<op2> ^name init-current-evaluation-depth)
+-->
+   (<s> ^operator <op1> < <op2>)
+}

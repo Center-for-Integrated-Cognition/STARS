@@ -1,0 +1,46 @@
+############################
+smem --add {
+#        
+           (<this> ^spelling |this|
+                   ^structure-type DP 
+                   ^number singular
+                   ^demonstrative true
+                   ^specifier definite)
+           
+           (<that> ^spelling |that|   
+                   ^structure-type DP 
+                   ^number singular
+                   ^demonstrative true
+                   ^specifier definite)
+           
+}
+                   
+smem --add {          
+           
+### The one
+           
+           (<D-one> ^prior-word D
+                    ^current-word |one|
+                    ^construction |D-one|  
+                    ^demonstrative true
+                    ^number singular
+                    ^structure-type N)  
+
+### The green one
+           (<ADJ-one> ^prior-word ADJ
+                      ^current-word |one|
+                      ^construction |adj-one|
+                      ^demonstrative true
+                      ^number singular
+                      ^structure-type N)
+           
+### This one
+           (<this-one> ^prior-word |this|
+                      ^current-word |one|
+                      ^construction |adj-one|
+                      ^demonstrative true
+                      ^number singular
+                      ^structure-type DP)
+           
+                    
+}

@@ -1,0 +1,82 @@
+classes {
+  c# {
+    labels = ["door", ""];
+    ids = [3, 5, 11, 17];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["intersection", ""];
+    ids = [7, 12];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp02", ""];
+    ids = [2];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp05", ""];
+    ids = [5];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp07", ""];
+    ids = [7];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp11", ""];
+    ids = [11];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp12", ""];
+    ids = [12];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp17", ""];
+    ids = [17];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+}

@@ -1,0 +1,6 @@
+source elaborations.soar
+
+source check-object-stability.soar
+
+source add-object-to-world.soar
+

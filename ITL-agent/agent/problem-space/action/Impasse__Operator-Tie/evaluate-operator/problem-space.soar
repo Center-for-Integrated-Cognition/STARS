@@ -1,0 +1,19 @@
+########## evaluate-operator state #########
+
+sp {problem-space*action*evaluate-operator*elaborate*propose-subtasks*true
+   (state <s> ^name evaluate-operator
+              ^problem-space <ps>)
+   (<ps> ^name action
+         ^learning.type exploration)
+-->
+   (<ps> ^propose-subtasks true)
+}
+
+sp {problem-space*action*evaluate-operator*elaborate*problem-space*execution-type*internal
+   (state <s> ^name evaluate-operator
+              ^problem-space <ps>)
+   (<ps> ^name action)
+-->
+   (<ps> ^execution-type internal)
+}
+

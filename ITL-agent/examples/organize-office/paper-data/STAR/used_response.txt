@@ -1,0 +1,13 @@
+data type;object handle;response;prompt type
+used_response;pen1_instance_10;the goal is that the pen is in the drawer and the drawer is closed;recurse_prompt
+used_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the trash;repair_prompt
+used_response;pencil1_instance_12;the goal is that the pencil is in the drawer and the drawer is closed;recurse_prompt
+used_response;folder1_instance_13;the goal is that the folder is in the drawer and the drawer is closed;initial_prompt
+used_response;book1_instance_14;the goal is that the book is in the cabinet and the cabinet is closed;repair_prompt
+used_response;tissue1_instance_15;the goal is that the tissue is in the trash;repair_prompt
+used_response;sprite-can1_instance_16;the goal is that the sprite-can is in the trash;repair_prompt
+used_response;dictionary1_instance_17;the goal is that the dictionary is in the drawer and the drawer is closed;recurse_prompt
+used_response;novel1_instance_18;the goal is that the novel is in the bookshelf;repair_prompt
+used_response;plastic-water-bottle1_instance_19;the goal is that the plastic-water-bottle is in the recycling bin;initial_prompt_end_branch
+used_response;stapler1_instance_8;the goal is that the stapler is in the drawer and the drawer is closed;recurse_prompt
+used_response;file1_instance_9;the goal is that the file is in the drawer and the drawer is closed;initial_prompt

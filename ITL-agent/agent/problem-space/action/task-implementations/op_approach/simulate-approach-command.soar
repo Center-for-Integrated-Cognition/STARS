@@ -1,0 +1,77 @@
+### For the internal environment, simulate the approach command on the top-state world ###
+
+sp {op_approach1*propose*simulate-approach-command
+   (state <s> ^name op_approach1
+              ^problem-space.execution-type external
+              ^agent-params.domain internal
+              ^current-task-segment <seg>)
+   (<seg> ^approach-command <cmd>)
+   (<cmd> -^status success)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name simulate-approach-command
+        ^item-type command-operator
+        ^command <cmd>)
+}
+
+sp {op_approach1*apply*simulate-approach-command*mark*command*success
+   (state <s> ^name op_approach1
+              ^operator <o>)
+   (<o> ^name simulate-approach-command
+        ^command <cmd>)
+-->
+   (<cmd> ^status success)
+}
+
+
+### simulate-perception = false, change is-reachable on the object directly ###
+
+sp {op_approach1*apply*simulate-approach-command*change*reachable
+   (state <s> ^name op_approach1
+              ^operator <o>
+             -^agent-params.simulate-perception true)
+   (<o> ^name simulate-approach-command
+        ^command.object.predicates <preds>)
+   (<preds> ^is-reachable1 not-reachable1)
+-->
+   (<preds> ^is-reachable1 not-reachable1 -
+            ^is-reachable1 reachable1)
+}
+
+
+### simulate-perception = true, change is-reachable on the perception-monitor ###
+
+sp {op_approach1*apply*simulate-approach-command*simulate-perception*change*reachable
+   (state <s> ^name op_approach1
+              ^operator <o>
+              ^agent-params.simulate-perception true
+              ^top-state.perception-monitor.object-monitor.object-info <obj-info>)
+   (<o> ^name simulate-approach-command
+        ^command.object <obj>)
+   (<obj-info> ^input-link-obj.property <il-prop>
+               ^world-obj <obj>)
+   (<il-prop> ^property-handle is-reachable1
+              ^predicate-handle not-reachable1)
+-->
+   (<il-prop> ^predicate-handle not-reachable1 -
+              ^predicate-handle reachable1)
+}
+
+sp {op_approach1*apply*simulate-approach-command*simulate-perception*make*others*not-reachable
+   (state <s> ^name op_approach1
+              ^operator <o>
+              ^agent-params.simulate-perception true
+              ^top-state.perception-monitor.object-monitor.object-info <obj-info>)
+   (<o> ^name simulate-approach-command
+        ^command.object <obj>)
+   (<obj-info> ^input-link-obj.property <il-prop>
+               ^world-obj { <wobj> <> <obj> })
+   (<il-prop> ^property-handle is-reachable1
+              ^predicate-handle reachable1)
+   (<wobj> -^predicates.is-grabbed1 grabbed1)
+-->
+   (<il-prop> ^predicate-handle reachable1 -
+              ^predicate-handle not-reachable1)
+}
+
+

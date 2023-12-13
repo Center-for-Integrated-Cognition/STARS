@@ -1,0 +1,31 @@
+# We shouldn't get to this point, the performed event should be appropriate and thus already been removed
+sp {interaction*propose*complete-interaction
+   (state <s> ^name interaction)
+-->
+   (<s> ^operator <o> + <)
+   (<o> ^name complete-interaction)
+}
+
+# Remove the status from interaction.status
+sp {interaction*apply*complete-interaction*clear*status
+   (state <s> ^name interaction
+              ^operator.name complete-interaction
+              ^status-type <type>
+              ^status-info <info>
+              ^top-state.interaction.status <status>)
+   (<status> ^<type> <info>)
+-->
+   (<status> ^<type> <info> -)
+}
+
+# Remove the change from interaction.changes
+sp {interaction*apply*complete-interaction*clear*changes
+   (state <s> ^name interaction
+              ^operator.name complete-interaction
+              ^change-type <type>
+              ^change-info <info>
+              ^top-state.interaction.changes <changes>)
+   (<changes> ^<type> <info>)
+-->
+   (<changes> ^<type> <info> -)
+}

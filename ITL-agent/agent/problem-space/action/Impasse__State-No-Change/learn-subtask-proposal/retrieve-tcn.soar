@@ -1,0 +1,25 @@
+## Do an smem query to lookup the smem info about the task
+sp {learn-subtask-proposal*elaborate*smem-query*task*handle
+   (state <s> ^name learn-subtask-proposal
+              ^task-operator.task-handle <task-handle>)
+-->
+   (<s> ^smem-query <query>)
+   (<query> ^cue <cue>
+            ^depth 160
+            ^destination <s>
+            ^result-name task-concept-network)
+   (<cue> ^handle <task-handle>)
+}
+
+## Do an smem query to lookup the smem info about the subtask
+sp {learn-subtask-proposal*elaborate*smem-query*subtask*handle
+   (state <s> ^name learn-subtask-proposal
+              ^subtask-tcn.task-handle <sub-h>)
+-->
+   (<s> ^smem-query <query>)
+   (<query> ^cue <cue>
+            ^depth 160
+            ^destination <s>
+            ^result-name subtask-info)
+   (<cue> ^handle <sub-h>)
+}

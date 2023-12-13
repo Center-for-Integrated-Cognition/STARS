@@ -1,0 +1,31 @@
+
+sp {interpret-message*propose*interpret-person-name
+   (state <s> ^name interpret-message
+              ^instructor-message <msg>)
+   (<msg> ^message-type williams
+         -^interpreted true)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name interpret-person-name
+        ^message <msg>
+        ^person-name williams1)
+}
+
+sp {interpret-message*apply*interpret-person-name*answer*to*ask*add*answer*predicate
+   (state <s> ^name interpret-message
+              ^operator <o>
+              ^instructor-message <msg>
+              ^current-purpose <p>)
+   (<o> ^name interpret-person-name
+        ^person-name williams1)
+   (<p> ^type wait-for-answer
+        ^parameters.current-task-segment <seg>)
+   (<seg> ^task-operator.task-handle ask1)
+-->
+   (<s> ^mark-interpreted <msg>)
+
+   (<seg> ^answer <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> ^category officer1
+            ^name williams1)
+}

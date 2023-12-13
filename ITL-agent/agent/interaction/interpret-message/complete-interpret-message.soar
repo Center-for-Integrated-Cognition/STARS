@@ -1,0 +1,87 @@
+sp {interpret-message*propose*complete-interpret-message
+   (state <s> ^name interpret-message)
+-->
+   (<s> ^operator <o> + <)
+   (<o> ^name complete-interpret-message)
+}
+
+# We have finished interpreting the message
+#   Remove it from interaction.status
+sp {interpret-message*apply*complete-interpret-message*delete*nl-il
+    (state <s> ^name interpret-message
+               ^operator.name complete-interpret-message
+				^instructor-message <msg>
+				 ^top-state.interaction.status <status>)
+	(<status> ^new-message <msg>)
+ -->
+    (<status> ^new-message <msg> -)
+ }
+
+# If there is a new segment to create
+#   Add the new-segment-info to interaction.changes
+sp {interpret-message*apply*complete-interpret-message*copy*new-segment-info
+   (state <s> ^name interpret-message
+              ^operator.name complete-interpret-message
+              ^top-state.interaction.changes <c>
+              ^new-segment-info <info>)
+-->
+   (<c> ^new-segment-info <info>) 
+}
+
+# If the instructor message is expected by a segment
+#   Then designate the segment to be terminated on interaction.changes
+sp {interpret-message*apply*complete-interpret-message*expected*message*terminate
+   (state <s> ^name interpret-message
+              ^operator.name complete-interpret-message
+	      ^current-purpose.satisfaction.dialog-event <de>
+	      ^instructor-message.message-type <type>
+	      ^top-state.interaction.changes <c>)
+   (<de> ^type <type>
+         ^originator instructor)
+-->
+   (<c> ^terminate-segment true)
+}
+
+sp {interpret-message*apply*complete-interpret-message*ANY*type*terminate
+   (state <s> ^name interpret-message
+              ^operator.name complete-interpret-message
+	      ^current-purpose.satisfaction.dialog-event <de>
+	      ^instructor-message.message-type <type>
+	      ^top-state.interaction.changes <c>)
+   (<de> ^type ANY
+         ^originator instructor)
+-->
+   (<c> ^terminate-segment true)
+}
+
+# If there is a flag telling the agent to terminate the current segment
+#   Then add ^terminate-segment true to interaction.changes
+sp {interpret-message*apply*complete-interpret-message*terminate-segment
+   (state <s> ^name interpret-message
+              ^operator.name complete-interpret-message
+              ^terminate-segment true
+              ^top-state.interaction.changes <c>)
+-->
+   (<c> ^terminate-segment true)
+}
+
+# If there is an outgoing-message, we add it to interaction.changes
+sp {interpret-message*apply*complete-interpret-message*copy*outgoing-message
+   (state <s> ^name interpret-message
+   	      ^operator.name complete-interpret-message
+	      ^outgoing-message <msg>
+	      ^top-state.interaction.changes <c>)
+-->
+   (<c> ^outgoing-message <msg>)
+}
+
+# If there is a flag telling the agent to pop the current action
+#   Then add ^task-stack.changes.pop
+sp {interpret-message*apply*complete-interpret-message*pop-current-task
+   (state <s> ^name interpret-message
+              ^operator.name complete-interpret-message
+              ^pop-current-task true
+              ^top-state.task-stack.bottom { <seg> <> none })
+-->
+   (<seg> ^status success)
+}

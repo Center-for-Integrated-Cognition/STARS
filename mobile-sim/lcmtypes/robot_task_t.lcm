@@ -1,0 +1,11 @@
+struct robot_task_t
+{
+    const int8_t FREEZE              = 0;
+    const int8_t WAITING             = 1;
+    const int8_t GOTO_LATLON         = 2;
+    const int8_t GOTO_GLOBAL         = 3;
+    const int8_t COMM_RELAY          = 5;
+
+    int8_t task;
+    int8_t repeat;
+}

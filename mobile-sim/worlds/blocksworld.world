@@ -1,0 +1,162 @@
+"soargroup.mobilesim.sim.SimRobot"
+{
+  # Robot ID
+  6
+  # XYZRPY Truth
+  vec 6
+   -1.00   1.00   0.10   0.00   0.00   0.00
+  # XYZRPY Odometry
+  vec 6
+    0.00   0.00   0.00   0.00   0.00   0.00
+}
+"soargroup.mobilesim.sim.SimBoxObject"
+{
+  # Object Description
+  red-block
+  # Object xyz
+  vec 3
+    0.50   0.50   0.05
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.10   0.10   0.10
+  # Properties
+  3
+    category=block
+    color=red1
+    shape=cube1
+  # Color rgb (int 0-255)
+  ivec 3
+    255 0 0
+}
+"soargroup.mobilesim.sim.SimBoxObject"
+{
+  # Object Description
+  green-block
+  # Object xyz
+  vec 3
+    0.50   1.50   0.05
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.10   0.10   0.10
+  # Properties
+  3
+    category=block
+    color=green1
+    shape=cube1
+  # Color rgb (int 0-255)
+  ivec 3
+    0 255 0
+}
+"soargroup.mobilesim.sim.SimBoxObject"
+{
+  # Object Description
+  blue-block
+  # Object xyz
+  vec 3
+    1.50   0.50   0.05
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.10   0.10   0.10
+  # Properties
+  3
+    category=block
+    color=blue1
+    shape=cube1
+  # Color rgb (int 0-255)
+  ivec 3
+    0 0 255
+}
+"soargroup.mobilesim.sim.SimBoxObject"
+{
+  # Object Description
+  Pantry
+  # Object xyz
+  vec 3
+    0.50   0.50   0.25
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.50   0.50   0.50
+  # Properties
+  2
+    category=pantry1
+    door2=closed2
+  # Color rgb (int 0-255)
+  ivec 3
+    255 255 0
+}
+"soargroup.mobilesim.sim.SimBoxObject"
+{
+  # Object Description
+  Garbage
+  # Object xyz
+  vec 3
+    1.50   0.50   0.25
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.50   0.50   0.50
+  # Properties
+  1
+    category=garbage1
+  # Color rgb (int 0-255)
+  ivec 3
+    255 255 0
+}
+"soargroup.mobilesim.sim.SimBoxObject"
+{
+  # Object Description
+  Garbage
+  # Object xyz
+  vec 3
+    1.50   1.50  -0.25
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.50   0.50   0.50
+  # Properties
+  1
+    category=table1
+  # Color rgb (int 0-255)
+  ivec 3
+    255 255 0
+}
+"soargroup.mobilesim.sim.SimBoxObject"
+{
+  # Object Description
+  Garbage
+  # Object xyz
+  vec 3
+    0.50   1.50  -0.25
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.50   0.50   0.50
+  # Properties
+  1
+    category=counter1
+  # Color rgb (int 0-255)
+  ivec 3
+    255 255 0
+}
+"soargroup.mobilesim.sim.SimRegion"
+{
+  # Region ID
+  wp01
+  # Tag Position
+  vec 6
+    0.00   1.00   0.01   0.00   0.00   0.00
+  # Width (dx) and Length (dy)
+  4.0
+  2.0
+}

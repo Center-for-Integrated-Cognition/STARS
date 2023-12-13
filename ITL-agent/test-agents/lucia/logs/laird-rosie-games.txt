@@ -1,0 +1,185 @@
+Interpreting Instructor Message: 
+The name of the puzzle is blocks-world.
+(I26 ^arg1 I44 ^message-type object-description ^predicate N38)
+  (I44 ^2 I45 ^handle of1 ^item-type predicate)
+    (I45 ^2 N15 ^handle name1)
+      (N15 ^handle puzzle1 ^property L49 (@100165))
+        (L49 ^handle concept ^type conceptual)
+  (N38 ^handle blocks-world1 ^item-type predicate
+         ^word-structure N37 (@999000))
+    (N37 ^referent R115 (@999001) ^spelling blocks-world)
+      (R115 ^handle blocks-world1 ^word-structure N37 (@999000))
+Interpreting Instructor Message: 
+(I26 ^arg1 I44 ^message-type object-description ^predicate N38)
+  (I44 ^2 I45 ^handle of1 ^item-type predicate)
+    (I45 ^2 N15 ^handle name1)
+      (N15 ^handle puzzle1 ^property L49 (@100165))
+        (L49 ^handle concept ^type conceptual)
+  (N38 ^handle blocks-world1 ^item-type predicate
+         ^word-structure N37 (@999000))
+    (N37 ^referent R115 (@999001) ^spelling blocks-world)
+      (R115 ^handle blocks-world1 ^word-structure N37 (@999000))
+Outgoing Message: 
+(M1 ^complete-message true ^type describe-puzzle)
+Outgoing Message: 
+(M2 ^complete-message true ^fields F4 ^type get-next-task)
+Interpreting Instructor Message: 
+Load init-blocksworld.
+(I67 ^action N47 ^arg1 N50 ^message-type command)
+  (N47 ^handle load1 ^item-type action ^procedural L122 (@882))
+    (L122 ^op_name initiate-load)
+  (N50 ^handle init-blocksworld3 ^word-structure N49 (@999003))
+    (N49 ^referent R233 (@999004) ^spelling init-blocksworld)
+      (R233 ^handle init-blocksworld3 ^word-structure N49 (@999003))
+Outgoing Message: 
+(M3 ^complete-message true ^type ok)
+Outgoing Message: 
+(M4 ^complete-message true ^fields F8 ^type get-next-task)
+Interpreting Instructor Message: 
+Ok.
+(I98 ^message-type yes)
+Outgoing Message: 
+(M6 ^complete-message true ^type define-actions)
+Interpreting Instructor Message: 
+You can move a clear block onto a clear object.
+(I122 ^action N67 ^action-modifier N65 ^agent R288 ^arg1 P115 ^arg2 I147
+       ^message-type command)
+  (N67 ^handle move1 ^item-type action ^procedural L226 (@685))
+    (L226 ^arg1 L228 (@687) ^arg2 L229 (@688) ^op_name op_move1
+           ^subtasks L227 (@686))
+      (L228 ^arg-type object ^id L230 (@689) ^required true)
+      (L229 ^2 L231 (@690) ^arg-type partial-predicate ^id L232 (@691)
+             ^required true)
+  (N65 ^handle can)
+  (R288 ^arm A4 ^debug-id rob ^handle rosie ^item-type object ^predicate P60)
+    (A4 ^action wait ^holding-object false)
+    (P60 ^handle rosie)
+  (P115 ^handle new-object-id4 ^item-type object ^predicates P116
+         ^predicates-copied true)
+    (P116 ^category block ^dialog-object true ^is-visible1 not-visible1
+           ^property clear)
+  (I147 ^2 P125 ^handle on1 ^item-type predicate)
+    (P125 ^handle new-object-id5 ^item-type object ^predicates P126
+           ^predicates-copied true)
+      (P126 ^category object ^dialog-object true ^is-visible1 not-visible1
+             ^property clear)
+Outgoing Message: 
+(M7 ^fields F13 ^originator agent ^type unknown-defined-word)
+  (F13 ^word clear7)
+Interpreting Instructor Message: 
+If a location is not below an object then it is clear.
+(I214 ^if-subclause I225 ^message-type conditional ^then-subclause I243)
+  (I225 ^action N181 ^arg1 P212 ^modifier N194 ^predicate I237)
+    (N181 ^handle is1 ^item-type action)
+    (P212 ^handle new-object-id8 ^item-type object ^predicates P213
+           ^predicates-copied true)
+      (P213 ^category location ^dialog-object true ^is-visible1 not-visible1)
+    (N194 ^handle negation ^modifier true)
+    (I237 ^2 P232 ^handle below1 ^item-type predicate)
+      (P232 ^handle new-object-id9 ^item-type object ^predicates P233
+             ^predicates-copied true)
+        (P233 ^category object ^dialog-object true ^is-visible1 not-visible1)
+  (I243 ^action N218 ^arg1 P212 ^predicate N232)
+    (N218 ^handle is1 ^item-type action)
+    (N232 ^handle clear ^item-type predicate ^property L876 (@100161))
+      (L876 ^handle property ^type visual)
+Outgoing Message: 
+(M8 ^complete-message true ^fields F16 ^type learned-unknown-word)
+  (F16 ^word clear7)
+Outgoing Message: 
+(M9 ^complete-message true ^type learned-action)
+Outgoing Message: 
+(M10 ^complete-message true ^fields F19 ^type get-next-task)
+Interpreting Instructor Message: 
+Load final-blocksworld.
+(I445 ^action N331 ^arg1 N334 ^message-type command)
+  (N331 ^handle load1 ^item-type action ^procedural L1067 (@882))
+    (L1067 ^op_name initiate-load)
+  (N334 ^handle final-blocksworld10 ^word-structure N333 (@999058))
+    (N333 ^referent R1361 (@999059) ^spelling final-blocksworld)
+      (R1361 ^handle final-blocksworld10 ^word-structure N333 (@999058))
+Outgoing Message: 
+(M11 ^complete-message true ^type ok)
+Outgoing Message: 
+(M12 ^complete-message true ^fields F23 ^type get-next-task)
+Interpreting Instructor Message: 
+The goal is that a red block is on a green block and the red block is below an orange block.
+(I476 ^arg1 N346 ^message-type object-description ^subclause I487)
+  (N346 ^handle goal ^property L1125 (@100165))
+    (L1125 ^handle concept ^type conceptual)
+  (I487 ^subclause I521 ^subclause I497)
+    (I521 ^action N434 ^arg1 P477 ^predicate I533)
+      (N434 ^handle is1 ^item-type action)
+      (P477 ^handle new-object-id11 ^item-type object ^predicates P478
+             ^predicates-copied true)
+        (P478 ^category block ^color red1 ^dialog-object true
+               ^is-visible1 not-visible1)
+      (I533 ^2 P535 ^handle below1 ^item-type predicate)
+        (P535 ^handle new-object-id13 ^item-type object ^predicates P536
+               ^predicates-copied true)
+          (P536 ^category block ^color orange1 ^dialog-object true
+                 ^is-visible1 not-visible1)
+    (I497 ^action N382 ^arg1 P477 ^predicate I509)
+      (N382 ^handle is1 ^item-type action)
+      (I509 ^2 P497 ^handle on1 ^item-type predicate)
+        (P497 ^handle new-object-id12 ^item-type object ^predicates P498
+               ^predicates-copied true)
+          (P498 ^category block ^color green1 ^dialog-object true
+                 ^is-visible1 not-visible1)
+Outgoing Message: 
+(M13 ^complete-message true ^type setup-goal)
+Interpreting Instructor Message: 
+Ok.
+(I542 ^message-type yes)
+Outgoing Message: 
+(M14 ^complete-message true ^type learned-goal)
+Interpreting Instructor Message: 
+Done.
+(I669 ^message-type finished)
+Outgoing Message: 
+(M15 ^complete-message true ^fields F30 ^type learned-game)
+  (F30 ^game blocks-world1 ^type puzzle)
+Interpreting Instructor Message: 
+Load init-blocksworld.
+(I757 ^action N561 ^arg1 N563 ^message-type command)
+  (N561 ^handle load1 ^item-type action ^procedural L1944 (@882))
+    (L1944 ^op_name initiate-load)
+  (N563 ^handle init-blocksworld3 ^word-structure L1949 (@999003))
+    (L1949 ^referent L1950 (@999004) ^spelling init-blocksworld)
+      (L1950 ^handle init-blocksworld3 ^word-structure L1949 (@999003))
+Outgoing Message: 
+(M16 ^complete-message true ^type ok)
+Outgoing Message: 
+(M17 ^complete-message true ^fields F34 ^type get-next-task)
+Interpreting Instructor Message: 
+Yes.
+(I788 ^message-type yes)
+Output of command successfully written to file.
+
+2
+3
+4Output of command successfully written to file.
+Outgoing Message: 
+(M18 ^complete-message true ^type gotit)
+Pushing a new task segment: 
+(I6866 ^start-of-execution true ^task-objects O3412 ^task-operator E1002)
+
+Action Operator: 
+(E1002 ^arg1 A1389 ^arg2 A1390 ^item-type task-operator ^name op_move1
+       ^task-handle move1)
+  (A1389 ^arg-type object ^id O2740)
+    (O2740 ^handle object-4 ^item-type object ^predicates P725)
+      (P725 ^affordance1 grabbable1 ^category block ^color red1
+             ^is-grabbed1 not-grabbed1 ^is-reachable1 reachable1
+             ^is-visible1 visible1)
+  (A1390 ^2 O2738 ^arg-type partial-predicate ^handle on1)
+    (O2738 ^handle object-2 ^item-type object ^predicates P723)
+      (P723 ^category location ^is-reachable1 reachable1 ^is-visible1 visible1)
+
+
+!EXECUTE-TASK! op_move1 object-4 object-2
+Outgoing Message: 
+(M22 ^complete-message true ^fields F42 ^type get-next-goal)
+
+
+Interrupt received.

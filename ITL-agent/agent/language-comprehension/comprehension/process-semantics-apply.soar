@@ -1,0 +1,436 @@
+## New version of process-semantics.
+## Puts semantics on assigner.parent-receiver.semantics - need to create for every receiver.
+##    So previously computed semantics for receiver structures are accessible via receiver.semantics 
+
+##### APPLY
+
+######### COPY Semantic substructure
+
+   
+sp {apply*process-semantics*process-semantics-copy
+ #:interrupt
+   (state <s> ^operator <o>)
+   (<o> ^name process-semantics
+        ^copy-semantics <sem2>
+       -^copy-structure
+        ^assigner <ass>)
+   (<ass> ^parent-receiver.semantics <sem>
+          ^merged-receiver.semantics <sem2>)
+   (<sem2> ^<att> <val>)
+-->
+   (<sem> ^<att> <val>)
+   (<ass> ^processed-semantics <sem2>)
+   #(write (crlf) |Copy semantics: | <sem> | ^| <att> | | <val>)
+}
+    
+sp {apply*process-semantics*process-semantics-copy-structure
+ #:interrupt
+   (state <s> ^operator <o>)
+   (<o> ^name process-semantics
+        ^copy-semantics <sem2>
+        ^copy-structure <att>
+        ^assigner <ass>)
+   (<ass> ^parent-receiver.semantics <sem>
+          ^merged-receiver.semantics <sem2>)
+   (<sem2> ^<att2> <val>)
+-->
+   (<sem> ^<att> <val>)
+   (<ass> ^processed-semantics <sem2>)
+   #(write (crlf) |Copy semantics: | <sem> | ^| <att> | | <val> | - changed from ^| <att2>)
+}
+######### Embed Semantic substructure
+
+
+sp {apply*process-semantics*process-semantics-embed
+ #:interrupt
+   (state <s> ^operator <o>)
+   (<o> ^name process-semantics
+        ^embed-semantics true
+        ^embed-structure <embed>
+        ^assigner <ass>)
+   (<ass> ^parent-receiver.semantics <sem>
+          ^merged-receiver.semantics <sem2>)
+-->
+   (<sem> ^<embed> <sem2>)
+   (<ass> ^processed-semantics *embed*)
+   #(write (crlf) |Embed semantics: | <sem> | ^| <embed> | | <sem2>)
+}
+
+
+sp {apply*process-semantics*process-semantics-embed*receiver
+ #:interrupt
+   (state <s> ^operator <o>)
+   (<o> ^name process-semantics
+        ^embed <embed>
+        ^receiver <mr>
+        ^attribute <att>
+        ^value <value>)
+-->
+   (<embed> ^<att> <value>)
+   (<mr> ^processed-semantics <value>)
+   #(write (crlf) |Embed semantics: | <embed> | ^| <att> | | <value>)
+}
+
+
+sp {apply*process-semantics*process-semantics-mark-processed
+ #:interrupt
+   (state <s> ^operator <o>)
+   (<o> ^name process-semantics
+        ^assigner <ass>
+        ^semantics <sem>)
+-->
+   #(write (crlf) |Mark | <ass> | with processed semantics for | <sem>)
+   (<ass> ^processed-semantics <sem>)
+}
+   
+##### APPLY Process-semantics
+
+sp {apply*process-semantics*create-empty*semantics
+   (state <s> ^operator <o>)
+   (<o> ^name process-semantics
+        ^assigner.parent-receiver <rec>)
+  -(<rec> ^semantics <sem>)
+-->
+   (<rec> ^semantics <sem>)
+}
+
+sp {apply*process-semantics*simple
+   (state <s> ^operator <op>)
+   (<op> ^name process-semantics
+         ^assigner <ass>
+         ^attribute { <> relation <att> }
+         ^value <value>
+        -^extra-attribute <of>
+        -^relation <sr>)
+   (<ass> ^parent-receiver.semantics <sem>)
+-->
+   #(write (crlf) | Add to assigner: | <ass> | Semantics: | <sem> | ^|  <att> | | <value>)
+   (<sem> ^<att> <value>)
+   (<ass> ^processed-semantics <value>)
+}
+
+sp {apply*process-semantics*simple2
+   (state <s> ^operator <op>)
+   (<op> ^name process-semantics
+         ^assigner <ass>
+         ^attribute2 <att>
+         ^value2 <value>)
+   (<ass> ^parent-receiver.semantics <sem>)
+-->
+   #(write (crlf) | Add to assigner: | <ass> | Semantics: | <sem> | ^|  <att> | | <value>)
+   (<sem> ^<att> <value>)
+   (<ass> ^processed-semantics <value>)
+}
+            
+sp {apply*process-semantics*unknown
+   (state <s> ^operator <op>)
+   (<op> ^name process-semantics
+         ^assigner <ass>
+         ^attribute <att>
+         ^value <value>
+         ^extra-attribute <of>)   
+   (<ass> ^parent-receiver.semantics <sem>)
+-->
+   #(write (crlf) | Add to assigner: | <ass> | Semantics: | <sem> | ^|  <att> |.| <of> | unknown.|)
+   (<sem> ^<att> <value>)
+   (<value> ^<of> unknown
+           ^item-type predicate)
+   (<ass> ^processed-semantics <att>)
+}
+
+#### BUG ###
+sp {apply*process-semantics*relation
+   (state <s> ^operator <op>
+              ^assigner <ass>)
+   (<op> ^name process-semantics
+         ^assigner <ass>
+         ^attribute relation
+         ^relation <sr>)
+   (<sr> ^handle <sp>
+         ^2 <sg>
+        -^3)
+   (<ass> ^parent-receiver.semantics <sem>)
+-->
+    #(write (crlf) | Add to assigner: | <ass> | Semantics: | <sem> | ^predicate | <sp> | (| <sg> |)|)
+   (<sem> ^predicate <sr2>)
+   (<sr2> ^handle <sp>         ## Added
+          ^2 <sg>             # might be an LTI
+          ^item-type predicate)
+   (<ass> ^processed-semantics <sg>)}
+
+sp {apply*process-semantics*relation*3
+   (state <s> ^operator <op>
+              ^assigner <ass>)
+   (<op> ^name process-semantics
+         ^assigner <ass>
+         ^attribute relation
+         ^relation <sr>)
+   (<sr> ^handle <sp>
+         ^2 <sg>
+         ^3 <sg3>)
+   (<ass> ^parent-receiver.semantics <sem>)
+-->
+    #(write (crlf) | Add to assigner: | <ass> | Semantics: | <sem> | ^predicate | <sp> | (| <sg> |, | <sg3> |)|)
+   (<sem> ^predicate <sr2>)
+   (<sr2> ^handle <sp>         ## Added
+          ^2 <sg>
+          ^3 <sg3>
+          ^item-type predicate)
+   (<ass> ^processed-semantics <sg>)}
+
+sp {apply*process-semantics*relation*other
+   (state <s> ^operator <op>
+              ^assigner <ass>)
+   (<op> ^name process-semantics
+         ^assigner <ass>
+         ^attribute { <> relation <att> }
+         ^relation <sr>
+        -^value)
+   (<sr> ^handle <sp>
+         ^2 <sg>)
+   (<ass> ^parent-receiver.semantics <sem>)
+  -(<sg> ^handle <sghandle>
+         ^2 <sg2>)
+-->
+   #(write (crlf) | Add to assigner: | <ass> | Semantics: | <sem> | ^predicate | <sp> | (| <sg> |)|)
+   (<sem> ^<att> <sr2>)
+   (<sr2> ^handle <sp>         ## Added
+          ^2 <sg>
+          ^item-type predicate)
+   (<ass> ^processed-semantics <sg>)}
+
+sp {apply*process-semantics*relation*other3
+   (state <s> ^operator <op>
+              ^assigner <ass>)
+   (<op> ^name process-semantics
+         ^assigner <ass>
+         ^attribute { <> relation <att> }
+         ^relation <sr>
+        -^value)
+   (<sr> ^handle <sp>
+         ^2 <sg>
+         ^3 <sg3>)
+   (<ass> ^parent-receiver.semantics <sem>)
+-->
+    #(write (crlf) | Add to assigner: | <ass> | Semantics: | <sem> | ^predicate | <sp> | (| <sg> |, | <sg3> |)|)
+   (<sem> ^<att> <sr2>)
+   (<sr2> ^handle <sp>         ## Added
+          ^2 <sg3>
+          ^item-type predicate)
+   (<ass> ^processed-semantics <sg>)}
+
+
+sp {apply*process-semantics*relation*other*deep
+   (state <s> ^operator <op>
+              ^assigner <ass>)
+   (<op> ^name process-semantics
+         ^assigner <ass>
+         ^attribute { <> relation <att> }
+         ^relation <sr>
+        -^relation2
+         ^value <sg>)
+   (<sr> ^handle <sp>
+         ^2 <sg>)
+   (<sg> ^handle <sghandle>
+         ^2 <sg2>)
+   (<ass> ^parent-receiver.semantics <sem>)
+-->
+    #(write (crlf) | Add to assigner: | <ass> | Semantics: | <sem> | ^predicate | <sp> | (| <sghandle> |)| <sg2>)
+   (<sem> ^<att> <sr2>)
+   (<sr2> ^handle <sp>         ## Added
+          ^2 <sgx>
+          ^item-type predicate)
+   (<sgx> ^handle <sghandle>
+          ^2 <sg2>)
+   (<ass> ^processed-semantics <sg>)}
+
+
+sp {apply*process-semantics*relation*other*deep2
+   (state <s> ^operator <op>
+              ^assigner <ass>)
+   (<op> ^name process-semantics
+         ^assigner <ass>
+         ^attribute { <> relation <att> }
+         ^relation <sr>
+        -^relation2
+        -^value <sg>)
+   (<sr> ^handle <sp>
+         ^2 <sg>)
+   (<sg> ^handle <sghandle>
+         ^2 <sg2>)
+   (<ass> ^parent-receiver.semantics <sem>)
+-->
+#(write (crlf) | Add to assigner: | <ass> | Semantics: | <sem> | ^predicate | <sp> 
+#                  | (| <sghandle> |)| <sg2>)
+   (<sem> ^<att> <sr2>)
+   (<sr2> ^handle <sp>         ## Added
+          ^2 <sgx>
+          ^item-type predicate)
+   (<sgx> ^handle <sghandle>
+          ^2 <sg2>)
+   (<ass> ^processed-semantics <sg>)}
+
+sp {apply*process-semantics*relation*other*deeper
+   (state <s> ^operator <op>
+              ^assigner <ass>)
+   (<op> ^name process-semantics
+         ^assigner <ass>
+         ^attribute { <> relation <att> }
+         ^relation <sr>
+         ^relation2 <rel2>
+         ^value <sg>)
+   (<sr> ^handle <sp>
+         ^2 <sg>)
+   (<sg> ^handle <sghandle>
+         ^2 <sg2>)
+   (<ass> ^parent-receiver.semantics <sem>)
+-->
+#(write (crlf) | Add to assigner: | <ass> | Semantics: | <sem> | ^predicate | <sp> 
+#                  | (| <sghandle> |)| <sg2>)
+   (<sem> ^<att> <sr2>)
+   (<sr2> ^handle <sp>         ## Added
+          ^2 <sgx>
+          ^item-type predicate)
+   (<sgx> ^handle <sghandle>
+          ^2 <sg2>)
+   (<sg2> ^relation <rel2>)
+   (<ass> ^processed-semantics <sg>)}
+
+sp {apply*process-semantics*relation*embedded
+   (state <s> ^operator <op>
+              ^assigner <ass>)
+   (<op> ^name process-semantics
+         ^assigner <ass>
+         ^attribute relation
+         ^value <value>)
+   (<value> ^relation <sr>)
+   (<sr> ^handle <sp>
+        -^3 <sg3>
+         ^2 <sg>)
+   (<ass> ^parent-receiver.semantics <sem>)
+-->
+    #(write (crlf) | Add to assigner: | <ass> | Semantics: | <sem> | ^predicate | <sp> | (| <sg> |)|)
+   (<sem> ^predicate <sr2>)
+   (<sr2> ^handle <sp>         ## Added
+          ^2 <sg>
+          ^item-type predicate)
+   (<ass> ^processed-semantics <value>)}
+#
+#
+#sp {apply*process-semantics*relation*embedded3
+#   (state <s> ^operator <op>
+#              ^assigner <ass>)
+#   (<op> ^name process-semantics
+#         ^assigner <ass>
+#         ^attribute relation
+#         ^value <value>)
+#   (<value> ^relation <sr>)
+#   (<sr> ^handle <sp>
+#         ^2 <sg>
+#        -^3 <sg3>)
+#   (<ass> ^parent-receiver.semantics <sem>)
+#-->
+#    #(write (crlf) | Add to assigner: | <ass> | Semantics: | <sem> | ^predicate | <sp> | (| <sg> |, | <sg3> |)|)
+#   (<sem> ^predicate <sr2>)
+#   (<sr2> ^handle <sp>         ## Added
+#          ^2 <sg>
+#          ^3 <sg3>
+#          ^item-type predicate)
+#   (<ass> ^processed-semantics <value>)}
+
+sp {apply*process-semantics*relation*embedded2
+   (state <s> ^operator <op>
+              ^assigner <ass>)
+   (<op> ^name process-semantics
+         ^assigner <ass>
+         ^attribute relation
+         ^value <value>)
+   (<ass> ^parent-receiver <pr>)
+   (<pr> ^semantics <sem>
+         ^complement.lt.relation.handle named)
+-->
+    #(write (crlf) | Add to assigner: | <ass> | Semantics: | <sem> | ^predicate named (| <value> |)|)
+   (<sem> ^predicate <sr2>)
+   (<sr2> ^handle named         ## Added
+          ^2 <value>
+          ^item-type predicate)
+   (<ass> ^processed-semantics <value>)}
+
+##############################
+### item-type
+
+sp {apply*process-semantics*simple*item-type*predicate
+   (state <s> ^operator <op>)
+   (<op> ^name process-semantics
+         ^attribute predicate 
+         ^value <value>
+        -^extra-attribute <of>)
+   (<value> -^item-type)
+-->
+   #(write (crlf) | Add to item-type predicate to | <value>)
+   (<value> ^item-type predicate)
+}
+
+sp {apply*process-semantics*simple*item-type*action
+   (state <s> ^operator <op>)
+   (<op> ^name process-semantics
+         ^attribute action 
+         ^value <value>)
+   (<value> -^item-type)
+-->
+   #(write (crlf) | Add to item-type concept to | <value>)
+   (<value> ^item-type action)
+}
+
+#sp {apply*process-semantics*simple*item-type*concept
+#   (state <s> ^operator <op>)
+#   (<op> ^name process-semantics
+#        -^attribute << action predicate relation >>
+#         ^value <value>
+#        -^extra-attribute <of>
+#        -^relation)
+#   (<value> -^item-type)
+#-->
+#   #(write (crlf) | Add to item-type concept to | <value>)
+#   (<value> ^item-type concept)
+#}
+
+##### attribute2
+
+sp {apply*process-semantics*simple*item-type*predicate2
+   (state <s> ^operator <op>)
+   (<op> ^name process-semantics
+         ^attribute2 << predicate relation >>
+         ^value2 <value>)
+   (<value> -^item-type)
+-->
+   #(write (crlf) | Add to item-type predicate to| <value>)
+   (<value> ^item-type predicate)
+}
+#
+#sp {apply*process-semantics*simple*item-type*concept2
+#   (state <s> ^operator <op>)
+#   (<op> ^name process-semantics
+#        -^attribute2 << predicate relation >>
+#         ^value2 <value>)
+#   (<value> -^item-type)
+#-->
+#   #(write (crlf) | Add to item-type concept to| <value>)
+#   (<value> ^item-type concept)
+#}
+
+##############################
+
+sp {apply*process-semantics*remove-ungrounded
+   #:interrupt
+   (state <s> ^operator <op>)
+   (<op> ^name process-semantics
+         ^assigner <ass>
+         ^attribute <att>)
+   (<ass> ^parent-receiver.semantics <sem>)
+   (<sem> ^<att> <val>)
+   (<val> ^ungrounded <x>)
+-->
+   #(write (crlf) | Removing ungrounded: | <sem> | ^| <att> | | <x>)
+   (<sem> ^<att> <val> -)}
+

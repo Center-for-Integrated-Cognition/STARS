@@ -1,0 +1,57 @@
+## FOR GOAL DEMONSTRATION MODIFICATIONS
+sp {dialog-event*propose*analyze-lm-response
+   (state <s> ^name dialog-event
+              ^purpose <p>)
+   (<p> ^type process-lm-response
+        ^parameters <pa>)
+   (<pa> ^response <r>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name analyze-lm-response
+	    ^parameter <pa>)
+}
+#todo change name to be more goal orientated
+
+sp {dialog-event*propose*process-lm-actions
+   (state <s> ^name dialog-event
+              ^purpose <p>)
+   (<p> ^type process-lm-response
+        ^parameters <pa>)
+   (<pa> ^update-node <r>)
+   (<r> -^selection-response)
+-{(<r> ^goal <g>)
+  (<g> ^retrying true)}
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name process-lm-actions
+	    ^parameter <pa>)
+}
+#handles ok for many goals?
+sp {dialog-event*propose*analyze-lm-response*retry-goal
+   (state <s> ^name dialog-event
+              ^purpose <p>)
+   (<p> ^type process-lm-response
+        ^parameters <pa>)
+   (<pa> ^update-node <r>)
+   (<r> ^goal <g>)
+   (<g> ^retrying true)#^goal <g2>) #this was failure....
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name analyze-lm-response
+       ^retry goal
+	    ^parameter <pa>)
+}
+
+
+sp {dialog-event*propose*analyze-lm-response*lm-goal-selection
+   (state <s> ^name dialog-event
+              ^purpose <p>)
+   (<p> ^type process-lm-response
+        ^parameters <pa>)
+   (<pa> ^update-node <r>)
+   (<r> ^selection-response <sr>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name analyze-lm-response
+	    ^parameter <pa>)
+}

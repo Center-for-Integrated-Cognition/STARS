@@ -1,0 +1,96 @@
+### GENERALIZE UNARY PREDICATE
+
+# If there is no property-handle, retrieve it from smem
+sp {task-utils*generalize-task-argument*retrieve*unary*predicate*lti
+   (state <s> ^generalize-task-argument <arg>)
+   (<arg> ^arg-type predicate
+          ^instantiation <i>)
+   (<i> ^type unary
+        ^handle <pred-handle>
+       -^property-handle)
+-->
+   (<s> ^smem-query <query>)
+   (<query> ^cue <cue>
+            ^depth 12
+            ^destination <arg>
+            ^result-name predicate-lti)
+   (<cue> ^handle <pred-handle>)
+}
+
+# Elaborate the property-handle onto the instantiation
+sp {task-utils*generalize-task-argument*elaborate*unary*predicate*property-handle
+   (state <s> ^generalize-task-argument <arg>)
+   (<arg> ^arg-type predicate
+          ^predicate-lti.property.handle <prop-h>
+          ^instantiation <i>)
+   (<i> ^type unary)
+-->
+   (<i> ^property-handle <prop-h>)
+}
+
+sp {task-utils*generalize-task-argument*expand*unary*predicate
+  (state <s> ^generalize-task-argument <arg>)
+  (<arg> ^arg-type predicate
+         ^instantiation <i>)
+  (<i> ^type unary
+       ^handle <handle>
+       ^property-handle <prop-h>
+       ^1 <obj1>)
+-->
+  (<s> ^generalize-task-argument <gen-obj1> <gen-pred>)
+
+  (<gen-pred> ^arg-type predicate-handle
+              ^instantiation <pred-i>)
+  (<pred-i> ^handle <handle>
+            ^property-handle <prop-h>)
+
+  (<gen-obj1> ^arg-type object
+              ^instantiation <obj1-i>)
+  (<obj1-i> ^id <obj1>)
+
+  (<arg> ^generalize-handle <gen-pred>
+         ^generalize-obj1 <gen-obj1>)
+}
+
+sp {task-utils*generalize-task-argument*predicate*elaborate*object1*reference-info
+   (state <s> ^generalize-task-argument <arg>)
+   (<arg> ^arg-type predicate
+          ^generalize-obj1 <gen-obj1>
+          ^instantiation.reference-info.{1} <ref1>)
+-->
+   (<gen-obj1> ^reference-info <ref1>)
+}
+
+sp {task-utils*generalize-task-argument*propose*generalize-task-argument*predicate*unary
+  (state <s> ^generalize-task-argument <arg>)
+  (<arg> ^arg-type predicate
+         ^instantiation.type unary
+         ^generalize-handle.general-arg-rep.id <pred-slot>
+         ^generalize-obj1.general-arg-rep.id <obj1-slot>
+        -^general-arg-rep)
+-->
+  (<s> ^operator <o> + =)
+  (<o> ^name generalize-task-argument
+       ^argument <arg>
+       ^arg-type predicate
+       ^pred-type unary
+       ^id <pred-slot>
+       ^1 <obj1-slot>)
+}
+
+sp {task-utils*generalize-task-argument*apply*generalize-task-argument*predicate*unary
+  (state <s> ^operator <o>)
+  (<o> ^name generalize-task-argument
+       ^argument <arg>
+       ^arg-type predicate
+       ^pred-type unary
+       ^id <pred-slot>
+       ^1 <obj1-slot>)
+-->
+  (<arg> ^general-arg-rep <rep>)
+  (<rep> ^type unary
+         ^id <pred-slot>
+         ^1 <obj1-slot>)
+}
+
+

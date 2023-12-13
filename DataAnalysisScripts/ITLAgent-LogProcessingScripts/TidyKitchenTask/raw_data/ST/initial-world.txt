@@ -1,0 +1,506 @@
+(W4 ^debug-id world ^objects O50 ^predicates P58 ^robot R5)
+  (O50 ^debug-id objs ^object O1037 ^object O1017 ^object O998 ^object O973
+         ^object O955 ^object O935 ^object O916 ^object O892 ^object O873
+         ^object O854 ^object O834 ^object O814 ^object O795 ^object O770
+         ^object O751 ^object O731 ^object O712 ^object O693 ^object O673
+         ^object O634 ^object O615 ^object O596 ^object O577 ^object O558
+         ^object O538 ^object O519 ^object O499 ^object O480 ^object O460
+         ^object O441 ^object O422 ^object O403 ^object O383 ^object O364
+         ^object O345 ^object O326 ^object O307 ^object O287 ^object O268
+         ^object O250 ^object O231 ^object O212 ^object O193 ^object O174
+         ^object O155 ^object O136 ^object O115)
+    (O1037 ^handle counter1_instance_4 ^item-type object ^perception-id counter1_instance_4 ^predicates P1960
+           ^root-category counter1 ^svs-obj C26367)
+      (P1960 ^affordance1 surface1 ^category counter1 ^category furniture1
+             ^category object ^category entity1 ^is-confirmed1 confirmed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 2.400000)
+      (C26367 ^id bel-4 ^object-source belief ^type node)
+    (O1017 ^handle pantry1_instance_8 ^item-type object ^perception-id pantry1_instance_8 ^predicates P1898
+           ^root-category pantry1 ^svs-obj C25670)
+      (P1898 ^affordance1 openable1 ^affordance1 receptacle1 ^category pantry1
+             ^category furniture1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-open1 not-open1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 4.000000)
+      (C25670 ^id bel-8 ^object-source belief ^type node)
+    (O998 ^handle glass-tumbler1_instance_33 ^item-type object ^perception-id glass-tumbler1_instance_33 ^predicates P1835
+           ^root-category glass-tumbler1 ^svs-obj C24980)
+      (P1835 ^affordance1 grabbable1 ^category glass-tumbler1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.003600)
+      (C24980 ^id bel-33 ^object-source belief ^type node)
+    (O973 ^handle bin1_instance_1 ^item-type object ^perception-id bin1_instance_1 ^predicates P1774
+           ^root-category bin1 ^svs-obj C24201)
+      (P1774 ^affordance1 always-open1 ^affordance1 receptacle1 ^category bin1
+             ^category object ^category entity1 ^is-confirmed1 confirmed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^property recycling1 ^volume 0.600000)
+      (C24201 ^id bel-1 ^object-source belief ^type node)
+    (O955 ^handle soda-can1_instance_13 ^item-type object ^perception-id soda-can1_instance_13 ^predicates P1714
+           ^root-category soda-can1 ^svs-obj C23621)
+      (P1714 ^affordance1 grabbable1 ^category soda-can1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.004500)
+      (C23621 ^id bel-13 ^object-source belief ^type node)
+    (O935 ^handle drawer1_instance_6 ^item-type object ^perception-id drawer1_instance_6 ^predicates P1656
+           ^root-category drawer1 ^svs-obj C22952)
+      (P1656 ^affordance1 openable1 ^affordance1 receptacle1 ^category drawer1
+             ^category furniture1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-open1 not-open1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 1.125000)
+      (C22952 ^id bel-6 ^object-source belief ^type node)
+    (O916 ^handle steak-knife1_instance_24 ^item-type object ^perception-id steak-knife1_instance_24 ^predicates P1597
+           ^root-category steak-knife1 ^svs-obj C22290)
+      (P1597 ^affordance1 grabbable1 ^category steak-knife1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.000625)
+      (C22290 ^id bel-24 ^object-source belief ^type node)
+    (O892 ^handle bottle-opener1_instance_25 ^item-type object ^perception-id bottle-opener1_instance_25 ^predicates P1539
+           ^root-category bottle-opener1 ^svs-obj C21543)
+      (P1539 ^affordance1 grabbable1 ^category bottle-opener1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.000375)
+      (C21543 ^id bel-25 ^object-source belief ^type node)
+    (O873 ^handle jar-of-salsa1_instance_45 ^item-type object ^perception-id jar-of-salsa1_instance_45 ^predicates P1484
+           ^root-category jar-of-salsa1 ^svs-obj C20895)
+      (P1484 ^affordance1 grabbable1 ^category jar-of-salsa1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.002160)
+      (C20895 ^id bel-45 ^object-source belief ^type node)
+    (O854 ^handle apple-juice1_instance_46 ^item-type object ^perception-id apple-juice1_instance_46 ^predicates P1429
+           ^root-category apple-juice1 ^svs-obj C20254)
+      (P1429 ^affordance1 pourable1 ^affordance1 grabbable1
+             ^affordance1 perishable1 ^category apple-juice1 ^category drink1
+             ^category food1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.008670)
+      (C20254 ^id bel-46 ^object-source belief ^type node)
+    (O834 ^handle ceramic-plate1_instance_27 ^item-type object ^perception-id ceramic-plate1_instance_27 ^predicates P1375
+           ^root-category ceramic-plate1 ^svs-obj C19530)
+      (P1375 ^affordance1 grabbable1 ^category ceramic-plate1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.002000)
+      (C19530 ^id bel-27 ^object-source belief ^type node)
+    (O814 ^handle dishwasher1_instance_3 ^item-type object ^perception-id dishwasher1_instance_3 ^predicates P1323
+           ^root-category dishwasher1 ^svs-obj C18903)
+      (P1323 ^affordance1 activatable1 ^affordance1 openable1
+             ^affordance1 receptacle1 ^category dishwasher1
+             ^category appliance1 ^category object ^category entity1
+             ^is-activated1 not-activated1 ^is-confirmed1 confirmed1
+             ^is-open1 not-open1 ^is-reachable1 not-reachable1
+             ^is-visible1 visible1 ^volume 1.650000)
+      (C18903 ^id bel-3 ^object-source belief ^type node)
+    (O795 ^handle metal-fork1_instance_23 ^item-type object ^perception-id metal-fork1_instance_23 ^predicates P1270
+           ^root-category metal-fork1 ^svs-obj C18283)
+      (P1270 ^affordance1 grabbable1 ^category metal-fork1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.000500)
+      (C18283 ^id bel-23 ^object-source belief ^type node)
+    (O770 ^handle fridge1_instance_7 ^item-type object ^perception-id fridge1_instance_7 ^predicates P1219
+           ^root-category fridge1 ^svs-obj C17584)
+      (P1219 ^affordance1 openable1 ^affordance1 receptacle1 ^category fridge1
+             ^category appliance1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-open1 not-open1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 2.250000)
+      (C17584 ^id bel-7 ^object-source belief ^type node)
+    (O751 ^handle ketchup1_instance_44 ^item-type object ^perception-id ketchup1_instance_44 ^predicates P1169
+           ^root-category ketchup1 ^svs-obj C16978)
+      (P1169 ^affordance1 grabbable1 ^affordance1 perishable1
+             ^category ketchup1 ^category condiment1 ^category food1
+             ^category object ^category entity1 ^is-confirmed1 confirmed1
+             ^is-grabbed1 not-grabbed1 ^is-reachable1 not-reachable1
+             ^is-visible1 visible1 ^volume 0.007875)
+      (C16978 ^id bel-44 ^object-source belief ^type node)
+    (O731 ^handle table1_instance_2 ^item-type object ^perception-id table1_instance_2 ^predicates P1112
+           ^root-category table1 ^svs-obj C16294)
+      (P1112 ^affordance1 surface1 ^category table1 ^category furniture1
+             ^category object ^category entity1 ^is-confirmed1 confirmed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 3.000000)
+      (C16294 ^id bel-2 ^object-source belief ^type node)
+    (O712 ^handle mug1_instance_31 ^item-type object ^perception-id mug1_instance_31 ^predicates P1065
+           ^root-category mug1 ^svs-obj C15702)
+      (P1065 ^affordance1 fillable1 ^affordance1 grabbable1 ^category mug1
+             ^category kitchenware1 ^category object ^category entity1
+             ^contents1 empty1 ^is-confirmed1 confirmed1
+             ^is-grabbed1 not-grabbed1 ^is-reachable1 not-reachable1
+             ^is-visible1 visible1 ^volume 0.003600)
+      (C15702 ^id bel-31 ^object-source belief ^type node)
+    (O693 ^handle coke-can1_instance_14 ^item-type object ^perception-id coke-can1_instance_14 ^predicates P1019
+           ^root-category coke-can1 ^svs-obj C15117)
+      (P1019 ^affordance1 grabbable1 ^category coke-can1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.003600)
+      (C15117 ^id bel-14 ^object-source belief ^type node)
+    (O673 ^handle rack1_instance_11 ^item-type object ^perception-id rack1_instance_11 ^predicates P966
+           ^root-category rack1 ^svs-obj C14539)
+      (P966 ^affordance1 always-open1 ^affordance1 receptacle1 ^category rack1
+             ^category furniture1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-reachable1 not-reachable1
+             ^is-visible1 visible1 ^property dish1 ^volume 0.375000)
+      (C14539 ^id bel-11 ^object-source belief ^type node)
+    (O634 ^handle corkscrew1_instance_26 ^item-type object ^perception-id corkscrew1_instance_26 ^predicates P918
+           ^root-category corkscrew1 ^svs-obj C13648)
+      (P918 ^affordance1 grabbable1 ^category corkscrew1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.000625)
+      (C13648 ^id bel-26 ^object-source belief ^type node)
+    (O615 ^handle cereal-box1_instance_37 ^item-type object ^perception-id cereal-box1_instance_37 ^predicates P875
+           ^root-category cereal-box1 ^svs-obj C13084)
+      (P875 ^affordance1 dispenser1 ^affordance1 grabbable1
+             ^category cereal-box1 ^category kitchenware1 ^category object
+             ^category entity1 ^is-confirmed1 confirmed1
+             ^is-grabbed1 not-grabbed1 ^is-reachable1 not-reachable1
+             ^is-visible1 visible1 ^volume 0.003750)
+      (C13084 ^id bel-37 ^object-source belief ^type node)
+    (O596 ^handle steak-knife1_instance_30 ^item-type object ^perception-id steak-knife1_instance_30 ^predicates P833
+           ^root-category steak-knife1 ^svs-obj C12527)
+      (P833 ^affordance1 grabbable1 ^category steak-knife1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.000625)
+      (C12527 ^id bel-30 ^object-source belief ^type node)
+    (O577 ^handle pop-tart-box1_instance_39 ^item-type object ^perception-id pop-tart-box1_instance_39 ^predicates P792
+           ^root-category pop-tart-box1 ^svs-obj C11977)
+      (P792 ^affordance1 grabbable1 ^category pop-tart-box1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.007500)
+      (C11977 ^id bel-39 ^object-source belief ^type node)
+    (O558 ^handle apple-core1_instance_17 ^item-type object ^perception-id apple-core1_instance_17 ^predicates P752
+           ^root-category apple-core1 ^svs-obj C11434)
+      (P752 ^affordance1 grabbable1 ^affordance1 perishable1
+             ^category apple-core1 ^category fruit1 ^category food1
+             ^category object ^category entity1 ^is-confirmed1 confirmed1
+             ^is-grabbed1 not-grabbed1 ^is-reachable1 not-reachable1
+             ^is-visible1 visible1 ^volume 0.000735)
+      (C11434 ^id bel-17 ^object-source belief ^type node)
+    (O538 ^handle paper-plate1_instance_18 ^item-type object ^perception-id paper-plate1_instance_18 ^predicates P713
+           ^root-category paper-plate1 ^svs-obj C10822)
+      (P713 ^affordance1 grabbable1 ^category paper-plate1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.002000)
+      (C10822 ^id bel-18 ^object-source belief ^type node)
+    (O519 ^handle plastic-fork1_instance_19 ^item-type object ^perception-id plastic-fork1_instance_19 ^predicates P675
+           ^root-category plastic-fork1 ^svs-obj C10293)
+      (P675 ^affordance1 grabbable1 ^category plastic-fork1 ^category utensil1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.000375)
+      (C10293 ^id bel-19 ^object-source belief ^type node)
+    (O499 ^handle mug1_instance_32 ^item-type object ^perception-id mug1_instance_32 ^predicates P638
+           ^root-category mug1 ^svs-obj C9697)
+      (P638 ^affordance1 fillable1 ^affordance1 grabbable1 ^category mug1
+             ^category kitchenware1 ^category object ^category entity1
+             ^contents1 empty1 ^is-confirmed1 confirmed1
+             ^is-grabbed1 not-grabbed1 ^is-reachable1 not-reachable1
+             ^is-visible1 visible1 ^volume 0.003600)
+      (C9697 ^id bel-32 ^object-source belief ^type node)
+    (O480 ^handle half-and-half1_instance_43 ^item-type object ^perception-id half-and-half1_instance_43 ^predicates P602
+           ^root-category half-and-half1 ^svs-obj C9182)
+      (P602 ^affordance1 pourable1 ^affordance1 grabbable1
+             ^affordance1 perishable1 ^category half-and-half1
+             ^category drink1 ^category food1 ^category object
+             ^category entity1 ^is-confirmed1 confirmed1
+             ^is-grabbed1 not-grabbed1 ^is-reachable1 not-reachable1
+             ^is-visible1 visible1 ^volume 0.003600)
+      (C9182 ^id bel-43 ^object-source belief ^type node)
+    (O460 ^handle plastic-cup1_instance_20 ^item-type object ^perception-id plastic-cup1_instance_20 ^predicates P567
+           ^root-category plastic-cup1 ^svs-obj C8602)
+      (P567 ^affordance1 grabbable1 ^category plastic-cup1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.003600)
+      (C8602 ^id bel-20 ^object-source belief ^type node)
+    (O441 ^handle coffee-grinder1_instance_36 ^item-type object ^perception-id coffee-grinder1_instance_36 ^predicates P533
+           ^root-category coffee-grinder1 ^svs-obj C8101)
+      (P533 ^affordance1 grabbable1 ^category coffee-grinder1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.008670)
+      (C8101 ^id bel-36 ^object-source belief ^type node)
+    (O422 ^handle glass-tumbler1_instance_29 ^item-type object ^perception-id glass-tumbler1_instance_29 ^predicates P500
+           ^root-category glass-tumbler1 ^svs-obj C7607)
+      (P500 ^affordance1 grabbable1 ^category glass-tumbler1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.003600)
+      (C7607 ^id bel-29 ^object-source belief ^type node)
+    (O403 ^handle milk1_instance_42 ^item-type object ^perception-id milk1_instance_42 ^predicates P468
+           ^root-category milk1 ^svs-obj C7120)
+      (P468 ^affordance1 pourable1 ^affordance1 grabbable1
+             ^affordance1 perishable1 ^category milk1 ^category drink1
+             ^category food1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.011560)
+      (C7120 ^id bel-42 ^object-source belief ^type node)
+    (O383 ^handle plate1_instance_28 ^item-type object ^perception-id plate1_instance_28 ^predicates P437
+           ^root-category plate1 ^svs-obj C6572)
+      (P437 ^affordance1 grabbable1 ^category plate1 ^category kitchenware1
+             ^category object ^category entity1 ^is-confirmed1 confirmed1
+             ^is-grabbed1 not-grabbed1 ^is-reachable1 not-reachable1
+             ^is-visible1 visible1 ^volume 0.002000)
+      (C6572 ^id bel-28 ^object-source belief ^type node)
+    (O364 ^handle plastic-bottle1_instance_12 ^item-type object ^perception-id plastic-bottle1_instance_12 ^predicates P407
+           ^root-category plastic-bottle1 ^svs-obj C6099)
+      (P407 ^affordance1 grabbable1 ^category plastic-bottle1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.004320)
+      (C6099 ^id bel-12 ^object-source belief ^type node)
+    (O345 ^handle crackers1_instance_41 ^item-type object ^perception-id crackers1_instance_41 ^predicates P378
+           ^root-category crackers1 ^svs-obj C5633)
+      (P378 ^affordance1 grabbable1 ^category crackers1 ^category kitchenware1
+             ^category object ^category entity1 ^is-confirmed1 confirmed1
+             ^is-grabbed1 not-grabbed1 ^is-reachable1 not-reachable1
+             ^is-visible1 visible1 ^volume 0.003750)
+      (C5633 ^id bel-41 ^object-source belief ^type node)
+    (O326 ^handle box-of-aluminum-foil1_instance_38 ^item-type object ^perception-id box-of-aluminum-foil1_instance_38 ^predicates P350
+           ^root-category box-of-aluminum-foil1 ^svs-obj C5174)
+      (P350 ^affordance1 grabbable1 ^category box-of-aluminum-foil1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.002450)
+      (C5174 ^id bel-38 ^object-source belief ^type node)
+    (O307 ^handle paring-knife1_instance_22 ^item-type object ^perception-id paring-knife1_instance_22 ^predicates P323
+           ^root-category paring-knife1 ^svs-obj C4722)
+      (P323 ^affordance1 grabbable1 ^category paring-knife1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.000625)
+      (C4722 ^id bel-22 ^object-source belief ^type node)
+    (O287 ^handle cupboard1_instance_5 ^item-type object ^perception-id cupboard1_instance_5 ^predicates P297
+           ^root-category cupboard1 ^svs-obj C4277)
+      (P297 ^affordance1 openable1 ^affordance1 receptacle1
+             ^category cupboard1 ^category furniture1 ^category object
+             ^category entity1 ^is-confirmed1 confirmed1 ^is-open1 not-open1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 1.968750)
+      (C4277 ^id bel-5 ^object-source belief ^type node)
+    (O268 ^handle garbage1_instance_10 ^item-type object ^perception-id garbage1_instance_10 ^predicates P272
+           ^root-category garbage1 ^svs-obj C3839)
+      (P272 ^affordance1 always-open1 ^affordance1 receptacle1
+             ^category garbage1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-reachable1 not-reachable1
+             ^is-visible1 visible1 ^volume 0.600000)
+      (C3839 ^id bel-10 ^object-source belief ^type node)
+    (O250 ^handle newspaper1_instance_16 ^item-type object ^perception-id newspaper1_instance_16 ^predicates P248
+           ^root-category newspaper1 ^svs-obj C3469)
+      (P248 ^affordance1 grabbable1 ^category newspaper1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.001875)
+      (C3469 ^id bel-16 ^object-source belief ^type node)
+    (O231 ^handle granola-bars1_instance_40 ^item-type object ^perception-id granola-bars1_instance_40 ^predicates P225
+           ^root-category granola-bars1 ^svs-obj C3045)
+      (P225 ^affordance1 grabbable1 ^category granola-bars1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.006250)
+      (C3045 ^id bel-40 ^object-source belief ^type node)
+    (O212 ^handle pepsi-can1_instance_15 ^item-type object ^perception-id pepsi-can1_instance_15 ^predicates P203
+           ^root-category pepsi-can1 ^svs-obj C2628)
+      (P203 ^affordance1 grabbable1 ^category pepsi-can1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.003600)
+      (C2628 ^id bel-15 ^object-source belief ^type node)
+    (O193 ^handle ceramic-plate1_instance_34 ^item-type object ^perception-id ceramic-plate1_instance_34 ^predicates P182
+           ^root-category ceramic-plate1 ^svs-obj C2218)
+      (P182 ^affordance1 grabbable1 ^category ceramic-plate1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.002000)
+      (C2218 ^id bel-34 ^object-source belief ^type node)
+    (O174 ^handle paper-cup1_instance_21 ^item-type object ^perception-id paper-cup1_instance_21 ^predicates P162
+           ^root-category paper-cup1 ^svs-obj C1815)
+      (P162 ^affordance1 grabbable1 ^category paper-cup1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.001500)
+      (C1815 ^id bel-21 ^object-source belief ^type node)
+    (O155 ^handle ceramic-bowl1_instance_35 ^item-type object ^perception-id ceramic-bowl1_instance_35 ^predicates P143
+           ^root-category ceramic-bowl1 ^svs-obj C1419)
+      (P143 ^affordance1 grabbable1 ^category ceramic-bowl1
+             ^category kitchenware1 ^category object ^category entity1
+             ^is-confirmed1 confirmed1 ^is-grabbed1 not-grabbed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.002890)
+      (C1419 ^id bel-35 ^object-source belief ^type node)
+    (O136 ^handle sink1_instance_9 ^item-type object ^perception-id sink1_instance_9 ^predicates P125
+           ^root-category sink1 ^svs-obj C1030)
+      (P125 ^affordance1 always-open1 ^affordance1 drain1
+             ^affordance1 receptacle1 ^category sink1 ^category furniture1
+             ^category object ^category entity1 ^is-confirmed1 confirmed1
+             ^is-reachable1 not-reachable1 ^is-visible1 visible1
+             ^volume 0.380000)
+      (C1030 ^id bel-9 ^object-source belief ^type node)
+    (O115 ^handle loc-kitchen1 ^item-type object ^predicates P116
+           ^root-category kitchen1 ^waypoint wp04)
+      (P116 ^category kitchen1 ^category room1 ^category location
+             ^category entity1 ^contents1 empty1 ^is-confirmed1 confirmed1
+             ^is-visible1 visible1 ^modifier1 current1)
+  (P58 ^debug-id preds ^predicate P66 ^predicate P67 ^predicate P63
+         ^predicate P64)
+    (P66 ^handle in1 ^instance I590 ^instance I578 ^instance A780
+           ^instance A781 ^instance I566 ^instance I553 ^instance I542
+           ^instance I530 ^instance A709 ^instance A710 ^instance I518
+           ^instance I505 ^instance I493 ^instance I481 ^instance I468
+           ^instance I456 ^instance A602 ^instance A603 ^instance I444
+           ^instance I431 ^instance I419 ^instance I406 ^instance I394
+           ^instance I382 ^instance A482 ^instance A483 ^instance A484
+           ^instance A485 ^instance A486 ^instance A487 ^instance A488
+           ^instance A489 ^instance I370 ^instance I354 ^instance I342
+           ^instance I330 ^instance I318 ^instance I306 ^instance I293
+           ^instance I281 ^instance I268 ^instance I256 ^instance I243
+           ^instance I231 ^instance I219 ^instance I207 ^instance I194
+           ^instance I182 ^instance I170 ^instance I158 ^instance I146
+           ^instance I134 ^instance I122 ^instance I111 ^instance I99
+           ^instance I87 ^instance I75 ^instance I63 ^instance I51
+           ^instance I39)
+      (I590 ^1 O1037 ^2 O115)
+      (I578 ^1 O1017 ^2 O115)
+      (A780 ^1 O673 ^2 O998)
+      (A781 ^1 O998 ^2 O673)
+      (I566 ^1 O998 ^2 O115)
+      (I553 ^1 O973 ^2 O115)
+      (I542 ^1 O955 ^2 O115)
+      (I530 ^1 O935 ^2 O115)
+      (A709 ^1 O673 ^2 O916)
+      (A710 ^1 O916 ^2 O673)
+      (I518 ^1 O916 ^2 O115)
+      (I505 ^1 O892 ^2 O115)
+      (I493 ^1 O873 ^2 O115)
+      (I481 ^1 O854 ^2 O115)
+      (I468 ^1 O834 ^2 O115)
+      (I456 ^1 O814 ^2 O115)
+      (A602 ^1 O673 ^2 O795)
+      (A603 ^1 O795 ^2 O673)
+      (I444 ^1 O795 ^2 O115)
+      (I431 ^1 O770 ^2 O115)
+      (I419 ^1 O751 ^2 O115)
+      (I406 ^1 O731 ^2 O115)
+      (I394 ^1 O712 ^2 O115)
+      (I382 ^1 O693 ^2 O115)
+      (A482 ^1 O307 ^2 O673)
+      (A483 ^1 O155 ^2 O673)
+      (A484 ^1 O499 ^2 O673)
+      (A485 ^1 O673 ^2 O155)
+      (A486 ^1 O673 ^2 O193)
+      (A487 ^1 O673 ^2 O307)
+      (A488 ^1 O673 ^2 O499)
+      (A489 ^1 O193 ^2 O673)
+      (I370 ^1 O673 ^2 O115)
+      (I354 ^1 O634 ^2 O115)
+      (I342 ^1 O615 ^2 O115)
+      (I330 ^1 O596 ^2 O115)
+      (I318 ^1 O577 ^2 O115)
+      (I306 ^1 O558 ^2 O115)
+      (I293 ^1 O538 ^2 O115)
+      (I281 ^1 O519 ^2 O115)
+      (I268 ^1 O499 ^2 O115)
+      (I256 ^1 O480 ^2 O115)
+      (I243 ^1 O460 ^2 O115)
+      (I231 ^1 O441 ^2 O115)
+      (I219 ^1 O422 ^2 O115)
+      (I207 ^1 O403 ^2 O115)
+      (I194 ^1 O383 ^2 O115)
+      (I182 ^1 O364 ^2 O115)
+      (I170 ^1 O345 ^2 O115)
+      (I158 ^1 O326 ^2 O115)
+      (I146 ^1 O307 ^2 O115)
+      (I134 ^1 O287 ^2 O115)
+      (I122 ^1 O268 ^2 O115)
+      (I111 ^1 O250 ^2 O115)
+      (I99 ^1 O231 ^2 O115)
+      (I87 ^1 O212 ^2 O115)
+      (I75 ^1 O193 ^2 O115)
+      (I63 ^1 O174 ^2 O115)
+      (I51 ^1 O155 ^2 O115)
+      (I39 ^1 O136 ^2 O115)
+    (P67 ^handle on1 ^instance A816 ^instance A817 ^instance A818
+           ^instance A819 ^instance A820 ^instance A821 ^instance A822
+           ^instance A823 ^instance A824 ^instance A825 ^instance A826
+           ^instance A827 ^instance A828 ^instance A829 ^instance A745
+           ^instance A691 ^instance A656 ^instance A638 ^instance A567
+           ^instance A541 ^instance A542 ^instance A543 ^instance A544
+           ^instance A545 ^instance A546 ^instance A547 ^instance A548
+           ^instance A549)
+      (A816 ^1 O250 ^2 O1037)
+      (A817 ^1 O326 ^2 O1037)
+      (A818 ^1 O345 ^2 O1037)
+      (A819 ^1 O383 ^2 O1037)
+      (A820 ^1 O441 ^2 O1037)
+      (A821 ^1 O480 ^2 O1037)
+      (A822 ^1 O558 ^2 O1037)
+      (A823 ^1 O596 ^2 O1037)
+      (A824 ^1 O634 ^2 O1037)
+      (A825 ^1 O174 ^2 O1037)
+      (A826 ^1 O693 ^2 O1037)
+      (A827 ^1 O712 ^2 O1037)
+      (A828 ^1 O873 ^2 O1037)
+      (A829 ^1 O231 ^2 O1037)
+      (A745 ^1 O955 ^2 O731)
+      (A691 ^1 O892 ^2 O731)
+      (A656 ^1 O854 ^2 O731)
+      (A638 ^1 O834 ^2 O731)
+      (A567 ^1 O751 ^2 O731)
+      (A541 ^1 O364 ^2 O731)
+      (A542 ^1 O403 ^2 O731)
+      (A543 ^1 O422 ^2 O731)
+      (A544 ^1 O460 ^2 O731)
+      (A545 ^1 O519 ^2 O731)
+      (A546 ^1 O538 ^2 O731)
+      (A547 ^1 O577 ^2 O731)
+      (A548 ^1 O615 ^2 O731)
+      (A549 ^1 O212 ^2 O731)
+    (P63 ^handle holding1)
+    (P64 ^handle heard2)
+  (R5 ^arm A2 ^current-location O115 ^current-waypoint W2 ^debug-id rob
+         ^handle rosie ^moving-status stopped ^predicates P59)
+    (A2 ^holding-object false ^moving-status wait ^state external)
+    (W2 ^handle wp04 ^map B1 ^x 15.000000 ^y 10.500000)
+      (B1 ^handle bmap1 ^super-waypoint B2 ^waypoint W2)
+        (B2 ^handle bwp01 ^map W1 ^sub-map B1 ^x 0 ^y 0)
+    (P59 ^name rosie)
+
+

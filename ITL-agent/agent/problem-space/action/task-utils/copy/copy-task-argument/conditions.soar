@@ -1,0 +1,38 @@
+### COPY CONDITIONS ARGUMENT
+
+sp {task-utils*copy-task-argument*conditions*elaborate*copy-predicate-set
+   (state <s> ^copy-task-argument <copy-cond>)
+   (<copy-cond> ^arg-type conditions
+                ^source-arg <src>
+                ^object-map <map>)
+-->
+   (<s> ^copy-task-argument <copy-ps>)
+   (<copy-ps> ^arg-type predicate-set
+              ^source-arg <src>
+              ^object-map <map>)
+   (<copy-cond> ^copy-predicate-set <copy-ps>)
+}
+
+sp {task-utils*copy-task-argument*propose*copy-task-argument*conditions
+   (state <s> ^copy-task-argument <arg>)
+   (<arg> ^arg-type conditions
+          ^copy-predicate-set.arg-copy <copy>
+         -^arg-copy)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name copy-task-argument
+        ^arg-type conditions
+        ^argument <arg>
+        ^copy <copy>)
+}
+
+sp {task-utils*copy-task-argument*apply*copy-task-argument*conditions
+   (state <s> ^operator <o>)
+   (<o> ^name copy-task-argument
+        ^arg-type conditions
+        ^argument <arg>
+        ^copy <copy>)
+-->
+   (<arg> ^arg-copy <copy>)
+}
+

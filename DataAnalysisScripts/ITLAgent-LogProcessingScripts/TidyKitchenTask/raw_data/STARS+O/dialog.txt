@@ -1,0 +1,132 @@
+Rosie: I'm ready for a new task
+Instructor: Tidy kitchen.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Repeat the following tasks while an object is on the table.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Clear an object that is on the table.
+Rosie: [LM] For a plastic-bottle on the table is the goal is that the plastic-bottle is in the recycling bin?
+Instructor: yes.
+Rosie: [LM] For a soda-can on the table is the goal is that the soda-can is in the recycling bin?
+Instructor: yes.
+Rosie: [LM] For a pepsi-can on the table is the goal is that the pepsi-can is in the recycling bin?
+Instructor: yes.
+Rosie: [LM] For a paper-plate on the table is the goal is that the paper-plate is in the garbage?
+Instructor: yes.
+Rosie: [LM] For a plastic-fork on the table is the goal is that the plastic-fork is in the drawer and the drawer is closed?
+Instructor: no.
+Rosie: [LM] For a plastic-fork on the table is the goal is that the plastic-fork is in the garbage?
+Instructor: yes.
+Rosie: [LM] For a plastic-cup on the table is the goal is that the plastic-cup is in the dishwasher and the dishwasher is closed?
+Instructor: no.
+Rosie: [LM] For a plastic-cup on the table is the goal is that the plastic-cup is in the sink?
+Instructor: no.
+Rosie: [LM] For a plastic-cup on the table is the goal is that the plastic-cup is in the trash?
+Instructor: yes.
+Rosie: [LM] For a bottle-opener on the table is the goal is that the bottle-opener is in the drawer and the drawer is closed?
+Instructor: yes.
+Rosie: [LM] For a ceramic-plate on the table is the goal is that the ceramic-plate is in the cupboard and the cupboard is closed?
+Instructor: no.
+Rosie: [LM] For a ceramic-plate on the table is the goal is that the ceramic-plate is in the dishwasher and the dishwasher is closed?
+Instructor: yes.
+Rosie: [LM] For a glass-tumbler on the table is the goal is that the glass-tumbler is in the cupboard and the cupboard is closed?
+Instructor: no.
+Rosie: [LM] For a glass-tumbler on the table is the goal is that the glass-tumbler is in the dishwasher and the dishwasher is closed?
+Instructor: yes.
+Rosie: [LM] For a cereal-box on the table is the goal is that the cereal-box is in the pantry and the pantry is closed?
+Instructor: yes.
+Rosie: [LM] For a pop-tart-box on the table is the goal is that the pop-tart-box is in the cupboard and the cupboard is closed?
+Instructor: no.
+Rosie: [LM] For a pop-tart-box on the table is the goal is that the pop-tart-box is in the cupboard?
+Instructor: no.
+Rosie: [LM] For a pop-tart-box on the table is the goal is that the pop-tart-box is in the pantry and the pantry is closed?
+Instructor: yes.
+Rosie: [LM] For a milk on the table is the goal is that the milk is in the fridge and the fridge is closed?
+Instructor: yes.
+Rosie: [LM] For a ketchup on the table is the goal is that the ketchup is in the fridge and the fridge is closed?
+Instructor: yes.
+Rosie: [LM] For an apple-juice on the table is the goal is that the apple-juice is in the fridge and the fridge is closed?
+Instructor: yes.
+Rosie: What is the next goal or subtask of clear?
+Instructor: You are done.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Repeat.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Repeat the following tasks while an object is on the counter.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Store an object that is on the counter.
+Rosie: [LM] For a coke-can on the counter is the goal is that the coke-can is in the recycling bin?
+Instructor: yes.
+Rosie: [LM] For a newspaper on the counter is the goal is that the newspaper is in the recycling bin?
+Instructor: yes.
+Rosie: [LM] For an apple-core on the counter is the goal is that the apple-core is in the garbage?
+Instructor: yes.
+Rosie: [LM] For a paper-cup on the counter is the goal is that the paper-cup is in the garbage?
+Instructor: yes.
+Rosie: [LM] For a corkscrew on the counter is the goal is that the corkscrew is in the drawer and the drawer is closed?
+Instructor: yes.
+Rosie: [LM] For a plate on the counter is the goal is that the plate is in the dishwasher and the dishwasher is closed?
+Instructor: yes.
+Rosie: [LM] For a steak-knife on the counter is the goal is that the steak-knife is in the drawer and the drawer is closed?
+Instructor: no.
+Rosie: [LM] For a steak-knife on the counter is the goal is that the steak-knife is in the dishwasher and the dishwasher is closed?
+Instructor: yes.
+Rosie: [LM] For a mug on the counter is the goal is that the mug is in the dishwasher and the dishwasher is closed?
+Instructor: yes.
+Rosie: [LM] For a coffee-grinder on the counter is the goal is that the coffee-grinder is in the cupboard and the cupboard is closed?
+Instructor: yes.
+Rosie: [LM] For a box-of-aluminum-foil on the counter is the goal is that the box-of-aluminum-foil is in the cupboard and the cupboard is closed?
+Instructor: no.
+Rosie: [LM] For a box-of-aluminum-foil on the counter is the goal is that the box-of-aluminum-foil is in the pantry and the pantry is closed?
+Instructor: yes.
+Rosie: [LM] For a granola-bars on the counter is the goal is that the granola-bars are in the cupboard and the cupboard is closed?
+Instructor: no.
+Rosie: [LM] For a granola-bars on the counter is the goal is that the granola-bars are in the cupboard?
+Instructor: no.
+Rosie: [LM] For a granola-bars on the counter is the goal is that the granola-bars are in the pantry and the pantry is closed?
+Instructor: yes.
+Rosie: [LM] For a crackers on the counter is the goal is that the crackers are in the cupboard and the cupboard is closed?
+Instructor: no.
+Rosie: [LM] For a crackers on the counter is the goal is that the crackers are in the pantry and the pantry is closed?
+Instructor: yes.
+Rosie: [LM] For a half-and-half on the counter is the goal is that the half-and-half is in the fridge and the fridge is closed?
+Instructor: yes.
+Rosie: [LM] For a jar-of-salsa on the counter is the goal is that the jar-of-salsa is in the fridge and the fridge is closed?
+Instructor: yes.
+Rosie: What is the next goal or subtask of store?
+Instructor: You are done.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Repeat.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Repeat the following tasks while an object is in the dish rack.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Unload an object that is in the dish rack.
+Rosie: [LM] For a paring-knife in the dish rack is the goal is that the paring-knife is in the drawer?
+Instructor: no.
+Rosie: [LM] For a paring-knife in the dish rack is the goal is that the paring-knife is in the drawer and the drawer is closed?
+Instructor: yes.
+Rosie: [LM] For a metal-fork in the dish rack is the goal is that the metal-fork is in the drawer?
+Instructor: no.
+Rosie: [LM] For a metal-fork in the dish rack is the goal is that the metal-fork is in the drawer and the drawer is closed?
+Instructor: yes.
+Rosie: [LM] For a steak-knife in the dish rack is the goal is that the steak-knife is in the drawer?
+Instructor: no.
+Rosie: [LM] For a steak-knife in the dish rack is the goal is that the steak-knife is in the drawer and the drawer is closed?
+Instructor: yes.
+Rosie: [LM] For a mug in the dish rack is the goal is that the mug is in the cupboard and the cupboard is closed?
+Instructor: yes.
+Rosie: [LM] For a glass-tumbler in the dish rack is the goal is that the glass-tumbler is in the cupboard and the cupboard is closed?
+Instructor: yes.
+Rosie: [LM] For a ceramic-plate in the dish rack is the goal is that the ceramic-plate is in the cupboard?
+Instructor: no.
+Rosie: [LM] For a ceramic-plate in the dish rack is the goal is that the ceramic-plate is in the cupboard and the cupboard is closed?
+Instructor: yes.
+Rosie: [LM] For a ceramic-bowl in the dish rack is the goal is that the ceramic-bowl is in the cupboard and the cupboard is closed?
+Instructor: yes.
+Rosie: What is the next goal or subtask of unload?
+Instructor: You are done.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Repeat.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: You are done.
+Rosie: I'm ready for a new task
+

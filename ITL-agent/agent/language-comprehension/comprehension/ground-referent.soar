@@ -1,0 +1,341 @@
+### Tries to find an object in the world that corresponds to a DP in the sentence
+###   (DP can't have an assigner of ^referent-type literal)
+### Different cases based on how specified (see index-scene-objects and failed grounding)
+###  - using "the", "a", pointing, or a "plural
+
+### When complete, marks the assigner with ^ground-tested.
+
+### Constraints on the grounding come from the assigners parent-receiver (or its head)
+### Parameter comes from receiver
+### 
+### Constraint format: 
+###     (<con> ^referent.handle <hand>)  ("handle" as property name)
+###     (<con> ^property.handle <property>  ^handle <value>)
+###     (<con> ^property (^handle <property> ^value <value>))
+###     (<con> ^{<< movable category type >> <type> } <value> 
+
+sp {comprehension*propose*ground-referent
+ # :interrupt
+   (state <s> ^name comprehension
+              ^segment.last-merge <lm>)
+   (<lm> ^assigner <as>
+         ^receiver <r1>)
+   (<as> ^parent-receiver { <> <r1> <a1> }
+        -^lt.referent-type literal   ## Don't ground if referent-type literal
+         ^structure-type)
+  -(<r1> ^lt-referent.property.type conceptual)
+   (<a1> ^structure-type DP
+        -^constraint.property.type conceptual  #maybe should test for type visual?
+        -^ground-tested <r1>
+        -^ground-tested <a1>)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name ground-referent
+         ^constraints <a1>
+         ^parameter <r1>)
+}
+
+sp {comprehension*propose*ground-referent*push*head
+ # :interrupt
+   (state <s> ^name comprehension
+              ^segment.last-merge <lm>)
+   (<lm> ^assigner <as>
+         ^receiver <r1>)
+   (<as> ^parent-receiver <a1>
+        -^lt.referent-type literal   ## Don't ground if referent-type literal
+         ^structure-type)   
+   (<r1> ^structure-type { <st> << THIS THAT DP >> }
+        -^ground-tested <head>)
+   (<a1> ^head <head>
+        -^ground-tested <head>)
+   (<head> ^structure-type <st>
+          -^constraint.property.type conceptual  #maybe should test for type visual?
+          -^ground-tested )#<head>)  # head ?  - need the head test for to the right of
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name ground-referent
+         ^constraints <head>
+         ^parameter <head>)
+}
+
+sp {comprehension*propose*ground-referent*push*complement
+ # :interrupt
+   (state <s> ^name comprehension
+              ^segment.last-merge <lm>)
+   (<lm> ^assigner <as>
+         ^receiver <r1>)
+   (<as> ^parent-receiver <a1>
+         ^structure-type)
+   (<r1> ^structure-type { <st> << THIS THAT DP >> }
+        -^ground-tested <head>)
+   (<a1> ^complement <head>
+        -^ground-tested <head>)
+   (<head> ^structure-type <st>
+          -^constraint.property.type conceptual  #maybe should test for type visual?
+          -^ground-tested <head>)
+  -(<head> ^head <head2>
+           ^ground-tested <head2>)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name ground-referent
+         ^constraints <head>
+         ^parameter <head>)
+}
+
+sp {comprehension*propose*ground-referent*push*complement2
+   (state <s> ^name comprehension
+              ^segment.last-merge <lm>)
+   (<lm> ^assigner <as>
+         ^receiver <r1>)
+   (<as> ^parent-receiver <a1>
+         ^structure-type)
+   (<r1> ^structure-type PP
+        -^ground-tested <head>)
+   (<a1> ^<< complement complement2 >> <c2>
+        -^ground-tested <head>)
+   (<c2> ^head <head>)
+   (<head> ^structure-type DP
+          -^constraint.property.type conceptual  #maybe should test for type visual?
+          -^ground-tested <head>
+          -^head.lt.semantic-entity-type relation)
+  -(<head> ^ground-tested <head2>
+           ^head <head2>)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name ground-referent
+         ^constraints <cons>
+         ^double-constraints <c2> <head>  # constraints from both
+         ^parameter <head>)
+}
+
+
+sp {comprehension*propose*ground-referent*push*complement3
+  #:interrupt
+   (state <s> ^name comprehension
+              ^segment <seg>)
+   (<seg> ^last-merge <lm>
+          ^new-constraint.object <obj>)
+   (<lm> ^assigner <as>
+         ^receiver <r1>)
+   (<as> ^parent-receiver <obj>
+         ^structure-type PP)
+   (<r1> ^structure-type PP
+   )#    -^ground-tested <head>)
+   (<obj> ^<< complement complement2 >> <c2>
+        -^ground-tested <head>
+        -^referent)
+   (<c2> ^head <head>)
+   (<head> ^structure-type DP
+          -^constraint.property.type conceptual  #maybe should test for type visual?
+     )
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name ground-referent
+         ^constraints <obj>
+         ^parameter <head>)
+}
+
+sp {comprehension*elaborate-operator*ground-referent*lt
+  #:interrupt
+   (state <s> ^name comprehension
+              ^operator <o> +)
+   (<o> ^name ground-referent
+        ^constraints <con>)
+   (<con> ^lt.constraint <x>)
+-->
+   (<con> ^constraint <x>)
+}
+
+sp {comprehension*elaborate-operator*ground-referent*parameter-constraint
+#  :interrupt
+   (state <s> ^name comprehension
+              ^operator <o> +)
+   (<o> ^name ground-referent
+       ^parameter.constraint <x>
+        ^constraints <con>)
+   (<x> ^relation)
+-->
+   (<con> ^constraint <x>)
+}
+#
+sp {comprehension*elaborate-operator*ground-referent*parameter-complement
+ #:interrupt
+   (state <s> ^name comprehension
+              ^operator <o> +)
+   (<o> ^name ground-referent
+        ^parameter.complement.constraint <x>
+        ^constraints <con>)
+-->
+  (<con> ^constraint <x>)
+}
+
+sp {comprehension*elaborate-operator*ground-referent
+  #:interrupt
+   (state <s> ^name comprehension
+              ^operator <o> +)
+   (<o> ^name ground-referent
+        ^constraints <con>
+        ^double-constraints.constraint <x>)
+-->
+   (<con> ^constraint <x>)
+}
+
+
+sp {comprehension*compare*ground-referent
+   (state <s> ^name comprehension
+              ^operator <op1> +
+                        <op2> +)
+   (<op1> ^name ground-referent)
+   (<op2> ^name process-phrase-end)
+-->
+   (<s> ^operator <op1> > <op2>)
+}
+
+# Avoid ground reference if referent nil will occur in future merge!
+## Assigner should not have a referent
+sp {comprehension*compare*ground-referent*merge
+   (state <s> ^name comprehension
+              ^operator <op1> +
+                        <op2> +)
+   (<op1> ^name ground-referent
+          ^constraints.structure-type DP)
+   (<op2> ^name merge 
+          ^assigner <ass>)
+   (<ass> ^structure-type DP
+          ^lt.referent nil)
+-->
+   (<s> ^operator <op1> < <op2>)
+}
+
+sp {comprehension*compare*ground-referent*merge*literal
+  #:interrupt
+   (state <s> ^name comprehension
+              ^operator <op1> +
+                        <op2> +)
+   (<op1> ^name ground-referent
+          ^constraints.structure-type DP)
+   (<op2> ^name merge 
+          ^assigner <ass>)
+   (<ass> ^structure-type DP
+          ^lt.referent-type literal)
+-->
+   (<s> ^operator <op1> -)  
+}
+
+sp {comprehension*compare*ground-referent*merge*not
+   (state <s> ^name comprehension
+              ^operator <op1> +
+                        <op2> +)
+   (<op1> ^name ground-referent
+          ^constraints.structure-type DP)
+   (<op2> ^name merge 
+          ^assigner <ass>)
+-->
+   (<s> ^operator <op1> > <op2>)
+}
+
+sp {comprehension*compare*ground-referent*process-semantics
+   (state <s> ^name comprehension
+              ^operator <op1> +
+                        <op2> +)
+   (<op1> ^name ground-referent)
+   (<op2> ^name << ground-new-constraint process-semantics >>)
+-->
+   (<s> ^operator <op1> > <op2>)
+}
+
+sp {comprehension*elaborate*ground-referent*count-constraints*0
+   (state <s> ^name comprehension
+              ^operator <op1> +)
+   (<op1> ^name ground-referent
+          ^constraints <con>)
+   (<con> -^constraint)
+-->
+   (<op1> ^constraint-count 0)
+}
+
+sp {comprehension*elaborate*ground-referent*count-constraints*1
+   (state <s> ^name comprehension
+              ^operator <op1> +)
+   (<op1> ^name ground-referent
+          ^constraints <con>)
+   (<con> ^constraint <c1> 
+         -^constraint <> <c1>)
+-->
+   (<op1> ^constraint-count 1)
+}
+
+sp {comprehension*elaborate*ground-referent*count-constraints*2
+   (state <s> ^name comprehension
+              ^operator <op1> +)
+   (<op1> ^name ground-referent
+          ^constraints <con>)
+   (<con> ^constraint <c1> { > <c1> <c2> }
+         -^constraint { <> <c1> <> <c2> })
+-->
+   (<op1> ^constraint-count 2)
+}
+
+sp {comprehension*elaborate*ground-referent*count-constraints*3
+   (state <s> ^name comprehension
+              ^operator <op1> +)
+   (<op1> ^name ground-referent
+          ^constraints <con>)
+   (<con> ^constraint <c1> { > <c1> <c2> } { > <c2> > <c1> <c3> }
+         -^constraint { <> <c1> <> <c2> <> <c3> })
+-->
+   (<op1> ^constraint-count 3)
+}
+
+sp {comprehension*elaborate*ground-referent*count-constraints*4
+   (state <s> ^name comprehension
+              ^operator <op1> +)
+   (<op1> ^name ground-referent
+          ^constraints <con>)
+   (<con> ^constraint <c1> { > <c1> <c2> } { > <c2> > <c1> <c3> }  { > <c2> > <c1> > <c3> <c4> }
+         -^constraint { <> <c1> <> <c2> <> <c3> <> <c4> })
+-->
+   (<op1> ^constraint-count 4)
+}
+
+
+sp {comprehension*elaborate*ground-referent*count-constraints*5
+   (state <s> ^name comprehension
+              ^operator <op1> +)
+   (<op1> ^name ground-referent
+          ^constraints <con>)
+   (<con> ^constraint <c1> { > <c1> <c2> } { > <c2> > <c1> <c3> }  { > <c2> > <c1> > <c3> <c4> } { > <c2> > <c1> > <c3> > <c4> <c5> }
+         -^constraint { <> <c1> <> <c2> <> <c3> <> <c4>  <> <c5>})
+-->
+   (<op1> ^constraint-count 5)
+}
+
+sp {comprehension*elaborate*ground-referent*count-constraints*lots
+   (state <s> ^name comprehension
+              ^operator <op1> +)
+   (<op1> ^name ground-referent
+          ^constraints <con>)
+   (<con> ^constraint <c1> { > <c1> <c2> } { > <c2> > <c1> <c3> }  { > <c2> > <c1> > <c3> <c4> } { > <c2> > <c1> > <c3> > <c4> <c5> } { > <c2> > <c1> > <c3> > <c4> > <c5> <c6>})
+-->
+   (<op1> ^constraint-count 6) # or more
+}
+
+
+sp {comprehension*apply*ground-referent*zero-constraints
+   (state <s> ^name comprehension
+              ^operator <op1>)
+   (<op1> ^name ground-referent
+          ^constraint-count 0
+          ^parameter <p>
+          ^ << double-constraints constraints >> <c>)
+  -(<p> ^lt.specifier << it personal >>)
+  -(<p> ^lt.demonstrative)
+-->   
+   (<c> ^failed-grounding <p>
+        ^ground-tested <p>)
+   (<p> ^failed-constraint <c>)
+   #(write (crlf) |No constraints - Error - Assume nothing passes.|)
+}
+
+
+

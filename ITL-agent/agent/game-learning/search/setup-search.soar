@@ -1,0 +1,74 @@
+sp {setup-search*elaborate*tcn
+   (state <s> ^name setup-search
+              ^top-state.dialog-context.structure.multiplayer <cg>
+              ^superstate.operator <op>)
+   (<op> ^game-name <name>)
+-->
+   (<s> ^multiplayer <cg>)
+}
+
+sp {setup-search*elaborate*multiplayer
+   (state <s> ^name setup-search
+              ^superstate.operator <op>)
+   (<op> ^game-name <name> ^multiplayer <m>)
+-->
+   (<s> ^multiplayer <m>)
+}
+
+sp {setup-search*propose*find-solution
+   (state <s> ^name setup-search
+              ^superstate.operator <op>)
+   (<op> ^game-name <name> -^multiplayer)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name find-solution
+        ^game-name <name>)
+}
+
+sp {setup-search*propose*find-solution2
+   (state <s> ^name setup-search
+              ^superstate.operator <op>)
+   (<op> ^game-name <name> ^multiplayer)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name find-solution
+        ^replay true
+        ^game-name <name>)
+}
+####################################################################3
+#sp {setup-search*propose*detect-game-concepts
+#   (state <s> ^name setup-search
+#              ^superstate.operator <op>)
+#   (<op> ^game-name <name> ^multiplayer)
+#-->
+#   (<s> ^operator <o> + =)
+#   (<o> ^name detect-game
+#        ^game-name <name>)
+#}
+#EXAMPLE GOAL
+#sp {elaborate*detect-game-concepts*initial
+#   (state <s> ^name detect-game
+#              ^superstate.operator <op>)
+#   (<op> ^game-name <name>)
+#-->
+#   (<s> ^detect-predicate <pred>)
+#   (<pred> ^type goal ^name goal-default27 ^copy-type shallow)
+#}
+#sp {elaborate*detect-game-concepts*initial
+#   (state <s> ^name detect-game
+#              ^superstate.operator <op>)
+#   (<op> ^game-name <name>)
+#-->
+#   (<s> ^detect-predicate <pred>)
+#   (<pred> ^name clear ^copy-type deep)
+#}
+################################
+
+sp {setup-search*elaborate*problem-space*predicate-structure
+   (state <s> ^name setup-search
+              ^top-state.world <world2>)
+-->
+   (<s> ^problem-space.world <world>)
+   (<world> ^source <world2>
+            ^copy-type deep)
+}

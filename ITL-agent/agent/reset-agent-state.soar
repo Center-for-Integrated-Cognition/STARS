@@ -1,0 +1,42 @@
+# reset-agent-state - stop any tasks/interactions the agent is doing
+
+sp {top-state*propose*reset-agent-state
+   (state <s> ^superstate nil
+              ^reset-agent-state true)
+-->
+   (<s> ^operator <o> + !)
+   (<o> ^name reset-agent-state)
+}
+
+sp {top-state*apply*reset-agent-state*clear-interaction-stack
+   (state <s> ^superstate nil
+              ^operator.name reset-agent-state
+              ^interaction.changes <chgs>)
+-->
+   (<chgs> ^clear-interaction-stack true)
+}
+
+sp {top-state*apply*reset-agent-state*clear-task-stack
+   (state <s> ^superstate nil
+              ^operator.name reset-agent-state
+              ^task-stack <stack>)
+-->
+   (<stack> ^clear-task-stack true)
+}
+
+sp {top-state*apply*reset-agent-state*remove*dialog-context
+   (state <s> ^superstate nil
+              ^operator.name reset-agent-state
+              ^dialog-context <dc>)
+-->
+   (<s> ^dialog-context <dc> -)
+}
+
+sp {top-state*apply*reset-agent-state*remove*flag
+   (state <s> ^superstate nil
+              ^operator.name reset-agent-state
+              ^reset-agent-state true)
+-->
+   (<s> ^reset-agent-state true -)
+}
+

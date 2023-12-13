@@ -1,0 +1,26 @@
+/** gps_tiepoint relates the local coordinate frame to the GPS
+    coordinate frame by describing how to derive xyzt coordinates from
+    a given GPS coordinate. The GPS coordinate implicitly specifies
+    "North".
+
+    Specifically: If lle represented the origin of a GPSLinearization
+    frame (such that (0,0) mapped to lle), an additional
+    transformation of xyzt is required to achieve the local
+    coordinates with the local coordinate frame's Y axis being
+    equivalent to GPS North.
+
+    I.e., if a pose_t and lle are known that exactly correspond to the
+    same point in space, set xyzt as:
+
+    xyzt[0] = pose.pos[0];
+    xyzt[1] = pose.pos[1];
+    xyzt[2] = pose.pos[3];
+    xyzt[3] = pose.theta;
+
+
+**/
+struct gps_tiepoint_t { int64_t utime;
+
+	double lle[3];
+	double xyzt[4];
+}

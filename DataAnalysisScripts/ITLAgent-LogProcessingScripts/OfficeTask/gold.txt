@@ -1,0 +1,14 @@
+pen1_instance_10,in,drawer1
+file1_instance_9,in,cabinet1
+dictionary1_instance_17,in,bookshelf1
+novel1_instance_18,in,bookshelf1
+sprite-can1_instance_16,in,bin1
+plastic-water-bottle1_instance_19,in,bin1
+stapler1_instance_8,in,drawer1
+pencil1_instance_12,in,drawer1
+folder1_instance_13,in,cabinet1
+book1_instance_14,in,bookshelf1
+tissue1_instance_15,in,garbage1
+cabinet1_instance_4,is-open1,not-open1
+drawer1_instance_3,is-open1,not-open1
+paper-coffee-cup1_instance_11,in,garbage1

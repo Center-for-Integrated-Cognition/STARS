@@ -1,0 +1,22 @@
+Store groceries.
+Repeat the following tasks while an object is in the bag.
+Unload an object that is in the bag.
+If the object is orange-juice then the goal is that the object is in the fridge and the fridge is closed.
+If the object is cream then the goal is that the object is in the fridge and the fridge is closed.
+If the object is yogurt then the goal is that the object is in the fridge and the fridge is closed.
+If the object is apple-cider then the goal is that the object is in the fridge and the fridge is closed.
+If the object is hummus then the goal is that the object is in the fridge and the fridge is closed.
+If the object is cheese then the goal is that the object is in the fridge and the fridge is closed.
+If the object is eggs then the goal is that the object is in the fridge and the fridge is closed.
+If the object is butter then the goal is that the object is in the fridge and the fridge is closed.
+If the object is chips then the goal is that the object is in the pantry and the pantry is closed.
+If the object is granola then the goal is that the object is in the pantry and the pantry is closed.
+If the object is a can-of-beans then the goal is that the object is in the pantry and the pantry is closed.
+If the object is boxed-pasta then the goal is that the object is in the pantry and the pantry is closed.
+If the object is flour then the goal is that the object is in the pantry and the pantry is closed.
+If the object is plastic-cups then the goal is that the object is in the cupboard and the cupboard is closed.
+If the object is paper-plates then the goal is that the object is in the cupboard and the cupboard is closed.
+You are done.
+Repeat.
+You are done.
+

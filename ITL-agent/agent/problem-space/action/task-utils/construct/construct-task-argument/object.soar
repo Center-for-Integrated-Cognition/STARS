@@ -1,0 +1,298 @@
+##### constructing object arguments
+#
+####### Operator: select-object-argument
+## If there are multiple possible groundings - select only one
+#
+#sp {task-utils*construct-task-argument*object*propose*select-object-argument
+#   (state <s> ^construct-task-argument <arg>)
+#   (<arg> ^arg-type object
+#          ^source <obj>
+#         -^selected)
+#-->
+#   (<s> ^operator <o> + =)
+#   (<o> ^name select-object-argument 
+#        ^argument <arg>
+#        ^source <obj>)
+#}
+#
+## If neither are task objects, prefer the one alphabetically (to make more deterministic in testing)
+#sp {task-utils*construct-task-argument*object*select-object-argument*break*ties
+#   (state <s> ^name << construct-task-operator construct-task-goal >>
+#              ^operator <o1> +
+#              ^operator <o2> +
+#              ^top-state.task-stack.segments <segs>)
+#   (<o1> ^name select-object-argument 
+#         ^argument <arg>
+#         ^source <obj1>)
+#   (<o2> ^name select-object-argument 
+#         ^argument <arg>
+#         ^source <obj2>)
+#   (<segs> -^segment.task-objects.object <obj1>
+#           -^segment.task-objects.object <obj2>)
+#   (<obj1> ^handle <h1>)
+#   (<obj2> ^handle > <h1>)
+#-->
+#   (<s> ^operator <o1> > <o2>)
+#}
+#
+## If there are multiple object arguments of the same name, prefer task-objects over non task-objects
+#sp {task-utils*construct-task-argument*object*prefer*select-object-argument*task-object
+#   (state <s> ^name << construct-task-operator construct-task-goal >>
+#              ^operator <o1> +
+#              ^operator <o2> +
+#              ^top-state.task-stack.segments <segs>)
+#   (<o1> ^name select-object-argument 
+#         ^argument <arg>
+#         ^source <obj1>)
+#   (<o2> ^name select-object-argument 
+#         ^argument <arg>
+#         ^source <obj2>)
+#   (<segs> ^segment.task-objects.object <obj1>
+#          -^segment.task-objects.object <obj2>)
+#-->
+#   (<s> ^operator <o1> > <o2>)
+#}
+#
+## If there are multiple object arguments of the same name, and both are task-objects, 
+## Prefer one on the bottom segment task-operator over one if not
+#sp {task-utils*construct-task-argument*object*prefer*select-object-argument*bottom*task-object
+#   (state <s> ^name << construct-task-operator construct-task-goal >>
+#              ^operator <o1> +
+#              ^operator <o2> +
+#              ^top-state.task-stack.bottom.task-objects <bot-objs>)
+#   (<o1> ^name select-object-argument 
+#         ^argument <arg>
+#         ^source <obj1>)
+#   (<o2> ^name select-object-argument 
+#         ^argument <arg>
+#         ^source <obj2>)
+#   (<bot-objs> ^task-object <obj1>
+#              -^task-object <obj2>)
+#-->
+#   (<s> ^operator <o1> > <o2>)
+#}
+#
+#sp {task-utils*construct-task-argument*object*apply*select-object-argument
+#   (state <s> ^construct-task-argument <arg>
+#              ^operator <o>)
+#   (<o> ^name select-object-argument 
+#        ^argument <arg>
+#        ^source <obj>)
+#-->
+#   (<arg> ^selected <obj>)
+#}
+
+
+###### Operator: add-object-to-world
+# For non-abstract objects, make sure the object is in the world (using add-object-to-world)
+
+sp {task-utils*construct-task-argument*object*propose*add-object-to-world
+   (state <s> ^construct-task-argument <arg>)
+   (<arg> ^arg-type object
+          ^source <obj>
+         -^world-object
+         -^abstract true)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name add-object-to-world
+        ^source-obj <obj>)
+}
+
+sp {task-utils*construct-task-argument*elaborate*object*argument*world-object*from*add-object-result
+   (state <s> ^construct-task-argument <arg>
+              ^add-object-result <res>)
+   (<arg> ^arg-type object
+         -^abstract true
+          ^source <obj>)
+   (<res> ^source-obj <obj>
+          ^world-obj <wobj>)
+-->
+   (<arg> ^world-object <wobj>)
+}
+
+###### Operator: create-abstract-object
+# For abstract objects, just create a new world object representation
+
+sp {task-utils*construct-task-argument*object*propose*create-abstract-object
+   (state <s> ^construct-task-argument <arg>)
+   (<arg> ^arg-type object
+          ^source <obj>
+         -^world-object
+          ^abstract true)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name create-abstract-object
+        ^argument <arg>
+        ^source-obj <obj>
+        ^predicates <preds>)
+}
+
+sp {task-utils*construct-task-argument*object*elaborate*create-abstract-object*category*ref
+   (state <s> ^operator <o> +)
+   (<o> ^name create-abstract-object
+        ^argument.reference-info.constraint.category <cat>)
+-->
+   (<o> ^category <cat>)
+}
+
+sp {task-utils*construct-task-argument*object*elaborate*create-abstract-object*root-category
+   (state <s> ^operator <o> +)
+   (<o> ^name create-abstract-object
+       -^argument.reference-info.constraint.category
+        ^source-obj.root-category <cat>)
+-->
+   (<o> ^category <cat>)
+}
+
+sp {task-utils*construct-task-argument*object*elaborate*create-abstract-object*category
+   (state <s> ^operator <o> +)
+   (<o> ^name create-abstract-object
+       -^argument.reference-info.constraint.category
+       -^source-obj.root-category
+        ^source-obj.predicates.category <cat>)
+-->
+   (<o> ^category <cat>)
+}
+
+sp {task-utils*construct-task-argument*object*apply*create-abstract-object
+   (state <s> ^operator <o>)
+   (<o> ^name create-abstract-object
+        ^source-obj <obj>
+        ^category <cat>
+        ^predicates <preds>
+        ^argument <arg>)
+-->
+   (<arg> ^world-object <new-obj>)
+   (<new-obj> ^handle (make-constant-symbol |obj-|)
+              ^item-type object
+              ^abstract true
+              ^root-category <cat>
+              ^predicates <preds>)
+   (<preds> ^category <cat>)
+}
+
+sp {task-utils*construct-task-argument*object*apply*create-abstract-object*copy*predicate
+   (state <s> ^operator <o>)
+   (<o> ^name create-abstract-object
+        ^category <cat>
+        ^argument.reference-info <ref-info>
+        ^predicates <preds>)
+   (<ref-info> ^constraint.<prop> { <pred> <> <cat> })
+-->
+   (<preds> ^<prop> <pred>)
+}
+
+####### Operator: construct-task-argument
+
+sp {task-utils*construct-task-argument*propose*construct-task-argument*object
+   (state <s> ^construct-task-argument <arg>)
+   (<arg> ^arg-type object
+          ^world-object <obj>
+         -^created-arg)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name construct-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^object <obj>
+        ^reference-info <ref-info>
+        ^reference-preds <ref-preds>
+        ^reference-rels <ref-rels>)
+}
+
+sp {task-utils*construct-task-argument*elaborate*construct-task-argument*object*relation
+   (state <s> ^construct-task-argument <arg>
+              ^operator <o> +)
+   (<o> ^name construct-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^object <obj>
+        ^reference-info <ref-info>
+        ^reference-preds <ref-preds>
+        ^reference-rels <ref-rels>)
+   (<arg> ^reference-info.relation <rel>)
+   (<rel> ^handle <pred-h>
+          ^2 <obj2>)
+-->
+   (<ref-rels> ^relation <new-rel>)
+   (<new-rel> ^handle <pred-h>
+              ^2 <new-obj2>)
+   (<new-obj2> ^source <obj2>
+               ^predicates <preds>)
+}
+
+sp {task-utils*construct-task-argument*apply*construct-task-argument*object
+   (state <s> ^operator <o>)
+   (<o> ^name construct-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^object <obj>
+        ^reference-info <ref-info>
+        ^reference-preds <ref-preds>)
+-->
+   (<arg> ^created-arg <carg>)
+   (<carg> ^id <obj>
+           ^reference-info <ref-info>)
+   (<ref-info> ^predicates <ref-preds>)
+}
+
+sp {task-utils*construct-task-argument*apply*construct-task-argument*object*add*reference-info
+   (state <s> ^operator <o>)
+   (<o> ^name construct-task-argument
+        ^arg-type object
+        ^argument.reference-info.constraint.<prop-h> <pred-h>
+        ^reference-preds <ref-preds>)
+-->
+   (<ref-preds> ^<prop-h> <pred-h>)
+}
+
+sp {task-utils*construct-task-argument*apply*construct-task-argument*object*add*reference-info*relation-count*0
+   (state <s> ^operator <o>)
+   (<o> ^name construct-task-argument
+        ^arg-type object
+        ^reference-info <ref-info>
+        ^reference-rels <ref-rels>)
+   (<ref-rels> -^relation)
+-->
+   (<ref-info> ^relation-count 0)
+}
+
+sp {task-utils*construct-task-argument*apply*construct-task-argument*object*add*reference-info*relation
+   (state <s> ^operator <o>)
+   (<o> ^name construct-task-argument
+        ^arg-type object
+        ^reference-info <ref-info>
+        ^reference-rels.relation <rel>)
+   (<rel> ^handle <pred-h>
+          ^{2}.predicates <preds>)
+-->
+   (<ref-info> ^relation-count 1
+               ^relation <new-rel>)
+   (<new-rel> ^num 1
+              ^handle <pred-h>
+              ^2 <obj2>)
+   (<obj2> ^predicates <preds>)
+}
+
+sp {task-utils*construct-task-argument*apply*construct-task-argument*object*add*reference-info*relation*predicates
+   (state <s> ^operator <o>)
+   (<o> ^name construct-task-argument
+        ^arg-type object
+        ^reference-info <ref-info>
+        ^reference-rels.relation <rel>)
+   (<rel> ^2 <obj2>)
+   (<obj2> ^source.constraint.<prop-h> <pred-h>
+           ^predicates <preds>)
+-->
+   (<preds> ^<prop-h> <pred-h>)
+}
+
+sp {task-utils*construct-task-argument*apply*construct-task-argument*object*remove*relation
+   (state <s> ^operator <o>)
+   (<o> ^name construct-task-argument
+        ^arg-type object
+        ^argument.source <obj>)
+   (<obj> ^relation <rel>)
+-->
+   (<obj> ^relation <rel> -)
+}

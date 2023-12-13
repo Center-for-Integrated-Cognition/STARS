@@ -1,0 +1,23 @@
+#########################################################
+#
+# Discrepancy: new-perception-object
+#   There is an object in perception that is not in belief
+# Params: 
+#   input-link-obj <obj> - The perception object (from input-link)
+# Handling:
+#   attend-to-perception: new-perception-object
+#
+#########################################################
+
+sp {perception-monitor*detect-discrepancies*new-perception-object
+   (state <s> ^superstate nil
+              ^perception-monitor <perc-mon>)
+   (<perc-mon> ^input-link.objects.object <il-obj>
+               ^object-monitor <obj-mon>
+               ^discrepancies <discs>)
+   (<obj-mon> -^object-info.input-link-obj <il-obj>)
+-->
+   (<discs> ^new-perception-object <disc>)
+   (<disc> ^input-link-obj <il-obj>)
+}
+

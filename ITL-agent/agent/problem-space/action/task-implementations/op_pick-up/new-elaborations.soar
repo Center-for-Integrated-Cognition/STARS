@@ -1,0 +1,76 @@
+sp {op_pick-up1*elaborate*target-object*superoperator
+   (state <s> ^name op_pick-up1
+              ^task-operator.arg1.id <obj>)
+-->
+   (<s> ^target-object <obj>)
+}
+
+# If the object is inside a receptacle, elaborate it
+sp {op_pick-up1*elaborate*inside-receptacle
+   (state <s> ^name op_pick-up1
+              ^target-object <obj>
+              ^world.predicates.predicate <in-pred>)
+   (<in-pred> ^handle in1
+              ^instance <i>)
+   (<i> ^1 <obj> ^2 <rec>)
+   (<rec> ^predicates.affordance1 receptacle1)
+-->
+   (<s> ^inside-receptacle <rec>)
+}
+
+### CHECK PRECONDITIONS
+# If these are violated, quit the current task and re-plan in the parent task
+
+# violated-precondition: the target object is missing
+sp {op_pick-up1*elaborate*violated-precondition*missing-object*target
+   (state <s> ^name op_pick-up1
+              ^target-object <obj>)
+   (<obj> ^predicates.is-confirmed1 not-confirmed1)
+-->
+   (<s> ^violated-precondition <vp>)
+   (<vp> ^type missing-object
+         ^object <obj>)
+   (write |op_pick-up1 fails: | <obj> | is not confirmed.|)
+}
+
+#    PL 8/12/2022
+# violated-precondition: the arm is holding some other object
+#    If it's holding our target object, that is ok, and it
+#    will just be treated as a NO-OP.
+#    However, if the arm is holding an object that is not the
+#    one we want, that is a violation.
+#    We test for this by testing for Rosie holding an object,
+#    but the object we want is not grabbed.
+sp {op_pick-up1*elaborate*violated-precondition*holding-other-object
+   (state <s> ^name op_pick-up1
+              ^superstate.operator <o>
+              ^top-state <ts>)
+   (<ts> ^world <world>)
+   (<o> ^item-type task-operator
+        ^name op_pick-up1
+        ^arg1.id <obj1>)
+   (<world> ^robot <rosie>
+            ^objects.object <obj1>    #    Our target object
+            ^objects.object { <obj2> <> <obj1> })   #    The other conflicting object
+   #    Rosie is holding something
+   (<rosie> ^arm.holding-object true)
+   #    Make sure our object is not grabbed
+   #    This is to make sure we don't fire at the end of pick-up
+   #    This should only fire if some other object is grabbed
+   (<obj1> ^predicates.is-grabbed1 not-grabbed1)
+   (<obj2> ^predicates.is-grabbed1 grabbed1)
+-->
+   (<s> ^violated-precondition <vp>)
+   (<vp> ^type holding-other-object)
+   (write |op_pick-up1 fails: arm is holding | <obj2> |, not | <obj1> |.|)
+}
+
+#JK-merge
+#JK-dev rule
+# accessible if not inside a receptacle
+sp {op_pick-up1*elaborate*accessible*true*no*receptacle
+   (state <s> ^name op_pick-up1
+             -^receptacle)
+-->
+   (<s> ^accessible true)
+}

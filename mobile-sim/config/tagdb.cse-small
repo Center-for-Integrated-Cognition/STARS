@@ -1,0 +1,45 @@
+classes {
+    c# {
+        labels = ["t-intersection", ""];
+        //probs = [0.999, 0.001];
+        probs = [1.0, 0.0];
+        ids = [46,39,21,12,7,69];
+        mean = 1.0;
+        stddev = 0.0;
+        minRange = 1.0;
+        maxRange = 2.0;
+    }
+
+    c# {
+        labels = ["door", ""];
+        //probs = [.95, .05];
+        probs = [1.0, 0.0];
+        ids = [44,43,41,40,37,36,35,34,33,30,26,25,17,15,14,11,10,8,65,63,61,57];
+        mean = 1.0;
+        stddev = 0.0;
+        minRange = 1.0;
+        maxRange = 3.0;
+    }
+
+    c# {
+        labels = ["green", "blue", ""];
+        //probs = [.95, .05];
+        probs = [1.0, 0.0];
+        ids = [44,43,41,65,63];
+        mean = 1.0;
+        stddev = 0.0;
+        minRange = 1.0;
+        maxRange = 3.0;
+    }
+
+    c# {
+        labels = ["elevator", ""];
+        //probs = [.95, 0.5];
+        probs = [1.0, 0.0];
+        ids = [23,84];
+        mean = 1.0;
+        stddev = 0.0;
+        minRange = 1.0;
+        maxRange = 3.0;
+    }
+}

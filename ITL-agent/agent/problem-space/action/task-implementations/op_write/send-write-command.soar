@@ -1,0 +1,37 @@
+sp {op_write1*propose*send-write-command
+   (state <s> ^name op_write1
+              ^target-object <obj>
+              ^target-value <val>)
+   (<obj> ^predicates <preds>)
+   (<preds> -^value <val>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name send-write-command
+        ^item-type command-operator
+        ^command-name write-command
+        ^arg1.handle <val>
+        ^arg2 <arg2>)
+   (<arg2> ^2 <obj>)
+}
+
+# external 
+sp {op_write1*external*apply*send-write-command
+   (state <s> ^name op_write1
+              ^problem-space.execution-type external
+              ^operator <o>
+              ^io.output-link <ol>
+              ^current-task-segment <seg>)
+   (<o> ^name send-write-command
+        ^command-name <cmd-name>
+        ^arg1.handle <val>
+        ^arg2.{2} <obj>)
+-->
+   (<ol> ^perform-action <pa>)
+   (<pa> ^item-type output-command
+         ^name write
+         ^object <obj>
+         ^value <val>)
+
+   (<seg> ^<cmd-name> <pa>)
+}
+

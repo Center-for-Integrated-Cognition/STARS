@@ -1,0 +1,76 @@
+### Send the low-level approach command when the door is visible and reachable ###
+
+sp {op_approach1*propose*send-approach-command
+   (state <s> ^name op_approach1
+              ^agent-params.domain << internal ai2thor cozmo >>
+              ^target-object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> ^is-visible1 visible1
+            ^is-reachable1 not-reachable1)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name send-approach-command
+        ^item-type command-operator
+        ^command-name approach-command
+        ^arg1.id <obj>)
+}
+
+### domain=internal ###
+
+sp {op_approach1*external*apply*send-approach-command*internal
+   (state <s> ^name op_approach1
+              ^problem-space.execution-type external
+              ^agent-params.domain internal
+              ^operator <o>
+              ^current-task-segment <seg>)
+   (<o> ^name send-approach-command
+        ^command-name <cmd-name>
+        ^arg1.id <obj>)
+-->
+   (<seg> ^<cmd-name> <pa>)
+   (<pa> ^item-type output-command
+         ^name approach
+         ^object <obj>)
+}
+
+
+### domain=ai2thor ###
+
+sp {op_approach1*external*apply*send-approach-command*ai2thor
+   (state <s> ^name op_approach1
+              ^problem-space.execution-type external
+              ^agent-params.domain ai2thor
+              ^operator <o>
+              ^io.output-link <ol>
+              ^current-task-segment <seg>)
+   (<o> ^name send-approach-command
+        ^command-name <cmd-name>
+        ^arg1.id.handle <h>)
+-->
+   (<ol> ^perform-action <pa>)
+   (<pa> ^item-type output-command
+         ^name approach
+         ^object <h>)
+   (<seg> ^<cmd-name> <pa>)
+}
+
+
+### domain=cozmo ###
+
+sp {op_approach1*external*apply*send-approach-command*cozmo
+   (state <s> ^name op_approach1
+              ^problem-space.execution-type external
+              ^agent-params.domain cozmo
+              ^operator <o>
+              ^io.output-link <ol>
+              ^current-task-segment <seg>)
+   (<o> ^name send-approach-command
+        ^command-name <cmd-name>
+        ^arg1.id.handle <h>)
+-->
+   (<ol> ^go-to-object <gto>)
+   (<gto> ^item-type output-command
+          ^object-id <h>)
+   (<seg> ^<cmd-name> <gto>)
+}
+

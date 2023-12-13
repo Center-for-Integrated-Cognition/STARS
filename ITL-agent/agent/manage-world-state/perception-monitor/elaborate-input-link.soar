@@ -1,0 +1,27 @@
+# In order for a predicate to be accepted, it must exceed a minimum confidence
+#   no other predicates within a certain percentage of it
+
+sp {top-state*perception-monitor*input-link*object*property*elaborate*best-value
+   (state <s> ^superstate nil
+              ^agent-params.minimum-property-confidence <min-conf>
+              ^agent-params.property-ambiguity-threshold <frac>
+              ^perception-monitor.input-link.objects.object.property.values <vals>)
+   (<vals> ^{ <pred-h> <> best-value <> best-threshold } { <conf> > <min-conf> }
+          -^<other> > <conf>)
+-->
+   (<vals> ^best-value <pred-h>
+           ^best-threshold (* <conf> <frac>))
+}
+
+sp {top-state*perception-monitor*input-link*object*property*elaborate*predicate-handle
+   (state <s> ^superstate nil
+              ^perception-monitor.input-link.objects.object.property <prop>)
+   (<prop> -^property-handle << timeleft temperature >>
+           ^values <vals>)
+   (<vals> ^best-value <pred-h>
+           ^best-threshold <t>
+           -^{ <other-pred> <> <pred-h> } > <t>)
+-->
+   (<prop> ^predicate-handle <pred-h>)
+}
+

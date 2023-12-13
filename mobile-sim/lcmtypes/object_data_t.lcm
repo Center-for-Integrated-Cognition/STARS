@@ -1,0 +1,18 @@
+struct object_data_t
+{
+    int64_t utime;
+
+    int32_t id;
+
+    // Bounding Box
+    double xyzrpy[6];
+    double lenxyz[3]; 
+
+	boolean visible;
+
+    int32_t num_classifications;
+    classification_t classifications[num_classifications];
+
+	int32_t num_objects;
+	int32_t contained_objects[num_objects];
+}

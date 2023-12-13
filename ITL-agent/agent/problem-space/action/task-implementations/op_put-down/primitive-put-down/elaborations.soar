@@ -1,0 +1,30 @@
+sp {primitive-put-down*elaborate*held-object*task-operator
+   (state <s> ^name primitive-put-down
+              ^task-operator.arg1.id <obj>)
+-->
+   (<s> ^held-object <obj>)
+}
+
+sp {primitive-put-down*elaborate*object-info*perception-monitor
+   (state <s> ^name primitive-put-down
+              ^problem-space.execution-type external
+              ^top-state.perception-monitor.object-monitor.object-info <obj-info>
+              ^held-object <obj>)
+   (<obj-info> ^world-obj <obj>)
+-->
+   (<s> ^object-info <obj-info>)
+}
+
+sp {primitive-put-down*elaborate*predicate-handle*task-operator
+   (state <s> ^name primitive-put-down
+              ^task-operator.arg2.handle <pred-handle>)
+-->
+   (<s> ^predicate-handle <pred-handle>)
+}
+
+sp {primitive-put-down*elaborate*destination*task-operator
+   (state <s> ^name primitive-put-down
+              ^task-operator.arg2.{2} <obj>)
+-->
+   (<s> ^destination <obj>)
+}

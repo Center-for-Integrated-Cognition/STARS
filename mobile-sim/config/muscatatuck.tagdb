@@ -1,0 +1,91 @@
+classes {
+    c# {
+        labels = ["intersection", ""];
+        probs = [1.0, 0.0];
+        ids = [47,48,49];
+        mean = 1.0;
+        stddev = 0.0;
+        minRange = 2.0;
+        maxRange = 4.0;
+    }
+
+    c# {
+        labels = ["room", ""];
+        probs = [1.0, 0.0];
+        ids = [50, 51, 52, 53];
+        mean = 1.0;
+        stddev = 0.0;
+        minRange = 2.0;
+        maxRange = 4.0;
+    }
+    c# {
+        labels = ["wp47"];  // Labels possible for this object.
+        probs = [1.0];      // Probability of corresponding label
+        ids  =  [47];        // Tag IDs with this model
+        mean = 1.0;         // Deprecated but not removed. Always 1.0 right now
+        stddev = 0.0;       // Deprecated but not removed. Always 0.0 right now.
+        // These parameters alter when tag detections are reported.
+        minRange = 2.0;     // Minimum range of fake decections.
+        maxRange = 4.0;     // Maximum range of fake detections
+    }
+    c# {
+        labels = ["wp48"];  // Labels possible for this object.
+        probs = [1.0];      // Probability of corresponding label
+        ids  =  [48];        // Tag IDs with this model
+        mean = 1.0;         // Deprecated but not removed. Always 1.0 right now
+        stddev = 0.0;       // Deprecated but not removed. Always 0.0 right now.
+        // These parameters alter when tag detections are reported.
+        minRange = 2.0;     // Minimum range of fake decections.
+        maxRange = 4.0;     // Maximum range of fake detections
+    }
+    c# {
+        labels = ["wp49"];  // Labels possible for this object.
+        probs = [1.0];      // Probability of corresponding label
+        ids  =  [49];        // Tag IDs with this model
+        mean = 1.0;         // Deprecated but not removed. Always 1.0 right now
+        stddev = 0.0;       // Deprecated but not removed. Always 0.0 right now.
+        // These parameters alter when tag detections are reported.
+        minRange = 2.0;     // Minimum range of fake decections.
+        maxRange = 4.0;     // Maximum range of fake detections
+    }
+    c# {
+        labels = ["wp50"];  // Labels possible for this object.
+        probs = [1.0];      // Probability of corresponding label
+        ids  =  [50];        // Tag IDs with this model
+        mean = 1.0;         // Deprecated but not removed. Always 1.0 right now
+        stddev = 0.0;       // Deprecated but not removed. Always 0.0 right now.
+        // These parameters alter when tag detections are reported.
+        minRange = 2.0;     // Minimum range of fake decections.
+        maxRange = 4.0;     // Maximum range of fake detections
+    }
+    c# {
+        labels = ["wp51"];  // Labels possible for this object.
+        probs = [1.0];      // Probability of corresponding label
+        ids  =  [51];        // Tag IDs with this model
+        mean = 1.0;         // Deprecated but not removed. Always 1.0 right now
+        stddev = 0.0;       // Deprecated but not removed. Always 0.0 right now.
+        // These parameters alter when tag detections are reported.
+        minRange = 2.0;     // Minimum range of fake decections.
+        maxRange = 4.0;     // Maximum range of fake detections
+    }
+    c# {
+        labels = ["wp52"];  // Labels possible for this object.
+        probs = [1.0];      // Probability of corresponding label
+        ids  =  [52];        // Tag IDs with this model
+        mean = 1.0;         // Deprecated but not removed. Always 1.0 right now
+        stddev = 0.0;       // Deprecated but not removed. Always 0.0 right now.
+        // These parameters alter when tag detections are reported.
+        minRange = 2.0;     // Minimum range of fake decections.
+        maxRange = 4.0;     // Maximum range of fake detections
+    }
+    c# {
+        labels = ["wp53"];  // Labels possible for this object.
+        probs = [1.0];      // Probability of corresponding label
+        ids  =  [53];        // Tag IDs with this model
+        mean = 1.0;         // Deprecated but not removed. Always 1.0 right now
+        stddev = 0.0;       // Deprecated but not removed. Always 0.0 right now.
+        // These parameters alter when tag detections are reported.
+        minRange = 2.0;     // Minimum range of fake decections.
+        maxRange = 4.0;     // Maximum range of fake detections
+    }
+}

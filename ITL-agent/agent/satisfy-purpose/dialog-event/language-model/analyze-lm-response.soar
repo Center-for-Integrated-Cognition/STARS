@@ -1,0 +1,734 @@
+###################################
+# Code for using Analysis and Repair strategy (Paper Section 4.2)
+#######################################
+sp {dialog-event*apply*analyze-lm-response
+   (state <s> ^name dialog-event
+              ^top-state.lm-responses <lmr>
+              ^operator <o>)
+   (<o> ^name analyze-lm-response
+	    ^parameter.response <r>)
+   (<lmr> -^response <r>)
+-->
+   (<lmr> ^response <r>)
+   (<r> ^goal-human-verifies 0)
+   (write |LM goal response:|)
+   (write (cmd |print | <r> |-d 10|))
+}
+
+sp {print*lm-received-goal
+   (state <s> ^top-state <s> ^lm-responses.response <r>)
+   (<r> ^goal <g> ^object-handle <handle>)
+   (<g> ^complete-sentence <cs> ^prompt-type <pt>)
+-->
+   (write |retrieved_response;| <handle> |;| <cs> |;| <pt> (crlf))
+}
+
+sp {dialog-event*apply*analyze-lm-response*retry-goal
+   (state <s> ^name dialog-event
+              ^top-state.lm-responses.response <r>
+              ^operator <o>)
+   (<o> ^name analyze-lm-response
+	    ^parameter.update-node.goal.goal <g>)
+   (<r> -^goal <g>)
+-->
+   (<r> ^goal <g>)
+   (write |LM goal retry response:|)
+   (write (cmd |print | <g> |-d 10|))
+}
+
+
+sp {dialog-event*apply*analyze-lm-response*seletion*response
+   (state <s> ^name dialog-event
+              ^top-state.lm-responses.response <r>
+              ^operator <o>)
+   (<o> ^name analyze-lm-response
+	    ^parameter.update-node <u>)
+   (<u> ^selection-response <sr>)
+-->
+   #(<lmr> ^update-node <r>)
+   (<r> ^selection-response <sr>)
+   (write |Selection response:|)
+   (write (cmd |print | <sr> |-d 10|))
+}
+
+
+sp {analyze-lm-response*elaborate*response
+   (state <s> ^name analyze-lm-response
+              ^top-state.lm-responses.response <r>)
+-->
+   (<s> ^response <r>)
+}
+
+
+###################################
+# Code for using Oversight strategy (Paper Section 4.4)
+#######################################
+sp {analyze-lm-response*propose*select-goal-to-try
+   (state <s> ^name analyze-lm-response
+              ^top-state.agent-params.lm-condition lm-human
+              ^response.goal <g>)
+   (<g> ^human-response yes)
+-->
+   (<s> ^operator <o> + = >)
+   (<o> ^name select-goal-to-try
+	    ^goal <g>)
+}
+
+sp {analyze-lm-response*propose*select-goal-to-try*recovery
+   (state <s> ^name analyze-lm-response
+              ^top-state.agent-params.lm-condition lm
+              ^response.goal <g>)
+   (<g> ^evaluation <e>)# ^object-location <loc> -^last-word <loc>)
+   (<e> ^issue-count 0)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name select-goal-to-try
+	    ^goal <g>)
+}
+
+###################################
+# Code for using Selection strategy (Paper Section 4.3)
+#######################################
+sp {analyze-lm-response*elaborate*selection-op
+   (state <s> ^superstate <ss>
+              ^choices multiple
+              ^top-state.agent-params.use-lm-selection true)
+   (<ss> ^name analyze-lm-response)
+-->
+   (<s> ^selection-op <op>)
+}
+
+sp {analyze-lm-response*elaborate*selection-op*option
+   (state <s> ^superstate <ss>
+              ^selection-op <op>
+              ^item <o>
+              ^top-state.agent-params.lm-condition lm
+              ^top-state.agent-params.use-lm-selection true)
+   (<ss> ^name analyze-lm-response
+              ^operator <o> +)
+   (<o> ^name select-goal-to-try ^goal <g>)
+   (<g> ^complete-sentence <sent> ^metadata <md>)
+   (<md> ^probability <p>)
+-->
+   (<op> ^option <op1>)
+   (<op1> ^sentence <sent> ^probability <p>)
+}
+
+sp {analyze-lm-response*elaborate*selection-op*option*verify-lm-goal-human 
+   (state <s> ^superstate <ss>
+              ^selection-op <op>
+              ^item <o>
+              ^top-state.agent-params.lm-condition lm-human
+              ^top-state.agent-params.use-lm-selection true)
+   (<ss> ^name analyze-lm-response
+              ^operator <o> +)
+   (<o> ^name verify-lm-goal-human ^goal <g>)
+   (<g> ^complete-sentence <sent> ^metadata <md>)
+   (<md> ^probability <p>)
+-->
+   (<op> ^option <op1>)
+   (<op1> ^sentence <sent> ^probability <p>)
+}
+
+sp {analyze-lm-response*elaborate*selection-op*option*lm-failure
+   (state <s> ^superstate <ss>
+              ^selection-op <op>
+              ^item <o>
+              ^top-state.agent-params.lm-condition lm
+            -^top-state.agent-params.agent-lm-evaluation true
+              ^top-state.agent-params.use-lm-selection true)
+   (<ss> ^name analyze-lm-response
+              ^operator <o> +)
+   (<o> ^name lm-failure ^goal <g>)
+   (<g> ^complete-sentence <sent> ^metadata <md>)
+   (<md> ^probability <p>)
+-->
+   (<op> ^option <op1>)
+   (<op1> ^sentence <sent> ^probability <p>)
+}
+
+
+sp {analyze-lm-response*propose*request-lm-selection
+   (state <s> ^superstate <ss>
+              ^selection-op <op> #goal sentences... elab from super state
+              ^top-state.agent-params.use-lm-selection true)
+   (<ss> ^name analyze-lm-response)
+-->
+   (<s> ^operator <o> + = >)
+   (<o> ^name request-lm-selection)
+}
+
+sp {analyze-lm-response*apply*request-lm-selection
+   (state <s> ^superstate.name analyze-lm-response
+              ^quiescence t
+              ^io.output-link <ol>
+              #^superstate.task-operator.arg1.id.handle <handle>
+              ^top-state <ts>
+              ^selection-op <op>
+              ^operator <o>
+              ^top-state.agent-params.use-lm-selection true
+              ^top-state.agent-params.use-language-model true
+              ^top-state <ts>)
+   (<o> ^name request-lm-selection)# ^goal <g> ^evaluation <e>)
+   (<ts> ^world <w>
+         ^lm-responses <lmr>
+         ^root-task <sentence>
+         ^interaction.changes <chgs>)
+   (<w> ^robot.current-location <loc>)
+   (<lmr> ^response <resp>)
+   (<resp> ^id <id>)
+   (<op> -^applied)
+-->
+   (<ol> ^lm-selection-request <msg>)
+   (<msg> ^type lm-selection-request
+          ^complete-message true
+          ^id <id>
+          #^user-step <g>
+          #^task-handle <task-h>
+          ^options <op>
+          ^task-goal <sentence>
+          ^robot-location <loc>
+          ^template stylized-steps)
+    #      ^fields <f>)
+   #(<f> ^task-handle <task-h>)
+   (<op> ^applied true)
+   (<chgs> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+           ^originator agent)
+   (<p> ^type wait-for-lm-response
+        ^satisfaction.learning-event <de>)
+   (<de> ^type lm-response)
+}
+
+
+# sp {analyze-lm-response*propose*lm-failure*recovery*same-location
+#    (state <s> ^name analyze-lm-response
+#               ^top-state.agent-params.lm-condition lm
+#               ^response.goal <g>)
+#    (<g> ^evaluation <e> ^last-word <lw> ^object-location <lw>)
+#    (<e> ^issue-count 0)
+# -->
+# #(interrupt)
+#    (<s> ^operator <o> +)
+#    (<o> ^name lm-failure
+# 	    ^goal <g>)
+# }
+
+sp {analyze-lm-response*propose*lm-failure*recovery
+   (state <s> ^name analyze-lm-response
+              ^top-state.agent-params.lm-condition lm
+              #^top-state.agent-params.prevent-failures true
+              -^top-state.agent-params.agent-lm-evaluation true
+              ^response.goal <g>)
+   (<g> ^evaluation <e>)
+   (<e> ^issue-count > 0)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name lm-failure
+	    ^goal <g>)
+}
+
+# sp {analyze-lm-response*propose*lm-failure*recovery*lm-human
+#    (state <s> ^name analyze-lm-response
+#               ^top-state.agent-params.lm-condition lm-human
+#              -^top-state.agent-params.agent-lm-evaluation true
+#               ^response.goal <g>)
+#    (<g> ^evaluation <e>)
+#    (<e> ^issue-count > 0)
+# -->
+#    (<s> ^operator <o> +)
+#    (<o> ^name lm-failure
+# 	    ^goal <g>)
+# }
+
+sp {analyze-lm-response*apply*lm-failure
+#:interrupt
+   (state <s> ^name analyze-lm-response
+              ^top-state.interaction.status <status>
+              ^top-state <ts>
+              ^operator <o>)
+   (<ts> ^lm-failures <lf> 
+         ^world.predicates.predicate <p>)
+         #^agent-params.prevent-failures true)
+   (<o> ^name lm-failure
+	    ^goal <g>)
+   (<g> ^object-handle <handle> ^object-desc <obj-desc> ^complete-sentence <sent> ^evaluation <e> ^prompt-type <pt>)# ^sentence.complete-sentence <cs>)
+   (<p> ^handle <prep> ^instance <inst>)
+   (<inst> ^1 <obj> ^2 <obj2>)
+   (<obj2> -^predicates.category room1)
+   (<obj> ^handle <handle>)
+-->
+   (write |used_response;| <handle> |;| <sent> |;| <pt> (crlf))
+   (<status> ^performed.dialog-event <de>)
+   (<de> ^type process-lm-response
+         ^originator agent)
+   (<status> ^performed.dialog-event <de2>)
+   (<de2> ^type goal-description
+         ^type command
+         ^originator instructor)
+   (<lf> ^failure <f>)
+   (<f> ^handle <handle> ^object-desc <obj-desc> ^evaluation <e> ^sentence <sent>)# ^original-sentence <cs>) #^prep <prep> ^prep-obj <obj2> 
+   (<p> ^instance <inst> -)
+}
+
+
+#need to test problemspace too?
+sp {analyze-lm-response*propose*verify-lm-goal-human
+   (state <s> ^name analyze-lm-response
+             -^top-state.agent-params.use-lm-selection true
+              ^top-state.agent-params.agent-lm-evaluation true
+              ^top-state.agent-params.lm-condition lm-human
+              ^response <r>)
+   (<r> ^goal <g> ^goal-human-verifies < 5)
+   (<g> -^human-response)
+   (<g> ^evaluation <e>)
+   (<e> ^issue-count 0)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name verify-lm-goal-human
+	    ^goal <g>)
+}
+
+sp {analyze-lm-response*propose*verify-lm-goal-human*no-eval
+   (state <s> ^name analyze-lm-response
+             -^top-state.agent-params.use-lm-selection true
+            -^top-state.agent-params.agent-lm-evaluation true
+              ^top-state.agent-params.lm-condition lm-human
+              ^response <r>)
+   (<r> ^goal <g> ^goal-human-verifies < 5)
+   (<g> -^human-response)
+   (<g> ^evaluation <e>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name verify-lm-goal-human
+	    ^goal <g>)
+}
+
+sp {analyze-lm-response*propose*verify-lm-goal-human*use-selection
+   (state <s> ^name analyze-lm-response
+              ^top-state.agent-params.use-lm-selection true
+              ^top-state.agent-params.agent-lm-evaluation true
+              ^top-state.agent-params.lm-condition lm-human
+              ^response <r>)
+   (<r> ^goal <g> ^goal-human-verifies < 5)
+   (<g> -^human-response)
+   (<g> ^evaluation <e>)
+   (<e> ^issue-count 0)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name verify-lm-goal-human
+	    ^goal <g>)
+}
+
+sp {analyze-lm-response*propose*verify-lm-goal-human*use-selection*no-eval
+   (state <s> ^name analyze-lm-response
+              ^top-state.agent-params.use-lm-selection true
+             -^top-state.agent-params.agent-lm-evaluation true
+              ^top-state.agent-params.lm-condition lm-human
+              ^response <r>)
+   (<r> ^goal <g> ^goal-human-verifies < 5)
+   (<g> -^human-response)
+   (<g> ^evaluation <e>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name verify-lm-goal-human
+	    ^goal <g>)
+}
+
+
+#worst preference for exhausted-lm-responses
+sp {analyze-lm-response*propose*exhausted-lm-responses
+   (state <s> ^name analyze-lm-response
+              ^response <r>)
+-->
+   (<s> ^operator <o> + < )
+   (<o> ^name exhausted-lm-responses
+	    ^response <r>)
+}
+
+
+sp {analyze-lm-response*propose*verify-lm-goal-auto
+   (state <s> ^name analyze-lm-response
+              #^top-state.agent-params.lm-condition lm #even with human want to auto verify first
+              ^response.goal <g>)
+   (<g> -^tested -^parse)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name verify-lm-goal-auto
+	    ^goal <g>)
+}
+
+sp {analyze-lm-response*propose*evaluate-parse-of-lm
+   (state <s> ^name analyze-lm-response
+              #^top-state.agent-params.lm-condition lm #even with human want to auto verify first
+              ^response.goal <g>)
+   (<g> ^parse <p> -^evaluation)
+-->
+   (<s> ^operator <o> + > =)
+   (<o> ^name evaluate-parse-of-lm
+	    ^goal <g>)
+}
+
+sp {analyze-lm-response*apply*verify-lm-goal-auto
+   (state <s> ^name analyze-lm-response
+              ^top-state.interaction.changes <c>
+              ^top-state.lm-responses <lmr>
+              ^operator <o>)
+   (<o> ^name verify-lm-goal-auto
+	    ^goal <g>)
+   (<g> ^sentence <m> ^complete-sentence <cs> ^if-sentence <ifs>)
+   (<m> ^complete-sentence <cs>)
+-->
+   (write |Auto verifying LM sourced goal: | <cs> (crlf))
+   (<lmr> ^parse-goal <g>)
+   (<c> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type process-sentence 
+        ^parameters.sentence (deep-copy <m>)
+        ^satisfaction <sat>)
+   (<sat> ^dialog-event <de>)
+   (<de> ^type process-sentence
+          ^originator agent)
+}
+
+sp {analyze-lm-response*apply*verify-lm-goal-auto*clean*dialog-world
+    (state <s1> ^name analyze-lm-response
+                ^operator.name verify-lm-goal-auto
+                ^top-state.dialog-world.<< objects predicates >> <dw>)
+   (<dw> ^<something> <obj>)
+-->
+   (<dw> ^<something> <obj> -)
+}
+#make sure doesn't blow away state...
+sp {analyze-lm-response*clean*dialog-object-list
+    (state <s1> ^operator <o*1> ^top-state <ts>)
+    (<o*1> ^name analyze-lm-response)
+    (<ts> ^dialog-object-list { <=> <s1> <dol> })
+    -->
+    (<ts> ^dialog-object-list <dol> - ^dialog-object-list nil)
+}
+sp {analyze-lm-response*clean*dialog-object-list-saved
+    (state <s1>  ^operator <o*1> ^top-state <ts>)
+    (<o*1> ^name analyze-lm-response)
+    (<ts> ^dialog-object-list-saved { <=> <s1> <dol> })
+    -->
+    (<ts> ^dialog-object-list-saved <dol> - ^dialog-object-list-saved nil)
+}
+
+
+
+#evaluation version
+
+
+sp {analyze-lm-response*propose*retry-lm-query*human-reject
+#:interrupt
+   (state <s> ^name analyze-lm-response
+              ^top-state.agent-params.agent-lm-evaluation true
+              ^top-state.agent-params.retry-human-reject true
+              ^response.goal <g>)
+   (<g> ^evaluation <e> ^human-response no -^retried true -^second-retry-attempt true)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name retry-lm-query
+        ^evaluation <e>
+        ^human-rejected true
+	     ^goal <g>)
+}
+
+sp {analyze-lm-response*propose*retry-lm-query
+#:interrupt
+   (state <s> ^name analyze-lm-response
+              ^top-state.agent-params.agent-lm-evaluation true
+              ^response.goal <g>)
+   (<g> ^evaluation <e> -^retried true -^second-retry-attempt true)
+   (<e> ^issue-count > 0 -^interpreted false)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name retry-lm-query
+        ^evaluation <e>
+	     ^goal <g>)
+}
+
+
+#affordance vs grounding??
+
+# add examples (for each case affordance-prop affordance-rel unknown-word uninterpretted ungrounded double-ungrounded?)
+#one for affordance, unknown word, 
+#prefer dealing with grounding of object over affordance
+
+sp {analyze-lm-response*apply*retry-lm-query
+   (state <s> ^name analyze-lm-response
+              ^quiescence t
+              ^io.output-link <ol>
+              ^top-state <ts>
+              ^operator <o>)
+   (<o> ^name retry-lm-query ^goal <g> ^evaluation <e>)
+   (<ts> ^world <w>
+         ^lm-responses.response.id <id>
+         #^io.input-link.language.sentence.complete-sentence <sentence>
+         #^task-goal <sentence>
+         ^interaction.changes <chgs>)
+   (<w> ^robot.current-location <loc>)
+   (<g> ^complete-sentence <cs> -^human-response)
+-->
+#(interrupt)
+   (write |Retrying goal: | <cs> (crlf))
+   (write (cmd |print | <e> |-d 5|))
+   (<g> ^retried true)
+   (<ol> ^lm-request-retry <msg>)
+   (<msg> ^type retry-goal
+          ^complete-message true
+          ^template stylized-steps
+          ^robot-location <loc>
+          ^id <id>
+          ^current-node <g>
+          #^task-goal <sentence>
+          #^task-handle <task-h>
+          ^fields <f>)
+   #(<f> ^task-handle <task-h>)
+   #(<ts> ^evaluated-object <object>)
+   (<chgs> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+           ^originator agent)
+   (<p> ^type wait-for-lm-response
+        ^satisfaction.learning-event <de>)
+   (<de> ^type lm-response)
+}
+
+
+sp {analyze-lm-response*apply*retry-lm-query*human-no
+   (state <s> ^name analyze-lm-response
+              ^quiescence t
+              ^io.output-link <ol>
+              ^top-state <ts>
+              ^operator <o>)
+   (<o> ^name retry-lm-query ^goal <g> ^evaluation <e>)
+   (<ts> ^world <w>
+         ^lm-responses.response.id <id>
+         #^io.input-link.language.sentence.complete-sentence <sentence>
+         #^task-goal <sentence>
+         ^interaction.changes <chgs>)
+   (<w> ^robot.current-location <loc>)
+   (<g> ^evaluation <e> ^complete-sentence <cs> ^human-response no)
+-->
+#(interrupt)
+   (write |Retrying human rejected goal: | <cs> (crlf))
+   (write (cmd |print | <e> |-d 5|))
+   (<g> ^retried true)
+   (<e> ^human-input incorrect)
+   (<ol> ^lm-request-retry <msg>)
+   (<msg> ^type retry-goal
+          ^complete-message true
+          ^template stylized-steps
+          ^robot-location <loc>
+          ^id <id>
+          ^current-node <g>
+          #^task-goal <sentence>
+          #^task-handle <task-h>
+          ^fields <f>)
+   #(<f> ^task-handle <task-h>)
+   #(<ts> ^evaluated-object <object>)
+   (<chgs> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+           ^originator agent)
+   (<p> ^type wait-for-lm-response
+        ^satisfaction.learning-event <de>)
+   (<de> ^type lm-response)
+}
+#probably just use root-category for now... for ungrounded ref and affordance
+
+
+
+######################################################################
+
+
+sp {analyze-lm-response*apply*verify-lm-goal-human
+   (state <s> ^name analyze-lm-response
+              ^top-state.interaction.changes <c>
+              ^response <r>
+              ^operator <o>)
+   (<o> ^name verify-lm-goal-human
+	    ^goal <g>)
+   (<g> ^object-desc <obj> ^complete-sentence <sent>)
+   (<r> ^goal-human-verifies <gc>)
+-->
+  # (write |offered_response;| <handle> |;| <cs> |;| <pt> (crlf))
+   (<r> ^goal-human-verifies <gc> -)
+   (<r> ^goal-human-verifies (+ 1 <gc>))
+   (<c> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+           ^originator agent) #change to lm
+   (<p> ^type attempt-lm-goal
+        ^parameters.goal <g>
+        ^satisfaction <sat>)
+   (<sat> ^dialog-event <de>)
+   (<de> ^type single-word-response
+          ^originator instructor)
+   (<c> ^outgoing-message <out-msg>)
+   (<out-msg> ^type attempt-lm-goal
+              ^complete-message true
+              ^fields <f>)
+   (<f> ^object <obj> ^sentence <sent>)
+}
+
+
+sp {analyze-lm-response*apply*select-goal-to-try
+   (state <s> ^name analyze-lm-response
+              ^top-state.interaction.changes <c>
+              ^operator <o>)
+   (<o> ^name select-goal-to-try
+	    ^goal <g>)
+   (<g> ^sentence <m> ^complete-sentence <cs> ^if-sentence <f> ^object-handle <handle> ^prompt-type <pt>)
+   (<m> ^complete-sentence <f>)
+ -{(<g> ^object-location <loc> ^last-word <loc>)}
+-->
+   #(<sent> ^segment-proposed true)
+   (write |LM sourced goal: | <cs> (crlf))
+   (write |used_response;| <handle> |;| <cs> |;| <pt> (crlf))
+   (<c> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type process-sentence 
+        ^parameters.sentence (deep-copy <m>)
+        ^satisfaction <sat>)
+   (<sat> ^dialog-event <de>)
+   (<de> ^type process-sentence
+          ^originator agent)
+}
+
+sp {analyze-lm-response*apply*select-goal-to-try2
+#:interrupt
+   (state <s> ^name analyze-lm-response
+              ^top-state.interaction.changes <c>
+              ^operator <o>)
+   (<o> ^name select-goal-to-try
+	    ^goal <g>)
+   (<g> ^sentence <m> ^complete-sentence <cs> -^if-sentence <f> ^object-handle <handle> ^prompt-type <pt>)
+#   (<m> ^complete-sentence <f>)
+-{(<g> ^object-location <loc> ^last-word <loc>)}
+-->
+   #(<sent> ^segment-proposed true)
+   (write |LM sourced goal: | <cs> (crlf))
+   (write |used_response;| <handle> |;| <cs> |;| <pt> (crlf))
+   (<c> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type process-sentence 
+        ^parameters.sentence (deep-copy <m>)
+        ^satisfaction <sat>)
+   (<sat> ^dialog-event <de>)
+   (<de> ^type process-sentence
+          ^originator agent)
+}
+
+sp {analyze-lm-response*apply*select-goal-to-try*prevent-failure
+#:interrupt
+   (state <s> ^name analyze-lm-response
+              ^top-state <ts>
+              ^operator <o>)
+   (<ts> ^lm-failures <lf>
+         ^interaction <int>
+         ^world.predicates.predicate <p>)
+   (<int> ^changes <c> ^status <status>)
+   (<o> ^name select-goal-to-try
+	    ^goal <g>)
+   (<g> ^object-handle <handle> ^object-desc <obj-desc> ^complete-sentence <sent> ^evaluation <e> ^prompt-type <pt>)
+   (<g> ^object-location <loc> ^last-word <loc>)
+   (<p> ^handle <prep> ^instance <inst>)
+   (<inst> ^1 <obj> ^2 <obj2>)
+   (<obj2> -^predicates.category room1)
+   (<obj> ^handle <handle>)
+-->
+   (write |used_response;| <handle> |;| <sent> |;| <pt> (crlf))
+   (<status> ^performed.dialog-event <de>)
+   (<de> ^type process-lm-response
+         ^originator agent)
+   (<status> ^performed.dialog-event <de2>)
+   (<de2> ^type goal-description
+         ^type command
+         ^originator instructor)
+   (<lf> ^failure <f>)
+   (<f> ^handle <handle> ^object-desc <obj-desc> ^evaluation <e> ^sentence <sent>)# ^original-sentence <cs>) #^prep <prep> ^prep-obj <obj2> 
+   (<p> ^instance <inst> -)
+}
+
+
+sp {analyze-lm-response*apply*select-goal-to-try*performed*segment
+   (state <s> ^name analyze-lm-response
+              ^top-state.interaction.status <status>
+              ^operator <o>)
+   (<o> ^name select-goal-to-try
+	    ^goal <g>)
+-->
+   (<status> ^performed.dialog-event <de>)
+   (<de> ^type process-lm-response
+         ^originator agent)
+}
+
+
+############################
+#exhausted
+sp {analyze-lm-response*apply*exhausted-lm-responses*performed*segment
+   (state <s> ^name analyze-lm-response
+              ^top-state.interaction.status <status>
+              ^operator <o>)
+   (<o> ^name << retry-lm-query exhausted-lm-responses >>)
+-->
+   (<status> ^performed.dialog-event <de>)
+   (<de> ^type process-lm-response
+         ^originator agent)
+}
+
+sp {analyze-lm-response*apply*request-lm-selection*performed*segment
+   (state <s> ^superstate.name analyze-lm-response
+              ^top-state.interaction.status <status>
+              ^operator <o>)
+   (<o> ^name << request-lm-selection >>)
+-->
+   (<status> ^performed.dialog-event <de>)
+   (<de> ^type process-lm-response
+         ^originator agent)
+}
+
+sp {analyze-lm-response*apply*exhausted-lm-responses
+   (state <s> ^name analyze-lm-response
+              ^top-state.interaction.changes <c>
+              ^operator <o>)
+   (<o> ^name exhausted-lm-responses
+        ^response.task-handle <task-h>)
+-->
+   (<c> ^outgoing-message <msg>)
+   (<msg> ^type get-next-goal
+          ^complete-message true
+          ^fields <f>)
+   (<f> ^task-handle <task-h>)
+}
+sp {analyze-lm-response*apply*exhausted-lm-responses*instructor-goal
+   (state <s> ^name analyze-lm-response
+              ^top-state.lm-responses <lmr>
+              ^operator <o>)
+   (<o> ^name exhausted-lm-responses)
+   (<lmr> -^instructor-goal ^response.object-handle <handle>)
+-->
+   (<lmr> ^instructor-goal <g>)
+   (<g> ^type goal ^object-handle <handle>)
+}
+
+#add other type of goal too
+
+sp {rosie*elaborate*process-new-sentence*instructor-lm-goal
+   (state <s> ^superstate nil
+              ^lm-responses <lmr>
+              ^operator <o>)
+   (<o> ^name process-new-sentence
+        ^original-sentence <sent>)
+   (<sent> ^complete-sentence <comp-sent>
+           -^complete-sentence yes
+           -^complete-sentence no)
+   (<lmr> ^<< instructor-goal instructor-step >> <g>)
+   (<g> -^sentence ^object-handle <handle>)
+-->
+   (write |used_response;| <handle> |;| <comp-sent> |;human| (crlf))
+   (<g> ^sentence <comp-sent>)
+}

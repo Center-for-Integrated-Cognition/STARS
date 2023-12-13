@@ -1,0 +1,72 @@
+sp {leave-old-waypoint*propose*change-world-state
+   (state <s> ^name leave-old-waypoint)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name change-world-state)
+}
+
+# Remove current-waypoint from robot
+sp {leave-old-waypoint*apply*change-world-state*remove*old-waypoint
+   (state <s> ^name leave-old-waypoint
+              ^operator.name change-world-state
+              ^old-waypoint <wp>
+              ^top-state.world.robot <rob>)
+   (<rob> ^current-waypoint <wp>)
+-->
+   (<rob> ^current-waypoint <wp> -)
+}
+
+# Remove current-location from robot
+sp {leave-old-waypoint*apply*change-world-state*remove*old-location
+   (state <s> ^name leave-old-waypoint
+              ^operator.name change-world-state
+              ^old-location <loc>
+              ^top-state.world.robot <rob>)
+   (<rob> ^current-location <loc>)
+-->
+   (<rob> ^current-location <loc> -)
+}
+
+# Delete everything from the world (note that task objects will not be deleted)
+sp {leave-old-waypoint*elaborate*change-world-state*delete*old*objects
+   (state <s> ^name leave-old-waypoint
+              ^operator <o> +
+              ^top-state.perception-monitor.object-monitor.object-info <obj-info>
+              ^top-state.world.objects.object <obj>)
+   (<o> ^name change-world-state)
+   (<obj-info> ^world-obj <obj>)
+-->
+   (<o> ^delete-object <obj-info>)
+}
+
+# If the new waypoint's location is already in the world, don't delete it
+sp {leave-old-waypoint*elaborate*change-world-state*ignore-delete*new-location
+   (state <s> ^name leave-old-waypoint
+              ^operator <o> +
+              ^new-waypoint.handle <wph>)
+   (<o> ^name change-world-state
+        ^delete-object <obj-info>)
+   (<obj-info> ^world-obj.waypoint <wph>)
+-->
+   (<o> ^ignore-delete <obj-info>)
+}
+        
+# Remove svs filters from command
+sp {leave-old-waypoint*apply*change-world-state*cleanup*svs*filters
+   (state <s> ^name leave-old-waypoint
+              ^operator.name change-world-state
+              ^{ <type> << position-filter rotation-filter scale-filter >> } <filter>
+              ^top-state.svs.command <cmd>)
+   (<cmd> ^extract_once <filter>)
+-->
+   (<cmd> ^extract_once <filter> -)
+}
+   
+sp {leave-old-waypoint*remove*any*metric*info
+   (state <s> ^name leave-old-waypoint
+              ^operator.name change-world-state
+              ^top-state.world.objects.object <obj>)
+   (<obj> ^{ <att> << position rotation scale >> } <val>)
+-->
+   (<obj> ^<att> <val> -)
+}

@@ -1,0 +1,36 @@
+source learn-predicate.soar
+source evaluate-predicate.soar
+source format-conditions.soar
+source retrieve-predicate-structure.soar
+source store-predicate-structure.soar
+source satisfy-predicate-conditions.soar
+source chunk-predicate-structure.soar
+source chunk-game-structure.soar
+source transfer-predicate-structure.soar
+source transfer-action-goal.soar
+source retrieve-game-structure.soar
+source learn-heuristic.soar
+source detect-learned-predicates.soar
+source chunks.soar
+source disambiguate.soar
+
+pushd resolve-conditions
+source resolve-conditions_source.soar
+popd
+
+#JK-2022 merge
+#pushd init-chunks
+#source init-chunks_source.soar
+#popd
+
+pushd convert-formats
+source convert-formats_source.soar
+popd
+
+pushd search
+source search_source.soar
+popd
+
+pushd goal-demonstration
+source goal-demonstration_source.soar
+popd

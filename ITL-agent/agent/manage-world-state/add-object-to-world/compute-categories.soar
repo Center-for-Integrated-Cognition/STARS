@@ -1,0 +1,109 @@
+
+sp {add-object-to-world*elaborate*category-info
+   (state <s> ^name add-object-to-world)
+-->
+   (<s> ^category-info <info>)
+}
+
+
+### root-category
+
+# Copy root-category from source-predicates
+sp {add-object-to-world*elaborate*category-info*root-category
+   (state <s> ^name add-object-to-world
+              ^source-predicates.root-category <cat>
+              ^category-info <info>)
+-->
+   (<info> ^root-category <cat>)
+}
+
+# Only 1 category, use it as root-category
+sp {add-object-to-world*elaborate*category-info*root-category*only
+   (state <s> ^name add-object-to-world
+              ^source-predicates <preds>
+              ^category-info <info>)
+   (<preds> ^category <cat>
+           -^category <> <cat>
+           -^root-category)
+-->
+   (<info> ^root-category <cat>)
+}
+
+# No categories, default to entity1
+sp {add-object-to-world*elaborate*category-info*root-category*default
+   (state <s> ^name add-object-to-world
+              ^source-predicates <preds>
+              ^category-info <info>)
+   (<preds> -^root-category
+            -^category)
+-->
+   (<info> ^root-category entity1)
+}
+
+# If there is no root-category and multiple categories, throw an assertion
+sp {ASSERT*add-object-to-world*no*unambiguous*root-category
+   (state <s> ^name add-object-to-world
+              ^source-predicates <preds>
+              ^source-obj <obj>)
+   (<preds> ^category <cat>
+            ^category { <cat2> <> <cat> }
+           -^root-category)
+-->
+   (halt)
+   (write (crlf) |!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!| (crlf))
+   (write |ASSERTION VIOLATED: add-object-to-world has two categories with no root-category specified: | <cat> | | <cat2> (crlf))
+   (write (cmd print -d 5 <obj>) (crlf))
+}
+
+
+### retrieve the root-category from smem
+
+sp {add-object-to-world*elaborate*smem-query
+   (state <s> ^name add-object-to-world
+              ^category-info <info>)
+   (<info> ^root-category <cat>)
+-->
+   (<s> ^smem-query <q>)
+   (<q> ^cue.handle <cat>
+        ^depth 16
+        ^destination <info>
+        ^result-name root-category-lti)
+}
+
+sp {ASSERT*add-object-to-world*root-category*in*smem
+   (state <s> ^name add-object-to-world
+              ^source-obj <obj>
+              ^category-info <cat>)
+   (<cat> ^root-category <root>
+          ^root-category-lti failure)
+-->
+   (halt)
+   (write (crlf) |!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!| (crlf))
+   (write |ASSERTION VIOLATED: add-object-to-world, root-category | <root> | not in smem!| (crlf))
+   (write (cmd print -d 5 <obj>) (crlf))
+}
+
+### elaborate category-lti
+
+sp {add-object-to-world*elaborate*category-info*category-lti*root
+   (state <s> ^name add-object-to-world
+              ^category-info <info>)
+   (<info> ^root-category-lti <cat>)
+-->
+   (<info> ^category-lti <cat>)
+}
+
+# recursively retrieve super categories
+sp {add-object-to-world*elaborate*smem-query*supercategory
+   (state <s> ^name add-object-to-world
+              ^category-info <info>)
+   (<info> ^category-lti.supercategory <super>)
+   (<super> ^handle { <cat-h> <> none1 })
+-->
+   (<s> ^smem-query <q>)
+   (<q> ^cue.handle <cat-h>
+        ^depth 16
+        ^destination <info>
+        ^result-name category-lti)
+}
+

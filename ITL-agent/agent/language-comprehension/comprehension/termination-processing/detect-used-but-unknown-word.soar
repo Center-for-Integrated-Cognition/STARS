@@ -1,0 +1,59 @@
+sp {termination-processing*propose*detect-used-but-unknown-word
+   (state <s> ^name termination-processing
+              ^quiescence t
+             -^checked <word>
+             -^new-verb.spelling <word>
+              ^segment.semantics.<arg> <uw>
+             -^segment.semantics.interaction-status.failure.word <word>)
+   (<uw> -^structure-type
+         ^spelling <word>
+        -^new-action true)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name detect-used-but-unknown-word
+         ^unknown-word <word>)
+}
+
+sp {termination-processing*propose*detect-used-but-unknown-word2
+   (state <s> ^name termination-processing
+              ^quiescence t
+             -^checked <word>
+              ^segment.unknown-word <word>
+             -^segment.semantics.interaction-status.failure.word <word>)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name detect-used-but-unknown-word
+         ^unknown-word <word>)
+}
+sp {termination-processing*compare*detect-used-but-unknown-word
+   (state <s> ^name termination-processing
+              ^operator <op1> +
+                        <op2> +)
+   (<op1> ^name detect-used-but-unknown-word)
+   (<op2> ^name create-new-adjective)
+-->
+   (<s> ^operator <op1> < <op2>)
+}
+
+sp {termination-processing*compare*detect-used-but-unknown-word2
+   (state <s> ^name termination-processing
+              ^operator <op1> +
+                        <op2> +)
+   (<op1> ^name detect-used-but-unknown-word)
+   (<op2> ^name create-new-verb)
+-->
+   (<s> ^operator <op1> < <op2>)
+}
+sp {termination-processing*apply*detect-used-but-unknown-word
+   #:interrupt
+   (state <s> ^operator <op>
+              ^segment.semantics <sem>)
+   (<op> ^name detect-used-but-unknown-word
+         ^unknown-word <word>)
+-->
+   #(write (crlf) |Unknown word failure: | <word>)
+   (<s> ^checked <word>)
+   (<sem> ^interaction-status.failure <fail>)
+   (<fail> ^type unknown-word
+           ^word <word>)
+}

@@ -1,0 +1,10 @@
+Single decision cycle maximums:
+Stat             Value       Cycle
+---------------- ----------- -----------
+      Time (sec)   2.016577       78678
+EpMem Time (sec)   0.000000           0
+ SMem Time (sec)   0.000000           0
+      WM changes       3737       59186
+    Firing count       2522       62627
+
+

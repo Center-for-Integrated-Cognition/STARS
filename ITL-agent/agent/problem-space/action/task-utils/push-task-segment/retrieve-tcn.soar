@@ -1,0 +1,13 @@
+sp {task-utils*push-task-segment*elaborate*smem-query*task-concept-network
+   (state <s> ^name push-task-segment
+              ^task-operator <task-op>
+             -^task-concept-network)
+   (<task-op> ^task-handle <h>)
+-->
+   (<s> ^smem-query <q>)
+   (<q> ^cue.handle <h>
+        ^depth 160 
+        ^destination <s>
+        ^result-name task-concept-network)
+}
+

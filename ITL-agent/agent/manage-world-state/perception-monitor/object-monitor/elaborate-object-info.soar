@@ -1,0 +1,39 @@
+##############################################################
+#
+# object-info contains all the information known about an object
+#
+##############################################################
+
+# belief-id/belief-obj: The svs id and scene object for the belief object
+sp {top-state*perception-monitor*object-monitor*object-info*elaborate*belief-obj
+  (state <s> ^superstate nil
+             ^perception-monitor.object-monitor.object-info <obj-info>
+             ^top-state.svs.spatial-scene.child <belief-obj>)
+  (<obj-info> ^belief-id <bel-id>)
+  (<belief-obj> ^id <bel-id>)
+-->
+  (<obj-info> ^belief-obj <belief-obj>)
+}
+
+# perception-id/perception-obj: The svs id and scene object for the perception object
+sp {top-state*perception-monitor*object-monitor*object-info*elaborate*perception-obj
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor.object-info <obj-info>
+              ^top-state.svs.spatial-scene.child <perc-obj>)
+   (<obj-info> ^perception-id <perc-id>)
+   (<perc-obj> ^id <perc-id>)
+-->
+   (<obj-info> ^perception-obj <perc-obj>)
+}
+
+# perception-id/input-link-obj: The object on the input-link (matches perception-id)
+sp {top-state*perception-monitor*object-monitor*object-info*elaborate*input-link-obj
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor.object-info <obj-info>
+              ^perception-monitor.input-link.objects.object <il-obj>)
+   (<obj-info> ^perception-id <perc-id>)
+   (<il-obj> ^object-handle <perc-id>)
+-->
+   (<obj-info> ^input-link-obj <il-obj>)
+}
+

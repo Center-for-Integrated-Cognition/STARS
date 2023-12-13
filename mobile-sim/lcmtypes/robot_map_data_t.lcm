@@ -1,0 +1,12 @@
+struct robot_map_data_t
+{
+    int64_t utime;
+
+    // a snapshot in time of the following quantities
+
+    grid_map_t gridmap; // in local coordinates, check encoding type
+
+    double latlon_deg[2]; // placeholder, set to NAN if doesn't exist
+
+    double xyt_local[3];    // i.e. POSE
+}

@@ -1,0 +1,33 @@
+sp {interaction-stack*elaborate*segments*all*segments
+   (state <s> ^top-state <s>
+              ^interaction.stack.segments <segs>)
+   (<segs> ^segment.prev <seg>)
+-->
+   (<segs> ^segment <seg>)
+}
+
+####
+# Special rules used to report more information when a segment pops
+####
+sp {interaction-stack*elaborate*teaching-request*info*object
+   (state <s> ^top-state <s>
+              ^interaction.stack.segments.segment <seg>)
+   (<seg> ^info <info>
+          ^purpose <purp>)
+   (<purp> ^type << teaching-request which-question >>
+           ^target-object <out>)
+-->
+   (<info> ^object <out>)
+}
+
+sp {interaction-stack*elaborate*ask-property-name*info*word
+   (state <s> ^top-state <s>
+              ^interaction.stack.segments.segment <seg>)
+   (<seg> ^info <info>
+          ^purpose <purp>)
+   (<purp> ^type ask-property-name
+           ^word <word>)
+-->
+   (<info> ^word <word>)
+}
+

@@ -1,0 +1,17 @@
+# When there is a new task but no corresponding segment, create a new segment on the task stack,
+# using copy-task-operator to create the operator to be pushed
+
+# use copy-task-operator (in task-utils) to copy the task-operator onto the task stack
+sp {subproblem*execute*no*task*segment*propose*copy-task-operator
+   (state <s> ^problem-space.subproblem execute
+              ^task-operator <task-op>
+             -^current-task-segment
+              ^superstate.current-task-segment <seg>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name copy-task-operator
+        ^task-operator <task-op>
+        ^destination <seg>
+        ^copy-name push-task-operator)
+}
+

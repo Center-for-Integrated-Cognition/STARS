@@ -1,0 +1,132 @@
+sp {rosie*propose*process-lm-response*input-link*initial-response
+   (state <s> #^superstate nil
+              ^name learning-event
+              ^top-state.io.input-link.language-model.response <resp>)
+   (<resp> -^segment-proposed true)
+-->
+   (<s> ^operator <op> + > =)
+   (<op> ^name process-lm-response
+         ^response <resp>)
+}
+
+# sp {rosie*propose*process-lm-response*input-link*update-nodesfdfsdfsd
+#    (state <s> ^superstate nil
+#               ^io.input-link.language-model.update-node <un>)
+# -->
+# (interrupt)
+# }
+
+#update node might be same as response node?
+sp {rosie*propose*process-lm-response*input-link*update-node
+   (state <s> #^superstate nil
+              ^name learning-event
+              ^top-state.io.input-link.language-model.update-node <resp>)
+   (<resp> -^segment-proposed true)
+-->
+   (<s> ^operator <op> + > =)
+   (<op> ^name process-lm-response
+         ^update-node <resp>)
+}
+#todo for retry not may be same response
+#also might lose goals?
+#new update node should have goals but may lose parse (probably)
+#will it merge it?
+#can resolve by ignore old goals... or copying old goals from top-state lmr, and only the retrys from the update node...
+
+
+#todo add type and differentiate goal and action for clarity
+
+
+# sp {rosie*apply*process-new-sentence*special-command*create*new-segment-info*handle-command
+#    (state <s> ^superstate nil
+#               ^operator <op>
+#               ^top-state.interaction.changes <c>)
+#    (<op> ^name process-new-sentence
+#          ^special-command <cmd>
+#          ^complete-command <comp>
+#          ^{ << sentence original-sentence >> } <sentence>)
+#    (<cmd> ^spelling <cmd-name>)
+# -->
+#    (<sentence> ^segment-proposed true)
+#    (<c> ^new-segment-info <info>)
+#    (<info> ^purpose <p>
+#            ^originator instructor)
+#    (<p> ^type handle-command 
+#         ^parameters <params>
+#         ^satisfaction <sat>)
+#    (<params> ^command (deep-copy <cmd>)
+#              ^complete-command <comp>)
+#    (<sat> ^testing-event <te>)
+#    (<te> ^type <cmd-name>
+#          ^originator agent)
+# }
+
+###########################
+
+sp {rosie*apply*process-lm-response*copy*new-segment-info*from-input-link*update-node
+#:interrupt
+   (state <s> ^name learning-event
+              ^operator <op>
+              ^top-state.interaction.status <status>
+              ^top-state.interaction.changes <c>)
+   (<op> ^name process-lm-response
+         ^update-node <un>)
+ #  (<un> ^<< goal completion >> <os>)
+-->
+   (<un> ^segment-proposed true)
+   (<c> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+           ^originator instructor) #change to lm
+   (<p> ^type process-lm-response 
+        ^parameters.update-node <un>
+        ^satisfaction <sat>)
+   (<sat> ^dialog-event <de>)
+   (<de> ^type process-lm-response
+          ^originator agent)
+   (<status> ^performed.learning-event <der>)
+   (<der> ^type lm-response)
+}
+
+#JKINT0
+sp {rosie*apply*process-lm-response*copy*new-segment-info*from-input-link
+#:interrupt
+   (state <s> ^name learning-event
+              ^operator <op>
+              ^top-state.interaction.status <status>
+              ^top-state.interaction.changes <c>)
+   (<op> ^name process-lm-response
+         ^response <os>)
+-->
+   (<os> ^segment-proposed true)
+   (<c> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+           ^originator instructor) #change to lm
+   (<p> ^type process-lm-response 
+        ^parameters.response <os>
+        ^satisfaction <sat>)
+   (<sat> ^dialog-event <de>)
+   (<de> ^type process-lm-response
+          ^originator agent)
+   (<status> ^performed.learning-event <der>)
+   (<der> ^type lm-response)
+}
+#satisfaction is a dialog event (shoudl I do X) #no that is further down....
+#need deep copy?, could be better to keep consistent... yeah
+#but then when gets updated will it auto update? will it be o supported?
+#yeah issue here for forget for now
+
+#what type of event?
+
+#segment or just copy to top-state?
+
+#need to make it ask about goal, (and later steps)
+#if they say yes then shove through sentence which will appease get next goal
+#in future do agent-ordering here too (syn, ground test) and very later parse test
+
+#then once goal is sent through
+#get next step should trigger the expansion (yes cause could solve without further steps...)
+#will have noted accepted goal
+
+#ok if first version doesn't have all desired flexibility
+
+

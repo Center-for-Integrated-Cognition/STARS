@@ -1,0 +1,13 @@
+# execute-task problem-space
+sp {execute-task*elaborate*problem-space
+   (state <s> ^name execute-task)
+-->
+   (<s> ^problem-space <ps>)
+   (<ps> ^name action
+         ^subproblem execute
+         ^execution-type external
+         ^world <world>
+         ^learning <learn>)
+   (<world> ^copy-type shallow)
+   (<learn> ^type exploration)
+}

@@ -1,0 +1,99 @@
+data type;object handle;response;prompt type
+retrieved_response;cream1_instance_15;the goal is that the cream is in the refrigerator and the door is closed;recurse_prompt
+retrieved_response;cream1_instance_15;the goal is that the cream is in the refrigerator and the refrigerator is closed;recurse_prompt
+retrieved_response;cream1_instance_15;the goal is that the cream is in the fridge and the fridge is closed;initial_prompt
+retrieved_response;orange-juice1_instance_16;the goal is that the orange-juice is in the refrigerator;recurse_prompt_end_branch
+retrieved_response;orange-juice1_instance_16;the goal is that the orange-juice is in the refrigerator and the door is closed;recurse_prompt
+retrieved_response;orange-juice1_instance_16;the goal is that the orange-juice is in the fridge;initial_prompt_end_branch
+retrieved_response;orange-juice1_instance_16;the goal is that the orange-juice is in the refrigerator and the refrigerator is closed;recurse_prompt
+retrieved_response;orange-juice1_instance_16;the goal is that the orange-juice is in the fridge and the fridge is closed;initial_prompt
+retrieved_response;chips1_instance_17;the goal is that the chips are in the cabinet;recurse_prompt_end_branch
+retrieved_response;chips1_instance_17;the goal is that the chips are in the pantry and the door is closed;recurse_prompt
+retrieved_response;chips1_instance_17;the goal is that the chips are in the pantry and the bag is in the garbage;recurse_prompt
+retrieved_response;chips1_instance_17;the goal is that the chips are in the pantry and the bag is in the trash;recurse_prompt
+retrieved_response;chips1_instance_17;the goal is that the chips are in the pantry and the bag is in the recycling bin;recurse_prompt
+retrieved_response;chips1_instance_17;the goal is that the chips are in the pantry and the door to the pantry is closed;recurse_prompt
+retrieved_response;chips1_instance_17;the goal is that the chips are in the pantry and the pantry door is closed;recurse_prompt
+retrieved_response;chips1_instance_17;the goal is that the chips are in the cabinet and the cabinet is closed;recurse_prompt
+retrieved_response;chips1_instance_17;the goal is that the chips are in the cupboard and the cupboard is closed;recurse_prompt
+retrieved_response;chips1_instance_17;the goal is that the chips are in the pantry and the pantry is closed;initial_prompt
+retrieved_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the kitchen cabinet and the cabinet is closed;recurse_prompt
+retrieved_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the pantry and the door is closed;recurse_prompt
+retrieved_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the kitchen cupboard and the kitchen cupboard is closed;recurse_prompt
+retrieved_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the pantry and the bag is in the recycling bin;recurse_prompt
+retrieved_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the pantry and the kitchen is clean;recurse_prompt
+retrieved_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the cabinet and the cabinet is closed;recurse_prompt
+retrieved_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the pantry and the pantry is closed;initial_prompt
+retrieved_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the cupboard and the cupboard is closed;recurse_prompt
+retrieved_response;yogurt1_instance_19;the goal is that the yogurt is in the refrigerator and the door is closed;recurse_prompt
+retrieved_response;yogurt1_instance_19;the goal is that the yogurt is in the refrigerator and the refrigerator is closed;recurse_prompt
+retrieved_response;yogurt1_instance_19;the goal is that the yogurt is in the fridge and the fridge is closed;initial_prompt
+retrieved_response;eggs1_instance_20;the goal is that the eggs are in the refrigerator;recurse_prompt_end_branch
+retrieved_response;eggs1_instance_20;the goal is that the eggs are in the fridge;initial_prompt_end_branch
+retrieved_response;eggs1_instance_20;the goal is that the eggs are in the refrigerator and the door is closed;recurse_prompt
+retrieved_response;eggs1_instance_20;the goal is that the eggs are in the refrigerator and the refrigerator is closed;recurse_prompt
+retrieved_response;eggs1_instance_20;the goal is that the eggs are in the fridge and the fridge is closed;initial_prompt
+retrieved_response;flour1_instance_21;the goal is that the flour is in the kitchen cupboard;recurse_prompt_end_branch
+retrieved_response;flour1_instance_21;the goal is that the flour is in the pantry and the door is closed;recurse_prompt
+retrieved_response;flour1_instance_21;the goal is that the flour is in the pantry and the bag is empty;recurse_prompt
+retrieved_response;flour1_instance_21;the goal is that the flour is in the pantry and the pantry door is closed;recurse_prompt
+retrieved_response;flour1_instance_21;the goal is that the flour is in the kitchen cupboard and the cupboard is closed;recurse_prompt
+retrieved_response;flour1_instance_21;the goal is that the flour is in the cabinet and the cabinet is closed;recurse_prompt
+retrieved_response;flour1_instance_21;the goal is that the flour is in the pantry and the pantry is closed;recurse_prompt
+retrieved_response;flour1_instance_21;the goal is that the flour is in the cupboard and the cupboard is closed;initial_prompt
+retrieved_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the kitchen-drawer;recurse_prompt_end_branch
+retrieved_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the pantry and the door is closed;recurse_prompt
+retrieved_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the pantry and the bag is in the recycling bin;recurse_prompt
+retrieved_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the pantry and the kitchen is clean;recurse_prompt
+retrieved_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the cabinet;initial_prompt_end_branch
+retrieved_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the kitchen-drawer and the kitchen-drawer is closed;recurse_prompt
+retrieved_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the pantry and the pantry is closed;recurse_prompt
+retrieved_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the fridge and the fridge is closed;recurse_prompt
+retrieved_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the cupboard and the cupboard is closed;recurse_prompt
+retrieved_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the cabinet and the cabinet is closed;initial_prompt
+retrieved_response;paper-plates1_instance_23;the goal is that the paper-plates are in the kitchen cupboard;recurse_prompt_end_branch
+retrieved_response;paper-plates1_instance_23;the goal is that the paper-plates are in the kitchen;recurse_prompt_end_branch
+retrieved_response;paper-plates1_instance_23;the goal is that the paper-plates are in the pantry and the door is closed;recurse_prompt
+retrieved_response;paper-plates1_instance_23;the goal is that the paper-plates are in the pantry;recurse_prompt_end_branch
+retrieved_response;paper-plates1_instance_23;the goal is that the paper-plates are in the kitchen cabinet and the cabinet is closed;recurse_prompt
+retrieved_response;paper-plates1_instance_23;the goal is that the paper-plates are in the cupboard;recurse_prompt_end_branch
+retrieved_response;paper-plates1_instance_23;the goal is that the paper-plates are in the cabinet;initial_prompt_end_branch
+retrieved_response;paper-plates1_instance_23;the goal is that the paper-plates are in the pantry and the bag is in the recycling bin;recurse_prompt
+retrieved_response;paper-plates1_instance_23;the goal is that the paper-plates are in the kitchen cupboard and the kitchen cupboard is closed;recurse_prompt
+retrieved_response;paper-plates1_instance_23;the goal is that the paper-plates are in the pantry and the pantry is closed;recurse_prompt
+retrieved_response;paper-plates1_instance_23;the goal is that the paper-plates are in the cupboard and the cupboard is closed;recurse_prompt
+retrieved_response;paper-plates1_instance_23;the goal is that the paper-plates are in the cabinet and the cabinet is closed;initial_prompt
+retrieved_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the cabinet;recurse_prompt_end_branch
+retrieved_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the bag is in the trash;recurse_prompt
+retrieved_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the door to the pantry is closed;recurse_prompt
+retrieved_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the cupboard;initial_prompt_end_branch
+retrieved_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the cabinet and the cabinet is closed;recurse_prompt
+retrieved_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the pantry is closed;recurse_prompt
+retrieved_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the cupboard and the cupboard is closed;initial_prompt
+retrieved_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the garbage;recurse_prompt
+retrieved_response;granola1_instance_25;the goal is that the granola is in the pantry and the door is closed;recurse_prompt
+retrieved_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the trash;recurse_prompt
+retrieved_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the recycle bin;recurse_prompt
+retrieved_response;granola1_instance_25;the goal is that the granola is in the pantry and the door to the pantry is closed;recurse_prompt
+retrieved_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the recycling bin;recurse_prompt
+retrieved_response;granola1_instance_25;the goal is that the granola is in the pantry and the pantry door is closed;recurse_prompt
+retrieved_response;granola1_instance_25;the goal is that the bag of granola is in the pantry and the pantry is closed;recurse_prompt
+retrieved_response;granola1_instance_25;the goal is that the granola is in the cabinet and the cabinet is closed;recurse_prompt
+retrieved_response;granola1_instance_25;the goal is that the granola is in the pantry and the pantry is closed;initial_prompt
+retrieved_response;granola1_instance_25;the goal is that the granola is in the cupboard and the cupboard is closed;recurse_prompt
+retrieved_response;cheese1_instance_26;the goal is that the cheese is in the refrigerator and the door is closed;recurse_prompt
+retrieved_response;cheese1_instance_26;the goal is that the cheese is in the refrigerator and the refrigerator is closed;recurse_prompt
+retrieved_response;cheese1_instance_26;the goal is that the cheese is in the fridge and the fridge is closed;initial_prompt
+retrieved_response;butter1_instance_27;the goal is that the butter is in the refrigerator and the refrigerator is closed;recurse_prompt
+retrieved_response;butter1_instance_27;the goal is that the butter is in the fridge and the fridge is closed;initial_prompt
+retrieved_response;apple-cider1_instance_28;the goal is that the apple-cider is in the fridge;initial_prompt_end_branch
+retrieved_response;apple-cider1_instance_28;the goal is that the groceries are in the fridge and the fridge is closed;recurse_prompt
+retrieved_response;apple-cider1_instance_28;the goal is that the apple-cider is in the refrigerator and the refrigerator is closed;recurse_prompt
+retrieved_response;apple-cider1_instance_28;the goal is that the apple-cider is in the fridge and the fridge is closed;initial_prompt
+retrieved_response;hummus1_instance_29;the goal is that the bag of hummus is in the fridge;recurse_prompt_end_branch
+retrieved_response;hummus1_instance_29;the goal is that the groceries are in the fridge;recurse_prompt_end_branch
+retrieved_response;hummus1_instance_29;the goal is that the hummus is in the refrigerator;recurse_prompt_end_branch
+retrieved_response;hummus1_instance_29;the goal is that the hummus is in the fridge;initial_prompt_end_branch
+retrieved_response;hummus1_instance_29;the goal is that the bag of hummus is in the fridge and the fridge is closed;recurse_prompt
+retrieved_response;hummus1_instance_29;the goal is that the hummus is in the refrigerator and the refrigerator is closed;recurse_prompt
+retrieved_response;hummus1_instance_29;the goal is that the hummus is in the fridge and the fridge is closed;initial_prompt

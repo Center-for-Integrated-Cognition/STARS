@@ -1,0 +1,27 @@
+source initialize-world.soar
+source elaborate-world.soar
+
+pushd add-object-to-world
+source add-object-to-world_source.soar
+popd
+
+pushd perception-monitor
+source perception-monitor_source.soar
+popd
+
+pushd simulate-perception
+source simulate-perception_source.soar
+popd
+
+pushd attend-to-perception
+source attend-to-perception_source.soar
+popd
+
+pushd detect-discrepancies
+source detect-discrepancies_source.soar
+popd
+
+pushd change-world-state
+source change-world-state_source.soar
+popd
+

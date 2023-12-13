@@ -1,0 +1,42 @@
+sp {action*state*no-change*elaborate*name*execute*SNC*elaborate*name*action-execute-SNC
+   (state <s> ^superstate <ss>
+              ^impasse no-change
+             -^learning-task-utils-rule true
+              ^attribute state)
+   (<ss> ^name <task-name>
+         ^problem-space.name action
+         ^task-operator <task-op>)
+   (<task-op> ^name <task-name>)
+-->
+   (<s> ^name task-state-no-change
+        ^default-problem-space no
+        ^task-operator <task-op>)
+}
+
+sp {task-state-no-change*turn*learning*on
+   (state <s> ^name task-state-no-change)
+-->
+   (force-learn <s>)
+}
+
+sp {task-state-no-change*elaborate*world*superstate
+   (state <s> ^name task-state-no-change
+              ^superstate.world <w>)
+-->
+   (<s> ^world <w>)
+}
+
+sp {task-state-no-change*elaborate*desired*superstate
+   (state <s> ^name task-state-no-change
+              ^superstate.desired <des>)
+-->
+   (<s> ^desired <des>)
+}
+
+sp {task-state-no-change*elaborate*current-goal-handle*current-task-segment
+   (state <s> ^name task-state-no-change
+              ^superstate.current-task-segment.current-goal.handle <goal-h>)
+-->
+   (<s> ^current-goal-handle <goal-h>)
+}
+

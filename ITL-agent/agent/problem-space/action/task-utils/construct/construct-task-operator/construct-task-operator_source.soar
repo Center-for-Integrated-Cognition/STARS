@@ -1,0 +1,19 @@
+
+source elaborations.soar
+source preferences.soar
+
+source retrieve-tcn.soar
+
+source create-operator-base.soar
+
+source identify-task-argument.soar
+
+source add-arguments-to-task-operator.soar
+
+source update-tcn.soar
+pushd update-tcn
+source update-tcn_source.soar
+popd
+
+source complete-construct-task-operator.soar
+

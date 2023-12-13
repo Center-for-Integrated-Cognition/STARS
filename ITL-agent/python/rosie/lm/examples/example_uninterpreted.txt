@@ -1,0 +1,10 @@
+Task name: store object. Task context: I am in mailroom. Aware of package of office supplies, package is in mailroom.
+(RESULT)The goal is that the package of office supplies is placed in the closet and then the closet gets closed.(END RESULT)
+Response: No. Could not understand. Rephrase.
+(RESULT)The goal is that the package is in the closet and the closet is closed.(END RESULT)
+Response: Ok.
+Steps:
+1. Open closet
+2. Pick up package
+3. Put package into closet
+4. Close closet

@@ -1,0 +1,11 @@
+struct tag_classification_t
+{
+       int64_t utime;
+   
+       string name; // E..g "Red"
+       int32_t tag_id;
+       double xyzrpy[6];
+   
+       double confidence; // [0-1] e.g. .7
+       double range; // Range of detection
+}

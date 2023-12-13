@@ -1,0 +1,42 @@
+sp {op_go-to-next-waypoint1*propose*simulate-go-to-next-waypoint*internal
+   (state <s> ^name op_go-to-next-waypoint1
+              ^agent-params.domain internal
+              ^problem-space.execution-type external
+              ^waypoint.handle <wph>
+             -^door-object.predicates.is-open1 not-open1
+              ^top-state.perception-monitor.input-link.self.current-waypoint <> <wph>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name simulate-go-to-next-waypoint
+        ^waypoint <wph>)
+}
+
+
+# Change the current-waypoint on the input-link
+sp {op_go-to-next-waypoint*apply*simulate-go-to-next-waypoint
+   (state <s> ^name op_go-to-next-waypoint1
+              ^operator <o>
+              ^top-state.perception-monitor.input-link.self <self>)
+   (<self> ^current-waypoint <old-wp>)
+   (<o> ^name simulate-go-to-next-waypoint
+        ^waypoint <wph>)
+-->
+   (<self> ^current-waypoint <old-wp> -
+           ^current-waypoint <wph>)
+}
+
+# Also change the waypoint for an object if it is held by the robot
+sp {op_go-to-next-waypoint1*apply*simulate-go-to-next-waypoint*change*grabbed1*obj*location
+   (state <s> ^name op_go-to-next-waypoint1
+              ^operator <o>
+              ^top-state.perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> ^status.is-grabbed1 grabbed1
+               ^input-link-obj.source-obj <src-obj>)
+   (<src-obj> ^waypoint { <old-wp> <> <wph> })
+   (<o> ^name simulate-go-to-next-waypoint
+        ^waypoint <wph>)
+-->
+   (<src-obj> ^waypoint <old-wp> -
+              ^waypoint <wph>)
+}
+

@@ -1,0 +1,64 @@
+// A schema for defining an intransitive statement
+schema IntransitiveAssertion
+   subcase of Assertion
+   roles
+      subject
+      verb
+
+// A schema for defining a transitive statement
+schema TransitiveAssertion
+   subcase of Assertion
+   roles
+      subject
+      verb
+      object
+
+// A schema for defining a transitive statement
+// with a PrepPhrase for the whole thing
+schema TransitiveAssertionPrepPhrase
+   subcase of Assertion
+   roles
+      subject
+      verb
+      object
+      relation
+
+//  A schema for a compound assertion
+schema CompoundAssertion
+   subcase of Assertion
+   roles
+      assertion1
+      assertion2
+
+
+//  SEVERAL SCHEMAS HAVE BEEN REMOVED FROM THIS FILE
+//  AND TRANSFERRED TO THE NEW if-structs-old.ecg FILE.
+//  THIS IS PART OF A REFACTORING OF ALL THE GRAMMAR RELATED
+//  TO THE WORD "if" STARTING 15 JUNE 2020.
+//
+//  THE SCHEMAS REMOVED HERE ARE:
+//      Condition  and CheckIt
+
+// A schema for a command like "Ask What is the message."
+schema AskQuestionCommand
+   subcase of ActOnIt
+
+// Schemas for defining new verbs
+schema VerbDefinition
+   roles
+      word
+
+schema TransitiveVerbDefinition
+   subcase of VerbDefinition
+   roles
+      object
+
+schema IntransitiveVerbDefinition
+   subcase of VerbDefinition
+   roles
+      location
+
+//  A schema for keeping track of salient references
+schema Salient
+   roles
+      reference //  Anything that has a referent

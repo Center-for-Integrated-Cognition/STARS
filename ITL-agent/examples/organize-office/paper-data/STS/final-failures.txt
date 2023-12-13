@@ -1,0 +1,55 @@
+(L6 ^failure F143 ^failure F140 ^failure F135 ^failure F121 ^failure F112
+       ^failure F108 ^failure F101 ^failure F80 ^failure F74 ^failure F65
+       ^failure F33)
+  (F143 ^evaluation E10512 ^handle |9| ^object-desc |file on the desk|
+         ^sentence |the goal is that the file is in the filing cabinet and the desk is clear|)
+    (E10512 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F140 ^evaluation E9696 ^handle |8| ^object-desc |stapler on the desk|
+         ^sentence |the goal is that the stapler is in the desk drawer and the drawer is closed|)
+    (E9696 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F135 ^evaluation E8915 ^handle |19|
+         ^object-desc |plastic-water-bottle on the desk|
+         ^sentence |the goal is that the plastic-water-bottle is in the recycling bin and the desk is clean|)
+    (E8915 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F121 ^evaluation E7901 ^handle |18| ^object-desc |novel on the desk|
+         ^sentence |the goal is that the novel is on the bookshelf and the bookshelf is organized|)
+    (E7901 ^interpreted true ^issue-count 1 ^type unknown-word
+           ^unknown-word organized)
+  (F112 ^evaluation E7180 ^handle |17| ^object-desc |dictionary on the desk|
+         ^sentence |the goal is that the dictionary is on the shelf and the shelf is organized|)
+    (E7180 ^interpreted true ^issue-count 2 ^type ungrounded-obj1
+           ^type unknown-word ^ungrounded-object P6915 ^unknown-word organized)
+      (P6915 ^handle new-object-id223 ^item-type object ^predicates P6916
+             ^predicates-copied true)
+  (F108 ^evaluation E6376 ^handle |16| ^object-desc |sprite-can on the desk|
+         ^sentence |the goal is that the sprite-can is in the recycling bin and the desk is clean|)
+    (E6376 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F101 ^evaluation E5735 ^handle |15| ^object-desc |tissue on the desk|
+         ^sentence |the goal is that the tissue is in the wastebasket and the desk is clean|)
+    (E5735 ^interpreted true ^issue-count 1 ^type unknown-word
+           ^unknown-word wastebasket)
+  (F80 ^evaluation E4578 ^handle |14| ^object-desc |book on the desk|
+         ^sentence |the goal is that the book is on the shelf and the shelf is organized|)
+    (E4578 ^interpreted true ^issue-count 2 ^type ungrounded-obj1
+           ^type unknown-word ^ungrounded-object P4558 ^unknown-word organized)
+      (P4558 ^handle new-object-id127 ^item-type object ^predicates P4559
+             ^predicates-copied true)
+  (F74 ^evaluation E3373 ^handle |12| ^object-desc |pencil on the desk|
+         ^sentence |the goal is that the pencil is in the pencil cup on the desk|)
+    (E3373 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F65 ^evaluation E2744 ^handle |11|
+         ^object-desc |paper-coffee-cup on the desk|
+         ^sentence |the goal is that the paper-coffee-cup is in the trash and the trash is in its proper place|)
+    (E2744 ^interpreted true ^issue-count 1 ^type unknown-word
+           ^unknown-word its)
+  (F33 ^evaluation E877 ^handle |10| ^object-desc |pen on the desk|
+         ^sentence |the goal is that the pen is in the pen holder on the desk|)
+    (E877 ^interpreted true ^issue-count 1 ^type unknown-word
+           ^unknown-word holder)
+
+

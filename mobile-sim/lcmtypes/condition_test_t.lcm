@@ -1,0 +1,17 @@
+struct condition_test_t
+{
+	const int32_t CMP_GT   = 1;
+	const int32_t CMP_GTE  = 2;
+	const int32_t CMP_EQ   = 3;
+	const int32_t CMP_LTE  = 4;
+	const int32_t CMP_LT   = 5;
+
+	string name;
+
+	int32_t num_params;
+	string param_names[num_params];
+	typed_value_t param_values[num_params];
+
+	int32_t compare_type;
+	typed_value_t compared_value;
+}

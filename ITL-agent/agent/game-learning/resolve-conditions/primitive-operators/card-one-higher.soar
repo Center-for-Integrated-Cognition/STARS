@@ -1,0 +1,61 @@
+# new card-one-higher is inclusive of last param (good for counting dice rolls/mancala, bad for othello...
+sp {card-one-higher*propose*elaborate*args
+   (state <s> ^name card-one-higher
+              ^superstate.operator <o>)
+   (<o> ^args <args>
+        ^name card-one-higher
+        ^parameter <p>)
+   (<args> ^num 2 ^1 <a1>
+                  ^2 <a2>)
+-->
+   (<s> ^parameter <p>
+         ^a <a1>
+         ^b <a2>)
+}
+
+sp {card-one-higher*elaborate*objects
+   (state <s> ^name card-one-higher
+              ^linkstate.successive.instance <p>
+              ^a <r>
+              ^b <r2>)
+   (<r> ^result.set <s3>)
+   (<s3> ^instance <i5>)
+   (<i5> ^1 <val>)
+   (<r2> ^result.set <s35>)
+   (<s35> ^instance <i55>)
+   (<i55> ^1 <val2>)
+   (<p> ^1 <val2> ^2 <val>)
+  -{(<s3> ^instance {<i8> < <i5>})
+    (<i8> ^1 <val>)} #bias only create one per object
+   -{(<s35> ^instance {<i9> < <i55>})
+    (<i9> ^1 <val2>)} #bias only create one per object
+-->
+   (<s> ^instance <s1>)
+   (<s1> ^1 <val> ^2 <val2>)
+}
+
+sp {card-one-higher*elaborate*objectszz
+   (state <s> ^name card-one-higher
+              ^superstate.condition.result.set <res>
+              ^operator <op>
+              ^instance <s1>)  
+   (<op> ^name complete ^instance <s1>)
+-->
+  (<res> ^instance <s1>)
+}
+
+sp {card-one-higher*elaborate*result
+   (state <s> ^name card-one-higher)
+-->
+   (<s> ^result.set <res>)
+}
+
+sp {card-one-higher*propose*complete
+   (state <s> ^name card-one-higher
+              ^instance <instance>
+              ^result.set <res>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name complete
+        ^instance <instance>)
+}

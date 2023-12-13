@@ -1,0 +1,317 @@
+#################### get-next-subaction ######################
+# Parameters:
+#    task-handle - the handle of the task for which we are asking the goal
+
+# Push a new segment to get the goal from the instructor
+sp {anystate*apply*initiate-interaction*get-next-subaction*push*segment
+:interrupt
+   (state <s> ^operator <o>
+              ^quiescence t
+              ^top-state.interaction.changes <chgs>)
+   (<o> ^name initiate-interaction
+        ^type get-next-subaction)
+-->
+   (<chgs> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+         ^originator agent)
+   (<p> ^type get-next-subaction
+      ^satisfaction.dialog-event <de>)
+   (<de> ^type command
+         ^type goal-description
+         ^originator instructor)
+}
+
+# Send an outgoing message to ask for the next action to take
+sp {anystate*apply*initiate-interaction*get-next-subaction*send*message*get-next-subaction
+   (state <s> ^operator <o>
+              ^quiescence t
+              ^superstate.task-operator.arg1.id <obj>
+	     #-^top-state.agent-params.use-language-model true
+              ^top-state.interaction.changes <chgs>)
+   (<o> ^name initiate-interaction
+        ^type get-next-subaction
+        ^task-handle <task-h>)
+-->
+   (<chgs> ^outgoing-message <msg>)
+   (<msg> ^type get-next-subaction
+          ^complete-message true
+          ^fields <f>)
+   (<f> ^task-handle <task-h> ^object <obj>)
+}
+##################################################
+# Using language model
+
+#JK2022 prevent next action questions, unless fail out of responses from lm,
+#so add rule ask question if current node as all actions tried 
+#maybe elaborate direct next action to try
+#mayve ok if doesn't fire for this experiment
+
+#update with new location? or recent actions?
+#^io.input-link.language.sentence.complete-sentence <sentence>
+# #todo
+
+########################################################################33
+# LM version
+
+#for all of these need to check that handle is same
+#superstate.task-operator.arg1
+#(A2198 ^arg-type object ^id O184) and pass handle
+#also make sure it is handle of goal
+
+#TODO fix with wait for response
+sp {anystate*apply*initiate-interaction*get-next-subaction*lm-request
+   (state <s> ^operator <o>
+              ^quiescence t
+              ^io.output-link <ol>
+              ^superstate.task-operator.arg1.id.handle <handle>
+              ^top-state.agent-params.lm-condition lm-human
+              ^top-state.agent-params.use-language-model true
+              ^top-state <ts>)
+   (<ts> ^world <w>
+         ^lm-responses <lmr>
+         ^interaction.changes <chgs>)
+   (<o> ^name initiate-interaction
+        ^type get-next-subaction
+        ^task-handle <task-h>)
+   (<lmr> -^update-node ^response <resp>)
+   (<resp> ^id <id> ^goal <g> ^object-handle <handle>)
+   (<g> ^human-response yes -^applied)
+-->
+   (<ol> ^lm-request-step <msg>)
+   (<msg> ^type get-next-subaction
+          ^complete-message true
+          ^id <id>
+          ^current-step <g>
+          ^task-handle <task-h>
+          ^object-handle <handle>
+          ^template stylized-steps
+          ^fields <f>)
+   (<f> ^task-handle <task-h>)
+}
+
+sp {anystate*apply*initiate-interaction*get-next-subaction*lm-request*from-repeat
+   (state <s> ^operator <o>
+              ^quiescence t
+              ^io.output-link <ol>
+              ^superstate.task-operator.arg1.id.handle <handle>
+              ^top-state.agent-params.use-language-model true
+              ^top-state.agent-params.lm-condition lm-human
+              ^top-state <ts>)
+   (<ts> ^world <w>
+         ^lm-responses <lmr>
+         ^past-lm-responses.lm-responses <lmr2>
+         ^interaction.changes <chgs>)
+   (<o> ^name initiate-interaction
+        ^type get-next-subaction
+        ^task-handle <task-h>)
+   (<lmr> ^response <resp>)
+   (<resp> -^object-handle <handle>)
+   (<lmr2> ^response <resp2>)
+   (<resp2> ^id <id> ^goal <g> ^object-handle <handle>)
+   (<g> ^human-response yes -^applied)
+-->
+   (<ts> ^reset-node true)
+   (<ol> ^lm-request-step <msg>)
+   (<msg> ^type get-next-subaction
+          ^complete-message true
+          ^id <id>
+          ^current-step <g>
+          ^post-processing true
+          ^task-handle <task-h>
+          ^object-handle <handle>
+          ^template stylized-steps
+          ^fields <f>)
+   (<f> ^task-handle <task-h>)
+}
+
+sp {anystate*apply*initiate-interaction*get-next-subaction*lm-request*from-repeat*instructor-goal
+   (state <s> ^operator <o>
+              ^quiescence t
+              ^io.output-link <ol>
+              ^superstate.task-operator.arg1.id.handle <handle>
+              ^top-state.agent-params.use-language-model true
+              ^top-state.agent-params.lm-condition lm-human
+              ^top-state <ts>)
+   (<ts> ^world <w>
+         ^lm-responses <lmr>
+         ^past-lm-responses.lm-responses <lmr2>
+         ^interaction.changes <chgs>)
+   (<o> ^name initiate-interaction
+        ^type get-next-subaction
+        ^task-handle <task-h>)
+   (<lmr> ^response <resp>)
+   (<resp> -^object-handle <handle>)
+   (<lmr2> ^response <resp2> ^instructor-goal <g>)
+   (<resp2> ^id <id> ^object-handle <handle>)
+   (<g> -^applied)
+-->
+   (<ts> ^reset-node true)
+   (<ol> ^lm-request-step <msg>)
+   (<msg> ^type get-next-subaction
+          ^complete-message true
+          ^id <id>
+          ^user-step <g>
+          ^post-processing true
+          ^task-handle <task-h>
+          ^object-handle <handle>
+          ^template stylized-steps
+          ^fields <f>)
+   (<f> ^task-handle <task-h>)
+}
+#this should fire, then second fires?
+#might want to move this to top state and reset node...
+sp {task-state-no-change*apply*initiate-interaction*restore-lmr
+   (state <s> ^quiescence t
+              ^top-state <ts>
+              ^superstate.task-operator.arg1.id.handle <handle>
+              #^top-state.agent-params.lm-condition lm-human
+              #^top-state.agent-params.use-language-model true
+              ^operator <o>)
+   (<o> ^name initiate-interaction
+        ^type get-next-subaction)
+   (<ts> ^agent-params.use-language-model true
+         #^agent-params.lm-condition lm-human
+         ^past-lm-responses <plr>
+         ^agent-params.store-prompts true
+         ^lm-responses <lmr>)
+   (<lmr> ^response <resp>)
+   (<plr> ^lm-responses <lmr2>)
+   (<resp> -^object-handle <handle>)
+   (<lmr2> ^response <resp2>)
+   (<resp2> ^object-handle <handle>)
+-->
+   (<plr> ^lm-responses <lmr>)
+   (<ts> ^lm-responses <lmr> -)
+   (<ts> ^lm-responses <lmr2>)
+}
+
+#yes just give it a new step here...
+
+
+sp {anystate*apply*initiate-interaction*get-next-subaction*lm-request*instructor-goal
+   (state <s> ^operator <o>
+              ^quiescence t
+              ^io.output-link <ol>
+              ^superstate.task-operator.arg1.id.handle <handle>
+              ^top-state.agent-params.lm-condition lm-human
+              ^top-state.agent-params.use-language-model true
+              ^top-state <ts>)
+   (<ts> ^world <w>
+         ^lm-responses <lmr>
+         ^interaction.changes <chgs>)
+   (<o> ^name initiate-interaction
+        ^type get-next-subaction
+        ^task-handle <task-h>)
+   (<lmr> -^update-node ^instructor-goal <g> ^response <resp>)
+   (<resp> ^id <id> ^object-handle <handle>)
+   (<g> -^applied)
+-->
+   (<ol> ^lm-request-step <msg>)
+   (<msg> ^type get-next-subaction
+          ^complete-message true
+          ^id <id>
+          ^user-step <g>
+          ^task-handle <task-h>
+          ^object-handle <handle>
+          ^template stylized-steps
+          ^fields <f>)
+   (<f> ^task-handle <task-h>)
+   (<g> ^applied true)
+}
+
+#version where first step is replaced so no update node yet
+
+#will this ever fire?
+#same regardless of after goal or after step?
+sp {anystate*apply*initiate-interaction*get-next-subaction*lm-request*instructor-step
+   (state <s> ^operator <o>
+              ^quiescence t
+              ^io.output-link <ol>
+              ^superstate.task-operator.arg1.id.handle <handle>
+              ^top-state.agent-params.lm-condition lm-human
+              ^top-state.agent-params.use-language-model true
+              ^top-state <ts>)
+   (<ts> ^world <w>
+         ^lm-responses <lmr>
+         ^interaction.changes <chgs>)
+   (<o> ^name initiate-interaction
+        ^type get-next-subaction
+        ^task-handle <task-h>)
+   (<lmr> ^instructor-step <g> ^response <resp>)#-^update-node 
+   (<resp> ^id <id> ^object-handle <handle>)
+   (<g> -^applied)
+-->
+   (<ol> ^lm-request-step <msg>)
+   (<msg> ^type get-next-subaction
+          ^complete-message true
+          ^id <id>
+          ^user-step <g>
+          ^task-handle <task-h>
+          ^object-handle <handle>
+          ^template stylized-steps
+          ^fields <f>)
+   (<f> ^task-handle <task-h>)
+   (<g> ^applied true)
+}
+
+#goals easy to insert, but what about actions...
+#what about multiple update nodes?
+sp {anystate*apply*initiate-interaction*get-next-subaction*lm-request*update-node*goal
+   (state <s> ^operator <o>
+              ^quiescence t
+              ^io.output-link <ol>
+              ^superstate.task-operator.arg1.id.handle <handle>
+              ^top-state.agent-params.lm-condition lm-human
+              ^top-state.agent-params.use-language-model true
+              ^top-state <ts>)
+   (<ts> ^world <w>
+         ^lm-responses <lmr>
+         ^interaction.changes <chgs>)
+   (<o> ^name initiate-interaction
+        ^type get-next-subaction
+        ^task-handle <task-h>)
+   (<lmr> ^update-node.goal <resp>)
+   (<resp> ^id <id> ^step.completion <c> ^object-handle <handle>)
+   (<c> ^human-response yes -^applied) #this one doesn't get updated though...#^object-handle <handle>
+-->
+   (<ol> ^lm-request-step <msg>)
+   (<msg> ^type get-next-subaction
+          ^complete-message true
+          ^id <id>
+          ^current-step <c>
+          ^object-handle <handle>
+          ^task-handle <task-h>
+          ^template stylized-steps
+          ^fields <f>)
+   (<f> ^task-handle <task-h>)
+}
+
+sp {anystate*apply*initiate-interaction*get-next-subaction*lm-request*update-node*step*completion
+   (state <s> ^operator <o>
+              ^quiescence t
+              ^io.output-link <ol>
+              ^superstate.task-operator.arg1.id.handle <handle>
+              ^top-state.agent-params.lm-condition lm-human
+              ^top-state.agent-params.use-language-model true
+              ^top-state <ts>)
+   (<ts> ^world <w>
+         ^lm-responses <lmr>
+         ^interaction.changes <chgs>)
+   (<o> ^name initiate-interaction
+        ^type get-next-subaction
+        ^task-handle <task-h>)
+   (<lmr> ^update-node.completion <resp>)
+   (<resp> ^id <id> ^step.completion <c>)
+   (<c> ^human-response yes -^applied ^object-handle <handle>) #this one doesn't get updated though... so change that #^object-handle <handle>
+-->
+   (<ol> ^lm-request-step <msg>)
+   (<msg> ^type get-next-subaction
+          ^complete-message true
+          ^id <id>
+          ^current-step <c>
+          ^object-handle <handle>
+          ^task-handle <task-h>
+          ^template stylized-steps
+          ^fields <f>)
+   (<f> ^task-handle <task-h>)
+}

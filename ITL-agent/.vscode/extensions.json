@@ -1,0 +1,16 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=827846 to learn about workspace recommendations.
+	// Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
+
+	// List of extensions which should be recommended for users of this workspace.
+	"recommendations": [
+        // X11 forwarding will allow you to view windows shown in the container
+		"spadin.remote-x11-ssh",
+        // Support developing in a container, locally or remotely
+        "ms-vscode-remote.vscode-remote-extensionpack"
+	],
+	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
+	"unwantedRecommendations": [
+
+	]
+}

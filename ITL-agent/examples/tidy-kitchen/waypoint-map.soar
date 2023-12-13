@@ -1,0 +1,19 @@
+sp {topstate*elaborate*map
+   (state <s> ^superstate nil)
+-->
+   (<s> ^maps <maps>)
+   (<maps> ^map <building> <world>)
+
+   (<world> ^handle world-map ^waypoint <bwp01>)
+   (<bwp01> ^handle bwp01 ^x 0 ^y 0 ^map <world> ^sub-map <building>)
+
+   ### BUILDING ###
+
+   (<building> ^handle bmap1 ^super-waypoint <bwp01>
+       ^waypoint <wp04> )
+
+   ### WAYPOINTS ###
+
+  (<wp04> ^handle wp04 ^x 15.0 ^y 10.5 ^map <building>)
+
+}

@@ -1,0 +1,309 @@
+sp {op_approach*elaborate*candidate-coords
+   (state <s> ^name op_approach1
+              ^agent-params.domain magicbot
+              ^problem-space.execution-type external)
+-->
+   (<s> ^candidate-coords <cc>)
+}
+
+sp {op_approach*elaborate*candidate-coords*num-coords*true
+   (state <s> ^name op_approach1
+              ^candidate-coords <cc>)
+   (<cc> -^num-coords > 1)
+-->
+   (<cc> ^num-coords 1)
+}
+
+sp {op_approach*elaborate*candidate-coords*num-coords*4*grabbable
+   (state <s> ^name op_approach1
+              ^target-object.predicates.affordance1 grabbable1
+              ^candidate-coords <cc>)
+-->
+   (<cc> ^num-coords 4)
+}
+
+#sp {op_approach*elaborate*candidate-coords*num-coords*true*person
+#   (state <s> ^name op_approach1
+#              ^target-object.predicates.category person
+#              ^candidate-coords <cc>)
+#-->
+#   (<cc> ^num-coords true)
+#}
+
+sp {op_approach*elaborate*candidate-coords*num-coords*4*vehicle
+   (state <s> ^name op_approach1
+              ^target-object.predicates.category vehicle1
+              ^candidate-coords <cc>)
+-->
+   (<cc> ^num-coords 4)
+}
+
+sp {op_approach*elaborate*candidate-coords*num-coords*2*door
+   (state <s> ^name op_approach1
+              ^target-object.predicates.category door1
+              ^candidate-coords <cc>)
+-->
+   (<cc> ^num-coords 2)
+}
+
+# Compute the sin/cos of the target's yaw 
+sp {op_approach*elaborate*candidate-coords*trig
+   (state <s> ^name op_approach1
+              ^target-transform.rot.z <yaw>
+              ^candidate-coords <cc>)
+-->
+   (<cc> ^sin (sin <yaw>)
+         ^cos (cos <yaw>) )
+}
+
+# Compute the distance from the center along each axis
+#    that the robot should drive to (half the scale + 1 meter)
+sp {op_approach*elaborate*candidate-coords*axis_dist
+   (state <s> ^name op_approach1
+              ^target-transform.scl <scl>
+              ^candidate-coords <cc>)
+   (<scl> ^x <sx> ^y <sy>)
+-->
+   (<cc> ^axis_x (+ (/ <sx> 2) 0.6)
+         ^axis_y (+ (/ <sy> 2) 0.6) )
+}
+
+# Compute only the 1 coordinate that goes from the target's position 
+#   along the x axis and that represents the goal coordinate
+sp {op_approach*elaborate*candidate-coords*1*coord
+   (state <s> ^name op_approach1
+              ^target-transform.pos <pos>
+              ^candidate-coords <cc>)
+   (<pos> ^x <px> ^y <py>)
+   (<cc> ^num-coords 1
+         ^sin <sin> ^cos <cos>
+         ^axis_x <ax> ^axis_y <ay>)
+-->
+   (<cc> ^coord <c1>)
+   (<c1> ^x (+ <px> (* <ax> <cos>))
+         ^y (+ <py> (* <ax> <sin>)))
+}
+
+# Compute 2 coordinates that go from the target's position 
+#   along the x axis (front + back)
+sp {op_approach*elaborate*candidate-coords*2*coords
+   (state <s> ^name op_approach1
+              ^target-transform.pos <pos>
+              ^candidate-coords <cc>)
+   (<pos> ^x <px> ^y <py>)
+   (<cc> ^num-coords 2
+         ^sin <sin> ^cos <cos>
+         ^axis_x <ax>)
+-->
+   (<cc> ^coord <c1> <c2>)
+   (<c1> ^x (+ <px> (* <ax> <cos>))
+         ^y (+ <py> (* <ax> <sin>)))
+   (<c2> ^x (- <px> (* <ax> <cos>))
+         ^y (- <py> (* <ax> <sin>)))
+}
+
+# Compute 4 coordinates that go from the target's position 
+#   along the 4 x/y axes and that represent 4 places
+#   the agent could drive to to approach the object
+sp {op_approach*elaborate*candidate-coords*all*4*coords
+   (state <s> ^name op_approach1
+              ^target-transform.pos <pos>
+              ^candidate-coords <cc>)
+   (<pos> ^x <px> ^y <py>)
+   (<cc> ^num-coords 4
+         ^sin <sin> ^cos <cos>
+         ^axis_x <ax> ^axis_y <ay>)
+-->
+   (<cc> ^coord <c1> <c2> <c3> <c4>)
+   (<c1> ^x (+ <px> (* <ax> <cos>))
+         ^y (+ <py> (* <ax> <sin>)))
+   (<c2> ^x (- <px> (* <ay> <sin>))
+         ^y (+ <py> (* <ay> <cos>)))
+   (<c3> ^x (- <px> (* <ax> <cos>))
+         ^y (- <py> (* <ax> <sin>)))
+   (<c4> ^x (+ <px> (* <ay> <sin>))
+         ^y (- <py> (* <ay> <cos>)))
+}
+
+# Compute the squared distance from the robot to each coord
+sp {op_approach*elaborate*candidate-coords*coord*dist_sq
+   (state <s> ^name op_approach1
+              ^robot-coord <robot>
+              ^candidate-coords.coord <coord>)
+   (<coord> ^x <cx> ^y <cy>)
+   (<robot> ^x <rx> ^y <ry>)
+-->
+   (<coord> ^dist_sq (+ (* (- <rx> <cx>) (- <rx> <cx>) ) 
+                        (* (- <ry> <cy>) (- <ry> <cy>) ) ) )
+}
+
+### For objects without a front, compute 4 candidate coordinates and then 
+# check to see which ones are closest and clear
+
+sp {op_approach*propose*check-candidate-coord
+   (state <s> ^name op_approach1
+              ^robot-coord
+              ^candidate-coords <cc>)
+   (<cc> ^num-coords > 1
+         ^coord <coord>)
+   (<coord> -^is-clear)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name check-candidate-coord
+        ^coord <coord>)
+}
+
+sp {op_approach*apply*check-candidate-coord*create*collision*object
+   (state <s> ^name op_approach1
+              ^operator <o>
+              ^svs.command <cmd>)
+   (<o> ^name check-candidate-coord
+        ^coord <coord>)
+   (<coord> ^x <x> ^y <y>)
+-->
+   (<cmd> ^add_node <an>)
+   (<an> ^id approach-collision
+         ^geometry box
+         ^parent world
+         ^position <pos>
+         ^scale <scl>)
+   (<pos> ^x <x> ^y <y> ^z 0.5)
+   (<scl> ^x 0.20 ^y 0.20 ^z 1.00)
+}
+
+sp {op_approach*elaborate*collision-obj*from*svs*scene
+   (state <s> ^name op_approach1
+              ^svs.spatial-scene.child <obj>)
+   (<obj> ^id approach-collision)
+-->
+   (<s> ^collision-obj <obj>)
+}
+
+sp {op_approach*apply*check-candidate-coord*create*intersection*filter
+   (state <s> ^name op_approach1
+              ^operator.name check-candidate-coord
+              ^svs.command <cmd>
+              ^collision-obj.id <colid>)
+-->
+   (<cmd> ^extract_once <intersect>)
+   (<intersect> ^type intersect
+                ^a <obj>
+                ^b <belief>
+                ^intersect_type hull)
+   (<obj> ^type node
+          ^id <colid>)
+   (<belief> ^type tag_select
+             ^a.type all_nodes
+             ^tag_name object-source
+             ^tag_value belief)
+
+   (<s> ^intersect-command <intersect>)
+}
+
+sp {op_approach*elaborate*check-candidate-coord*is-clear*true
+   (state <s> ^name op_approach1
+              ^operator <o> +
+              ^intersect-command <cmd>)
+   (<o> ^name check-candidate-coord)
+   (<cmd> ^status success
+         -^result.record.value true)
+-->
+   (<o> ^is-clear true)
+}
+
+sp {op_approach*elaborate*check-candidate-coord*is-clear*false
+   (state <s> ^name op_approach1
+              ^operator <o> +
+              ^intersect-command <cmd>)
+   (<o> ^name check-candidate-coord)
+   (<cmd> ^result.record.value true)
+-->
+   (<o> ^is-clear false)
+}
+
+sp {op_approach*apply*check-candidate-coord*finish
+   (state <s> ^name op_approach1
+              ^operator <o>
+              ^intersect-command <cmd>
+              ^collision-obj.id <colid>
+              ^svs.command <svs-cmd>)
+   (<o> ^name check-candidate-coord
+        ^coord <coord>
+        ^is-clear <is-clear>)
+-->
+   (<s> ^intersect-command <cmd> -)
+   (<svs-cmd> ^extract_once <cmd> -
+              ^delete_node.id <colid>)
+   (<coord> ^is-clear <is-clear>)
+}
+
+#sp {op_approach*apply*check-candidate-coord*write
+#   (state <s> ^name op_approach1
+#              ^operator <o>)
+#   (<o> ^name check-candidate-coord
+#        ^coord <coord>
+#        ^is-clear <is-clear>)
+#   (<coord> ^x <x> ^y <y> ^dist_sq <dist>)
+#-->
+#   (write (crlf) |RESULT: | <x> |, | <y> | (| <dist> |) clear=| <is-clear> (crlf))
+#}
+
+### Copy the best coordinate as the goal-coord
+#   (either the front of the object, or the closest clear point)
+
+sp {op_approach*propose*compute-goal-coord
+   (state <s> ^name op_approach1
+              ^agent-params.domain magicbot
+              ^problem-space.execution-type external
+              ^target-object.svs-obj.id <perc-id>
+              ^candidate-coords <cc>
+             -^goal-coord)
+   (<cc> ^num-coords 1
+         ^coord <coord>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name compute-goal-coord
+        ^goal-coord <coord>)
+}
+
+sp {op_approach*propose*compute-goal-coord*is-clear
+   (state <s> ^name op_approach1
+              ^agent-params.domain magicbot
+              ^problem-space.execution-type external
+              ^target-object.svs-obj.id <perc-id>
+              ^candidate-coords <cc>
+             -^goal-coord)
+   (<cc> ^coord <coord>)
+   (<coord> ^is-clear true)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name compute-goal-coord
+        ^goal-coord <coord>)
+}
+
+sp {op_approach*prefer*compute-goal-coord*closer
+   (state <s> ^name op_approach1
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name compute-goal-coord
+         ^goal-coord.dist_sq <d>)
+   (<o2> ^name compute-goal-coord
+         ^goal-coord.dist_sq > <d>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {op_approach*apply*compute-goal-coord*copy*goal-coord
+   (state <s> ^name op_approach1
+              ^operator <o>
+              ^current-task-segment <seg>)
+   (<o> ^name compute-goal-coord
+        ^goal-coord <coord>)
+   (<coord> ^x <x> ^y <y>)
+-->
+   (<seg> ^goal-coord <gc>)
+   (<gc> ^x <x> ^y <y>)
+}
+
+
+

@@ -1,0 +1,15 @@
+## failure
+sp {evaluate-operator*failure
+   :default
+   (state <s> ^impasse no-change
+              ^quiescence t
+              ^attribute state
+              ^superstate <ss>)
+   (<ss> ^name evaluate-operator
+        -^learning-chunking-rule true # AM: If the SNC was purposeful for learning a chunk, don't call it a failure yet
+         ^desired <d>)
+-->
+ #####(write (crlf) |Failure - state no-change|)
+   (<ss> ^exhaustion-failure <d>)
+   (<ss> ^failure <d>)
+}

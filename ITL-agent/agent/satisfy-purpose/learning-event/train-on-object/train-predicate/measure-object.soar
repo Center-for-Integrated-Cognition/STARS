@@ -1,0 +1,29 @@
+sp {train-on-object*propose*measure-object
+   (state <s> ^name train-on-object
+              ^sense <sense>
+              ^example-object <obj>
+              ^top-state.interaction.stack.segment.purpose.parameters <p>)
+   (<p> -^measured <sense>)
+   (<sense> ^property.type measurable)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name measure-object
+        ^sense <sense>
+        ^example-object <obj>)
+}
+
+sp {train-on-object*apply*measure-object*perform-action
+   (state <s> ^name train-on-object
+              ^operator <o>
+              ^top-state.interaction.stack.segment.purpose.parameters <params>
+              ^top-state.task-stack <stack>)
+   (<o> ^name measure-object
+        ^sense <sense>
+        ^example-object <obj>)
+-->
+   (<stack> ^action <measure>)
+   (<measure> ^name measure-object
+              ^object <obj>
+              ^train-sense <sense>)
+   (<params> ^measured <sense>)
+}

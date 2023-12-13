@@ -1,0 +1,104 @@
+### Send the low-level close command when the door is visible and reachable ###
+
+sp {op_close1*propose*send-close-command
+   (state <s> ^name op_close1
+              ^target-object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> ^is-visible1 visible1
+            ^is-reachable1 reachable1
+            ^is-open1 open2)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name send-close-command
+        ^command-name close-command
+        ^item-type command-operator
+        ^arg1.id <obj>)
+}
+
+### internal ###
+
+sp {op_close1*external*apply*send-close-command*internal
+   (state <s> ^name op_close1
+              ^problem-space.execution-type external
+              ^agent-params.domain internal
+              ^operator <o>
+              ^io.output-link <ol>
+              ^current-task-segment <seg>)
+   (<o> ^name send-close-command
+        ^command-name <cmd-name>
+        ^arg1.id <obj>)
+-->
+   (<ol> ^perform-action <pa>)
+   (<pa> ^item-type output-command
+         ^name close
+         ^object <obj>)
+   (<seg> ^<cmd-name> <pa>)
+}
+
+### ai2thor ### 
+
+sp {op_close1*external*apply*send-close-command*ai2thor
+   (state <s> ^name op_close1
+              ^problem-space.execution-type external
+              ^agent-params.domain ai2thor
+              ^operator <o>
+              ^io.output-link <ol>
+              ^current-task-segment <seg>)
+   (<o> ^name send-close-command
+        ^command-name <cmd-name>
+        ^arg1.id.handle <h>)
+-->
+   (<ol> ^perform-action <pa>)
+   (<pa> ^item-type output-command
+         ^name close
+         ^object <h>)
+   (<seg> ^<cmd-name> <pa>)
+}
+
+
+### tabletop ###
+
+sp {op_close1*external*apply*send-close-command*tabletop
+   (state <s> ^name op_close1
+              ^problem-space.execution-type external
+              ^agent-params.domain tabletop
+              ^operator <o>
+              ^io.output-link <ol>
+              ^current-task-segment <seg>)
+   (<o> ^name send-close-command
+        ^command-name <cmd-name>
+        ^arg1.id.handle <h>)
+-->
+   (<ol> ^set-state <set>)
+   (<set> ^object-handle <h>
+          ^name is-open1
+          ^value not-open1)
+   (<seg> ^<cmd-name> <set>)
+}
+
+### magicbot ###
+
+sp {op_close1*external*apply*send-close-command*magicbot
+   (state <s> ^name op_close1
+              ^problem-space.execution-type external
+              ^agent-params.domain magicbot
+              ^operator <o>
+              ^io.output-link <ol>
+              ^current-task-segment <seg>)
+   (<o> ^name send-close-command
+        ^command-name <cmd-name>
+        ^arg1.id.perception-id <perc-id>)
+-->
+   (<ol> ^do-control-law <cmd>)
+   (<cmd> ^name change-state
+          ^item-type output-command
+          ^parameters <params>
+          ^termination-condition <term>)
+   (<term> ^name object-state
+           ^parameters <params>)
+   (<params> ^object-id (int <perc-id>)
+             ^property is-open1
+             ^value not-open1)
+
+   (<seg> ^<cmd-name> <cmd>)
+}

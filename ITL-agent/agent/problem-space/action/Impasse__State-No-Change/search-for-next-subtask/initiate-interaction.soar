@@ -1,0 +1,28 @@
+sp {search-for-next-subtask*propose*initiate-interaction*get-next-subaction*search*failed
+   (state <s> ^name search-for-next-subtask
+              ^number-phases <n>
+              ^problem-space.search-phase <n>
+              ^subtask-search-failed true
+              ^superstate.task-operator.task-handle <task-h>)
+-->
+   (<s> ^operator <o> + >)
+   (<o> ^name initiate-interaction
+        ^type get-next-subaction
+        ^task-handle <task-h>)
+}
+
+#JK2022
+#JK2023 action change
+sp {search-for-next-subtask*propose*initiate-interaction*get-next-subaction*search*failed*0
+   (state <s> ^name search-for-next-subtask
+              ^number-phases 0
+              #^superstate.task-operator.task-handle << store1 tidy1 unload1 clear1 empty1 >> #unload2 unload3 unload4 unload5 unload6 unload7 unload8
+              ^superstate.task-operator.task-handle <task-h>)
+-->
+(interrupt)
+   (<s> ^operator <o> + >)
+   (<o> ^name initiate-interaction
+        ^type get-next-subaction
+        ^task-handle <task-h>)
+}
+

@@ -1,0 +1,9 @@
+sp {train-predicate*elaborate*retrieve*predicate
+   (state <s> ^name train-predicate
+              ^predicate <pred>)
+-->
+   (<s> ^smem-retrieve <ret>)
+  (<ret> ^identifier <pred>
+          ^depth 12)
+}
+

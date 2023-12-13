@@ -1,0 +1,195 @@
+## All 
+## All of, some of, none of, a few of
+
+smem --add {
+           (<all> ^spelling |all|
+                  ^structure-type QUANT
+                  ^number plural
+                  ^specifier universal
+                  ^referent <refall>
+                  ^super-converts-to CP)
+           (<refall> ^handle all)
+           
+           (<all-of> ^prior-word QUANT #|all|
+                     ^current-word |of|
+                     ^spelling |quant-of|
+                     ^structure-type QUANT
+                     ^number plural
+                     ^specifier universal #*inherit*
+                     ^assigners <all1>
+                     ^super-converts-to CP
+                     ^consumes-prior-word true)
+           (<all1> ^structure-type QUANT
+                   ^syntactic-structure quantifier
+                   ^required true)
+
+           (<all-the> ^prior-word QUANT
+                      ^current-word |the|
+                      ^construction |quant-the|
+                      ^prior-word-first false   # by having both - means it doesn't matter whether first or not.
+                      ^prior-word-first true
+                      ^structure-type D
+                      ^number plural
+                      ^specifier universal #*inherit*               ##JEL should inherit from QUANT structure..
+                      ^assigners <the0> <the1> <the2> <the3>
+                      ^converts-to DP
+                      ^super-converts-to CP
+                      ^consumes-prior-word true)
+           (<the0> ^structure-type QUANT
+                   ^syntactic-structure quantifier
+                   ^optional true)
+           (<the1> ^structure-type ADJ
+                   ^syntactic-structure adjoin
+                   ^repeatable true
+                   ^relative-position after
+                   ^optional true
+                   ^before <the2> 
+                   ^before <the3>)
+           (<the2> ^structure-type N
+                   ^syntactic-structure head 
+                   ^relative-position after
+                   ^required true 
+                   ^before <the3>)
+           (<the3> ^structure-type PP
+                   ^syntactic-structure complement
+                   ^relative-position after
+                   ^optional true)
+}     
+     
+smem --add {
+           (<all-your> ^prior-word QUANT
+                      ^current-word |your|
+                      ^construction |quant-your|
+                      ^prior-word-first false   # by having both - means it doesn't matter whether first or not.
+                      ^prior-word-first true
+                      ^structure-type D
+                      ^number plural
+                      ^specifier universal #*inherit*               ##JEL should inherit from QUANT structure..
+                      ^assigners <the0> <the1> <the2> <the3>
+                      ^converts-to  DP
+                      ^consumes-prior-word true)
+           (<the0> ^structure-type QUANT
+                   ^syntactic-structure quantifier
+                   ^optional true)
+           (<the1> ^structure-type ADJ
+                   ^syntactic-structure adjoin
+                   ^repeatable true
+                   ^relative-position after
+                   ^optional true
+                   ^before <the2> 
+                   ^before <the3>)
+           (<the2> ^structure-type N
+                   ^syntactic-structure head 
+                   ^relative-position after
+                   ^required true 
+                   ^before <the3>)
+           (<the3> ^structure-type PP
+                   ^syntactic-structure complement
+                   ^relative-position after
+                   ^optional true)
+
+
+}
+
+## For ALL/SOME/MANY/FEW ADJ N are ...
+smem --add {
+           (<all-the> ^prior-word QUANT
+                      ^current-word ADJ
+                      ^construction |quant-ADJ| 
+                      ^prior-word-first false   # by having both - means it doesn't matter whether first or not.
+                      ^prior-word-first true
+                      ^structure-type D
+                      ^number plural
+                      ^specifier universal               ##JEL should inherit from QUANT structure..
+                      ^assigners <the0> <the1> <the2> <the3>
+                      ^converts-to DP)
+           (<the0> ^structure-type QUANT
+                   ^syntactic-structure quantifier
+                   ^optional true)
+           (<the1> ^structure-type ADJ
+                   ^syntactic-structure adjoin
+                   ^repeatable true
+                   ^optional true
+                   ^before <the2> 
+                   ^before <the3>)
+           (<the2> ^structure-type N
+                   ^syntactic-structure head 
+                   ^relative-position after
+                   ^required true
+                   ^before <the3>)
+           (<the3> ^structure-type PP
+                   ^syntactic-structure complement
+                   ^relative-position after
+                   ^optional true)
+}
+
+## For ALL/SOME/MANY/FEW N are ...
+smem --add {
+           (<all-the> ^prior-word QUANT
+                      ^current-word N
+                      ^construction |quant-N|
+                      ^prior-word-first false   # by having both - means it doesn't matter whether first or not.
+                      ^prior-word-first true
+                      ^structure-type D
+                      ^number plural
+                      ^specifier universal               ##JEL should inherit from QUANT structure..
+                      ^assigners <the0> <the2> <the3>
+                      ^converts-to DP)
+           (<the0> ^structure-type QUANT
+                   ^syntactic-structure quantifier
+                   ^optional true)
+           (<the2> ^structure-type N
+                   ^syntactic-structure head 
+                   ^required true 
+                   ^before <the3>)
+           (<the3> ^structure-type PP
+                   ^syntactic-structure complement
+                   ^relative-position after
+                   ^optional true)
+}
+smem --add {
+           (<some> ^spelling |some|
+                  ^structure-type QUANT
+                  ^number plural
+                  ^specifier indefinite
+                  ^referent <refsome>
+                  ^super-converts-to DP)
+           (<refsome> ^handle some) 
+           
+
+           (<refeach> ^spelling |each|
+                  ^structure-type QUANT
+                  ^number singular
+                  ^specifier definite
+                  ^referent <refeach>
+                  ^super-converts-to DP)
+           (<refeach> ^handle each) 
+           
+
+           (<none> ^spelling |none|
+                  ^structure-type QUANT
+                  ^number plural
+                  ^specifier indefinite
+                  ^referent <refnone>)
+           (<refnone> ^handle none)
+               
+           (<many> ^spelling |many|
+                  ^structure-type QUANT
+                  ^number plural
+                  ^specifier indefinite
+                  ^referent <refmany>
+                  ^super-converts-to DP)
+           (<refmany> ^handle many)
+           
+           (<few> ^spelling |few|
+                  ^structure-type QUANT
+                  ^number plural
+                  ^specifier indefinite
+                  ^referent <reffew>
+                  ^super-converts-to DP)
+           (<reffew> ^handle few)
+
+
+}
+
+

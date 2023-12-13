@@ -1,0 +1,139 @@
+# io.output-link
+#   Remove commands with the status complete
+
+sp {apply*operator*remove*successful*command*send-message
+   (state <s> ^operator <op>
+          ^io.output-link <ol>)
+   (<ol> ^{ <cmd-name> << send-message lm-request lm-request-step lm-request-retry lm-selection-request >> } <com>)
+   (<com> ^status <status>)
+-->
+   #(write |OUTPUT LINK STATUS: | <cmd-name> | = | <status> (crlf))
+   (<ol> ^<cmd-name> <com> -)
+}
+
+#    PL 8/12/2022    Delete leftovers from Lucia
+sp {apply*operator*remove*successful*command*lucia-residue
+   (state <s> ^operator <op>
+          ^io.output-link <ol>)
+   (<ol> ^{ <cmd-name> << report-comprehension report-decision report-results >> } <msg>)
+#   (<msg> ^status <status>)    # The Lucia Java code is not setting the status yet.
+-->
+   #(write |OUTPUT LINK STATUS: | <cmd-name> | = | <status> (crlf))
+   (<ol> ^<cmd-name> <msg> -)
+}
+
+#    PL 8/12/2022    After sending a message to report
+#    a task-execution-failure, and if the halt-on-task-failure
+#    is set to true, halt (or interrupt).
+sp {apply*operator*remove*send-message*task-execution-failure*halt
+   (state <s> ^operator <op>
+            ^top-state.world <w>
+          ^io.output-link <ol>
+          ^agent-params.halt-on-task-failure true)
+   (<ol> ^send-message <msg>)
+   (<msg> ^status <status>
+          ^type task-execution-failure)
+-->
+   #(write |OUTPUT LINK STATUS: | <cmd-name> | = | <status> (crlf))
+   #(<ol> ^<cmd-name> <msg> -)
+#   (halt)
+   (interrupt)
+   (write (cmd |ctf final-world.txt print | <w> |-d 5|))
+   (write (cmd |ctf final-stats.txt stats|))
+   (write (cmd |ctf final-statsm.txt statsm|))
+   (write (cmd |ctf final-chunks.txt print -fc|))
+   (write (cmd |ctf final-tcn.txt print -d 60 @100046|))
+   (write (cmd |ctf final-search-states.txt fc selection*apply*state*evaluation|)) 
+}
+
+
+#remove current segment still fails JK2022
+sp {apply*operator*remove*send-message*task-execution-failure*halt*recover
+   (state <s> ^operator <op>
+          ^io.output-link <ol>
+          ^top-state.interaction <interaction>)
+   (<ol> ^send-message <msg>)
+   (<interaction> ^stack.segment.purpose.satisfaction.task-event <e>
+                  ^status <status>)
+   (<msg> ^status <mstat>
+          ^type task-execution-failure)
+-->
+   (<status> ^performed.task-event <e>)
+}
+
+
+# sp {problem-space*action*pop-task-segment*apply*complete-pop-task-segment*report*performed*task-event
+#    (state <s> ^name pop-task-segment
+#               ^operator.name complete-pop-task-segment
+#               ^segment-to-pop <segment>
+#               ^top-state.interaction <interaction>)
+#    (<segment> ^status success
+#               ^task-operator.task-handle <task-handle>)
+#    (<interaction> ^stack.segment.purpose.satisfaction.task-event <e>
+#                   ^status <status>)
+#    (<e> ^type completed-task
+#         ^task-handle <task-handle>)
+# -->
+#    (<status> ^performed.task-event <e>)
+# }
+
+sp {apply*operator*remove*handled*completed-task
+   (state <s> ^operator <op>
+          ^io.output-link <ol>)
+   (<ol> ^{ <cmd-name> << started-task completed-task scripted-sentence handled-command >> } <com>)
+   (<com> ^handled true)
+-->
+   #(write |OUTPUT LINK STATUS: | <cmd-name> | = | <status> (crlf))
+   (<ol> ^<cmd-name> <com> -)
+}
+
+sp {apply*operator*remove*interrupted*command
+   (state <s> ^operator <op>
+          ^io.output-link <ol>)
+   (<ol> ^{ <cmd-name> << do-control-law face-point >> } <cmd>)
+   (<cmd> ^status interrupted)
+-->
+   (<ol> ^<cmd-name> <cmd> -)
+}
+
+
+# svs.command
+#   Cleans up the svs command link after commands have been  completed
+
+# Remove filters for monitoring new objects that have disappeared
+sp {top-state*apply*any-op*remove*monitor*filters
+   (state <s> ^top-state <s>
+              ^operator <o>
+              ^svs.command <cmd>
+              ^svs.spatial-scene <scene>)
+   (<cmd> ^extract <filter>)
+   (<filter> ^type << monitor_position monitor_volume >>
+             ^a.id <id>)
+   (<scene> -^child.id <id>)
+-->
+   (<cmd> ^extract <filter> -)
+}
+
+# Remove commands which are completed
+sp {top-state*apply*any-op*remove*completed*svs*commands
+   (state <s> ^top-state <s>
+              ^operator <o>
+              ^svs.command <cmd>)
+   (<cmd> ^{<type> <> extract <> extract_once } <val>)
+   (<val> ^status <status>)
+-->
+   (<cmd> ^<type> <val> -)
+}
+
+# smem.command 
+#   Remove store commands when finished
+
+#sp {anystate*apply*any-op*remove*store*commands
+#   (state <s> ^operator <o>
+#              ^smem <smem>)
+#   (<smem> ^command <cmd>
+#           ^result.success <a>)
+#   (<cmd> ^store <a>)
+#-->
+#   (<cmd> ^store <a> -)
+#}

@@ -1,0 +1,39 @@
+//  Kitchen and others are a different kind of animal,
+//  not a RosieLocation
+//	But, they should be RosieObjects so that they
+//	can sometimes ground to the world.
+schema MapLocation
+   subcase of KnownObject, RosieObject
+   constraints
+	  rosie-category <-- location
+
+schema Kitchen
+   subcase of MapLocation
+   constraints
+      handle <-- loc-kitchen1
+
+schema ConferenceRoom
+   subcase of MapLocation
+   constraints
+      handle <-- loc-conf1
+
+schema Building
+   subcase of MapLocation
+   constraints
+      handle <-- building1
+
+schema Office
+   subcase of MapLocation
+   constraints
+      handle <-- office1
+
+schema MainOffice
+   subcase of MapLocation
+   constraints
+      handle <-- loc-main1
+
+schema SoarOffice
+   subcase of MapLocation
+   constraints
+      handle <-- loc-soar1
+      

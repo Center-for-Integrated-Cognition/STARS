@@ -1,0 +1,28 @@
+# Elaborate svs object id's
+# belief objects have an id-int that corresponds to an id on a working memory object
+# perception objects have an id-as-integer that is the cast form of the id
+
+sp {svs*elaborate*svs*objects*type*node
+   (state <s> #^superstate nil
+   	          ^svs.spatial-scene <sc>)
+   (<sc> ^child <C>)
+   (<C> ^object-source belief)
+ --> 
+   (<C> ^type node)
+ }
+
+# Create property on belief objects that mark their source 
+#    (Used to only grab the subset of svs objects that are belief objects)
+sp {svs*apply*any-op*property-command*object-source*belief
+   (state <s> ^top-state.perception-monitor.object-monitor.object-info.belief-obj <bel-obj>
+              ^operator <o>
+              ^svs.command <cmd>)
+   (<bel-obj> ^id <bel-id>
+             -^object-source belief)
+-->
+   (<cmd> ^set_tag <prop>)
+   (<prop> ^id <bel-id>
+           ^tag_name object-source
+           ^tag_value belief)
+}
+

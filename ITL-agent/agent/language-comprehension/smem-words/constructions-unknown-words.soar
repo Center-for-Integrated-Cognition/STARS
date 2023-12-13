@@ -1,0 +1,126 @@
+
+
+## Unknown Verb
+# Command *-U-DP-T - XXX the red block.
+smem --add {
+           (<VP-T> ^construction |*-U-D|
+                   ^structure-type UV
+                   ^current-word D
+                   ^prior-word U  
+                   ^prior-word-first true
+                   ^message-type new-verb	
+                   ^assigners <a2> <a3> <a1> 
+                   ^converts-to VP)
+           (<a1> ^structure-type U
+                 ^predicted-structure-type V
+                 ^syntactic-structure action
+                 ^semantic-structure action
+                 ^referent-type literal
+                 ^required true)
+           (<a2> ^structure-type DP
+                 ^syntactic-structure head
+                 ^semantic-structure arg1
+                 ^required true)
+           (<a3> ^structure-type PP
+                 ^syntactic-structure complement2
+                 ^semantic-structure arg2
+                 ^optional true)
+}
+# Command *-U-P-T - XXX in the pantry.
+smem --add {
+           (<VP-T> ^construction |*-U-P|
+                   ^structure-type UV
+                   ^current-word P
+                   ^prior-word U  
+                   ^prior-word-first true
+                   ^message-type new-verb	
+                   ^assigners <a2> <a1> 
+                   ^converts-to VP)
+           (<a1> ^structure-type U
+                 ^predicted-structure-type V
+                 ^syntactic-structure action
+                 ^semantic-structure action
+                 ^referent-type literal
+                 ^required true)
+           (<a2> ^structure-type PP
+                 ^syntactic-structure complement2
+                 ^semantic-structure arg2
+                 ^optional true)
+}
+
+## Unknown Single Word
+smem --add {
+           (<U-T> ^construction |*-U-T|
+                   ^structure-type S
+                   ^current-word T
+                   ^prior-word U   
+                   ^prior-word-first true
+                   ^message-type unknown-word	
+                   ^assigners <ass1> <ass2>)
+           (<ass1> ^structure-type U
+                   ^required true
+                   ^syntactic-structure head
+                   )
+           (<ass2> ^structure-type T
+                   ^required true
+                   ^syntactic-structure terminator
+                   )
+}
+smem --add {
+           (<VP-T> ^construction |*-U-PN|
+                   ^structure-type UV
+                   ^current-word PN
+                   ^prior-word U  
+                   ^prior-word-first true
+                   ^message-type new-verb	
+                   ^assigners <a2>  <a1> 
+                   ^converts-to VP)
+           (<a1> ^structure-type U
+                 ^predicted-structure-type V
+                 ^syntactic-structure action
+                 ^semantic-structure action
+                 ^referent-type literal
+                 ^required true)
+           (<a2> ^structure-type PN
+                 ^syntactic-structure head
+                 ^semantic-structure arg1
+                 ^required true)
+}
+# Green is a color. - Unknown - could be proper noun
+smem --add {
+           (<sentence> ^construction |*-U-is-DP|
+                       ^structure-type CP
+                       ^current-word IS-V
+                       ^prior-word U
+                       ^prior-word-first true
+                       ^message-type adjective-definition
+                       ^assigners <isa> <isb> <isc> <isd>) 
+           (<isa> ^structure-type U 
+                  ^predicted-structure-type ADJ 
+                  ^predicted-structure-type N 
+                  ^before <isb>
+                  ^syntactic-structure head
+                  ^referent-type literal
+                  ^semantic-structure arg1           # Seems confusion here should this be included or not?  Need it for Taupe is a color. If seen Taupe before.
+                  ^required true)
+           (<isb> ^structure-type IS-V
+                  ^after <isa>
+                  ^before <isc>
+                  ^lexical-item-spelling |is|
+                  ^syntactic-structure predicate
+                  ^required true)
+           (<isc> ^structure-type DP
+                  ^exclusive <isd>
+                  ^relative-position after
+                  ^syntactic-structure predicate
+                  ^semantic-structure property
+                  ^referent-type literal
+                  ^optional true)
+           (<isd> ^structure-type N   # In case get |Purple is color.|
+                  ^exclusive <isc>
+                  ^relative-position after
+                  ^syntactic-structure predicate
+                  ^semantic-structure property
+                  ^referent-type literal
+                  ^optional true)
+}

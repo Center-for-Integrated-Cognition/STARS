@@ -1,0 +1,137 @@
+sp {comprehend-word*propose*smem-lexical-retrieval
+   (state <s> ^name << comprehend-word comprehend-construction >>
+             # ^failed-operator smem-lexical-retrieval-cw-pw-type
+              ^current-word <cw>)
+   (<s> -^retrieved-lexical-item
+        -^comprehension-structure.retrieved-lexical-item
+        -^failed-retrieval true
+        -^segment.retry
+         ^segment <seg>)
+  -{(<seg> ^prior-word.spelling |*|)
+    (<cw> ^next.spelling |.|)}
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name smem-lexical-retrieval
+        ^word <cw>)}
+
+sp {comprehend-word*propose*smem-lexical-retrieval2
+   (state <s> ^name << comprehend-word comprehend-construction >>
+            #  ^failed-operator smem-lexical-retrieval-cw-pw
+             -^failed-operator smem-lexical-retrieval-cw-pw-type
+              ^current-word <cw>)
+   (<s> -^retrieved-lexical-item
+        -^comprehension-structure.retrieved-lexical-item
+        -^failed-retrieval true
+        -^segment.retry
+         ^segment <seg>
+        -^retrieved-stack.item.lt.structure-type <pick-type>)
+  -{(<seg> ^prior-word.spelling |*|)
+    (<cw> ^next.spelling |.|)}
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name smem-lexical-retrieval
+        ^word <cw>)}
+### Retrieval
+
+sp {comprehend-word*apply*smem-lexical-retrieval*not-first-word
+   (state <s> ^operator <o>
+              ^smem.command <cmd>)
+   (<o> ^name smem-lexical-retrieval
+        ^word <word>)
+   (<word> ^spelling <x>
+          -^first-word true)
+-->   
+  # #(write (crlf) |Attempt retrieval for: | <x>)
+   (<cmd> ^query <q> ^depth 9)
+   (<q> ^spelling <x>)
+}
+
+sp {comprehend-word*apply*smem-lexical-retrieval*first-word
+   (state <s> ^operator <o>
+              ^smem.command <cmd>)
+   (<o> ^name smem-lexical-retrieval
+        ^word <word>)
+   (<word> ^spelling <x>
+           ^first-word true)
+-->   
+ #  #(write (crlf) |Attempt retrieval for: | <x>)
+   (<cmd> ^query <q> ^depth 9)
+   (<q> ^spelling <x>)
+}
+
+#   (<p-item> ^current-word.first-word true) # Added JEL 4/39
+
+### After retrieval
+sp {comprehend-word*apply*smem-lexical-retrieval*success
+   (state <s> ^operator.name << smem-lexical-retrieval smem-lexical-retrieval-cw-pw-type >>
+              ^comprehension-structure <cs>
+              ^smem <smem>)
+   (<smem> ^result.retrieved <rli>
+           ^command <c>)
+   (<c> ^query <q>)
+   (<q> ^spelling <x>)
+   (<rli> ^spelling <x>)
+-->
+   (<c> ^query <q> -
+        ^depth 9 -)
+   (<cs> ^retrieved-lexical-item <rli>)
+}
+
+sp {comprehend-word*apply*smem-lexical-retrieval*success*monitor
+   (state <s> ^operator.name smem-lexical-retrieval
+              ^agent-params.print-parser-data true
+              ^smem <smem>)
+   (<smem> ^result.retrieved <rli>
+           ^command <c>)
+   (<c> ^query <q>)
+   (<q> ^spelling <x>)
+   (<rli> ^structure-type <st>
+          ^spelling <x>)
+-->
+#   (write (crlf) |Retrieval Success: | <x> |, | <st>)
+}
+
+sp {comprehend-word*apply*smem-lexical-retrieval*fail
+   (state <s> ^superstate.operator <so>
+              ^operator.name smem-lexical-retrieval 
+              ^smem <smem>)
+   (<smem> ^result.failure <t>)
+-->
+ #  #(write (crlf) |No lexical item found in semantic memory.|)
+   (<s> ^failed-retrieval true)
+}
+
+###
+#JK duplicate rule name from smem-lexical-retrieval-cw-pw
+#sp {comprehend-word*apply*smem-lexical-retrieval-assigner-prior-word-stale
+#  #:interrupt
+#   (state <s> ^operator <o>
+#              ^segment <seg>
+#              ^smem.result.retrieved <rli>
+#              ^comprehension-structure <cs>)
+#   (<o> ^name smem-lexical-retrieval)
+#   (<seg> ^not-merged-assigner <uai>
+#          ^retrieved-stack.item <prior-receiver>)
+#   (<rli> ^consumes-prior-word true 
+#           ^prior-word <pw>)
+#   (<uai> ^parent-receiver <prior-receiver>
+#          ^lt <lt>)
+#-->
+#   (write (crlf) |Remove assigner: | <uai> | for prior word: | <pw>)
+#   (<seg> ^not-merged-assigner <uai> -)}
+
+#JK duplicate rule name from smem-lexical-retrieval-cw-pw
+#sp {comprehend-word*apply*smem-lexical-retrieval-receiver-prior-word-stale
+#   (state <s> ^operator <o>
+#              ^segment <seg>
+#              ^smem.result.retrieved <rli>
+#              ^comprehension-structure <cs>)
+#   (<o> ^name smem-lexical-retrieval)
+#   (<seg> ^not-merged-receiver <uai>
+#          ^retrieved-stack.item <uai>)
+#   (<uai> ^lt <lt>)
+#   (<rli> ^consumes-prior-word true 
+#          ^prior-word <pw>)
+#-->
+#   (write (crlf) |Remove receiver: | <uai> | for prior word: | <pw>)
+#   (<cs> ^remove-receiver <uai>)}

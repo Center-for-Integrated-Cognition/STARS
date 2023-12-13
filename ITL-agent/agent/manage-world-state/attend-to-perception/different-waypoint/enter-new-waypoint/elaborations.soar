@@ -1,0 +1,29 @@
+# new-waypoint - reference to the waypoint being entered
+#   from superstate.operator
+sp {enter-new-waypoint*elaborate*new-waypoint*superstate
+   (state <s> ^name enter-new-waypoint
+              ^superstate.operator.new-waypoint <wp>)
+-->
+   (<s> ^new-waypoint <wp>)
+}
+
+# new-location - reference to the location being entered (if any)
+#   from top-state.world.objects.object
+sp {enter-new-waypoint*elaborate*new-location
+   (state <s> ^name enter-new-waypoint
+              ^new-waypoint.handle <wp-handle>
+              ^top-state.world.objects.object <loc>)
+   (<loc> ^waypoint <wp-handle>)
+-->
+   (<s> ^new-location <loc>)
+}
+
+# new-location none - flag present if no location includes the current waypoint
+sp {enter-new-waypoint*elaborate*new-location*none
+   (state <s> ^name enter-new-waypoint
+              ^new-waypoint.handle <wp-handle>
+             -^top-state.world.objects.object.waypoint <wp-handle>)
+-->
+   (<s> ^new-location none)
+}
+

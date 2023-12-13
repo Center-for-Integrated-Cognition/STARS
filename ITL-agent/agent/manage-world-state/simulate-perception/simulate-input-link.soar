@@ -1,0 +1,76 @@
+# These rules simulate the input-link by copying structures from the internal-world
+
+sp {top-state*simulate-perception*elaborate*input-link*self*current-waypoint
+   (state <s> ^superstate nil
+              ^agent-params.domain internal
+              ^agent-params.simulate-perception true
+              ^internal-world.starting-location <wph>
+              ^perception-monitor.input-link.self <self>)
+-->
+   (<self> ^current-waypoint <wph>)
+}
+
+sp {top-state*simulate-perception*elaborate*input-link*self*holding-object
+   (state <s> ^superstate nil
+              ^agent-params.domain internal
+              ^agent-params.simulate-perception true
+              ^internal-world.holding-object <objh>
+              ^perception-monitor.input-link.self.arm <arm>)
+-->
+   (<arm> ^holding-object <objh>)
+}
+
+sp {top-state*simulate-perception*elaborate*input-link*object
+   (state <s> ^superstate nil
+              ^agent-params.domain internal
+              ^agent-params.simulate-perception true
+              ^internal-world.objects.object <obj>
+              ^perception-monitor.input-link <input-link>)
+   (<obj> ^handle <h>
+          ^waypoint <wph>)
+   (<input-link> ^objects <objs>
+                 ^self.current-waypoint <wph>)
+-->
+   (<objs> ^object <il-obj>)
+   (<il-obj> ^object-handle <h>
+             ^source-obj <obj>)
+}
+
+sp {top-state*simulate-perception*elaborate*input-link*object*properties
+   (state <s> ^superstate nil
+              ^agent-params.domain internal
+              ^agent-params.simulate-perception true
+              ^perception-monitor.input-link.objects.object <il-obj>)
+   (<il-obj> ^source-obj.predicates.<prop> <pred>)
+-->
+   (<il-obj> ^property <il-prop>)
+   (<il-prop> ^property-handle <prop>
+              ^predicate-handle <pred>)
+}
+
+# reachable property
+sp {top-state*simulate-perception*elaborate*input-link*object*reachable*property
+   (state <s> ^superstate nil
+              ^agent-params.domain internal
+              ^agent-params.simulate-perception true
+             -^agent-params.all-objects-reachable true
+              ^perception-monitor.input-link.objects.object <il-obj>)
+-->
+   (<il-obj> ^property <il-prop>)
+   (<il-prop> ^property-handle is-reachable1
+              ^predicate-handle not-reachable1)
+}
+
+# reachable property 
+sp {top-state*simulate-perception*elaborate*input-link*object*reachable*property*all
+   (state <s> ^superstate nil
+              ^agent-params.domain internal
+              ^agent-params.simulate-perception true
+              ^agent-params.all-objects-reachable true
+              ^perception-monitor.input-link.objects.object <il-obj>)
+-->
+   (<il-obj> ^property <il-prop>)
+   (<il-prop> ^property-handle is-reachable1
+              ^predicate-handle reachable1)
+}
+

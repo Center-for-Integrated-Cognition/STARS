@@ -1,0 +1,8 @@
+Task name: store object. Task context: I am in mailroom. Aware of package of office supplies, package is in mailroom.
+(RESULT)The goal is that the package is on the table.(END RESULT)
+Response: No. That goal is wrong.
+(RESULT)The goal is that the package is in the closet.(END RESULT)
+Response: Ok.
+Steps:
+1. Pick up package
+2. Put package into closet

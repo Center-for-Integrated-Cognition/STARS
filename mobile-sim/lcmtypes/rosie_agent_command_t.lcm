@@ -1,0 +1,8 @@
+struct rosie_agent_command_t
+{
+    int64_t utime;
+
+	int32_t command_type;
+	const int32_t INTERRUPT = 1;
+	const int32_t CONTINUE = 2;
+}

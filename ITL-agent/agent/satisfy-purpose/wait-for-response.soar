@@ -1,0 +1,51 @@
+sp {satisfy-purpose*propose*wait-for-response
+   (state <s> ^name satisfy-purpose
+              ^purpose.satisfaction.dialog-event.type <type>
+              ^purpose.originator agent)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name wait-for-response)
+}
+
+sp {satisfy-purpose*reject*dialog-event*waiting-for-response
+   (state <s> ^name satisfy-purpose
+              ^purpose.satisfaction.dialog-event.type <type>
+              ^purpose.originator agent
+              ^operator <o> +)
+   (<o> ^name dialog-event)
+-->
+   (<s> ^operator <o> -)
+}
+
+sp {wait-for-response*elaborate*attend-to-all-scene-changes
+   (state <s> ^name wait-for-response)
+-->
+  (<s> ^problem-space <ps>)
+  (<ps> ^attend-to-perception yes)
+}
+
+### find-missing-object
+###   dont attend to the missing object
+sp {wait-for-response*reject*attend-to-scene-change*missing-object
+   (state <s> ^name wait-for-response
+              ^operator <o> +
+              ^superstate.purpose <p>)
+   (<o> ^name attend-to-scene-change
+        ^change.object-info.world-obj <obj>)
+   (<p> ^type find-missing-object
+        ^missing-object <obj>)
+-->
+   (<s> ^operator <o> -)
+}
+
+### find-missing-object
+###   dont attend to the missing object
+sp {satisfy-purpose*apply*wait-for-response*missing-object*stop-asking
+   (state <s> ^name satisfy-purpose
+              ^operator.name wait-for-response
+              ^purpose.type find-missing-object
+              ^purpose.parameters.stop-asking true
+              ^top-state.interaction.changes <chgs>)
+-->
+   (<chgs> ^terminate-segment true)
+}

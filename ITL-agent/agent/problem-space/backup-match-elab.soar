@@ -1,0 +1,151 @@
+sp {match-task-operator*elaborate*state*name*learn-matches-task-op-elaboration-rule
+   (state <s> ^superstate.match-task-operator <mto>
+              ^impasse no-change
+              ^attribute state)
+-->
+   (<s> ^name learn-matches-task-op-elaboration-rule
+        ^ss-match-task-operator <mto>)
+}
+
+sp {match-task-operator*elaborate*task-op-to-match
+   (state <s> ^name learn-matches-task-op-elaboration-rule
+              ^ss-match-task-operator.task-operator <task-op>)
+-->
+   (<s> ^task-op-to-match <task-op>
+        ^task-info <info>)
+}
+
+sp {learn-matches-task-op-elaboration-rule*elaborate*candidate
+   (state <s> ^name learn-matches-task-op-elaboration-rule
+              ^ss-match-task-operator.candidate-tasks.candidate-task-operator <cand-tkop>)
+-->
+   (<s> ^candidate <cand>)
+   (<cand> ^task-operator <cand-tkop>)
+}
+
+sp {task-utils*match-task-operator*elaborate*no-matching-candidates
+   (state <s> ^name learn-matches-task-op-elaboration-rule
+             -^candidate.successful-match yes)
+-->
+   (<s> ^no-matching-candidates true)
+}
+
+sp {task-utils*match-task-operator*elaborate*learning-task-utils-rule
+   (state <s> ^name learn-matches-task-op-elaboration-rule
+              ^ss-match-task-operator <ss-mto>
+             -^no-matching-candidates true)
+-->
+   (<s> ^learning-task-utils-rule true)
+}
+
+# elaborate argument information 
+## ENUMERATE: 0-5 TASK ARGUMENTS
+sp {learn-matches-task-op-elaboration-rule*elaborate*no-args
+   (state <s> ^name learn-matches-task-op-elaboration-rule
+              ^task-op-to-match <task-op>
+              ^task-info <info>)
+   -{(<task-op> ^<n1> <arg2>)
+      (<arg2> ^arg-type << object partial-predicate concept >>)}
+-->
+   (<info> ^num-args 0)
+}
+
+sp {learn-matches-task-op-elaboration-rule*elaborate*arg-names*1*args
+   (state <s> ^name learn-matches-task-op-elaboration-rule
+              ^task-op-to-match <task-op>
+              ^task-info <info>)
+   (<task-op> ^{ <n1>        } <arg1>)
+   (<arg1> ^arg-type << object partial-predicate concept >>)
+   -{(<task-op> ^{ <n2> <> <n2> <> <n1> } <arg2>)
+      (<arg2> ^arg-type << object partial-predicate concept >>)}
+-->
+   (<info> ^num-args 1
+           ^arg-name <n1>
+           ^<n1> <arg1>)
+}
+
+sp {learn-matches-task-op-elaboration-rule*elaborate*arg-names*2*args
+   (state <s> ^name learn-matches-task-op-elaboration-rule
+              ^task-op-to-match <task-op>
+              ^task-info <info>)
+   (<task-op> ^{ <n1>        } <arg1>
+              ^{ <n2> > <n1> } <arg2>)
+   (<arg1> ^arg-type << object partial-predicate concept >>)
+   (<arg2> ^arg-type << object partial-predicate concept >>)
+   -{(<task-op> ^{ <n3> <> <n2> <> <n1> } <arg3>)
+      (<arg3> ^arg-type << object partial-predicate concept >>)}
+-->
+   (<info> ^num-args 2
+           ^arg-name <n1> <n2>
+           ^<n1> <arg1>
+           ^<n2> <arg2>)
+}
+
+sp {learn-matches-task-op-elaboration-rule*elaborate*arg-names*3*args
+   (state <s> ^name learn-matches-task-op-elaboration-rule
+              ^task-op-to-match <task-op>
+              ^task-info <info>)
+   (<task-op> ^{ <n1>        } <arg1>
+              ^{ <n2> > <n1> } <arg2>
+              ^{ <n3> > <n2> } <arg3>)
+   (<arg1> ^arg-type << object partial-predicate concept >>)
+   (<arg2> ^arg-type << object partial-predicate concept >>)
+   (<arg3> ^arg-type << object partial-predicate concept >>)
+   -{(<task-op> ^{ <n4> <> <n3> <> <n2> <> <n1> } <arg4>)
+      (<arg4> ^arg-type << object partial-predicate concept >>)}
+-->
+   (<info> ^num-args 3
+           ^arg-name <n1> <n2> <n3> 
+           ^<n1> <arg1>
+           ^<n2> <arg2>
+           ^<n3> <arg3>)
+}
+
+sp {learn-matches-task-op-elaboration-rule*elaborate*arg-names*4*args
+   (state <s> ^name learn-matches-task-op-elaboration-rule
+              ^task-op-to-match <task-op>
+              ^task-info <info>)
+   (<task-op> ^{ <n1>        } <arg1>
+              ^{ <n2> > <n1> } <arg2>
+              ^{ <n3> > <n2> } <arg3>
+              ^{ <n4> > <n3> } <arg4>)
+   (<arg1> ^arg-type << object partial-predicate concept >>)
+   (<arg2> ^arg-type << object partial-predicate concept >>)
+   (<arg3> ^arg-type << object partial-predicate concept >>)
+   (<arg4> ^arg-type << object partial-predicate concept >>)
+   -{(<task-op> ^{ <n5> <> <n4> <> <n3> <> <n2> <> <n1> } <arg5>)
+      (<arg5> ^arg-type << object partial-predicate concept >>)}
+-->
+   (<info> ^num-args 4
+           ^arg-name <n1> <n2> <n3> <n4> 
+           ^<n1> <arg1>
+           ^<n2> <arg2>
+           ^<n3> <arg3>
+           ^<n4> <arg4>)
+}
+
+sp {learn-matches-task-op-elaboration-rule*elaborate*arg-names*5*args
+   (state <s> ^name learn-matches-task-op-elaboration-rule
+              ^task-op-to-match <task-op>
+              ^task-info <info>)
+   (<task-op> ^{ <n1>        } <arg1>
+              ^{ <n2> > <n1> } <arg2>
+              ^{ <n3> > <n2> } <arg3>
+              ^{ <n4> > <n3> } <arg4>
+              ^{ <n5> > <n4> } <arg5>)
+   (<arg1> ^arg-type << object partial-predicate concept >>)
+   (<arg2> ^arg-type << object partial-predicate concept >>)
+   (<arg3> ^arg-type << object partial-predicate concept >>)
+   (<arg4> ^arg-type << object partial-predicate concept >>)
+   (<arg5> ^arg-type << object partial-predicate concept >>)
+   -{(<task-op> ^{ <n6> <> <n5> <> <n4> <> <n3> <> <n2> <> <n1> } <arg6>)
+      (<arg6> ^arg-type << object partial-predicate concept >>)}
+-->
+   (<info> ^num-args 5
+           ^arg-name <n1> <n2> <n3> <n4> <n5>
+           ^<n1> <arg1>
+           ^<n2> <arg2>
+           ^<n3> <arg3>
+           ^<n4> <arg4>
+           ^<n5> <arg5>)
+}

@@ -1,0 +1,32 @@
+classes {
+  c# {
+    labels = ["door", ""];
+    ids = [49, 51];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp49", ""];
+    ids = [49];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp51", ""];
+    ids = [51];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+}

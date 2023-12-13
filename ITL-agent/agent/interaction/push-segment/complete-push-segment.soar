@@ -1,0 +1,56 @@
+sp {push-segment*propose*complete-push-segment
+   (state <s> ^name push-segment)
+-->
+   (<s> ^operator <o> + <)
+   (<o> ^name complete-push-segment)
+}
+
+# Pushes the actual segment onto the stack
+sp {push-segment*apply*complete-push-segment*push-segment
+   (state <s> ^name push-segment
+              ^operator.name complete-push-segment
+              ^segment <seg>
+              ^epmem.present-id <epmem-id>
+              ^top-state.interaction.stack <stack>)
+   (<stack> ^segment <prev-seg>)
+-->
+   (<stack> ^segment <prev-seg> -
+            ^segment <seg>)
+   (<seg> ^epmem-id <epmem-id>)
+   (<prev-seg> ^prev <seg>)
+}
+
+sp {push-segment*apply*complete-push-segment*remove*new-segment-info
+   (state <s> ^name push-segment
+              ^operator.name complete-push-segment
+              ^new-segment-info <info>
+              ^top-state.interaction.changes <c>)
+   (<c> ^new-segment-info <info>)
+-->
+   (<c> ^new-segment-info <info> -)
+}
+
+sp {push-segment*increment*counter
+   (state <s> ^name push-segment
+   	      ^operator.name complete-push-segment
+	      ^segment <seg>
+	      ^top-state.interaction.stack.segment <prev>)
+   (<seg> ^purpose.type execute-task)
+   (<prev> ^counter <count>)
+-->
+   (<prev> ^counter <count> -
+   	   ^counter (+ <count> 1))
+}
+
+sp {push-segment*apply*complete-push-segment*print-interaction-stack*print
+   (state <s> ^name push-segment
+              ^operator.name complete-push-segment
+              ^agent-params.print-interaction-stack true
+              ^segment <seg>)
+   (<seg> ^purpose <purp>)
+-->
+   (write (concat (crlf) |Pushing Interaction Segment:| (crlf)))
+   (write (cmd print <seg>) (crlf))
+   (write (cmd print <purp> -d 3) (crlf))
+}
+

@@ -1,0 +1,99 @@
+sp {comprehension*propose*runaway-word-processing
+   (state <s> ^name comprehension
+              ^segment.decision-count-threshold <thres>
+              ^top-state.io.input-link.time.steps > <thres>)
+-->
+   (<s> ^operator <op> !)
+   (<op> ^name runaway-word-processing)
+} 
+
+#JK2023 no long recording failure-count so does not fire
+#TODO make two versions
+# sp {apply*runaway-word-processing*internal
+# :interrupt
+#    (state <s> ^operator.name runaway-word-processing
+#               ^agent-params.sentence-source scripts
+#               ^top-state <ts> 
+#               ^segment <seg>)
+#    (<seg> ^original-sentence <cs>
+#           ^decision-count-threshold <thres>) 
+#    (<ts> ^current-sentence-number <csn>) #JK2023 no sentence number for agent evaluation
+#          #^failure-count <fc>)#JK2023 
+# -->
+# #   (interrupt)
+#    (<seg> ^decision-count-threshold <thres> -)
+#    #(write (crlf) |Runaway processing: | <thres>)
+#    (<seg> ^processed-terminator true)
+#    (<cs> ^processed-sentence true
+#          ^processing-result failure)
+#    (<ts> ^terminated-sentence <csn> #JK2023 
+#          ^failure-count 1)#<fc> - (+ <fc> 1))#JK2023 
+# }
+
+sp {apply*runaway-word-processing*internal
+   (state <s> ^operator.name runaway-word-processing
+              #^agent-params.sentence-source scripts
+              ^top-state.agent-params.use-language-model true
+              ^top-state.interaction.status <status>
+              #^top-state <ts> 
+              ^segment <seg>)
+   (<seg> ^original-sentence <cs>
+          ^decision-count-threshold <thres>) 
+   #(<ts> ^current-sentence-number <csn>) #JK2023 no sentence number for agent evaluation
+         #^failure-count <fc>)#JK2023 
+-->
+#   (interrupt)
+   (<seg> ^decision-count-threshold <thres> -)
+   #(write (crlf) |Runaway processing: | <thres>)
+   (<seg> ^processed-terminator true)
+   (<cs> ^processed-sentence true
+         ^processing-result failure)
+   #(<ts> #^terminated-sentence <csn> #JK2023 
+   #      ^failure-count 1)#<fc> - (+ <fc> 1))#JK2023
+   (<status> ^failure.type failed-to-interpret-message)
+   (<seg> ^parse-failed-end-of-sentence true)
+}
+
+# sp {comprehension*apply*next-word*end-of-sentence-failure*internal
+#    (state <s> ^operator.name next-word
+#               ^agent-params.sentence-source scripts
+#               ^top-state.interaction.status <status>
+#               ^segment <seg>)
+#    (<seg> ^input-sentence <i>
+#           ^current-word <old-w>
+#           ^prior-word <pw>
+#           ^original-sentence <cs>
+#           ^original-sentence.complete-sentence <os>
+#           ^semantics <sem>)
+#    (<i> ^next nil
+#         ^spelling << |?| |!| |.| >>)
+# -->
+#   # (interrupt)
+#    #(write (crlf) |Internal parse FAILED. Didn't get complete parse by time end of sentence encountered.|)
+#   # (<cs> ^processing-result failure)
+#    #JK2023 adding, failures not properly triggering and getting into bad loop with bad sentence
+# 		(<cs> ^processing-result failure
+#     	     ^processed-sentence true)
+#    		(<status> ^failure.type failed-to-interpret-message)
+#    (<seg> ^parse-failed-end-of-sentence true)
+#  # (write (crlf) |========== | <csn> | =============================================| (crlf) <os>)
+#  #  (write (crlf) (cmd print -d 7 <sem>) |=======================|)
+# }
+
+sp {apply*runaway-word-processing*external
+   (state <s> ^operator.name runaway-word-processing
+              ^agent-params.sentence-source chat
+             -^top-state.agent-params.use-language-model 
+              ^segment <seg>)
+   (<seg> ^original-sentence <cs>
+          ^decision-count-threshold <thres>) 
+-->
+#   (interrupt)
+   (<seg> ^decision-count-threshold <thres> -)
+   #(write (crlf) |Runaway processing: | <thres>)
+   (<seg> ^processed-terminator true)
+   (<cs> ^processed-sentence true
+         ^terminated-sentence <cs> #JK2023 
+         ^processing-result failure)
+}
+

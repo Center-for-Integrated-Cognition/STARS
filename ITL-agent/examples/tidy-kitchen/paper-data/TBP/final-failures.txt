@@ -1,0 +1,59 @@
+(L6 ^failure F622 ^failure F292 ^failure F286 ^failure F278 ^failure F274
+       ^failure F80 ^failure F71 ^failure F66 ^failure F61 ^failure F59)
+  (F622 ^evaluation E37863 ^handle |32| ^object-desc |a mug in the dish rack|
+         ^sentence |the goal is that the mug is in the cabinet and the cabinet is closed|)
+    (E37863 ^interpreted true ^issue-count 1 ^type ungrounded-obj1
+           ^ungrounded-object P85359)
+      (P85359 ^handle new-object-id193 ^item-type object ^predicates P85360
+             ^predicates-copied true)
+  (F292 ^evaluation E21644 ^handle |31| ^object-desc |a mug on the counter|
+         ^sentence |the goal is that the mug is in the dishwasher and the dishwasher is turned on|)
+    (E21644 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F286 ^evaluation E20692 ^handle |28| ^object-desc |a plate on the counter|
+         ^sentence |the goal is that the plate is in the dishwasher and the dishwasher is turned on|)
+    (E20692 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F278 ^evaluation E19444 ^handle |17|
+         ^object-desc |an apple-core on the counter|
+         ^sentence |the goal is that the apple-core is in the bin and the bin is closed|)
+    (E19444 ^affordance-mismatch A60376 ^interpreted true ^issue-count 1)
+      (A60376 ^clause I53362 ^obj-desc bin1 ^object O877 ^object-desc R57187
+             ^property closed ^type affordance2)
+  (F274 ^evaluation E18541 ^handle |14|
+         ^object-desc |a coke-can on the counter|
+         ^sentence |the goal is that the coke-can is in the bin and the bin is closed|)
+    (E18541 ^affordance-mismatch A60331 ^interpreted true ^issue-count 1)
+      (A60331 ^clause I52031 ^obj-desc bin1 ^object O877 ^object-desc R54370
+             ^property closed ^type affordance2)
+  (F80 ^evaluation E4441 ^handle |29|
+         ^object-desc |a glass-tumbler on the table|
+         ^sentence |the goal is that the glass-tumbler is in the dishwasher and the dishwasher is turned on|)
+    (E4441 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F71 ^evaluation E2952 ^handle |20|
+         ^object-desc |a plastic-cup on the table|
+         ^sentence |the goal is that the plastic-cup is in the sink and the sink is full of water|)
+    (E2952 ^failure failed-interpretation ^interpreted false ^issue-count 2
+           ^type ungrounded-obj1 ^type uninterpreted ^ungrounded-object P5842)
+      (P5842 ^handle new-object-id28 ^item-type object ^predicates P5843
+             ^predicates-copied true)
+  (F66 ^evaluation E2081 ^handle |18|
+         ^object-desc |a paper-plate on the table|
+         ^sentence |the goal is that the paper-plate is in the bin and the bin is closed|)
+    (E2081 ^affordance-mismatch A987 ^interpreted true ^issue-count 1)
+      (A987 ^clause I3146 ^obj-desc bin1 ^object O877 ^object-desc R8205
+             ^property closed ^type affordance2)
+  (F61 ^evaluation E1142 ^handle |13| ^object-desc |a soda-can on the table|
+         ^sentence |the goal is that the soda-can is in the recycling bin and the recycling bin is closed|)
+    (E1142 ^affordance-mismatch A947 ^interpreted true ^issue-count 1)
+      (A947 ^clause I1777 ^obj-desc bin1 ^object O877 ^object-desc R5273
+             ^property closed ^type affordance2)
+  (F59 ^evaluation E800 ^handle |12|
+         ^object-desc |a plastic-bottle on the table|
+         ^sentence |the goal is that the plastic-bottle is in the recycling bin and the recycling bin is closed|)
+    (E800 ^affordance-mismatch A932 ^interpreted true ^issue-count 1)
+      (A932 ^clause I1277 ^obj-desc bin1 ^object O877 ^object-desc R4247
+             ^property closed ^type affordance2)
+
+

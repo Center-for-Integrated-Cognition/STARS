@@ -1,0 +1,52 @@
+# Merge arg2 into arg1 using change-world-state (see manage-world-state)
+
+sp {op_remember1*elaborate*objects*superoperator
+   (state <s> ^name op_remember1
+              ^memory-type wm
+              ^task-operator <ssop>)
+   (<ssop> ^arg1.id <obj1>
+           ^arg2.id <obj2>)
+-->
+   (<s> ^core-object <obj1>
+        ^merging-object <obj2>)
+}
+
+sp {op_remember1*propose*change-world-state*merge-belief-objects
+   (state <s> ^name op_remember1
+              ^problem-space.execution-type external
+              ^memory-type wm
+              ^current-task-segment.current-goal.handle remember1goal1
+              ^top-state.perception-monitor.object-monitor <obj-mon>
+              ^core-object <core>
+              ^merging-object <merged>)
+   (<obj-mon> ^object-info <core-info> { <merged-info> <> <core-info> })
+   (<core-info> ^world-obj <core>)
+   (<merged-info> ^world-obj <merged>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name change-world-state
+        ^merge-belief-objects <merge>)
+   (<merge> ^core-object-info <core-info>
+            ^merging-object-info <merged-info>)
+}
+
+sp {op_remember1*apply*change-world-state*merge-belief-objects*mark*remember-command*complete
+   (state <s> ^name op_remember1
+              ^operator <o>
+              ^current-task-segment <seg>)
+   (<o> ^name change-world-state
+        ^merge-belief-objects <merge>)
+-->
+   (<seg> ^remember-command.status success)
+}
+
+sp {op_remember1*apply*change-world-state*merge-belief-objects*mark*object*as*task-object
+   (state <s> ^name op_remember1
+              ^operator <o>
+              ^core-object <obj>
+              ^parent-task-segment.task-objects <objs>)
+   (<o> ^name change-world-state
+        ^merge-belief-objects <merge>)
+-->
+   (<objs> ^added-object <obj>)
+}

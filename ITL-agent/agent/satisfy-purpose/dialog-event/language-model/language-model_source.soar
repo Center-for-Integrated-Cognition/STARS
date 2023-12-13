@@ -1,0 +1,9 @@
+source analyze-lm-response.soar
+
+source process-lm-actions.soar
+
+source evaluate-parse-of-lm.soar
+
+source evaluate-affordance.soar
+
+source preferences.soar

@@ -1,0 +1,59 @@
+sp {top-state*apply*init-agent*create*name
+	(state <s> ^top-state <s>
+				^operator.name init-agent)
+-->
+	(<s> ^name rosie)
+}
+
+### the agent maintains an interaction state
+## initialized at agent initialization
+
+sp {top-state*apply*init-agent*create*interaction-stack
+   (state <s> ^top-state <s>
+              ^operator.name init-agent)
+-->
+   (<s> ^interaction <int>)
+   (<int> ^stack <stack>
+          ^status <status>
+          ^changes <changes>)
+   (<stack> ^segment <seg>
+            ^segments.segment <seg>)
+   (<seg> ^id 10
+   	  ^purpose none
+	  ^counter 1)
+}
+
+# Creates the task-stack during init-agent
+sp {top-state*apply*init-agent*create*task-stack
+   (state <s> ^superstate nil
+              ^operator.name init-agent)
+-->
+   (<s> ^task-stack <stack>)
+   (<stack> ^top none
+            ^bottom none
+            ^changes <c>
+            ^queued-tasks <q>
+            ^segments <segs>
+            ^whenever <when>)
+}
+              
+sp {top-state*apply*init-agent*create*lm-responses
+   (state <s> ^superstate nil
+              ^operator.name init-agent)
+-->
+   (<s> ^lm-responses <lm>
+        ^past-lm-responses <lms>
+        ^phase 1
+        ^lm-failures <lf>)
+}
+
+sp {top-state*apply*init-agent*cozmo*reset*robot
+   (state <s> ^superstate nil
+              ^agent-params.domain cozmo
+              ^operator.name init-agent
+              ^io.output-link <ol>)
+-->
+   (<ol> ^move-lift.height 0.0
+         ^move-head.angle 0.0)
+}
+

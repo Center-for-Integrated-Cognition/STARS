@@ -1,0 +1,437 @@
+"soargroup.mobilesim.sim.SimRobot"
+{
+  # Robot ID
+  6
+  # XYZRPY Truth
+  vec 6
+   15.00  10.00   0.10   0.00   0.00   0.00
+  # XYZRPY Odometry
+  vec 6
+    0.00   0.00   0.00   0.00   0.00   0.00
+}
+"soargroup.mobilesim.sim.RosieSimObject"
+{
+  # Object Description
+  desk
+  # Object xyz
+  vec 3
+   12.00   9.65   0.25
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    1.40   3.40   0.50
+  # Color rgb (int 0-255)
+  ivec 3
+    94 76 28
+  # Properties
+  3
+    category=desk1
+    custom-model
+    surface
+}
+"soargroup.mobilesim.sim.RosieSimObject"
+{
+  # Object Description
+  chair
+  # Object xyz
+  vec 3
+   11.00  10.65   0.33
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.65   0.65   0.65
+  # Color rgb (int 0-255)
+  ivec 3
+    30 30 150
+  # Properties
+  3
+    color=blue1
+    category=chair1
+    custom-model
+}
+"soargroup.mobilesim.sim.SimShelves"
+{
+  # Object Description
+  drawer
+  # Object xyz
+  vec 3
+   16.00  12.50   0.51
+  # Rotation (yaw)
+  4.71238898038469
+  # Scale xyz
+  vec 3
+    1.00   2.00   1.00
+  # Color rgb (int 0-255)
+  ivec 3
+    94 76 28
+  # Properties
+  2
+    category=drawer1
+    is-open1=not-open1
+}
+"soargroup.mobilesim.sim.SimShelves"
+{
+  # Object Description
+  cabinet
+  # Object xyz
+  vec 3
+   14.00  12.50   0.76
+  # Rotation (yaw)
+  4.71238898038469
+  # Scale xyz
+  vec 3
+    1.00   1.00   1.50
+  # Color rgb (int 0-255)
+  ivec 3
+    198 198 193
+  # Properties
+  3
+    property=filing1
+    category=cabinet1
+    is-open1=not-open1
+}
+"soargroup.mobilesim.sim.RosieSimObject"
+{
+  # Object Description
+  bin
+  # Object xyz
+  vec 3
+   14.85   7.65   0.26
+  # Rotation (yaw)
+  1.5707963267948966
+  # Scale xyz
+  vec 3
+    1.00   1.00   0.50
+  # Color rgb (int 0-255)
+  ivec 3
+    0 0 255
+  # Properties
+  4
+    property=recycling1
+    category=bin1
+    openbox
+    receptacle
+}
+"soargroup.mobilesim.sim.RosieSimObject"
+{
+  # Object Description
+  garbage
+  # Object xyz
+  vec 3
+   16.25   7.65   0.26
+  # Rotation (yaw)
+  1.5707963267948966
+  # Scale xyz
+  vec 3
+    1.00   1.00   0.50
+  # Color rgb (int 0-255)
+  ivec 3
+    80 150 80
+  # Properties
+  3
+    category=garbage1
+    openbox
+    receptacle
+}
+"soargroup.mobilesim.sim.SimShelves"
+{
+  # Object Description
+  bookshelf
+  # Object xyz
+  vec 3
+   17.38   9.50   1.00
+  # Rotation (yaw)
+  3.141592653589793
+  # Scale xyz
+  vec 3
+    1.00   2.00   2.00
+  # Color rgb (int 0-255)
+  ivec 3
+    94 76 28
+  # Properties
+  1
+    category=bookshelf1
+}
+"soargroup.mobilesim.sim.RosieSimObject"
+{
+  # Object Description
+  stapler
+  # Object xyz
+  vec 3
+   12.40   9.25   0.56
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.10   0.20   0.10
+  # Color rgb (int 0-255)
+  ivec 3
+    0 0 0
+  # Properties
+  1
+    category=stapler1
+}
+"soargroup.mobilesim.sim.RosieSimObject"
+{
+  # Object Description
+  file
+  # Object xyz
+  vec 3
+   12.55   9.00   0.53
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.30   0.20   0.05
+  # Color rgb (int 0-255)
+  ivec 3
+    200 200 200
+  # Properties
+  1
+    category=file1
+}
+"soargroup.mobilesim.sim.RosieSimObject"
+{
+  # Object Description
+  pen
+  # Object xyz
+  vec 3
+   12.38   8.12   0.53
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.20   0.05   0.05
+  # Color rgb (int 0-255)
+  ivec 3
+    100 20 20
+  # Properties
+  2
+    rectangle
+    category=pen1
+}
+"soargroup.mobilesim.sim.RosieSimObject"
+{
+  # Object Description
+  papercoffeecup
+  # Object xyz
+  vec 3
+   12.57  10.62   0.58
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.10   0.10   0.15
+  # Color rgb (int 0-255)
+  ivec 3
+    200 200 200
+  # Properties
+  2
+    cylinder
+    category=paper-coffee-cup1
+}
+"soargroup.mobilesim.sim.RosieSimObject"
+{
+  # Object Description
+  pencil
+  # Object xyz
+  vec 3
+   12.60  10.38   0.53
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.20   0.05   0.05
+  # Color rgb (int 0-255)
+  ivec 3
+    241 213 146
+  # Properties
+  2
+    rectangle
+    category=pencil1
+}
+"soargroup.mobilesim.sim.RosieSimObject"
+{
+  # Object Description
+  folder
+  # Object xyz
+  vec 3
+   12.10  11.00   0.56
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.30   0.20   0.10
+  # Color rgb (int 0-255)
+  ivec 3
+    241 213 146
+  # Properties
+  1
+    category=folder1
+}
+"soargroup.mobilesim.sim.RosieSimObject"
+{
+  # Object Description
+  book
+  # Object xyz
+  vec 3
+   12.45   9.65   0.56
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.20   0.30   0.10
+  # Color rgb (int 0-255)
+  ivec 3
+    105 105 105
+  # Properties
+  1
+    category=book1
+}
+"soargroup.mobilesim.sim.RosieSimObject"
+{
+  # Object Description
+  tissue
+  # Object xyz
+  vec 3
+   12.45  11.00   0.53
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.20   0.20   0.05
+  # Color rgb (int 0-255)
+  ivec 3
+    200 200 200
+  # Properties
+  2
+    rectangle
+    category=tissue1
+}
+"soargroup.mobilesim.sim.RosieSimObject"
+{
+  # Object Description
+  spritecan
+  # Object xyz
+  vec 3
+   12.60   8.50   0.63
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.12   0.12   0.25
+  # Color rgb (int 0-255)
+  ivec 3
+    0 100 10
+  # Properties
+  2
+    cylinder
+    category=sprite-can1
+}
+"soargroup.mobilesim.sim.RosieSimObject"
+{
+  # Object Description
+  dictionary
+  # Object xyz
+  vec 3
+   12.40  10.00   0.56
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.30   0.20   0.10
+  # Color rgb (int 0-255)
+  ivec 3
+    0 0 0
+  # Properties
+  1
+    category=dictionary1
+}
+"soargroup.mobilesim.sim.RosieSimObject"
+{
+  # Object Description
+  novel
+  # Object xyz
+  vec 3
+   12.30   8.60   0.56
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.30   0.20   0.10
+  # Color rgb (int 0-255)
+  ivec 3
+    20 20 100
+  # Properties
+  1
+    category=novel1
+}
+"soargroup.mobilesim.sim.RosieSimObject"
+{
+  # Object Description
+  plasticwaterbottle
+  # Object xyz
+  vec 3
+   12.40  10.62   0.63
+  # Rotation (yaw)
+  0.0
+  # Scale xyz
+  vec 3
+    0.12   0.12   0.25
+  # Color rgb (int 0-255)
+  ivec 3
+    200 200 200
+  # Properties
+  2
+    cylinder
+    category=plastic-water-bottle1
+}
+"soargroup.mobilesim.sim.SimRoomWall"
+{
+  # End Point 1
+  vec 2
+   10.00  13.00
+  # End Point 2
+  vec 2
+   18.00  13.00
+}
+"soargroup.mobilesim.sim.SimRoomWall"
+{
+  # End Point 1
+  vec 2
+   18.00  13.00
+  # End Point 2
+  vec 2
+   18.00   7.00
+}
+"soargroup.mobilesim.sim.SimRoomWall"
+{
+  # End Point 1
+  vec 2
+   18.00   7.00
+  # End Point 2
+  vec 2
+   10.00   7.00
+}
+"soargroup.mobilesim.sim.SimRoomWall"
+{
+  # End Point 1
+  vec 2
+   10.00   7.00
+  # End Point 2
+  vec 2
+   10.00  13.00
+}
+"soargroup.mobilesim.sim.SimRegion"
+{
+  # Region ID
+  wp04
+  # Tag Position
+  vec 6
+   14.00  10.00   0.01   0.00   0.00   0.00
+  # Width (dx) and Length (dy)
+  8.0
+  6.0
+}

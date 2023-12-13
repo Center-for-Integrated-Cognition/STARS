@@ -1,0 +1,88 @@
+# Once the subtask operator has been generalized, add it to the parent TCN
+sp {learn-new-subtask*propose*add-subtask-to-tcn
+   (state <s> ^name learn-new-subtask
+              ^generalized-subtask <gen-subtask>
+              ^task-concept-network.procedural <proc>
+             -^create-goal-node)
+   (<proc> -^subtasks.subtask <gen-subtask>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name add-subtask-to-tcn
+        ^procedural-lti <proc>
+        ^subtask-rep <gen-subtask>)
+}
+
+sp {learn-new-subtask*propose*add-subtask-to-tcn*create-goal-node*subtask
+   (state <s> ^name learn-new-subtask
+              ^generalized-subtask <gen-subtask>
+              ^task-concept-network.procedural <proc>
+              ^create-goal-node subtask)
+   (<proc> -^subtasks.subtask <gen-subtask>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name add-subtask-to-tcn
+        ^procedural-lti <proc>
+        ^subtask-rep <gen-subtask>)
+}
+
+# If we are adding the subtask as a goal node, then the conditions
+#   should be on the graph edge, not the subtask proposal
+#   so we remove them from the subtask tcn
+sp {learn-new-subtask*apply*add-subtask-to-tcn*remove*conditions
+   (state <s> ^name learn-new-subtask
+              ^create-goal-node subtask
+              ^operator <o>)
+   (<o> ^name add-subtask-to-tcn
+        ^subtask-rep <rep>)
+   (<rep> ^conditions <conds>)
+-->
+   (<rep> ^conditions <conds> -)
+}
+
+# If there is no ^tcn.procedural.subtasks lti, create one
+sp {learn-new-subtask*apply*add-subtask-to-tcn*create*subtasks*lti
+   (state <s> ^name learn-new-subtask
+              ^operator <o>)
+   (<o> ^name add-subtask-to-tcn
+        ^procedural-lti <proc>)
+   (<proc> -^subtasks <subs>)
+-->
+   (<proc> ^subtasks <subs>)
+
+   (<s> ^store-concept <proc>)
+}
+
+# Add the subtask to the subtasks lti
+sp {learn-new-subtask*apply*add-subtask-to-tcn*add*subtask
+   (state <s> ^name learn-new-subtask
+              ^operator <o>)
+   (<o> ^name add-subtask-to-tcn
+        ^procedural-lti.subtasks <subs>
+        ^subtask-rep <sub>)
+-->
+   (<subs> ^subtask <sub>)
+
+   (<s> ^store-concept <subs>
+        ^store-task-operator <sub>)
+}
+
+# Create a subtask-handle
+sp {learn-new-subtask*apply*add-subtask-to-tcn*create*subtask*handle
+   (state <s> ^name learn-new-subtask
+              ^operator <o>)
+   (<o> ^name add-subtask-to-tcn
+        ^subtask-rep <sub>)
+-->
+   (<sub> ^handle (make-constant-symbol |subtask|))
+}
+
+# Mark the subtask as not being learned
+sp {learn-new-subtask*apply*add-subtask-to-tcn*mark*learned-proposal*no
+   (state <s> ^name learn-new-subtask
+              ^operator <o>)
+   (<o> ^name add-subtask-to-tcn
+        ^subtask-rep <sub>)
+-->
+   (<sub> ^learned-proposal no)
+}
+

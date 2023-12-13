@@ -1,0 +1,391 @@
+#   Soar code produced automatically 
+#   from file '..\Lucia\Grammars\Rosie\ecg\xv-nouns.ecg'.
+
+#   ROOM construction
+sp {comprehend-word*apply*lexical-access*ROOM-room
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |room|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name ROOM
+          ^is <a>
+          ^orth |room|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of CommonNoun
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a ROOM)
+   (<e-meaning> ^schema Room
+                ^target <meaning>)
+}
+
+#   LIGHTS construction
+sp {comprehend-word*apply*lexical-access*LIGHTS-lights
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |lights|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name LIGHTS
+          ^is <a>
+          ^orth |lights|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of CommonNoun
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a LIGHTS)
+   (<e-meaning> ^schema Lights
+                ^target <meaning>)
+}
+
+#   LIGHTS self.features.number <-- "pl" constraint
+sp {comprehend-word*LIGHTS-constraint*self-features-number*ASSIGN*pl
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a LIGHTS
+          ^orth |lights|
+          ^features <l-slot1>)
+   (<l-slot1> ^number { <target> <> |pl| })
+-->
+   (<l-slot1> ^number <target> -
+              ^number |pl|)
+}
+
+#   ROSIE construction
+sp {comprehend-word*apply*lexical-access*ROSIE-rosie
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |rosie|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name ROSIE
+          ^is <a>
+          ^orth |rosie|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Agent
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a ROSIE)
+   (<e-meaning> ^schema Rosie
+                ^target <meaning>)
+}
+
+#   BOB construction
+sp {comprehend-word*apply*lexical-access*BOB-bob
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |bob|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name BOB
+          ^is <a>
+          ^orth |bob|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of ProperName
+          ^subcase-of Agent
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a BOB)
+   (<e-meaning> ^schema Bob
+                ^target <meaning>)
+}
+
+#   ACTION construction
+sp {comprehend-word*apply*lexical-access*ACTION-action
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |action|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name ACTION
+          ^is <a>
+          ^orth |action|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of PropertyClassName
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a ACTION)
+   (<e-meaning> ^schema PropertyClass
+                ^target <meaning>)
+}
+
+#   ACTION self.m.name <-- "action2" constraint
+sp {comprehend-word*ACTION-constraint*self-m-name*ASSIGN*action2
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a ACTION
+          ^orth |action|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |action2| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |action2|)
+}
+
+#   RELATION construction
+sp {comprehend-word*apply*lexical-access*RELATION-relation
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |relation|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name RELATION
+          ^is <a>
+          ^orth |relation|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of PropertyClassName
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a RELATION)
+   (<e-meaning> ^schema PropertyClass
+                ^target <meaning>)
+}
+
+#   RELATION self.m.name <-- "relation1" constraint
+sp {comprehend-word*RELATION-constraint*self-m-name*ASSIGN*relation1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a RELATION
+          ^orth |relation|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |relation1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |relation1|)
+}
+
+#   QUESTION construction
+sp {comprehend-word*apply*lexical-access*QUESTION-question
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |question|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name QUESTION
+          ^is <a>
+          ^orth |question|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of CommonNoun
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a QUESTION)
+   (<e-meaning> ^schema Question
+                ^target <meaning>)
+}
+
+#   ANSWER construction
+sp {comprehend-word*apply*lexical-access*ANSWER-answer
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |answer|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name ANSWER
+          ^is <a>
+          ^orth |answer|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of CommonNoun
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a ANSWER)
+   (<e-meaning> ^schema Answer
+                ^target <meaning>)
+}
+
+#   RESPONSE construction
+sp {comprehend-word*apply*lexical-access*RESPONSE-response
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |response|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name RESPONSE
+          ^is <a>
+          ^orth |response|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of CommonNoun
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a RESPONSE)
+   (<e-meaning> ^schema Response
+                ^target <meaning>)
+}
+
+#   MESSAGE construction
+sp {comprehend-word*apply*lexical-access*MESSAGE-message
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |message|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name MESSAGE
+          ^is <a>
+          ^orth |message|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of CommonNoun
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a MESSAGE)
+   (<e-meaning> ^schema Message
+                ^target <meaning>)
+}
+
+#   MINUTE construction
+sp {comprehend-word*apply*lexical-access*MINUTE-minute
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |minute|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name MINUTE
+          ^is <a>
+          ^orth |minute|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of UnitsName
+          ^first-lex nil)
+   (<a> ^a MINUTE)
+}
+
+#   MINUTE self.m.type <-- "time" constraint
+sp {comprehend-word*MINUTE-constraint*self-m-type*ASSIGN*time
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a MINUTE
+          ^orth |minute|
+          ^m <l-slot1>)
+   (<l-slot1> ^type { <target> <> |time| })
+-->
+   (<l-slot1> ^type <target> -
+              ^type |time|)
+}
+
+#   MINUTE self.m.concept-handle <-- "minutes" constraint
+sp {comprehend-word*MINUTE-constraint*self-m-concept-handle*ASSIGN*minutes
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a MINUTE
+          ^orth |minute|
+          ^m <l-slot1>)
+   (<l-slot1> ^concept-handle { <target> <> |minutes| })
+-->
+   (<l-slot1> ^concept-handle <target> -
+              ^concept-handle |minutes|)
+}
+
+#   MINUTES construction
+sp {comprehend-word*apply*lexical-access*MINUTES-minutes
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |minutes|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name MINUTES
+          ^is <a>
+          ^orth |minutes|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of UnitsName
+          ^first-lex nil)
+   (<a> ^a MINUTES)
+}
+
+#   MINUTES self.m.type <-- "time" constraint
+sp {comprehend-word*MINUTES-constraint*self-m-type*ASSIGN*time
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a MINUTES
+          ^orth |minutes|
+          ^m <l-slot1>)
+   (<l-slot1> ^type { <target> <> |time| })
+-->
+   (<l-slot1> ^type <target> -
+              ^type |time|)
+}
+
+#   MINUTES self.m.concept-handle <-- "minutes" constraint
+sp {comprehend-word*MINUTES-constraint*self-m-concept-handle*ASSIGN*minutes
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a MINUTES
+          ^orth |minutes|
+          ^m <l-slot1>)
+   (<l-slot1> ^concept-handle { <target> <> |minutes| })
+-->
+   (<l-slot1> ^concept-handle <target> -
+              ^concept-handle |minutes|)
+}
+

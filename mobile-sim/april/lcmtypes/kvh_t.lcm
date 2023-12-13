@@ -1,0 +1,11 @@
+struct kvh_t
+{
+    int64_t utime;
+
+    // (average) angular velocity in radians per second
+    double rads;
+
+    // raw data samples
+    int16_t nsamples;
+    int32_t samples[nsamples];
+}

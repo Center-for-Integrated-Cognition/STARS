@@ -1,0 +1,16 @@
+sp {task-utils*instantiate*propose*instantiate-task-goal
+   (state <s> ^instantiate-task-goal <ito>)
+   (<ito> ^general-goal-rep <rep>     
+          ^reference-task-op <task-op>   
+          ^reference-tcn-proc <proc>
+          ^world <w>
+         -^instantiation)  
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name instantiate-task-goal
+        ^destination <ito>
+        ^general-goal-rep <rep>     
+        ^reference-task-op <task-op>   
+        ^reference-tcn-proc <proc>
+        ^world <w>)
+}

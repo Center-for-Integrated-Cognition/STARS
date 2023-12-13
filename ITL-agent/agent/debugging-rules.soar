@@ -1,0 +1,333 @@
+##################################################################
+# Debugging Rules
+# 
+# These are rules which are triggered by specific debug parameters
+# and which aid in debugging the agent, 
+# such as interrupting at specific operators or printing additional info
+# 
+# These parameters should be added under the top-state.agent-params identifier
+#   but in test-agent specific soar code (e.g. should not be global)
+##################################################################
+
+##### Parameters:
+#
+# debug-ids true                 : Will elaborate specific structures with debug-ids and allow handy alias commands
+#
+# report-tasks-to-output-link true : Will add ^started-task and ^completed-task commands to the output-link 
+#
+# INTERRUPTS: 
+# debug-op-ties true             : Will interrupt and print info on ever operator tie
+#
+# interrupt-operator <op-name>   : Will interrupt any time an operator 
+#                                  with the given name is selected
+#
+# debug-wait-limit <int>         : Will interrupt after <int> consecutive wait operators (only state no-change waits)
+#
+# interrupt-end-of-sentence true : Will interrupt after each sentence in parser-test mode
+#
+# interrupt-new-task true        : Will interrupt when starting a new task/subtask
+#
+# interrupt-task-search true     : Will interrupt when starting a subtask search and when it finishes
+#
+# disable-reference-info true    : Will not add reference-info onto parsed messages
+#
+#
+# PRINTING:
+# print-perception true          : Will print during perception-processing, attend-to-scene-change stuff
+# 
+# print-new-task true            : Will print each task-segment that is pushed onto the task-stack
+# 
+# print-new-task-shorthand true  : Will print a single-line summary of each new task
+# 
+# print-wp-search-path-costs true : Will print the heuristic path costs during astar waypoint search
+# 
+# print-parsed-messages true     : Will print each message parse produced by comprehension
+# 
+# save-parsed-messages true      : Will write each sentence with its message to |parse.txt|
+# 
+# print-parser-data true         : Will print detailed messages from the parser
+#
+# print-incoming-messages true   : Will print each sentence that the agent goes to parse
+#
+# print-outgoing-messages true   : Will print each message going out the output-link
+# 
+# print-interaction-stack true   : Will print each interaction segment pushed/popped on the interaction stack
+
+
+#########
+### input-link.interrupt-agent <t>
+# If the environment elaborates an ^interrupt-agent <time> onto the input-link, (time > 0)
+# The agent will interrupt
+# Allows an agent caught in an infinite loop to be stopped from the outside
+sp {debugging-rules*interrupt-agent*interrupt
+   (state <s> ^superstate nil
+              ^io.input-link.interrupt-agent > 0)
+-->
+   (interrupt)
+}
+
+
+#########
+### input-link.monitor-world true
+# If the environment elaborates a ^monitor-world true flag onto the input-link
+# The agent will copy the world identifier onto the output-link 
+# (Will likely slow down the agent a lot)
+sp {debugging-rules*monitor-world*true
+   (state <s> ^superstate nil
+              ^io.input-link.monitor-world true
+              ^io.output-link <out>
+              ^world <w>)
+   (<w> ^objects <objs>
+        ^predicates <preds>)
+-->
+   (<out> ^world <new-w>)
+   (<new-w> ^objects <objs>
+            ^predicates <preds>)
+}
+
+
+#########
+### agent-params.debug-op-ties true
+
+sp {debugging-rules*debug-op-ties*anystate*operator-tie*interrupt
+   (state <s> ^impasse tie
+              ^agent-params.debug-op-ties true)
+-->
+   (interrupt)
+}
+
+sp {debugging-rules*debug-op-ties*anystate*print*tied*operators
+   (state <s> ^impasse tie
+              ^item <o>
+              ^agent-params.debug-op-ties true)
+   (<o> ^name <name>)
+-->
+   (write |Operator tie on | <s> |: '| <name> |'|  (crlf))
+   (write (cmd print <o> -d 2) (crlf))
+}
+
+
+#########
+### agent-params.interrupt-operator <op-name>
+
+sp {debugging-rules*interrupt-operator*anystate*interrupt
+   (state <s> ^agent-params.interrupt-operator <op-name>
+              ^operator.name <op-name>)
+-->
+   (interrupt)
+}
+
+#########
+### agent-params.interrupt-new-task true
+
+sp {debugging-rules*interrupt-new-task*top-state*interrupt
+   (state <s> ^superstate nil
+              ^agent-params.interrupt-new-task true
+              ^task-stack.top.start-of-execution true)
+-->
+   (interrupt)
+}
+
+########
+### agent-params.debug-wait-limit <int> (REQUIRED, default=0)
+
+sp {debugging-rules*debug-wait-limit*default*0
+   (state <s> ^superstate nil
+              ^agent-params <p>)
+   (<p> -^debug-wait-limit <> 0)
+-->
+   (<p> ^debug-wait-limit 0)
+}
+
+
+#########
+### agent-params.print-perception <bool> (REQUIRED, default=false)
+
+sp {debugging-rules*print-perception*default*false
+   (state <s> ^superstate nil
+              ^agent-params <p>)
+   (<p> -^print-perception true)
+-->
+   (<p> ^print-perception false)
+}
+
+# Write messages when an svs filter or command fails
+
+sp {debugging-rules*print-perception*top-state*report*svs*filter*errors
+   (state <s> ^superstate nil
+              ^agent-params.print-perception true
+              ^svs.command <cmd>)
+   (<cmd> ^{ << extract extract_once >> } <val>)
+   (<val> ^type <type>
+          ^status {<status> <> success})
+-->
+   (write |Filter Error (| <type> |): | <status> (crlf))
+}
+
+sp {debugging-rules*print-perception*top-state*report*svs*command*errors
+   (state <s> ^superstate nil
+              ^agent-params.print-perception true
+              ^svs.command <cmd>)
+   (<cmd> ^{<type> <> extract <> extract_once } <val>)
+   (<val> ^status {<status> <> success})
+-->
+   (write |Command Error (| <type> |): | <status> (crlf))
+}
+
+########
+### agent-params.print-parsed-messages true
+
+sp {debugging-rules*print-parsed-messages*top-state*print*new-message
+   (state <s> ^superstate nil
+              ^interaction.status.new-message <msg>
+              ^agent-params.print-parsed-messages true
+              ^current-sentence.original-sentence.complete-sentence <text>)
+-->
+   (write (concat |Interpreting Instructor Message: | (crlf) ) ||)
+   (write (concat <text> (crlf) ))
+   (write (concat (cmd print <msg> -d 10)) ||)
+}
+
+
+sp {debugging-rules*print-parsed-messages*top-state*save*new-message
+   (state <s> ^superstate nil
+              ^interaction.status.new-message <msg>
+              ^agent-params.save-parsed-messages true
+              ^current-sentence.original-sentence.complete-sentence <text>)
+-->
+#(cmd command-to-file -a |parse.txt| echo (concat <text> (crlf)))
+(cmd command-to-file -a |parse.txt| echo <text>)
+(cmd command-to-file -a |parse.txt| print -d 10 <msg>)
+}
+
+
+sp {debugging-rules*print-parsed-messages*top-state*print*new-message*without*text
+   (state <s> ^superstate nil
+              ^interaction.status.new-message <msg>
+              ^agent-params.print-parsed-messages true
+             -^dialog-context #JK prevent double firing, timing cause both rules to fire
+              -^current-sentence.original-sentence.complete-sentence <text>)
+-->
+   (write (concat |Interpreting Instructor Message: | (crlf) ) ||)
+   (write (concat (cmd print <msg> -d 10)) ||)
+}
+
+#########
+### agent-params.print-incoming-messages <bool> (default=false)
+
+sp {debugging-rules*print-incoming-messages*default*false
+   (state <s> ^superstate nil
+              ^agent-params <p>)
+   (<p> -^print-incoming-messages true)
+-->
+   (<p> ^print-incoming-messages false)
+}
+
+sp {debugging-rules*apply*process-new-sentence*print-incoming-messages
+   (state <s> ^superstate nil
+              ^agent-params.print-incoming-messages true
+              ^operator <o>)
+   (<o> ^name process-new-sentence
+        ^original-sentence.complete-sentence <sent>)
+-->
+   (write |NEW-SENTENCE: | <sent> (crlf))
+}
+
+sp {debugging-rules*apply*process-new-sentence*print-incoming-messages*2
+   (state <s> ^superstate nil
+              ^agent-params.print-incoming-messages true
+              ^operator <o>)
+   (<o> ^name process-new-sentence
+        ^sentence.original-sentence.complete-sentence <sent>)
+-->
+   (write |NEW-SENTENCE: | <sent> (crlf))
+}
+
+
+#########
+### agent-params.print-outgoing-messages <bool> (default=false)
+
+sp {debugging-rules*print-outgoing-messages*default*false
+   (state <s> ^superstate nil
+              ^agent-params <p>)
+   (<p> -^print-outgoing-messages true)
+-->
+   (<p> ^print-outgoing-messages false)
+}
+
+########
+### agent-params.debug-ids true
+
+# Will elaborate debug-ids onto specific structures in working memory
+# These are little handles for specific identifiers that aid in quick printing during debugging
+# Will elaborate an (<id> ^debug-id |id-string|), which then you can easily find through a print command:
+# print (* ^debug-id |id-string|), which you can alias to further improve the ease of use
+#
+   
+# Printing world info
+alias pworld print (* ^debug-id world)
+alias pobjs print (* ^debug-id objs)
+alias ppreds print (* ^debug-id preds)
+alias probot print (* ^debug-id rob)           
+
+sp {debugging-rules*top-state*elaborate*debug-ids*world
+   (state <s> ^superstate nil
+              ^agent-params.debug-ids true
+              ^world <w>)
+   (<w> ^objects <objs>
+        ^robot <rob>
+        ^predicates <preds>)
+-->
+   (<w> ^debug-id world)
+   (<objs> ^debug-id objs)
+   (<rob> ^debug-id rob)
+   (<preds> ^debug-id preds)
+}
+   
+# Printing perception info
+alias ppmon print (* ^debug-id percmon)
+alias pobjinfo print (* ^debug-id objmon)
+alias pchanges print (* ^debug-id perc-changes)
+
+sp {debugging-rules*top-state*elaborate*debug-ids*perception-monitor
+   (state <s> ^superstate nil
+              ^agent-params.debug-ids true
+              ^perception-monitor <pmon>)
+   (<pmon> ^object-monitor <omon>
+           ^predicate-monitor <prmon>
+           ^changes <chgs>)
+-->
+   (<pmon> ^debug-id percmon)
+   (<omon> ^debug-id objmon)
+   (<prmon> ^debug-id predmon)
+   (<chgs> ^debug-id perc-changes)
+}
+
+#game debugging
+#
+alias pgame print (* ^type game-learning)
+alias mem production memory-usage
+alias pfc print -fc
+alias stcyc stats --cycle
+alias statsm stats -M
+
+# pttask (print top task segment)
+sp {debugging-rules*debug-ids*elaborate*debug-id*top-task-seg
+   (state <s> ^superstate nil
+              ^agent-params.debug-ids true
+              ^task-stack.top { <top> <> none })
+-->
+   (<top> ^debug-id top-task-seg)
+}
+alias pttask print (* ^debug-id top-task-seg)
+
+# ptint (print top interaction segment)
+sp {debugging-rules*debug-ids*elaborate*debug-id*top-int-seg
+   (state <s> ^superstate nil
+              ^agent-params.debug-ids true
+              ^interaction.stack.segment { <seg> <> none })
+-->
+   (<seg> ^debug-id top-int-seg)
+}
+alias ptint print (* ^debug-id top-int-seg)
+

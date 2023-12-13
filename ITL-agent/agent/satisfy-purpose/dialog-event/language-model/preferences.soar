@@ -1,0 +1,328 @@
+#analyze-lm-response
+
+#replacing prob order with metadata probability due to responses from different queries..
+#
+
+#first just used prob-order
+#future is make agent-order
+
+#only with no selection
+sp {analyze-lm-response*prefer*verify-lm-goal-human
+   (state <s> ^name analyze-lm-response
+             -^top-state.agent-params.use-lm-selection true
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name verify-lm-goal-human ^goal <g>)
+   (<o2> ^name verify-lm-goal-human ^goal <g2>)
+   (<g> ^metadata.probability <p1>)
+   (<g2> ^metadata.probability {<p2> < <p1>})
+-->
+   (<s> ^operator <o> > <o2>)
+}
+#does it matter if one is a retry and one is not?
+#eh not clear...
+
+sp {analyze-lm-response*prefer*verify-lm-goal-auto
+   (state <s> ^name analyze-lm-response
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name verify-lm-goal-auto ^goal <g>)
+   (<o2> ^name verify-lm-goal-auto ^goal <g2>)
+   (<g> ^metadata.probability <p1>)
+   (<g2> ^metadata.probability {<p2> < <p1>})
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+
+sp {analyze-lm-response*prefer*lm-failure*select-goal-to-try*probability
+#:interrupt
+   (state <s> ^name analyze-lm-response
+             -^top-state.agent-params.use-lm-selection true
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name << select-goal-to-try lm-failure >> ^goal <g>)
+   (<o2> ^name << select-goal-to-try lm-failure >> ^goal <g2>)
+   (<g> ^metadata.probability <p1>)
+   (<g2> ^metadata.probability {<p2> < <p1>})
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+
+sp {analyze-lm-response*prefer*select-goal-to-try*lm-only
+   (state <s> ^name analyze-lm-response
+             -^top-state.agent-params.use-lm-selection true
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name select-goal-to-try ^goal <g>)
+   (<o2> ^name select-goal-to-try ^goal <g2>)
+   (<g> ^metadata.probability <p1>)
+   (<g2> ^metadata.probability {<p2> < <p1>})
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+
+sp {analyze-lm-response*prefer*verify-lm-goal-human*lm-selection
+   (state <s> ^name analyze-lm-response
+              ^top-state.agent-params.lm-condition lm-human
+              ^top-state.agent-params.use-lm-selection true
+              ^response.selection-response.selection-sentence <sent>
+              ^operator <o> +)
+   (<o> ^name verify-lm-goal-human ^goal <g>)
+   (<g> ^complete-sentence <sent>)
+-->
+   (<s> ^operator <o> > =)
+}
+#No prefs for request-lm-selection?
+
+
+sp {analyze-lm-response*prefer*select-goal-to-try*lm-selection
+   (state <s> ^name analyze-lm-response
+              ^top-state.agent-params.lm-condition lm
+              ^top-state.agent-params.use-lm-selection true
+              ^response.selection-response.selection-sentence <sent>
+              ^operator <o> +)
+   (<o> ^name select-goal-to-try ^goal <g>)
+   (<g> ^complete-sentence <sent>)
+-->
+   (<s> ^operator <o> > =)
+}
+
+sp {analyze-lm-response*prefer*lm-failure*lm-selection
+   (state <s> ^name analyze-lm-response
+              ^top-state.agent-params.lm-condition lm
+              ^top-state.agent-params.use-lm-selection true
+              ^response.selection-response.selection-sentence <sent>
+              ^operator <o> +)
+   (<o> ^name lm-failure ^goal <g>)
+   (<g> ^complete-sentence <sent>)
+-->
+   (<s> ^operator <o> > =)
+}
+
+####################################################################
+
+sp {analyze-lm-response*prefer*select-goal-to-try*over*verify-lm-goal-human
+   (state <s> ^name analyze-lm-response
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name select-goal-to-try)
+   (<o2> ^name verify-lm-goal-human)
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+sp {analyze-lm-response*prefer*any*over*exhausted-lm-responses
+   (state <s> ^name analyze-lm-response
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name << verify-lm-goal-auto verify-lm-goal-human select-goal-to-try lm-failure >>)
+   (<o2> ^name << exhausted-lm-responses >>)
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+sp {analyze-lm-response*prefer*select-goal-to-try*over*lm-failure
+   (state <s> ^name analyze-lm-response
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name << verify-lm-goal-auto verify-lm-goal-human evaluate-parse-of-lm >>)
+   (<o2> ^name << lm-failure >>)
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+sp {analyze-lm-response*prefer*verify-lm-goal*over*retry-lm-query
+   (state <s> ^name analyze-lm-response
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name << verify-lm-goal-auto >>) #verify-lm-goal-human
+   (<o2> ^name << retry-lm-query >>)
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+#temporarily reverting this..
+#2023 changing
+# sp {analyze-lm-response*prefer*retry-lm-query*over*verify-lm-goal-human
+#    (state <s> ^name analyze-lm-response
+#               ^operator <o> +
+#               ^operator <o2> + )
+#    (<o> ^name << verify-lm-goal-human >>) 
+#    (<o2> ^name << retry-lm-query >> )
+# -->
+#    (<s> ^operator <o> > <o2>) #TODO temp!
+# }
+
+
+sp {analyze-lm-response*prefer*evaluate-parse-of-lm*over*verify-lm-goal-auto*retry
+   (state <s> ^name analyze-lm-response
+              #^top-state.agent-params.lm-condition lm
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name << evaluate-parse-of-lm >>)
+   (<o2> ^name << verify-lm-goal-auto verify-lm-goal-human >>)
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+sp {analyze-lm-response*prefer*verify-lm-goal-auto*over*verify-lm-goal-human
+   (state <s> ^name analyze-lm-response
+              #^top-state.agent-params.lm-condition lm
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name << verify-lm-goal-auto >>)
+   (<o2> ^name << verify-lm-goal-human >>)
+-->
+   (<s> ^operator <o> > <o2>)
+}
+#change to only not do uninterprtable...
+sp {analyze-lm-response*prefer*select-goal-to-try*over*retry-lm-query*retry
+   (state <s> ^name analyze-lm-response
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name << retry-lm-query >> ^evaluation.interpreted false) #-^evaluation.affordance-mismatch)
+   (<o2> ^name << verify-lm-goal-human select-goal-to-try >>)
+-->
+   (<s> ^operator <o> < <o2>)
+}
+sp {analyze-lm-response*prefer*select-goal-to-try*over*retry-lm-query*retry*human-rejected
+   (state <s> ^name analyze-lm-response
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name << retry-lm-query >> ^human-rejected true) #-^evaluation.affordance-mismatch)
+   (<o2> ^name << verify-lm-goal-human select-goal-to-try >>)
+-->
+   (<s> ^operator <o> < <o2>)
+}
+
+sp {analyze-lm-response*prefer*select-goal-to-try*over*retry-lm-query*retry2
+   (state <s> ^name analyze-lm-response
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name << retry-lm-query >> -^human-rejected ^evaluation.interpreted true)#^evaluation.affordance-mismatch)
+   (<o2> ^name << verify-lm-goal-human select-goal-to-try >>)
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+
+# sp {analyze-lm-response*prefer*select-goal-to-try*over*verify-lm-goal-auto
+#    (state <s> ^name analyze-lm-response
+#               ^top-state.agent-params.lm-condition lm
+#              -^top-state.agent-params.retry-lm true
+#               ^operator <o> +
+#               ^operator <o2> + )
+#    (<o> ^name << select-goal-to-try >>)
+#    (<o2> ^name << verify-lm-goal-auto >>)
+# -->
+#    (<s> ^operator <o> > <o2>)
+# }
+
+sp {analyze-lm-response*prefer*verify-lm-goal-auto*over*select-goal-to-try
+   (state <s> ^name analyze-lm-response
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name << verify-lm-goal-auto >>)
+   (<o2> ^name << select-goal-to-try >>)
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+###############################
+#retry
+
+sp {analyze-lm-response*prefer*retry-lm-query*fewer-issue
+   (state <s> ^name analyze-lm-response
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name retry-lm-query ^evaluation <e>)
+   (<e> -^unknown-word -^interpreted false ^issue-count <ic>)
+   (<o2> ^name retry-lm-query ^evaluation <e2>)
+   (<e2> ^issue-count {<ic2> > <ic>})
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+sp {analyze-lm-response*prefer*retry-lm-query*not-unknown-word
+   (state <s> ^name analyze-lm-response
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name retry-lm-query ^evaluation <e>)
+   (<e> -^interpreted false -^unknown-word ^issue-count <ic>)
+   (<o2> ^name retry-lm-query ^evaluation <e2>)
+   (<e2> ^unknown-word <w> ^issue-count <ic>)
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+
+sp {analyze-lm-response*prefer*retry-lm-query*affordance-mismatch
+   (state <s> ^name analyze-lm-response
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name retry-lm-query ^evaluation <e>)
+   (<e> -^affordance-mismatch ^issue-count <ic>)
+   (<o2> ^name retry-lm-query ^evaluation <e2>)
+   (<e2> ^affordance-mismatch ^issue-count <ic>)
+-->
+   (<s> ^operator <o2> > <o>)
+}
+
+
+sp {analyze-lm-response*prefer*retry-lm-query*same*prob-order
+   (state <s> ^name analyze-lm-response
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name retry-lm-query ^evaluation <e> ^goal <g>)
+   (<e> ^interpreted true ^{<x> << unknown-word ungrounded-object affordance-mismatch >>} <y> ^issue-count 1)
+   (<o2> ^name retry-lm-query ^evaluation <e2> ^goal <g2>)
+   (<e2> ^interpreted true ^<x> <w> ^issue-count 1)
+   (<g> ^metadata.probability <p1>)
+   (<g2> ^metadata.probability {<p2> < <p1>})
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+sp {analyze-lm-response*prefer*retry-lm-query*uninterprety*prob-order
+   (state <s> ^name analyze-lm-response
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name retry-lm-query ^evaluation <e> ^goal <g>)
+   (<e> ^interpreted false ^issue-count 1)
+   (<o2> ^name retry-lm-query ^evaluation <e2> ^goal <g2>)
+   (<e2> ^interpreted false ^issue-count 1)
+   (<g> ^metadata.probability <p1>)
+   (<g2> ^metadata.probability {<p2> < <p1>})
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+#TODO why commented out?
+sp {analyze-lm-response*prefer*retry-lm-query*ungrounded-object
+   (state <s> ^name analyze-lm-response
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name retry-lm-query ^evaluation <e>)
+   (<e> -^interpreted false -^ungrounded-object -^unknown-word ^issue-count <ic>)
+   (<o2> ^name retry-lm-query ^evaluation <e2>)
+   (<e2> ^ungrounded-object <w> ^issue-count <ic>)
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+sp {analyze-lm-response*prefer*retry-lm-query*interpreted
+   (state <s> ^name analyze-lm-response
+              ^operator <o> +
+              ^operator <o2> +)
+   (<o> ^name retry-lm-query ^evaluation <e>)
+   (<e> ^interpreted true ^issue-count <ic>)
+   (<o2> ^name retry-lm-query ^evaluation <e2>)
+   (<e2> ^interpreted false ^issue-count <ic>)
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+

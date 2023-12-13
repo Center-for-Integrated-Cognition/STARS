@@ -1,0 +1,199 @@
+sp {ground-referent*propose*index-object-properties
+   (state <s> ^name ground-referent
+              ^candidate-set <cs>
+              ^property-constraint <pc>)
+   (<cs> ^generated-candidates true
+        -^satisfied-property <pc>)
+   (<pc> -^property grammatical-property)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name index-object-properties
+         ^property-constraint <pc>)
+}
+
+# Added to help chunking - this adds a constraint that the values must be different which eliminates multiple instantiations
+sp {ground-referent*compare*index-object-properties2
+   (state <s> ^name ground-referent
+              ^operator <op1> +
+                        <op2> +)
+   (<op1> ^name index-object-properties
+          ^property-constraint.value <pc>)
+   (<op2> ^name index-object-properties
+          ^property-constraint.value < <pc>)
+-->
+   (<s> ^operator <op1> > <op2>)
+}
+
+sp {ground-referent*apply*index-object-properties*violates
+   (state <s> ^operator <o>
+              ^candidate-set <cs>)
+   (<cs> ^proto-referent <pr>)
+   (<o> ^name index-object-properties
+        ^property-constraint <pc>)
+   (<pc> ^property { <prop-name> <> generic}
+        -^property property
+         ^value <prop-val>)
+   (<pr> ^object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> -^<prop-name> <prop-val>)
+  -(<obj> ^handle <prop-val>)   # for named locations and objects
+-{(<pc> ^value <p-value>)        # for inherited subcategories.
+  (<preds> ^<prop-name> <p-value>)}
+-->
+   (<pr> ^violates <pc>)
+   (<cs> ^fail-tested <pc>)
+}
+
+sp {ground-referent*apply*index-object-properties*property*violates
+   (state <s> ^operator <o>
+             #-^detect-predicate.name <prop-val> #JK2022 changes to support interactive property teaching
+              ^candidate-set <cs>)
+   (<cs> ^proto-referent <pr>)
+   (<o> ^name index-object-properties
+        ^property-constraint <pc>)
+   (<pc> ^property { <prop-name> << property >> }
+         ^value <prop-val>)
+   (<pr> ^object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> -^<prop-name> <prop-val>)
+  -(<obj> ^handle <prop-val>)   # for named locations and objects
+-{(<pc> ^value <p-value>)        # for inherited subcategories.
+  (<preds> ^<prop-name> <p-value>)}
+-->
+   (<pr> ^violates <pc>)
+   (<cs> ^fail-tested <pc>)
+}
+
+#JK apply index-object-property for learned predicates which need to be extracted
+sp {ground-referent*apply*index-object-properties*violates*property
+   (state <s> ^operator <o>
+              ^detect-predicate <pred>
+              ^candidate-set <cs>)
+   (<cs> ^proto-referent <pr>)
+   (<o> ^name index-object-properties
+        ^property-constraint <pc>)
+   (<pc> ^property property
+         ^value <prop-val>)
+   (<pr> ^object <obj>)
+   (<pred> ^name <prop-val> ^complete true)
+  -{(<pred> ^results.instance <int>)
+    (<int> ^1 <obj>)}
+-->
+   (<pr> ^violates <pc>)
+   (<cs> ^fail-tested <pc>)
+}
+#detect learned predicate of type property 
+#(copy-type deep or shallow for world problem space)
+#JK2022 should prevent if there is an oject with this property already?
+#sp {ground-referent*apply*index-object-properties*detect-predicates
+#   (state <s> ^operator <o>
+#             -^segment.hypothetical true
+#              ^candidate-set <cs>)
+#   (<o> ^name index-object-properties
+#        ^property-constraint <pc>)
+#   (<pc> ^property property
+#         ^value <prop-val>)
+#-->
+#   (<s> ^detect-predicate <pred>)
+#   (<pred> ^name <prop-val> ^copy-type shallow ^type unary)
+#}
+
+#JK2022 this one should work for learning new predicates and detecting
+sp {ground-referent*apply*index-object-properties*detect-predicates*apply
+   (state <s> ^detect-predicate <pred>
+              ^superstate nil
+              ^world.objects.object <obj>)
+   (<pred> ^name <prop-val> ^results.instance.{1} <obj>)
+   (<obj> ^predicates <p>)
+-->
+   (<p> ^property <prop-val>)
+}
+
+
+
+sp {ground-referent*apply*index-object-properties*passes*learned-predicate
+   (state <s> ^operator <o>
+              ^detect-predicate <pred>
+              ^candidate-set <cs>)
+   (<cs> ^proto-referent <pr>)
+   (<o> ^name index-object-properties
+        ^property-constraint <pc>)
+   (<pc> ^property property
+         ^value <prop-val>)
+   (<pred> ^name <prop-val> ^results.instance.{1} <obj>)
+   (<pr> ^object <obj>)
+-->
+   (<pr> ^passes <pc>)
+   (<cs> ^success-tested <pc>)
+}
+
+sp {ground-referent*apply*index-object-properties*passes
+   (state <s> ^operator <o>
+              ^candidate-set <cs>)
+   (<cs> ^proto-referent <pr>)
+   (<o> ^name index-object-properties
+        ^property-constraint <pc>)
+   (<pc> ^property <prop-name>
+         ^value <prop-val>)
+   (<pr> ^object.predicates.<prop-name> <prop-val>)
+-->
+   (<pr> ^passes <pc>)
+   (<cs> ^success-tested <pc>)
+}
+
+sp {ground-referent*apply*index-object-properties*passes*named
+   (state <s> ^operator <o>
+              ^candidate-set <cs>)
+   (<cs> ^proto-referent <pr>)
+   (<o> ^name index-object-properties
+        ^property-constraint <pc>)
+   (<pc> ^value <prop-val>)
+   (<pr> ^object.handle <prop-val>)  # special case for named locations and objects
+-->
+   (<pr> ^passes <pc>)
+   (<cs> ^success-tested <pc>)
+}
+
+sp {ground-referent*apply*index-object-properties*mark*checked
+   (state <s> ^candidate-set <cs>
+              ^operator <o>)
+   (<o> ^name << index-object-properties index-dialog-properties >>
+        ^property-constraint <pc>)
+   (<cs> ^success-tested <pc>)
+-->
+   (<cs> ^satisfied-property <pc>)
+}
+
+sp {ground-referent*apply*index-object-properties*mark*checked*failed
+   (state <s> #^constraint-count <cc>
+              ^candidate-set <cs>
+              ^operator <o>)
+   (<o> ^name << index-object-properties index-dialog-properties >>
+        ^property-constraint <pc>)
+   (<cs> -^success-tested <pc>
+         ^fail-tested <pc>)
+-->
+   (<cs> ^satisfied-property <pc>)
+}
+
+sp {ground-referent*apply*index-object-properties*mark*satisfied
+   (state <s> ^candidate-set.proto-referent <pr>
+              ^operator <o>)
+   (<o> ^name << index-object-properties index-dialog-properties >>
+        ^property-constraint <pc>)
+   (<pr> ^passes <pc>
+         ^constraint-count <cc>)
+-->
+   (<pr> ^constraint-count <cc> - (- <cc> 1))
+}
+
+sp {ground-referent*apply*index-object-properties*remove-violated
+   (state <s> ^candidate-set <cs>
+              ^operator <o>)
+   (<o> ^name << index-object-properties index-dialog-properties >>
+        ^property-constraint <pc>)
+   (<cs> ^proto-referent <pr>)
+   (<pr> ^violates <pc>)
+-->
+   (<cs> ^proto-referent <pr> -)
+}

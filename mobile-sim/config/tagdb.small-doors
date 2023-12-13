@@ -1,0 +1,41 @@
+classes {
+    c# {
+        labels = ["door", ""];
+        probs = [0.95, 0.05];
+        ids = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+        mean = 1.0;
+        stddev = 0.0;
+        minRange = 1.0;
+        maxRange = 2.0;
+    }
+
+    c# {
+        labels = ["potted-plant", "tree", ""];
+        probs = [0.9, 0.08, 0.02];
+        ids = [16,18];
+        mean = 1.0;
+        stddev = 0.0;
+        minRange = 1.0;
+        maxRange = 1.5;
+    }
+
+    c# {
+        labels = ["tree", "potted-plant", ""];
+        probs = [0.98, 0.015, 0.005];
+        ids = [17];
+        mean = 1.0;
+        stddev = 0.0;
+        minRange = 1.0;
+        maxRange = 2.0;
+    }
+
+    c# {
+        labels = ["t-intersection", ""];
+        probs = [0.99, 0.000];
+        ids = [19];
+        mean = 1.0;
+        stddev = 0.0;
+        minRange = 2.0;
+        maxRange = 2.5;
+    }
+}

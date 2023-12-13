@@ -1,0 +1,527 @@
+sp {top-pair*perference*complete*diff
+   (state <s> ^name top-pair
+              ^operator <o1> +)
+   (<o1> ^name complete
+         ^instance <instance>)
+-->
+   (<s> ^operator <o1> >)
+}
+
+sp {top-pair*propose*complete
+   (state <s> ^name top-pair
+              ^instance <instance>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name complete
+        ^instance <instance>)
+}
+
+sp {top-pair*adffee
+   (state <s> ^name top-pair
+              ^superstate.condition <co>)
+-->
+(write (cmd print <co> -d 4))
+}
+
+sp {top-pair*apply*complete
+   (state <s> ^name top-pair
+              ^superstate.condition.result.set <res>
+              ^operator <op>
+              ^instance <s1>)  
+   (<op> ^name complete ^instance <s1>)#JAMES UNCHUNKED VERSION
+-->
+  (<res> ^instance <s1>)
+}
+
+#for all test sets
+sp {top-pair*with-type*1param*set
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype set
+              ^linkstate <ls>
+             # ^superstate.condition.result.set <res>
+              ^superstate.operator <o>)
+   (<ls> ^world.predicates.predicate <pa>)
+   (<pa> ^handle <c3>)
+   (<o> ^args <args> ^parameter.num 1 ^type <c3> ^negative false) #^attribute <c2> 
+   (<args> ^num 2
+           ^1 <a1>
+           ^2 <a2>)
+   (<a1> ^rtype set ^result.set <s3>)
+   (<s3> ^instance <i5>)
+   (<i5> ^1 <obja>)
+   (<a2> -^rtype set)
+   -{(state <ls>) 
+     (<obja> -^<x1>)}
+   -{(<obja> ^<elem> <e>)
+    -{(<pa> ^instance <instance1>)
+       (<instance1> ^1 <e> ^2 <objb>)
+       (<a2> ^result.set.instance.{1} <objb>)}}
+  -{(<s3> ^instance {<i8> < <i5>})
+    (<i8> ^1 <obja>)} #bias only create one per object
+-->
+   (<s> ^instance <instance>)
+   (<instance> ^1 <obja>)
+}
+
+sp {top-pair*with-type*2param*set*single
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype set
+              ^linkstate <ls>
+              #^superstate.condition.result.set <res>
+              ^superstate.operator <o>)
+   (<ls> ^world.predicates.predicate <pa>)
+   (<pa> ^handle <c3>)
+   (<o> ^args <args> ^parameter.num 2 ^type <c3> ^negative false) #^attribute <c2> 
+   (<args> ^num 2
+           ^1 <a1>
+           ^2 <a2>)
+   (<a1> ^rtype set ^result.set <s3>)
+   (<s3> ^instance <i5>)
+   (<i5> ^1 <obja>)
+   (<a2> -^rtype set ^result.set <s35>)
+   (<s35> ^instance <i55>)
+   (<i55> ^1 <objb>)
+   -{(state <ls>) 
+     (<obja> -^<x1>)}
+   -{(<obja> ^<elem> <e>)
+    -{(<pa> ^instance <instance1>)
+       (<instance1> ^1 <e> ^2 <objb>)}}
+   -{(<s3> ^instance {<i8> < <i5>})
+    (<i8> ^1 <obja>)} #bias only create one per object
+   -{(<s35> ^instance {<i9> < <i55>})
+    (<i9> ^1 <objb>)} #bias only create one per object
+-->
+   (<s> ^instance <instance>)
+   (<instance> ^1 <obja> ^2 <objb>)
+}
+
+sp {top-pair*with-type*2param*single*set
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype single
+              ^linkstate <ls>
+              #^superstate.condition.result.set <res>
+              ^superstate.operator <o>)
+   (<ls> ^world.predicates.predicate <pa>)
+   (<pa> ^handle <c3>)
+   (<o> ^args <args> ^parameter.num 2 ^type <c3> ^negative false) #^attribute <c2> 
+   (<args> ^num 2
+           ^1 <a1>
+           ^2 <a2>)
+   (<a1> -^rtype set ^result.set <s3>)
+   (<s3> ^instance <i5>)
+   (<i5> ^1 <obja>)
+   (<a2> ^rtype set ^result.set <s35>)
+   (<s35> ^instance <i55>)
+   (<i55> ^1 <objb>)
+   -{(state <ls>) 
+     (<objb> -^<x1>)}
+   -{(<objb> ^<elem> <e>)
+    -{(<pa> ^instance <instance1>)
+       (<instance1> ^1 <obja> ^2 <e>)}}
+   -{(<s3> ^instance {<i8> < <i5>})
+    (<i8> ^1 <obja>)} #bias only create one per object
+   -{(<s35> ^instance {<i9> < <i55>})
+    (<i9> ^1 <objb>)} #bias only create one per object
+-->
+   (<s> ^instance <instance>)
+   (<instance> ^1 <obja> ^2 <objb>)
+}
+
+sp {top-pair*with-type*1param*set*set
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype set
+              ^linkstate <ls>
+              #^superstate.condition.result.set <res>
+              ^superstate.operator <o>)
+   (<ls> ^world.predicates.predicate <pa>)
+   (<pa> ^handle <c3>)
+   (<o> ^args <args> ^parameter.num 1 ^type <c3> ^negative false) #^attribute <c2> 
+   (<args> ^num 2
+           ^1 <a1>
+           ^2 <a2>)
+   (<a1> ^rtype set ^result.set <s3>)
+   (<s3> ^instance <i5>)
+   (<i5> ^1 <obja>)
+   (<a2> ^rtype set)
+   -{(state <ls>) 
+     (<obja> -^<x1>)}
+   -{(<obja> ^<elem> <e>)
+    -{(<pa> ^instance <instance1>)
+       (<instance1> ^1 <e> ^2 <objb>)
+       (<a2> ^result.set.instance.{1}.<elem2> <objb>)}}
+  -{(<s3> ^instance {<i8> < <i5>})
+    (<i8> ^1 <obja>)} #bias only create one per object
+-->
+   (<s> ^instance <instance>)
+   (<instance> ^1 <obja>)
+}
+
+#one to one
+sp {top-pair*with-type*2param*set*set
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype set
+              ^linkstate <ls>
+              #^superstate.condition.result.set <res>
+              ^superstate.operator <o>)
+   (<ls> ^world.predicates.predicate <pa>)
+   (<pa> ^handle <c3>)
+   (<o> ^args <args> ^parameter.num 2 ^type <c3> ^negative false) #^attribute <c2> 
+   (<args> ^num 2
+           ^1 <a1>
+           ^2 <a2>)
+   (<a1> ^rtype set ^result.set <s3>)
+   (<s3> ^instance <i5>)
+   (<i5> ^1 <obja>)
+   (<a2> ^rtype set ^result.set <s35>)
+   (<s35> ^instance <i55>)
+   (<i55> ^1 <objb>)
+   -{(state <ls>) 
+     (<obja> -^<x1>)}
+   -{(state <ls>) 
+     (<objb> -^<x1>)}
+   -{(<obja> ^<elem> <e>)
+    -{(<pa> ^instance <instance1>)
+       (<instance1> ^1 <e> ^2 <e2>)
+       (<objb> ^<elem2> <e2>)}}
+ -{(<objb> ^<elem> <e>)
+    -{(<pa> ^instance <instance1>)
+       (<instance1> ^2 <e> ^1 <e2>)
+       (<obja> ^<elem2> <e2>)}}
+   -{(<s3> ^instance {<i8> < <i5>})
+    (<i8> ^1 <obja>)} #bias only create one per object
+   -{(<s35> ^instance {<i9> < <i55>})
+    (<i9> ^1 <objb>)} #bias only create one per object
+-->
+   (<s> ^instance <instance>)
+   (<instance> ^1 <obja> ^objb <objb>)
+}
+
+sp {top-pair*with-type*1param*set*negative
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype set
+              ^linkstate <ls>
+              #^superstate.condition.result.set <res>
+              ^superstate.operator <o>)
+   (<ls> ^world.predicates.predicate <pa>)
+   (<pa> ^handle <c3>)
+   (<o> ^args <args> ^parameter.num 1 ^type <c3> ^negative true)#^attribute <c2> 
+   (<args> ^num 2
+           ^1 <a1>
+           ^2 <a2>)
+   (<a1> ^rtype set ^result.set <s3>)
+   (<s3> ^instance <i5>)
+   (<i5> ^1 <obja>)
+   (<a2> -^rtype set)
+   -{(state <ls>) 
+     (<obja> -^<x1>)}
+   -{(<obja> ^<elem> <e>)
+     (<pa> ^instance <instance1>)
+     (<instance1> ^1 <e> ^2 <objb>)
+     (<a2> ^result.set.instance.{1} <objb>)}
+   -{(<s3> ^instance {<i8> < <i5>})
+    (<i8> ^1 <obja>)} #bias only create one per object
+-->
+   (<s> ^instance <instance>)
+   (<instance> ^1 <obja>)
+}
+
+#for linear type only 1 arg top pair
+#sp {top-pair*with-type*1arg*set
+#   (state <s> ^name top-pair
+#              ^linkstate <ls>
+#              ^superstate.condition.result.set <res>
+#              ^superstate.condition.rtype set
+#              ^superstate.operator <o>)
+#   (<o> ^type <c3> ^args <args> ^parameter.num < 2 ^negative false)
+#   (<ls> ^world.predicates.predicate <pa>)
+#   (<pa> ^handle <c3> ^instance <instance1>)
+#   (<instance1> ^1 <set>)
+#   (<args> ^num 1
+#           ^1 <a1>)
+#   (<a1> -^rtype set)
+#   -{(state <ls>) 
+#     (<set> -^<x1>)}
+#  -{(<set> ^object <obja>)
+#    -{(<a1> ^result.set.instance.{1} <obja>)}}
+#-->
+#   (<s> ^instance <instance>)
+#   (<instance> ^1 <set>)
+#}
+
+sp {top-pair*with-type*1param*set*1arg*apply
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype set
+              #^superstate.condition.result.set <res>
+              ^linkstate <ls>
+              ^superstate.operator <o>)
+   (<ls> ^world.predicates.predicate <pa>)
+   (<pa> ^handle <c3> ^instance <i1>)
+   (<o> ^args <args> ^type <c3> ^negative false ^parameter.num < 2) #^attribute <c2> 
+   (<args> ^num 1
+           ^1 <a1>)
+   (<a1> -^rtype set)
+   (<i1> ^1 <set>)
+   -{(state <ls>) 
+     (<set> -^<x1>)}
+  -{(<set> ^<elem> <obja>)
+    (<a1> -^result.set.instance.{1} <obja>)}
+-->
+   (<s> ^instance <i6>)
+   (<i6> ^1 <set>)
+}
+sp {top-pair*with-type*1param*set*set*1arg*apply
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype set
+              #^superstate.condition.result.set <res>
+              ^linkstate <ls>
+              ^superstate.operator <o>)
+   (<ls> ^world.predicates.predicate <pa>)
+   (<pa> ^handle <c3> ^instance <i1>)
+   (<o> ^args <args> ^type <c3> ^negative false ^parameter.num < 2) #^attribute <c2> 
+   (<args> ^num 1
+           ^1 <a1>)
+   (<a1> ^rtype set ^result.set <s3>)
+   (<s3> ^instance <i5>)
+   (<i5> ^1 <set>)
+   (<i1> ^1 <set2>)
+   -{(state <ls>) 
+     (<set> -^<x1>)}
+  -{(<set> ^<elem> <obja>)
+    (<set2> -^<elem> <obja>)}
+  -{(<set2> ^<elem2> <objb>) #trictly all have same memember (should this always be the case?)
+    (<set> -^<elem2> <objb>)}
+   -{(<s3> ^instance {<i8> < <i5>})
+    (<i8> ^1 <set>)} #bias only create one per object
+-->
+   (<s> ^instance <i6>)
+   (<i6> ^1 <set>)
+}
+
+#create sets from single
+sp {top-pair*with-type*1param*set*noarg-set
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype set
+              ^superstate.operator <o>)
+   (<o> ^args <args> ^parameter.num 2  ^negative false)#^attribute <c2> ^type <c3>
+   (<args> ^num 2
+           ^1 <a1>
+           ^2 <a2>)
+   (<a1> -^rtype set)
+   (<a2> -^rtype set ^result.set <s35>)
+   (<s35> ^instance <i55>)
+   (<i55> ^1 <objb>)
+   -{(<s35> ^instance {<i9> < <i55>})
+    (<i9> ^1 <objb>)} #bias only create one per object
+-->
+   (<s> ^instance <instance>)
+   (<instance> ^1 <set> ^2 <objb>)
+}
+
+sp {top-pair*with-type*1param*set*noarg-set*noparam
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype set
+              ^superstate.operator <o>)
+   (<o> ^args <args> ^parameter.num < 2  ^negative false)#^attribute <c2> ^type <c3>
+   (<args> ^num 2
+           ^1 <a1>
+           ^2 <a2>)
+   (<a1> -^rtype set)
+   (<a2> -^rtype set)
+-->
+   (<s> ^instance <instance>)
+   (<instance> ^1 <set>)
+}
+
+sp {top-pair*with-type*1param*set*noarg-set1*apply
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype set
+              ^superstate.condition.result.set.instance <res>
+              ^operator <op>
+              #^instance <res> #JAMES UNCHUNKED VERSION
+              ^linkstate <ls>
+              ^superstate.operator <o>)
+   (<ls> ^world.predicates.predicate <pa>)
+   (<op> ^name complete)# ^instance <res2>) #JAMES UNCHUNKED VERSION
+   #(<res2> ^2 <objb>)
+   (<res> ^1 <set> ^2 <objb>)
+   (<pa> ^handle <c3> ^instance <instance1>)
+   (<o> ^args <args> ^type <c3> ^negative false ^parameter.num 2) #^attribute <c2> 
+   (<args> ^num 2
+           ^1 <a1>
+           ^2 <a2>)
+   (<a1> -^rtype set ^result.set.instance.{1} <obja>)
+   (<a2> -^rtype set ^result.set.instance.{1} <objb>)
+   (<instance1> ^1 <obja> ^2 <objb>)
+-->
+   (<set> ^object <obja>)
+}
+
+sp {top-pair*with-type*1param*set*noarg-set1*apply*noparam
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype set
+              ^superstate.condition.result.set.instance <res>
+              ^operator <op>
+             # ^instance <res> #JAMES UNCHUNKED VERSION
+              ^linkstate <ls>
+              ^superstate.operator <o>)
+   (<op> ^name complete)# ^instance <res>) #JAMES UNCHUNKED VERSION
+   (<ls> ^world.predicates.predicate <pa>)
+   (<res> ^1 <set>)
+   (<pa> ^handle <c3> ^instance <instance1>)
+   (<o> ^args <args> ^type <c3> ^negative false ^parameter.num < 2)#^attribute <c2> 
+   (<args> ^num 2
+           ^1 <a1>
+           ^2 <a2>)
+   (<a1> -^rtype set ^result.set.instance.{1} <obja>)
+   (<a2> -^rtype set ^result.set.instance.{1} <objb>)
+   (<instance1> ^1 <obja> ^2 <objb>)
+-->
+   (<set> ^object <obja>)
+}
+
+###new
+##POSITIVE
+sp {top-pair*with-type*1param*no-set
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype single
+              ^linkstate <ls>
+             # ^superstate.condition.result.set <res>
+              ^superstate.operator <o>)
+   (<ls> ^world.predicates.predicate <pa>)
+   (<pa> ^handle <c3> ^instance <instance1>)
+   (<o> ^args <args> ^parameter.num < 2 ^type <c3> ^negative false)
+   (<args> ^num 2
+           ^1 <a1>
+           ^2 <a2>)
+   (<a1> -^rtype set ^result.set <s3>)
+   (<s3> ^instance <i5>)
+   (<i5> ^1 <obja>)
+   (<a2> -^rtype set ^result.set <s35>)
+   (<s35> ^instance <i55>)
+   (<i55> ^1 <objb>)
+   (<instance1> ^1 <obja> ^2 <objb>)
+ -{(<s3> ^instance {<i8> < <i5>})
+   (<i8> ^1 <obja>)} #bias only create one per object
+ -{(<s35> ^instance {<i9> < <i55>})
+   (<i9> ^1 <objb>)} #bias only create one per object
+-->
+   (<s> ^instance <instance>)
+   (<instance> ^1 <obja>)
+}
+
+sp {top-pair*with-type*2param*no-set
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype single
+              ^linkstate <ls>
+              #^superstate.condition.result.set <res>
+              ^superstate.operator <o>)
+   (<ls> ^world.predicates.predicate <pa>)
+   (<pa> ^handle <c3> ^instance <instance1>)
+   (<o> ^args <args> ^parameter.num 2 ^type <c3> ^negative false)
+   (<args> ^num 2
+           ^1 <a1>
+           ^2 <a2>)
+   (<a1> -^rtype set ^result.set <s3>)
+   (<s3> ^instance <i5>)
+   (<i5> ^1 <obja>)
+   (<a2> -^rtype set ^result.set <s35>)
+   (<s35> ^instance <i55>)
+   (<i55> ^1 <objb>)
+   (<instance1> ^1 <obja> ^2 <objb>)
+ -{(<s3> ^instance {<i8> < <i5>})
+   (<i8> ^1 <obja>)} #bias only create one per object
+ -{(<s35> ^instance {<i9> < <i55>})
+   (<i9> ^1 <objb>)} #bias only create one per object
+-->
+   (<s> ^instance <instance>)
+   (<instance> ^1 <obja> ^2 <objb>)
+}
+
+sp {top-pair*with-type*3param*no-set
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype single
+              ^linkstate <ls>
+              #^superstate.condition.result.set <res>
+              ^superstate.operator <o>)
+   (<ls> ^world.predicates.predicate <pa>)
+   (<pa> ^handle <c3> ^instance <instance1>)
+   (<o> ^args <args> ^parameter.num 3 ^type <c3> ^negative false)
+   (<args> ^num 3
+           ^1 <a1>
+           ^2 <a2>
+           ^3 <a3>)
+   (<a1> -^rtype set ^result.set <s3>)
+   (<s3> ^instance <i5>)
+   (<i5> ^1 <obja>)
+   (<a2> -^rtype set ^result.set <s35>)
+   (<s35> ^instance <i55>)
+   (<i55> ^1 <objb>)
+   (<a3> -^rtype set ^result.set <s36>)
+   (<s36> ^instance <i56>)
+   (<i56> ^1 <objc>)
+   (<instance1> ^1 <obja> ^2 <objb> ^3 <objc>)
+ -{(<s3> ^instance {<i8> < <i5>})
+   (<i8> ^1 <obja>)} #bias only create one per object
+ -{(<s35> ^instance {<i9> < <i55>})
+   (<i9> ^1 <objb>)} #bias only create one per object
+ -{(<s36> ^instance {<i91> < <i56>})
+   (<i91> ^1 <objc>)} #bias only create one per object
+-->
+   (<s> ^instance <instance>)
+   (<instance> ^1 <obja> ^2 <objb> ^3 <objc>)
+}
+
+####negative true
+sp {top-pair*with-type*1param*no-set*negative
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype single
+              ^linkstate <ls>
+              #^superstate.condition.result.set <res>
+              ^superstate.operator <o>)
+   (<ls> ^world.predicates.predicate <pa>)
+   (<pa> ^handle <c3>)
+   (<o> ^args <args> ^parameter.num < 2 ^type <c3> ^negative true)
+   (<args> ^num 2
+           ^1 <a1>
+           ^2 <a2>)
+   (<a1> -^rtype set ^result.set <s3>)
+   (<s3> ^instance <i5>)
+   (<i5> ^1 <obja>)
+ -{(<pa> ^instance <instance>)
+  (<a2> ^result.set.instance.{1} <objb>)
+  (<instance> ^1 <obja> ^2 <objb>)}
+ -{(<s3> ^instance {<i8> < <i5>})
+   (<i8> ^1 <obja>)} #bias only create one per object
+-->
+   (<s> ^instance <instance>)
+   (<instance> ^1 <obja>)
+}
+
+sp {top-pair*with-type*2param*no-set*negative
+   (state <s> ^name top-pair
+              ^superstate.condition.rtype single
+              ^linkstate <ls>
+              #^superstate.condition.result.set <res>
+              ^superstate.operator <o>)
+   (<ls> ^world.predicates.predicate <pa>)
+   (<o> ^args <args> ^parameter.num 2 ^type <c3> ^negative true)#^attribute <c2> 
+   (<args> ^num 2
+           ^1 <a1>
+           ^2 <a2>)
+   (<a1> -^rtype set ^result.set <s3>)
+   (<s3> ^instance <i5>)
+   (<i5> ^1 <obja>)
+   (<a2> -^rtype set ^result.set <s35>)
+   (<s35> ^instance <i55>)
+   (<i55> ^1 {<objb> <> <obja>})
+   (<pa> ^handle <c3>)
+ -{(<pa> ^instance <instance1>)
+  (<instance1> ^1 <obja> ^2 <objb>)}
+ -{(<s3> ^instance {<i8> < <i5>})
+   (<i8> ^1 <obja>)} #bias only create one per object
+ -{(<s35> ^instance {<i9> < <i55>})
+   (<i9> ^1 <objb>)} #bias only create one per object
+-->
+   (<s> ^instance <instance>)
+   (<instance> ^1 <obja> ^2 <objb>)
+}

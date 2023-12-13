@@ -1,0 +1,47 @@
+#### AM: These are rules which I add ad-hoc but need to be changed into a more principled form
+
+# AM: Don't pick up something if its already satisfying a relation goal predicate
+#    Not sure if there is a better way to handle this 
+#    (Otherwise it may try to pick up something that is already in a goal location)
+sp {SPCASE*action*reject*op_pick-up1*in*goal
+   (state <s> ^problem-space.name action
+              ^operator <o> +
+             -^child-task-segment
+              ^desired.<gpnum> <gp>
+              ^world.predicates.predicate <wpred>)
+   (<o> ^name op_pick-up1
+        ^arg1.id <obj1>)
+   (<gp> ^type relation ^handle <ph> ^1 <obj1> ^2 <obj2>)
+   (<wpred> ^handle <ph>
+            ^instance <i>)
+   (<i> ^1 <obj1> ^2 <obj2>)
+-->
+   (<s> ^operator <o> -)
+}
+
+
+# AM: in problem-space/action/preferences.soar there is a rule that prevents a task being proposed within itself
+#     Should have a broader solution of avoiding repeated tasks in the hierarchy, this pops up other places
+
+
+
+#### I think this is a chunk that helps with leanring concepts during task learnig? 
+#sp {chunkx4*with-attribute*apply*complete*instance*OpNoChange*t589-1
+#       :chunk
+#           (state <s1> ^list <l1> ^world <w1>
+#                                 ^{ <a1> << action goal predicate failure heuristic >> } <a2>)
+#       (<l1> ^game <g1>)
+#       (<w1> ^objects <o1>)
+#       (<o1> ^object <o2>)
+#       (<o2> -^handle self)
+#       (<a2> ^condition <c1>)
+#       (<c1> ^rtype single ^name object ^type attribute ^attribute primitive
+#                       ^args <a3> ^negative <n1> ^parameter <p1> ^result <r1>)
+#       (<a3> -^1 <i1>)
+#       (<r1> ^set <s2>)
+#       -->
+#       (<s2> ^instance <i2> +)
+#       (<i2> ^1 <o2> +)
+#}
+
+

@@ -1,0 +1,7 @@
+struct control_law_status_list_t
+{
+    int64_t utime;
+
+    int32_t nstatuses;
+    control_law_status_t statuses[nstatuses];
+}

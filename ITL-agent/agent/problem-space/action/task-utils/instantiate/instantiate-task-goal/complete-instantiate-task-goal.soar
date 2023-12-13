@@ -1,0 +1,39 @@
+sp {task-utils*instantiate-task-goal*propose*complete-instantiate-task-goal
+   (state <s> ^name instantiate-task-goal)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name complete-instantiate-task-goal)
+}
+
+sp {__INST__GOAL__*anystate*apply*instantiate-task-goal*no*modifiers
+   (state <s> ^name instantiate-task-goal
+              ^operator.name complete-instantiate-task-goal
+              ^instantiate-goal <ins-goal>
+              ^result-destination <dest>)
+   (<ins-goal> ^instantiation <goal>
+               ^modifiers none)
+-->
+   (<dest> ^instantiation <goal>)
+}
+
+sp {__INST__GOAL__*anystate*apply*instantiate-task-goal*with*modifiers
+   (state <s> ^name instantiate-task-goal
+              ^operator.name complete-instantiate-task-goal
+              ^instantiate-goal <ins-goal>
+              ^result-destination <dest>)
+   (<ins-goal> ^instantiation <goal>
+               ^modifiers.instantiation <mods>)
+-->
+   (<dest> ^instantiation <goal>)
+   (<goal> ^modifiers <mods>)
+}
+
+sp {task-utils*instantiate-task-goal*apply*complete-instantiate-task-goal*failure
+   (state <s> ^name instantiate-task-goal
+              ^operator.name complete-instantiate-task-goal
+              ^quiescence t
+             -^instantiate-goal.instantiation
+             ^superstate <ss>)
+-->
+   (<ss> ^instantiate-task-goal-failure true)
+}

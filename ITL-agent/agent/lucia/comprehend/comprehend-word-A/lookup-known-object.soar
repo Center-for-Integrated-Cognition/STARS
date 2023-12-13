@@ -1,0 +1,97 @@
+##!
+# @file
+#
+# @created plind 20170209
+# File: lookup-known-object.soar
+# Author: Peter 
+# Created: 9 February 2017
+#
+# Desc: Looks up a KnownObject in the context to find its referent.
+#       This version is customized for the Rosie environment.
+#
+#       A KnownObject is an object like "kitchen" that is defined in smem.
+#
+#       PL 4/23/2018
+#       The name has been changed from "lookup-" to "ground-" because,
+#       even though the item is stored in smem,
+#       conceptually it is part of the world model and not the ontology.
+#
+#       PL 9/15/2020
+#       This is being changed back to "lookup-" since that is really
+#       what it is doing. This is not part of the world model or
+#       the ontology, smem can also contain know objects.
+#
+
+#   Propose an operator to resolve the reference of a KnownObject
+sp {comprehend-word*propose*lookup-known-object
+   (state <s> ^problem-space comprehend-word
+              ^lexical-access done  # May need to see comprehend-word-done as proposed
+              ^cxn <cxn>
+             -^smem.command.query <q>)
+   (<cxn> ^m <known-object>)
+   (<known-object> ^is.a KnownObject
+                   ^handle <handle>
+                   ^referent NONE)
+-->
+   (<s> ^operator <o> > + =)    #   May need more if multiple lexicals
+   (<o> ^name lookup-known-object
+        ^type resolution
+        ^r-type known-object
+        ^cxn <cxn>
+        ^handle <handle>
+        ^known-object <known-object>
+        ^debug-info (concat |Find the referent for a given KnownObject.|))
+}
+
+#   Make a retrieval request if not a person
+#   The rule comprehend-word*apply*lookup-operator*do-query
+#   defined elsewhere will set up an smem query.
+sp {comprehend-word*apply*lookup-known-object
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>)
+   (<o> ^name lookup-known-object
+        ^r-type known-object
+        ^cxn <cxn>
+        ^handle <handle>
+        ^known-object <known-object>)
+   #    Check that this is NOT a person
+   (<cxn> ^m <meaning>)
+   (<meaning> ^rosie-category { <r-c> <> person })
+-->
+   #    Request a retrieval of the predicate
+   (<s> ^retrieval <r>)
+   (<r> ^cxn <cxn>
+        ^handle <handle>
+        ^target <known-object>
+        ^attribute referent)
+}
+
+#   Make a retrieval request it IS a person
+#   The rule comprehend-word*apply*lookup-operator*do-query
+#   defined elsewhere will set up an smem query.
+sp {comprehend-word*apply*lookup-known-object*person
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>)
+   (<o> ^name lookup-known-object
+        ^r-type known-object
+        ^cxn <cxn>
+        ^handle <name>  #   Here the handle is based on the name
+        ^known-object <known-object>)
+   #    Check that this IS a person
+   (<cxn> ^m <meaning>)
+   (<meaning> ^rosie-category person)
+-->
+   #    Request a retrieval of the predicate
+   (<s> ^retrieval <r>)
+   (<r> ^cxn <cxn>
+        ^handle (concat person- <name>) #   Build the complete handle
+        ^target <known-object>
+        ^attribute referent)
+}
+
+
+##################  QUERY RULE   #####################
+
+#   Put a retrieval query on the smem link
+#   Use the universal rule in retrieve-item
+

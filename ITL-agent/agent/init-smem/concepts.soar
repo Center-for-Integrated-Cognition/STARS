@@ -1,0 +1,344 @@
+smem --add {
+   (<lti> ^handle matching-predicates-info
+          ^ignore is-visible1 is-reachable1 is-grabbed1 category modifier1
+          ^dont-conflict color shape size name weight temperature spatial-shape)
+}
+
+# Different categories
+smem --add {
+   (@property ^handle property ^item-type property ^type visual)
+
+   (@color ^handle color ^type visual ^item-type property ^property @numeric)
+
+   (@shape ^handle shape ^type visual ^item-type property ^property @concept)
+
+   (@size ^handle size ^type visual ^item-type property ^property @numeric)
+
+   (@material ^handle material ^type visual ^item-type property ^property @numeric)
+
+   (@name ^handle name ^type visual ^item-type property)
+
+   (@weight ^handle weight ^type measurable ^item-type property ^property @concept)
+
+   (@temperature ^handle temperature ^type measurable ^item-type property ^property @concept)
+
+   (@spatial-shape ^handle spatial-shape ^type visual ^item-type property)
+
+   (@category ^handle category ^type visual ^item-type property)
+
+   (@subcategory ^handle subcategory ^type visual ^item-type property)
+
+   (@possessive ^handle possessive ^item-type property)
+
+   (@owner ^handle owner ^item-type property)
+
+   (@modifier1 ^handle modifier1 ^type visual ^item-type property)
+
+   (@concept ^handle concept ^type conceptual)
+   
+   (@numeric ^handle numeric ^type conceptual)
+
+   (@cardinal-direction1 ^handle cardinal-direction1 ^item-type property)
+
+   (@relative-direction1 ^handle relative-direction1 ^item-type property)
+
+   (@unit ^handle unit ^type unit ^item-type property)
+
+   (@container1 ^handle container1 ^type visual ^item-type property)
+
+   #   (@is-following1 ^handle is-following1 ^type visual ^item-type property)
+
+   (@affordance1 ^handle affordance1 ^item-type property)
+    
+   (@none1 ^handle none1)
+
+}
+
+# Object affordances and properties
+smem --add {
+   # is-visible1: visible1 or not-visible1
+   #    whether the robot can currently see the object
+   (@is-visible1 ^handle is-visible1 ^type visual ^item-type property)
+   (@visible1 ^handle visible1 ^property @is-visible1)
+   (@not-visible1 ^handle not-visible1 ^property @is-visible1)
+   # AM: I don't know if unknown-visible is needed
+   (@unknown-visible1 ^handle unknown-visible1 ^property @is-visible1)
+
+   # is-confirmed1: confirmed1 or not-confirmed1
+   #    whether the object has a known position in the world
+   (@is-confirmed1 ^handle is-confirmed1 ^type visual ^item-type property)
+   (@confirmed1 ^handle confirmed1 ^property @is-confirmed1)
+   (@not-confirmed1 ^handle not-confirmed1 ^property @is-confirmed1)
+
+   # is-reachable1: reachable1 or not-reachable1
+   #    whether the object/person is within arm's reach (can interact with)
+   (@is-reachable1 ^handle is-reachable1 ^type visual ^item-type property)
+   (@reachable1 ^handle reachable1 ^property @is-reachable1)
+   (@not-reachable1 ^handle not-reachable1 ^property @is-reachable1)
+
+   # is-grabbed1: grabbed1 or not-grabbed1
+   #    whether the robot is holding the object
+   (@grabbable1 ^handle grabbable1 ^property @affordance1 ^default @not-grabbed1)
+   (@is-grabbed1 ^handle is-grabbed1 ^type visual ^item-type property)
+   (@grabbed1 ^handle grabbed1 ^property @is-grabbed1)
+   (@not-grabbed1 ^handle not-grabbed1 ^property @is-grabbed1)
+
+   # is-activated1: activated1 or not-activated1
+   #    whether the robot is holding the object
+   (@activatable1 ^handle activatable1 ^property @affordance1 ^default @not-activated1)
+   (@is-activated1 ^handle is-activated1 ^type visual ^item-type property)
+   (@activated1 ^handle activated1 ^property @is-activated1)
+   (@not-activated1 ^handle not-activated1 ^property @is-activated1)
+
+   # is-open1: open1 or not-open1
+   #    whether the robot is holding the object
+   (@openable1 ^handle openable1 ^property @affordance1 ^default @open2)
+   (@is-open1 ^handle is-open1 ^type visual ^item-type property)
+   (@open2 ^handle open2 ^property @is-open1)
+   (@not-open1 ^handle not-open1 ^property @is-open1)
+
+   (@always-open1 ^handle always-open1 ^property @affordance1)
+
+   # is-locked1: locked1 or not-locked1
+   #    whether the object is currently locked (given by perception)
+   (@lockable1 ^handle lockable1 ^property @affordance1 ^default @not-locked1)
+   (@is-locked1 ^handle is-locked1 ^type visual ^item-type property)
+   (@locked1 ^handle locked1 ^property @is-locked1)
+   (@not-locked1 ^handle not-locked1 ^property @is-locked1)
+
+   # connected1 or not-connected1
+   (@connected1 ^handle connected1 ^property @is-connected1)
+   (@not-connected1 ^handle not-connected1 ^property @is-connected1)
+
+#   # following1 or not-following1
+#   (@following1 ^handle following1 ^property @is-following1)
+#   (@not-following1 ^handle not-following1 ^property @is-following1)
+
+   # is-filled1: filled1 or empty1
+   (@fillable1 ^handle fillable1 ^property @affordance1 ^default @empty1)
+
+   (@contents1 ^handle contents1 ^item-type property)
+   (@empty1 ^handle notfull1 ^property @contents1)
+
+   # drain1: You can empty a fillable object with it
+   (@drain1 ^handle drain1 ^property @affordance1)
+
+   # dispenser1: Something that you can pour into something else
+   (@dispenser1 ^handle dispenser1 ^property @affordance1)
+
+   # Other affordances
+   (@pourable1 ^handle pourable1 ^property @affordance1)
+   (@pressable1 ^handle pressable1 ^property @affordance1)
+
+
+   (@perishable1 ^handle perishable1 ^property @affordance1)
+
+   (@surface1 ^handle surface1 ^property @affordance1)
+   (@receptacle1 ^handle receptacle1 ^property @affordance1)
+
+   (@activatable1 ^handle activatable1 ^property @affordance1)
+
+}
+#smem --add {
+#(<water2> ^spelling |water2|
+#          ^structure-type N
+#          ^attachment immediate
+#          ^referent @water2)
+#}
+
+# Misc Concepts
+smem --add {
+   # Rosie
+   (@rosie ^handle rosie)
+
+   (@end1 ^handle end1 ^property @concept)
+   (@task-completed ^handle task-completed ^property @concept ^item-type predicate)
+   (@won ^handle won ^property @concept ^item-type predicate)
+   (@lost ^handle lost ^property @concept ^item-type predicate)
+   # (@clear ^handle clear ^property @property)
+   (@recyclable ^handle recyclable ^property @property)
+   (@recyclables ^handle recyclable ^property @property ^multiple true)
+   (@available ^handle available ^property @property)
+   (@access ^handle accessible ^property @property)
+   (@yours ^handle yours ^property @property)
+   (@diagonal ^handle diagonal ^property @property)
+   (@filled ^handle filled ^property @property)
+   (@grouped ^handle grouped ^property @property)
+   (@free ^handle free ^property @property)
+   (@absent ^handle absent ^property @property)
+   (@full ^handle full1 ^property @container1)
+   (@enemy ^handle enemy ^property @property)
+   (@linear ^handle linear ^property @property)
+   (@center ^handle center ^property @property)
+   (@recycling ^handle recycling1 ^property @property)
+   (@filing ^handle filing1 ^property @property)
+   (@dish ^handle dish1 ^property @property)
+   (@corner ^handle corner ^property @property)
+   (@edge ^handle edge ^property @property)
+   (@covered ^handle covered ^property @property)
+   (@moved ^handle moved ^property @property)
+   (@placed ^handle placed ^property @property)
+   (@trashed ^handle trashed ^property @property)
+   (@captured ^handle captured ^property @property)
+   (@separated ^handle separated ^property @property)
+   (@stranded ^handle stranded ^property @property)
+   (@occupied ^handle occupied ^property @property)
+   (@matched ^handle matched ^property @property)
+   (@matching ^handle matching ^property @property)
+   (@identical ^handle identical ^property @property)
+   (@usual ^handle usual ^property @property)
+   (@other ^handle other ^property @property)
+   (@initial ^handle initial ^property @property)
+   (@final ^handle final ^property @property)
+   (@last ^handle last ^property @property)
+   (@opposite ^handle opposite ^property @property)
+
+   # AM: removed for testing
+   #(@current ^handle current ^property @property)
+
+   (@your ^handle your ^property @property)
+   #(@empty ^handle empty ^property @property)
+   #(@empty ^handle empty1 ^property @container1) #JK
+
+   #(@mustard ^handle mustard1 ^property @property)
+
+   (@strong ^handle strong ^property @property)
+   (@weak ^handle weak ^property @property)
+   (@heavy ^handle heavy ^property @property)
+   (@light ^handle light ^property @property)
+   (@low ^handle low ^property @property)
+   (@high ^handle high ^property @property)
+   (@top ^handle top ^property @property)
+   (@bottom ^handle bottom ^property @property)
+   (@dim ^handle dim ^property @property)
+   (@dark ^handle dark ^property @property)
+   (@bright ^handle bright ^property @property)
+   (@hard ^handle hard ^property @property)
+   (@soft ^handle soft ^property @property)
+   
+   (@leftmost ^handle leftmost ^property @property)
+   (@rightmost ^handle rightmost ^property @property)
+   (@largest ^handle largest ^property @property)
+   (@smallest ^handle smallest ^property @property)
+
+   (@strongest ^handle strongest ^property @property)
+   (@weakest ^handle weakest ^property @property)
+   (@heaviest ^handle heaviest ^property @property)
+   (@lightest ^handle lightest ^property @property)
+   (@lowest ^handle lowest ^property @property)
+   (@highest ^handle highest ^property @property)
+   (@dimmest ^handle dimmest ^property @property)
+   (@darkest ^handle darkest ^property @property)
+   (@brightest ^handle brightest ^property @property)
+   (@hardest ^handle hardest ^property @property)
+   (@softest ^handle softest ^property @property)
+   
+   (@peg ^handle peg ^property @property)
+   (@knight ^handle knight ^property @property)
+   # AM: This breaks my tests
+   #(@person ^handle person ^property @property)	
+   (@agent ^handle agent ^property @concept)
+   (@actor ^handle actor ^property @property)
+   #(@manager ^handle manager ^property @concept)
+   (@piece ^handle piece ^property @property)
+   (@frog ^handle frog ^property @property)
+   (@toad ^handle toad ^property @property)
+   (@frogs ^handle frog ^property @property ^multiple true)
+   (@toads ^handle toad ^property @property ^multiple true)
+   (@grape ^handle grape ^property @property)
+   (@grapefruit ^handle grapefruit ^property @property)
+   (@goose ^handle goose ^property @property)
+   (@bean ^handle bean ^property @property)
+   (@fox ^handle fox ^property @property)
+   #(@passenger ^handle passenger ^property @property)
+   (@line ^handle line ^property @property)
+   #(@place ^handle place ^property @property)
+   (@group ^handle group ^property @property)
+   (@grouping ^handle grouping ^property @property)
+   (@rank ^handle rank ^property @property)
+   (@file ^handle file ^property @property)
+   (@trash ^handle trash1 ^property @property)
+   (@region ^handle region ^property @property)
+   (@stack ^handle stack ^property @property)
+   (@solutiond ^handle solution-depth ^property @property)
+   #(@column1 ^handle column1 ^property @property)
+   
+   (@owner ^handle owner ^property @concept)
+   (@partner ^handle partner ^property @concept)
+   (@age ^handle age ^property @numeric)
+   (@score ^handle score ^property @numeric)
+   (@husband ^handle husband ^property @concept)
+   (@wife ^handle wife ^property @concept)
+   (@position ^handle position ^property @numeric)
+   #(@aposition ^handle position ^property @concept)#TODO second version of position.. so can override with location under block
+   (@neighbor ^handle neighbor ^property @concept)
+   (@occupant ^handle occupant ^property @concept)
+   (@constraints ^handle constraints ^property @concept)
+   (@manager1 ^handle manager1 ^property @property) #concept) property)
+   (@passenger1 ^handle passenger1 ^property @concept)
+   (@passengers1 ^handle passenger1 ^property @concept ^multiple true)
+   
+   (@same ^handle same ^property @property)
+  #(@closed ^handle closed ^property @property)
+   (@name1 ^handle name1 ^property @concept)
+   (@number1 ^handle number1 ^property @numeric ^function @count)
+   (@count ^type count ^function soar-count)
+   (@letter1 ^handle letter1 ^property @concept)
+   (@action ^handle action 
+            ^property @action2)
+   (@action2 ^handle action ^type action)
+   (@relation ^handle relation ^property @concept)
+   (@last-name ^handle last-name ^property @numeric)
+   (@volume ^handle volume ^property @numeric)
+   (@difference ^handle difference ^property @numeric ^function @diff)
+   (@diff ^type difference ^function soar-difference)
+   	
+   (@value ^handle value ^property @numeric)
+   (@values ^handle value ^property @numeric ^multiple true)
+   (@sum ^handle sum ^property @numeric ^function @soarsum)
+   (@soarsum ^type sum ^function soar-sum)
+   (@product ^handle product ^property @numeric ^function @prodfunc)
+   (@prodfunc ^type product ^function soar-product)
+   (@columns ^handle column ^property @numeric ^multiple true)
+   (@rows ^handle row ^property @numeric ^multiple true)
+   (@column ^handle column ^property @numeric)
+   (@row ^handle row ^property @numeric)
+   (@section ^handle section ^property @numeric)
+   #(@rank1 ^handle rank1 ^property @numeric)
+   (@suit ^handle suit ^property @numeric)
+	
+   (@solution1 ^handle solution1 ^property @category ^item-type object)
+#JK-merge2022
+#JK-dev version commented out below that contained locations, blocks,
+   (@locations ^handle location ^property @category ^multiple true)
+   (@blocks ^handle block ^property @category ^multiple true)
+   (@steps1 ^handle steps1 ^property @shape ^multiple true ^item-type object)
+   (@missionaries1 ^handle missionary1 ^property @shape ^multiple true)
+   (@cannibals1 ^handle cannibal1 ^property @shape ^multiple true)
+   (@lights1 ^handle lights1 ^property @shape ^item-type predicate)
+
+   #   (@nothing1 ^handle nothing1 ^property @concept ^item-type predicate)
+
+   (<nothing> ^spelling |nothing|
+             ^structure-type N
+             ^number singular
+             ^specifier definite
+             ^singleton-DP true
+             ^converts-to DP
+             ^referent @nothing1)
+   (@nothing1 ^handle nothing1 ^property @category ^item-type predicate ^supercategory @entity1)
+   (@entity1 ^subcategory @nothing1)
+
+
+}
+
+# Additional info on templated words
+smem --add {
+   (@door1 ^output-word door)
+   (@intersection1 ^output-word intersection)
+
+   (@alices1 ^person-name alice1)
+   (@bobs1 ^person-name bob1)
+   (@charlies1 ^person-name charlie1)
+}
+

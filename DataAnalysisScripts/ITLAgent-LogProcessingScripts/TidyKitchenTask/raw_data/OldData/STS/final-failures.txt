@@ -1,0 +1,102 @@
+(L6 ^failure F633 ^failure F621 ^failure F611 ^failure F607 ^failure F256
+       ^failure F248 ^failure F241 ^failure F234 ^failure F228 ^failure F223
+       ^failure F217 ^failure F102 ^failure F84 ^failure F77 ^failure F62
+       ^failure F43 ^failure F12)
+  (F633 ^evaluation E37924 ^handle paring-knife1_instance_22
+         ^object-desc |a paring-knife in the dish rack|
+         ^sentence |the goal is that the paring-knife is in the knife block|)
+    (E37924 ^failure failed-interpretation ^interpreted false ^issue-count 2
+           ^type uninterpreted ^type ungrounded-obj1 ^ungrounded-object P86291)
+      (P86291 ^handle new-object-id296 ^item-type object ^predicates P86292
+             ^predicates-copied true)
+  (F621 ^evaluation E35002 ^handle metal-fork1_instance_23
+         ^object-desc |a metal-fork in the dish rack|
+         ^sentence |the goal is that the kitchen is tidy and the metal-fork is in the drawer|)
+    (E35002 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F611 ^evaluation E32508 ^handle ceramic-plate1_instance_34
+         ^object-desc |a ceramic-plate in the dish rack|
+         ^sentence |the goal is that the ceramic-plate is in the cabinet|)
+    (E32508 ^interpreted true ^issue-count 1 ^type ungrounded-obj1
+           ^ungrounded-object P77658)
+      (P77658 ^handle new-object-id281 ^item-type object ^predicates P77659
+             ^predicates-copied true)
+  (F607 ^evaluation E31039 ^handle ceramic-bowl1_instance_35
+         ^object-desc |a ceramic-bowl in the dish rack|
+         ^sentence |the goal is that the ceramic-bowl is in the cabinet|)
+    (E31039 ^interpreted true ^issue-count 1 ^type ungrounded-obj1
+           ^ungrounded-object P75150)
+      (P75150 ^handle new-object-id278 ^item-type object ^predicates P75151
+             ^predicates-copied true)
+  (F256 ^evaluation E25480 ^handle plate1_instance_28
+         ^object-desc |a plate on the counter|
+         ^sentence |the goal is that the plate is in the dishwasher and the dishwasher is turned on|)
+    (E25480 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F248 ^evaluation E24560 ^handle paper-cup1_instance_21
+         ^object-desc |a paper-cup on the counter|
+         ^sentence |the goal is that the paper-cup is in the trash can and the trash can is closed|)
+    (E24560 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F241 ^evaluation E23688 ^handle newspaper1_instance_16
+         ^object-desc |a newspaper on the counter|
+         ^sentence |the goal is that the newspaper is in the recycling bin and the recycling bin is closed|)
+    (E23688 ^affordance-mismatch A46810 ^interpreted true ^issue-count 1)
+      (A46810 ^clause I71223 ^obj-desc bin1 ^object O217 ^object-desc R70959
+             ^property closed ^type affordance2)
+  (F234 ^evaluation E22606 ^handle half-and-half1_instance_43
+         ^object-desc |a half-and-half on the counter|
+         ^sentence |the goal is that half-and-half is in fridge|)
+    (E22606 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F228 ^evaluation E21932 ^handle granola-bars1_instance_40
+         ^object-desc |a granola-bars on the counter|
+         ^sentence |the goal is that the granola-bars are in the pantry and the counter is clear|)
+    (E21932 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F223 ^evaluation E19972 ^handle coke-can1_instance_14
+         ^object-desc |a coke-can on the counter|
+         ^sentence |the goal is that the coke-can is in the recycling bin and the recycling bin is closed|)
+    (E19972 ^affordance-mismatch A46677 ^interpreted true ^issue-count 1)
+      (A46677 ^clause I65800 ^obj-desc bin1 ^object O217 ^object-desc R59355
+             ^property closed ^type affordance2)
+  (F217 ^evaluation E18867 ^handle box-of-aluminum-foil1_instance_38
+         ^object-desc |a box-of-aluminum-foil on the counter|
+         ^sentence |the goal is that the box-of-aluminum-foil is in the cabinet and the cabinet is closed|)
+    (E18867 ^interpreted true ^issue-count 1 ^type ungrounded-obj1
+           ^ungrounded-object P47901)
+      (P47901 ^handle new-object-id207 ^item-type object ^predicates P47902
+             ^predicates-copied true)
+  (F102 ^evaluation E14806 ^handle soda-can1_instance_13
+         ^object-desc |a soda-can on the table|
+         ^sentence |the goal is that the soda-can is in the recycling bin and the table is clean|)
+    (E14806 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F84 ^evaluation E11847 ^handle plastic-fork1_instance_19
+         ^object-desc |a plastic-fork on the table|
+         ^sentence |the goal is that the plastic-fork is in the trash and the trash is closed|)
+    (E11847 ^affordance-mismatch A27903 ^interpreted true ^issue-count 1)
+      (A27903 ^clause I39449 ^obj-desc garbage1 ^object O199
+             ^object-desc R35980 ^property closed ^type affordance2)
+  (F77 ^evaluation E10965 ^handle plastic-cup1_instance_20
+         ^object-desc |a plastic-cup on the table|
+         ^sentence |the goal is that the plastic-cup is in the dishwasher and the dishwasher is on|)
+    (E10965 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F62 ^evaluation E9276 ^handle plastic-bottle1_instance_12
+         ^object-desc |a plastic-bottle on the table|
+         ^sentence |the goal is that the plastic-bottle is in the recycle-bin and the bin is closed|)
+    (E9276 ^interpreted true ^issue-count 1 ^type unknown-word
+           ^unknown-word recycle-bin)
+  (F43 ^evaluation E7114 ^handle paper-plate1_instance_18
+         ^object-desc |a paper-plate on the table|
+         ^sentence |the goal is that the paper-plate is in the trash and the trashcan is closed|)
+    (E7114 ^interpreted true ^issue-count 1 ^type unknown-word
+           ^unknown-word trashcan)
+  (F12 ^evaluation E2061 ^handle bottle-opener1_instance_25
+         ^object-desc |a bottle-opener on the table|
+         ^sentence |the goal is that the kitchen is tidy and the bottle-opener is in the drawer|)
+    (E2061 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+
+

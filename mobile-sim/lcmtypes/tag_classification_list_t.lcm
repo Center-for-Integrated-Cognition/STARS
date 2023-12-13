@@ -1,0 +1,7 @@
+struct tag_classification_list_t
+{
+    int64_t utime;
+
+    int32_t num_classifications;
+    tag_classification_t classifications[num_classifications];
+}

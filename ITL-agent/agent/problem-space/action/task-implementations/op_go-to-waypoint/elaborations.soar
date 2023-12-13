@@ -1,0 +1,49 @@
+sp {op_go-to-waypoint1*elaborate*desired*waypoint*task-operator
+   (state <s> ^name op_go-to-waypoint1
+              ^task-operator.arg1 <arg1>)
+   (<arg1> ^arg-type waypoint
+           ^id <wp>)
+-->
+   (<s> ^desired-waypoint <wp>)
+}
+
+sp {op_go-to-waypoint1*elaborate*current-waypoint*from*world
+   (state <s> ^name op_go-to-waypoint1
+              ^problem-space.execution-type external
+              ^world.robot.current-waypoint <wp>)
+-->
+   (<s> ^current-waypoint <wp>)
+}
+
+# The waypoint search is messed up with the default ^problem-space.learning.type exploration
+#   so we override it with type none
+sp {op_go-to-waypoint1*elaborate*problem-space*learning*none
+   (state <s> ^name op_go-to-waypoint1
+              ^problem-space.execution-type external
+              ^problem-space.learning <l>)
+-->
+   (<l> ^type none)
+}
+
+#### GOAL SATISFACTION ####
+sp {op_go-to-waypoint1*elaborate*desired*waypoint
+   (state <s> ^name op_go-to-waypoint1
+              ^problem-space.execution-type external
+              ^current-task-segment.current-goal.handle go-to-waypoint1goal1
+              ^desired-waypoint <wp>)
+-->
+   (<s> ^desired <des>)
+   (<des> ^handle go-to-waypoint1goal1
+          ^waypoint <wp>)
+}
+
+sp {op_go-to-waypoint1*elaborate*desired*satisfied
+   (state <s> ^name op_go-to-waypoint1
+              ^problem-space.execution-type external
+              ^current-waypoint <wp>
+              ^desired <des>)
+   (<des> ^waypoint <wp>)
+-->
+   (<des> ^satisfied true)
+}
+

@@ -1,0 +1,227 @@
+
+sp {comprehension*propose*process-missing-assigner*before
+   (state <s> ^name comprehension
+              ^operator.name next-word
+              ^segment <seg>)
+   (<seg> ^not-merged-assigner <ass1>)
+ -{(<seg> ^not-merged-assigner <nma>)
+   (<nma> ^parent-receiver <pr>
+          ^lt <ass-before>)}
+  -(<ass-before> ^optional true)
+   (<ass1> ^structure-type <stype>
+           ^parent-receiver <pr>
+           ^lt.before <ass-before>
+          -^failed merge)
+  -(<seg> ^not-merged-receiver.structure-type <stype>)
+-->
+   #(write (crlf) |Remove assigner | <ass1> | type | <stype> | because it must come before | <ass-before> | which is merged.|)
+   (<seg> ^not-merged-assigner <ass1> -)
+}
+
+
+sp {comprehension*propose*process-missing-assigner*before-already-merged
+  # :interrupt
+   (state <s> ^name comprehension
+              ^operator.name next-word
+              ^segment <seg>)
+   (<seg> ^not-merged-assigner <ass1>)
+   (<seg> ^merged-assigner <nma>)
+   (<nma> ^parent-receiver <pr>
+          ^lt <ass-before>)
+   (<ass1> ^structure-type <stype>
+           ^parent-receiver <pr>
+           ^lt.before <ass-before>
+          -^failed merge)
+-->
+   #(write (crlf) |Remove assigner | <ass1> | type | <stype> | because it must come before | <ass-before> | which already merged.|)
+   (<seg> ^not-merged-assigner <ass1> -)
+}
+
+## JEL NEW
+sp {comprehension*propose*process-missing-assigner*before*x
+  # :interrupt
+   (state <s> ^name comprehension
+              ^operator.name next-word
+              ^segment <seg>)
+   (<seg> ^not-merged-assigner <ass1>
+          ^not-merged-assigner { <> <ass1> <ass2> }
+          ^not-merged-receiver <nmr>)
+   (<nmr> ^lt.converts-to <until-pp>
+          ^decision-count <dc>)
+   (<ass1> ^structure-type <until-pp>
+           ^decision-count < <dc>  
+           ^lt <ass-before>
+           ^parent-receiver <pr>)
+   (<ass2> ^lt.before <ass-before>
+           ^parent-receiver <pr>
+           ^structure-type { <stype> <> <until-pp> <> CP <> IF-CLAUSE }
+          -^lt.required true 
+          -^decision-count > <dc>)
+ -{(<seg> ^not-merged-assigner { <ass3> <> <ass1> <> <ass2> })             # There isn't another assigner that will grab <nmr>
+   (<ass3> ^structure-type <until-pp>
+            ^parent-receiver <pr>
+            ^lt.before <ass-before>)}
+  -(<seg> ^not-merged-receiver.structure-type <until-pp>) 
+-->
+   #(write (crlf) |Remove assigner | <ass2> | type | <stype> | because it must come after | <ass1> |, which has a potential match of type | <until-pp>)
+   (<seg> ^not-merged-assigner <ass2> -)
+}
+
+
+## JEL NEW
+sp {comprehension*propose*process-missing-assigner*after*x
+   (state <s> ^name comprehension
+              ^operator.name next-word
+              ^segment <seg>)
+   (<seg> ^not-merged-assigner <ass1>
+          ^not-merged-assigner { <> <ass1> <ass2> }
+          ^not-merged-receiver <nmr>)
+   (<nmr> ^lt.converts-to <until-pp>
+          ^decision-count <dc>)
+   (<ass1> ^structure-type <until-pp>
+           ^parent-receiver <pr>
+           ^decision-count < <dc>   # must come before potential match otherwise will reach back 
+           ^lt.after <ass-after>)
+   (<ass2> ^lt <ass-after>
+           ^parent-receiver <pr>
+          -^lt.required true   # Added 6/13
+           ^structure-type { <stype> <> <until-pp> }
+          -^decision-count > <dc>)
+  -(<seg> ^not-merged-receiver.structure-type <until-pp>)
+-->
+   #(write (crlf) |Remove assigner | <ass2> | type | <stype> | because it must come before | <ass1> |, which has a potential match of type | <until-pp>)
+   (<seg> ^not-merged-assigner <ass2> -)
+}
+
+sp {comprehension*propose*process-missing-assigner*after
+ #:interrupt
+   (state <s> ^name comprehension
+              ^operator.name next-word
+              ^segment <seg>)
+   (<seg> ^not-merged-assigner <ass1>
+          ^not-merged-assigner <ass2>)
+   (<ass2> ^parent-receiver <pr>
+           ^lt <ass-after>)
+   (<ass1> ^structure-type <stype>
+           ^parent-receiver <pr>
+           ^lt.after <ass-after>
+          -^failed merge)
+   (<seg> ^not-merged-receiver.structure-type <stype>)
+-->
+   #(write (crlf) |Remove assigner | <ass1> | type | <stype>)
+   (<seg> ^not-merged-assigner <ass1> -)
+}
+
+####### Replacement
+sp {comprehension*propose*process-missing-assigner*exclusive
+   (state <s> ^name comprehension
+              ^operator.name next-word
+              ^segment <seg>)
+   (<seg> ^not-merged-assigner <ass1>
+          ^merged-assigner <ma>)
+   (<ma> ^parenet-receiver <pr>
+         ^lt.exclusive <lt-ass1>)
+   (<ass1> ^lt <lt-ass1>
+           ^parent-receiver <pr>)
+-->
+   #(write (crlf) |Remove exclusive assigner | <ass1>)
+   (<seg> ^not-merged-assigner <ass1> -)
+}
+#
+
+
+# If just hit phrase end and there is a previous assigner that can't be matched 
+#  by a current receiver - even if that receiver gets promoted (to avoid dropping PP at end of DP).
+#  This will be used to remove dangling ADJ in a DP
+sp {comprehension*propose*process-missing-assigner*phrase-end
+   (state <s> ^name comprehension
+              ^operator.name << process-phrase-end next-word >>
+              ^segment <seg>)
+   (<seg> ^not-merged-assigner <ass1>
+         -^not-merged-receiver.lt.converts-to  <rst>)
+   (<ass1> ^parent-receiver <ps>
+           ^lt <lla>)
+   (<lla> ^optional true
+          ^structure-type <rst>)
+   (<ps> ^lt.converts-to  <nstruct>
+         ^structure-type <nstruct>)
+-->
+      (<seg> ^not-merged-assigner <ass1> -)
+}
+
+
+#################NEW
+
+## JEL NEW
+sp {comprehension*propose*process-missing-assigner*new
+   (state <s> ^name comprehension
+              ^operator.name next-word
+              ^segment <seg>)
+   (<seg> ^not-merged-assigner <ass1>
+          ^not-merged-assigner { <> <ass1> <ass2> }
+          ^not-merged-receiver <nmr>)
+   (<nmr> ^lt <lt>
+          ^decision-count > <dc>)
+   (<lt> ^converts-to <new-type>
+         ^attachment immediate)
+   (<ass1> ^structure-type <new-type>
+           ^parent-receiver <pr>
+           ^decision-count <dc>)
+   (<ass2> -^lt.required true   # Added 6/13
+            ^parent-receiver <pr> 
+            ^structure-type <stype>
+            ^decision-count { <= <dc> <dc2> })
+  -(<seg> ^not-merged-receiver.structure-type <new-type>)
+  -{(<s> ^possible-future-merge <pm>) #p10016
+    (<pm> ^assigner.parent-receiver <rec2>  #n10064 - I144
+          ^receiver <nmr>)  #I146
+   (<s> ^possible-future-merge <pm2>) #p10012
+   (<pm2> ^assigner <ass2>  #N10061
+          ^receiver <rec2>)} #I144
+-{(<s> ^possible-future-merge <pfm4>)
+  (<pfm4> ^receiver <nmr>
+          ^assigner <ass4>)
+  (<ass4> ^decision-count > <dc2>
+          ^structure-type <new-type>)}
+-->
+   #(write (crlf) |Remove assigner | <ass2> | type | <stype> | because | <ass1> | has a potential immediate attachment match of type | <new-type>)
+   (<seg> ^not-merged-assigner <ass2> -)
+}
+
+##################
+
+sp {comprehension*compare*process-missing-assigner
+   (state <s> ^name comprehension
+              ^operator <op1> +
+                        <op2> +)
+   (<op1> ^name process-missing-assigner)
+   (<op2> ^name << next-word comprehend-construction >>)
+-->
+   (<s> ^operator <op1> > <op2>)
+}
+
+sp {comprehension*compare*process-missing-assigner*comprehend
+   (state <s> ^name comprehension
+              ^operator <op1> +
+                        <op2> +)
+   (<op1> ^name process-missing-assigner)
+   (<op2> ^name << process-phrase-end comprehend-word >>)
+-->
+   (<s> ^operator <op1> < <op2>)
+}
+sp {apply*process-missing-assigner*optional*remove
+   (state <s> ^operator <op>
+             -^segment.not-merged-receiver.structure-type unknown
+              ^segment <seg>)
+   (<seg> ^not-merged-assigner <ass1>)
+   (<op> ^name process-missing-assigner
+         ^item <ass1>)
+   (<ass1> ^lt.optional true
+           ^structure-type <stype>)
+   (<ass1> ^parent-receiver <pr>)
+-->
+   #(write (crlf) |Remove assigner | <ass1> | type | <stype>)
+   (<seg> ^not-merged-assigner <ass1> -)
+}
+
+

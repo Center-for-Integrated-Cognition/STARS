@@ -1,0 +1,23 @@
+sp {op_scan*propose*handle-failure*unsatisfied-goal
+   (state <s> ^name op_scan1
+              ^current-task-segment.scan-command.status success
+              ^predicate-test <cl>
+              ^task-operator.end-clause <cl>
+             -^satisfied <cl>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name handle-execution-failure
+        ^type unsatisfied-goal)
+}
+
+sp {op_scan*propose*handle-failure*unsatisfied-goal*after*stop
+   (state <s> ^name op_scan1
+              ^current-task-segment.stop-command.status success
+              ^predicate-test <cl>
+              ^task-operator.end-clause <cl>
+             -^satisfied <cl>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name handle-execution-failure
+        ^type unsatisfied-goal)
+}

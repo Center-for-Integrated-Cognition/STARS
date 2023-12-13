@@ -1,0 +1,8 @@
+struct control_law_status_t
+{
+    int64_t utime;
+
+	int32_t id;
+    string name;
+	string status;
+}

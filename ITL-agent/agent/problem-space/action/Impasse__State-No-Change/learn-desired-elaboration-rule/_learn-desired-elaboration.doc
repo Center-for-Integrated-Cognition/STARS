@@ -1,0 +1,34 @@
+######################### learn-desired-elaboration #####################
+
+Will try to learn an elaboration rule to elaborate the task's goal (desired)
+
+
+##### State Rep ######
+
+task-operator     - The task we're learing the goal for, elaborated from superstate
+goal-id             - The smem goal info - elaborated from superstate.task-concept-network.goal
+procedural-id       - The task's procedural smem info - elaborated from superstate.task-concept-network.procedural
+world               - Elaborated from superstate.world
+
+
+##### instantiate-task-argument ######
+
+Elaborates the goal-id onto the state inside a instantiate-task-argument predicate-set:
+  (<s> ^instantiate-task-argument <arg>)
+  (<arg> ^arg-type predicate-set
+         ^general-arg-rep <gid>)
+
+This will trigger instantiate-task-argument rules to fire (see action/task-utils/instantiate-task-operator)
+  Which will match the smem rep of the goal against the world and task-operator
+  To produce a instance of the goal, elaborated to the state as ^desired
+
+
+##### Operators #####
+
+create-empty-goal - If the goal can't be fully grounded, this copies an empty desired to the superstate 
+  (no chunk is learned)
+
+complete-learn-desired-elaboration-rule - If the entire goal is grounded, this copies it to the superstate
+  and a chunk is learned
+
+

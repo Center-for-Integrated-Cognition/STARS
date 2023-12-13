@@ -1,0 +1,101 @@
+sp {find-relations*elaborate*copy-down-attrs
+   (state <s> ^name find-relations
+              ^superstate.operator <o>
+              ^top-state.object <obj>)
+   (<o> ^obj <id>)
+   (<obj> ^id <id>
+          ^belief-id <bel-id>)
+-->
+   (<s> ^obj <bel-id>)
+}
+
+sp {find-relations*elaborate*copy-down-attrs*ind1
+   (state <s> ^name find-relations
+              ^superstate.operator.ind 1)
+-->
+   (<s> ^ind a
+        ^other b)
+}
+
+sp {find-relations*elaborate*copy-down-attrs*ind2
+   (state <s> ^name find-relations
+              ^superstate.operator.ind 2)
+-->
+   (<s> ^ind b
+        ^other a)
+}
+
+sp {find-relations*elaborate*extract-prepositions*extract-info
+   (state <s> ^name find-relations
+              ^prep <name>
+              ^top-state.found-prep <p>
+              ^other <base>
+              ^obj <id>)
+   (<p> ^type <name>
+        ^predicate <pred>)
+-->
+   (<s> ^extract-prepositions.extract-info <info>)
+   (<info> ^object-id <id>
+           ^prep <pred>
+           ^base <base>)
+}
+
+sp {find-relations*elaborate*copy-down-attrs*svs-link
+   (state <s> ^name find-relations
+              ^superstate.operator <o>)
+   (<o> ^svs-link <svs>)
+-->
+   (<s> ^svs-link <svs>
+        ^prep-link <pl>)
+}
+
+sp {find-relations*elaborate*copy-down-attrs*svs-no-link-usetop-state
+   (state <s> ^name find-relations
+              #^top-state.svs <svs> #which is better?
+			  ^svs <svs>
+              ^top-state.prepositions <pre>
+              ^superstate.operator <o>)
+   (<o> -^svs-link )
+-->
+   (<s> ^prep-link <pre>)
+}
+
+sp {find-relations*elaborate*copy-down-attrs*prep
+   (state <s> ^name find-relations
+              ^superstate.operator <o>)
+   (<o> ^prep <prep>)
+-->
+   (<s> ^prep <prep>)
+}
+
+#sp {find-relations*elaborate*copy-down-attrs*optional*found-prep
+#   (state <s> ^name find-relations
+#              ^superstate.operator <o>)
+#   (<o> ^found-prep <fprep>)
+#-->
+#   (<s> ^found-prep <fprep>)
+#}
+#
+#sp {find-relations*elaborate*copy-down-attrs*found-prep-status
+#   (state <s> ^name find-relations
+#              ^found-prep <fprep>)
+#   (<fprep> ^stat <status>)
+#-->
+#   (<s> ^stat <status>)
+#}
+#
+#sp {find-relations*elaborate*copy-down-attrs*found-prep-predicate
+#   (state <s> ^name find-relations
+#              ^found-prep <fprep>)
+#   (<fprep> ^predicate <p>)
+#-->
+#   (<s> ^predicate <p>)
+#}
+#
+#sp {find-relations*elaborate*copy-down-attrs*interaction
+#   (state <s> ^name find-relations
+#              ^superstate.operator <o>)
+#   (<o> ^interaction <inter>)
+#-->
+#   (<s> ^interaction <inter>)
+#}

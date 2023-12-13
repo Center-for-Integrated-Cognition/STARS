@@ -1,0 +1,524 @@
+run
+Erasing contents of episodic memory database. (append = off)
+========== 1 =============================================
+The name of the puzzle is king-stacked-frogs.
+(I25 ^arg1 I43
+       ^message-type object-description ^predicate N38)
+  (I43 ^2 I44 ^handle of1 ^item-type predicate)
+    (I44 ^2 N15 ^handle name1)
+      (N15 ^handle puzzle1 ^property L48 (@100091))
+        (L48 ^handle concept ^type conceptual)
+  (N38 ^handle king-stacked-frogs1 ^item-type predicate
+         ^word-structure N37 (@999000))
+    (N37 ^referent R114 (@999001) ^spelling king-stacked-frogs)
+      (R114 ^handle king-stacked-frogs1 ^word-structure N37 (@999000))
+=======================
+Parse SUCCEEDED.Interpreting Instructor Message: 
+The name of the puzzle is king-stacked-frogs.
+(I25 ^arg1 I43 ^message-type object-description ^predicate N38)
+  (I43 ^2 I44 ^handle of1 ^item-type predicate)
+    (I44 ^2 N15 ^handle name1)
+      (N15 ^handle puzzle1 ^property L48 (@100091))
+        (L48 ^handle concept ^type conceptual)
+  (N38 ^handle king-stacked-frogs1 ^item-type predicate
+         ^word-structure N37 (@999000))
+    (N37 ^referent R114 (@999001) ^spelling king-stacked-frogs)
+      (R114 ^handle king-stacked-frogs1 ^word-structure N37 (@999000))
+Interpreting Instructor Message: 
+(I25 ^arg1 I43 ^message-type object-description ^predicate N38)
+  (I43 ^2 I44 ^handle of1 ^item-type predicate)
+    (I44 ^2 N15 ^handle name1)
+      (N15 ^handle puzzle1 ^property L48 (@100091))
+        (L48 ^handle concept ^type conceptual)
+  (N38 ^handle king-stacked-frogs1 ^item-type predicate
+         ^word-structure N37 (@999000))
+    (N37 ^referent R114 (@999001) ^spelling king-stacked-frogs)
+      (R114 ^handle king-stacked-frogs1 ^word-structure N37 (@999000))
+Outgoing Message: 
+(M1 ^complete-message true ^type describe-puzzle)
+Outgoing Message: 
+(M2 ^complete-message true ^fields F4 ^type get-next-task)
+========== 2 =============================================
+Load init-kstacked-frogs.
+(I66 ^action N47 ^arg1 N50 ^message-type command)
+  (N47 ^handle load1 ^item-type action ^procedural L121 (@2062))
+    (L121 ^op_name initiate-load)
+  (N50 ^handle init-kstacked-frogs2 ^word-structure N49 (@999003))
+    (N49 ^referent R232 (@999004) ^spelling init-kstacked-frogs)
+      (R232 ^handle init-kstacked-frogs2 ^word-structure N49 (@999003))
+=======================
+Parse SUCCEEDED.Interpreting Instructor Message: 
+Load init-kstacked-frogs.
+(I66 ^action N47 ^arg1 N50 ^message-type command)
+  (N47 ^handle load1 ^item-type action ^procedural L121 (@2062))
+    (L121 ^op_name initiate-load)
+  (N50 ^handle init-kstacked-frogs2 ^word-structure N49 (@999003))
+    (N49 ^referent R232 (@999004) ^spelling init-kstacked-frogs)
+      (R232 ^handle init-kstacked-frogs2 ^word-structure N49 (@999003))
+Outgoing Message: 
+(M3 ^complete-message true ^type ok)
+Outgoing Message: 
+(M4 ^complete-message true ^fields F8 ^type get-next-task)
+========== 3 =============================================
+Ok.
+(I99 ^message-type yes)
+=======================
+Parse SUCCEEDED.Interpreting Instructor Message: 
+Ok.
+(I99 ^message-type yes)
+Outgoing Message: 
+(M6 ^complete-message true ^type define-actions)
+========== 4 =============================================
+If the number of the locations between a location and a covered location is the number of the blocks that are on the covered location then you can move it onto the former location.
+(I125
+       ^if-subclause I174 ^message-type conditional ^then-subclause I213)
+  (I174 ^action N155 ^arg1 I175 ^predicate I188)
+    (N155 ^handle is1 ^item-type action)
+    (I175 ^2 I176 ^handle of1 ^item-type predicate)
+      (I176 ^2 N138 ^handle number1)
+    (I188 ^2 P150 ^handle on1 ^item-type predicate)
+      (P150 ^handle new-object-id4 ^item-type object ^predicates P151
+             ^predicates-copied true)
+        (P151 ^category location ^dialog-object true ^is-visible1 not-visible1
+               ^property covered)
+  (I213 ^action N190 ^action-modifier N188 ^agent I196 ^arg1 P162 ^arg2 I211)
+    (N190 ^handle move1 ^item-type action ^procedural L794 (@1774))
+      (L794 ^arg1 L795 (@1775) ^arg2 L797 (@1777) ^op_name op_move1
+             ^subtasks L796 (@1776))
+        (L795 ^arg-type object ^id L798 (@1778) ^required true)
+        (L797 ^2 L800 (@1780) ^arg-type partial-predicate ^id L799 (@1779)
+               ^required true)
+    (N188 ^handle can)
+    (I196 ^2 I197 ^handle of1 ^item-type predicate)
+      (I197 ^2 P162 ^handle number1)
+    (P162 ^handle new-object-id5 ^item-type object ^predicates P163
+           ^predicates-copied true ^relation I157)
+      (P163 ^category object ^dialog-object true ^is-visible1 not-visible1)
+      (I157 ^2 P137 ^3 P150 ^handle between)
+    (I211 ^2 P137 ^handle on1 ^item-type predicate)
+      (P137 ^handle new-object-id3 ^item-type object ^predicates P138
+             ^predicates-copied true)
+        (P138 ^category location ^dialog-object true ^is-visible1 not-visible1)
+=======================
+Parse FAILED. Receiver: I145
+Parse FAILED. Receiver: I189
+========== 4 =============================================
+If the number of the locations between a location and a covered location is the number of the blocks that are on the covered location then you can move it onto the former location.
+(I125
+       ^if-subclause I174 ^message-type conditional ^then-subclause I213)
+  (I174 ^action N155 ^arg1 I175 ^predicate I188)
+    (N155 ^handle is1 ^item-type action)
+    (I175 ^2 I176 ^handle of1 ^item-type predicate)
+      (I176 ^2 N138 ^handle number1)
+    (I188 ^2 P150 ^handle on1 ^item-type predicate)
+      (P150 ^handle new-object-id4 ^item-type object ^predicates P151
+             ^predicates-copied true)
+        (P151 ^category location ^dialog-object true ^is-visible1 not-visible1
+               ^property covered)
+  (I213 ^action N190 ^action-modifier N188 ^agent I196 ^arg1 P162 ^arg2 I211)
+    (N190 ^handle move1 ^item-type action ^procedural L794 (@1774))
+      (L794 ^arg1 L795 (@1775) ^arg2 L797 (@1777) ^op_name op_move1
+             ^subtasks L796 (@1776))
+        (L795 ^arg-type object ^id L798 (@1778) ^required true)
+        (L797 ^2 L800 (@1780) ^arg-type partial-predicate ^id L799 (@1779)
+               ^required true)
+    (N188 ^handle can)
+    (I196 ^2 I197 ^handle of1 ^item-type predicate)
+      (I197 ^2 P162 ^handle number1)
+    (P162 ^handle new-object-id5 ^item-type object ^predicates P163
+           ^predicates-copied true ^relation I157)
+      (P163 ^category object ^dialog-object true ^is-visible1 not-visible1)
+      (I157 ^2 P137 ^3 P150 ^handle between)
+    (I211 ^2 P137 ^handle on1 ^item-type predicate)
+      (P137 ^handle new-object-id3 ^item-type object ^predicates P138
+             ^predicates-copied true)
+        (P138 ^category location ^dialog-object true ^is-visible1 not-visible1)
+=======================
+Parse FAILED. Receiver: I145
+Parse FAILED. Receiver: I189
+======== RETRY SENTENCE =======
+========== 4 =============================================
+If the number of the locations between a location and a covered location is the number of the blocks that are on the covered location then you can move it onto the former location.
+(I218
+       ^if-subclause I252 ^message-type conditional ^then-subclause I305)
+  (I252 ^action N297 ^arg1 I253 ^predicate I282)
+    (N297 ^handle is1 ^item-type action)
+    (I253 ^2 I254 ^handle of1 ^item-type predicate)
+      (I254 ^2 P287 ^handle number1)
+        (P287 ^handle new-object-id8 ^item-type object ^predicates P288
+               ^predicates-copied true ^relation I248)
+          (P288 ^category object ^dialog-object true ^is-visible1 not-visible1)
+          (I248 ^2 P263 ^3 P276 ^handle between)
+    (I282 ^2 I283 ^handle of1 ^item-type predicate)
+      (I283 ^2 P352 ^handle number1)
+  (I305 ^action N367 ^action-modifier N365 ^agent R287 ^arg1 P352 ^arg2 I303)
+    (N367 ^handle move1 ^item-type action ^procedural L1555 (@1774))
+      (L1555 ^arg1 L1556 (@1775) ^arg2 L1558 (@1777) ^op_name op_move1
+             ^subtasks L1557 (@1776))
+        (L1556 ^arg-type object ^id L1559 (@1778) ^required true)
+        (L1558 ^2 L1561 (@1780) ^arg-type partial-predicate ^id L1560 (@1779)
+               ^required true)
+    (N365 ^handle can)
+    (R287 ^arm A4 ^debug-id rob ^handle rosie ^item-type object ^predicate P49)
+      (A4 ^action wait ^holding-object false)
+      (P49 ^handle rosie)
+    (P352 ^handle new-object-id9 ^item-type object ^predicates P353
+           ^predicates-copied true ^relation I279)
+      (P353 ^category object ^dialog-object true ^is-visible1 not-visible1)
+      (I279 ^2 P276 ^handle on1)
+        (P276 ^handle new-object-id7 ^item-type object ^predicates P277
+               ^predicates-copied true)
+          (P277 ^category location ^dialog-object true
+                 ^is-visible1 not-visible1 ^property covered)
+    (I303 ^2 P263 ^handle on1 ^item-type predicate)
+      (P263 ^handle new-object-id6 ^item-type object ^predicates P264
+             ^predicates-copied true)
+        (P264 ^category location ^dialog-object true ^is-visible1 not-visible1)
+=======================
+Parse SUCCEEDED.Interpreting Instructor Message: 
+If the number of the locations between a location and a covered location is the number of the blocks that are on the covered location then you can move it onto the former location.
+(I218 ^if-subclause I252 ^message-type conditional ^then-subclause I305)
+  (I252 ^action N297 ^arg1 I253 ^predicate I282)
+    (N297 ^handle is1 ^item-type action)
+    (I253 ^2 I254 ^handle of1 ^item-type predicate)
+      (I254 ^2 P287 ^handle number1)
+        (P287 ^handle new-object-id8 ^item-type object ^predicates P288
+               ^predicates-copied true ^relation I248)
+          (P288 ^category object ^dialog-object true ^is-visible1 not-visible1)
+          (I248 ^2 P263 ^3 P276 ^handle between)
+    (I282 ^2 I283 ^handle of1 ^item-type predicate)
+      (I283 ^2 P352 ^handle number1)
+  (I305 ^action N367 ^action-modifier N365 ^agent R287 ^arg1 P352 ^arg2 I303)
+    (N367 ^handle move1 ^item-type action ^procedural L1555 (@1774))
+      (L1555 ^arg1 L1556 (@1775) ^arg2 L1558 (@1777) ^op_name op_move1
+             ^subtasks L1557 (@1776))
+        (L1556 ^arg-type object ^id L1559 (@1778) ^required true)
+        (L1558 ^2 L1561 (@1780) ^arg-type partial-predicate ^id L1560 (@1779)
+               ^required true)
+    (N365 ^handle can)
+    (R287 ^arm A4 ^debug-id rob ^handle rosie ^item-type object ^predicate P49)
+      (A4 ^action wait ^holding-object false)
+      (P49 ^handle rosie)
+    (P352 ^handle new-object-id9 ^item-type object ^predicates P353
+           ^predicates-copied true ^relation I279)
+      (P353 ^category object ^dialog-object true ^is-visible1 not-visible1)
+      (I279 ^2 P276 ^handle on1)
+        (P276 ^handle new-object-id7 ^item-type object ^predicates P277
+               ^predicates-copied true)
+          (P277 ^category location ^dialog-object true
+                 ^is-visible1 not-visible1 ^property covered)
+    (I303 ^2 P263 ^handle on1 ^item-type predicate)
+      (P263 ^handle new-object-id6 ^item-type object ^predicates P264
+             ^predicates-copied true)
+        (P264 ^category location ^dialog-object true ^is-visible1 not-visible1)
+Outgoing Message: 
+(M7 ^fields F13 ^originator agent ^type unknown-defined-word)
+  (F13 ^word covered11)
+========== 5 =============================================
+If a location is below an object then it is covered.
+(I622 ^if-subclause I633
+       ^message-type conditional ^then-subclause I649)
+  (I633 ^action N529 ^arg1 P649 ^predicate I643)
+    (N529 ^handle is1 ^item-type action)
+    (P649 ^handle new-object-id12 ^item-type object ^predicates P650
+           ^predicates-copied true)
+      (P650 ^category location ^dialog-object true ^is-visible1 not-visible1)
+    (I643 ^2 P668 ^handle below1 ^item-type predicate)
+      (P668 ^handle new-object-id13 ^item-type object ^predicates P669
+             ^predicates-copied true)
+        (P669 ^category object ^dialog-object true ^is-visible1 not-visible1)
+  (I649 ^action N561 ^arg1 P649 ^predicate N574)
+    (N561 ^handle is1 ^item-type action)
+    (N574 ^handle covered ^item-type predicate ^property L2262 (@100087))
+      (L2262 ^handle property ^type visual)
+=======================
+Parse SUCCEEDED.Interpreting Instructor Message: 
+If a location is below an object then it is covered.
+(I622 ^if-subclause I633 ^message-type conditional ^then-subclause I649)
+  (I633 ^action N529 ^arg1 P649 ^predicate I643)
+    (N529 ^handle is1 ^item-type action)
+    (P649 ^handle new-object-id12 ^item-type object ^predicates P650
+           ^predicates-copied true)
+      (P650 ^category location ^dialog-object true ^is-visible1 not-visible1)
+    (I643 ^2 P668 ^handle below1 ^item-type predicate)
+      (P668 ^handle new-object-id13 ^item-type object ^predicates P669
+             ^predicates-copied true)
+        (P669 ^category object ^dialog-object true ^is-visible1 not-visible1)
+  (I649 ^action N561 ^arg1 P649 ^predicate N574)
+    (N561 ^handle is1 ^item-type action)
+    (N574 ^handle covered ^item-type predicate ^property L2262 (@100087))
+      (L2262 ^handle property ^type visual)
+Outgoing Message: 
+(M8 ^complete-message true ^fields F16 ^type learned-unknown-word)
+  (F16 ^word covered11)
+Preferences for S821 ^operator:
+
+acceptables:
+  O3477 (resolve-ungroundable) +  :I  [level 6] 
+  O3478 (resolve-ungroundable) +  :I  [level 6] 
+  O3479 (resolve-ungroundable) +  :I  [level 6] 
+  O3480 (resolve-ungroundable) +  :I  [level 6] 
+  O3481 (resolve-ungroundable) +  :I  [level 6] 
+  O3482 (resolve-ungroundable) +  :I  [level 6] 
+  O3483 (resolve-ungroundable) +  :I  [level 6] 
+  O3484 (resolve-ungroundable) +  :I  [level 6] 
+  O3403 (learn-condition) +  :I  [level 6] 
+  O3404 (learn-condition) +  :I  [level 6] 
+  O3405 (learn-condition) +  :I  [level 6] 
+  O3406 (learn-condition) +  :I  [level 6] 
+  O3407 (learn-condition) +  :I  [level 6] 
+  O3408 (learn-condition) +  :I  [level 6] 
+  O3409 (learn-condition) +  :I  [level 6] 
+  O3410 (learn-condition) +  :I  [level 6] 
+  O3411 (learn-condition) +  :I  [level 6] 
+  O3412 (learn-condition) +  :I  [level 6] 
+  O3413 (learn-condition) +  :I  [level 6] 
+  O3414 (learn-condition) +  :I  [level 6] 
+  O3415 (learn-condition) +  :I  [level 6] 
+  O3416 (learn-condition) +  :I  [level 6] 
+  O3417 (learn-condition) +  :I  [level 6] 
+  O3418 (learn-condition) +  :I  [level 6] 
+  O3419 (learn-condition) +  :I  [level 6] 
+  O3420 (learn-condition) +  :I  [level 6] 
+  O3422 (learn-condition) +  :I  [level 6] 
+  O3423 (learn-condition) +  :I  [level 6] 
+  O3424 (learn-condition) +  :I  [level 6] 
+  O3425 (learn-condition) +  :I  [level 6] 
+  O3426 (learn-condition) +  :I  [level 6] 
+  O3427 (learn-condition) +  :I  [level 6] 
+  O3428 (learn-condition) +  :I  [level 6] 
+  O3429 (learn-condition) +  :I  [level 6] 
+  O3430 (learn-condition) +  :I  [level 6] 
+  O3431 (learn-condition) +  :I  [level 6] 
+  O3432 (learn-condition) +  :I  [level 6] 
+  O3433 (learn-condition) +  :I  [level 6] 
+  O3434 (learn-condition) +  :I  [level 6] 
+  O3435 (learn-condition) +  :I  [level 6] 
+  O3436 (learn-condition) +  :I  [level 6] 
+  O3437 (learn-condition) +  :I  [level 6] 
+  O3438 (learn-condition) +  :I  [level 6] 
+  O3439 (learn-condition) +  :I  [level 6] 
+  O3440 (learn-condition) +  :I  [level 6] 
+  O3441 (learn-condition) +  :I  [level 6] 
+  O3442 (learn-condition) +  :I  [level 6] 
+  O3443 (learn-condition) +  :I  [level 6] 
+  O3444 (learn-condition) +  :I  [level 6] 
+  O3446 (learn-condition) +  :I  [level 6] 
+  O3447 (learn-condition) +  :I  [level 6] 
+
+rejects:
+  O3432 (learn-condition) -  :I  [level 6] 
+  O3434 (learn-condition) -  :I  [level 6] 
+  O3434 (learn-condition) -  :I  [level 6] 
+  O3434 (learn-condition) -  :I  [level 6] 
+  O3434 (learn-condition) -  :I  [level 6] 
+  O3435 (learn-condition) -  :I  [level 6] 
+  O3403 (learn-condition) -  :I  [level 6] 
+  O3403 (learn-condition) -  :I  [level 6] 
+  O3403 (learn-condition) -  :I  [level 6] 
+  O3403 (learn-condition) -  :I  [level 6] 
+  O3403 (learn-condition) -  :I  [level 6] 
+  O3403 (learn-condition) -  :I  [level 6] 
+  O3403 (learn-condition) -  :I  [level 6] 
+  O3403 (learn-condition) -  :I  [level 6] 
+  O3404 (learn-condition) -  :I  [level 6] 
+  O3404 (learn-condition) -  :I  [level 6] 
+  O3404 (learn-condition) -  :I  [level 6] 
+  O3404 (learn-condition) -  :I  [level 6] 
+  O3404 (learn-condition) -  :I  [level 6] 
+  O3405 (learn-condition) -  :I  [level 6] 
+  O3405 (learn-condition) -  :I  [level 6] 
+  O3405 (learn-condition) -  :I  [level 6] 
+  O3405 (learn-condition) -  :I  [level 6] 
+  O3406 (learn-condition) -  :I  [level 6] 
+  O3406 (learn-condition) -  :I  [level 6] 
+  O3406 (learn-condition) -  :I  [level 6] 
+  O3406 (learn-condition) -  :I  [level 6] 
+  O3406 (learn-condition) -  :I  [level 6] 
+  O3406 (learn-condition) -  :I  [level 6] 
+  O3406 (learn-condition) -  :I  [level 6] 
+  O3406 (learn-condition) -  :I  [level 6] 
+  O3407 (learn-condition) -  :I  [level 6] 
+  O3407 (learn-condition) -  :I  [level 6] 
+  O3407 (learn-condition) -  :I  [level 6] 
+  O3407 (learn-condition) -  :I  [level 6] 
+  O3407 (learn-condition) -  :I  [level 6] 
+  O3408 (learn-condition) -  :I  [level 6] 
+  O3408 (learn-condition) -  :I  [level 6] 
+  O3408 (learn-condition) -  :I  [level 6] 
+  O3408 (learn-condition) -  :I  [level 6] 
+  O3409 (learn-condition) -  :I  [level 6] 
+  O3409 (learn-condition) -  :I  [level 6] 
+  O3409 (learn-condition) -  :I  [level 6] 
+  O3409 (learn-condition) -  :I  [level 6] 
+  O3409 (learn-condition) -  :I  [level 6] 
+  O3409 (learn-condition) -  :I  [level 6] 
+  O3409 (learn-condition) -  :I  [level 6] 
+  O3409 (learn-condition) -  :I  [level 6] 
+  O3410 (learn-condition) -  :I  [level 6] 
+  O3410 (learn-condition) -  :I  [level 6] 
+  O3410 (learn-condition) -  :I  [level 6] 
+  O3410 (learn-condition) -  :I  [level 6] 
+  O3410 (learn-condition) -  :I  [level 6] 
+  O3411 (learn-condition) -  :I  [level 6] 
+  O3411 (learn-condition) -  :I  [level 6] 
+  O3411 (learn-condition) -  :I  [level 6] 
+  O3411 (learn-condition) -  :I  [level 6] 
+  O3412 (learn-condition) -  :I  [level 6] 
+  O3412 (learn-condition) -  :I  [level 6] 
+  O3412 (learn-condition) -  :I  [level 6] 
+  O3412 (learn-condition) -  :I  [level 6] 
+  O3412 (learn-condition) -  :I  [level 6] 
+  O3412 (learn-condition) -  :I  [level 6] 
+  O3412 (learn-condition) -  :I  [level 6] 
+  O3412 (learn-condition) -  :I  [level 6] 
+  O3413 (learn-condition) -  :I  [level 6] 
+  O3413 (learn-condition) -  :I  [level 6] 
+  O3413 (learn-condition) -  :I  [level 6] 
+  O3413 (learn-condition) -  :I  [level 6] 
+  O3414 (learn-condition) -  :I  [level 6] 
+  O3414 (learn-condition) -  :I  [level 6] 
+  O3414 (learn-condition) -  :I  [level 6] 
+  O3414 (learn-condition) -  :I  [level 6] 
+  O3414 (learn-condition) -  :I  [level 6] 
+  O3414 (learn-condition) -  :I  [level 6] 
+  O3414 (learn-condition) -  :I  [level 6] 
+  O3414 (learn-condition) -  :I  [level 6] 
+  O3415 (learn-condition) -  :I  [level 6] 
+  O3415 (learn-condition) -  :I  [level 6] 
+  O3415 (learn-condition) -  :I  [level 6] 
+  O3415 (learn-condition) -  :I  [level 6] 
+  O3415 (learn-condition) -  :I  [level 6] 
+  O3415 (learn-condition) -  :I  [level 6] 
+  O3415 (learn-condition) -  :I  [level 6] 
+  O3415 (learn-condition) -  :I  [level 6] 
+  O3416 (learn-condition) -  :I  [level 6] 
+  O3417 (learn-condition) -  :I  [level 6] 
+  O3417 (learn-condition) -  :I  [level 6] 
+  O3417 (learn-condition) -  :I  [level 6] 
+  O3417 (learn-condition) -  :I  [level 6] 
+  O3417 (learn-condition) -  :I  [level 6] 
+  O3417 (learn-condition) -  :I  [level 6] 
+  O3417 (learn-condition) -  :I  [level 6] 
+  O3417 (learn-condition) -  :I  [level 6] 
+  O3418 (learn-condition) -  :I  [level 6] 
+  O3418 (learn-condition) -  :I  [level 6] 
+  O3418 (learn-condition) -  :I  [level 6] 
+  O3418 (learn-condition) -  :I  [level 6] 
+  O3419 (learn-condition) -  :I  [level 6] 
+  O3419 (learn-condition) -  :I  [level 6] 
+  O3419 (learn-condition) -  :I  [level 6] 
+  O3419 (learn-condition) -  :I  [level 6] 
+  O3420 (learn-condition) -  :I  [level 6] 
+  O3422 (learn-condition) -  :I  [level 6] 
+  O3423 (learn-condition) -  :I  [level 6] 
+  O3424 (learn-condition) -  :I  [level 6] 
+  O3424 (learn-condition) -  :I  [level 6] 
+  O3424 (learn-condition) -  :I  [level 6] 
+  O3424 (learn-condition) -  :I  [level 6] 
+  O3424 (learn-condition) -  :I  [level 6] 
+  O3424 (learn-condition) -  :I  [level 6] 
+  O3424 (learn-condition) -  :I  [level 6] 
+  O3424 (learn-condition) -  :I  [level 6] 
+  O3425 (learn-condition) -  :I  [level 6] 
+  O3425 (learn-condition) -  :I  [level 6] 
+  O3425 (learn-condition) -  :I  [level 6] 
+  O3425 (learn-condition) -  :I  [level 6] 
+  O3426 (learn-condition) -  :I  [level 6] 
+  O3426 (learn-condition) -  :I  [level 6] 
+  O3426 (learn-condition) -  :I  [level 6] 
+  O3426 (learn-condition) -  :I  [level 6] 
+  O3426 (learn-condition) -  :I  [level 6] 
+  O3426 (learn-condition) -  :I  [level 6] 
+  O3426 (learn-condition) -  :I  [level 6] 
+  O3426 (learn-condition) -  :I  [level 6] 
+  O3427 (learn-condition) -  :I  [level 6] 
+  O3427 (learn-condition) -  :I  [level 6] 
+  O3427 (learn-condition) -  :I  [level 6] 
+  O3427 (learn-condition) -  :I  [level 6] 
+  O3427 (learn-condition) -  :I  [level 6] 
+  O3427 (learn-condition) -  :I  [level 6] 
+  O3427 (learn-condition) -  :I  [level 6] 
+  O3427 (learn-condition) -  :I  [level 6] 
+  O3428 (learn-condition) -  :I  [level 6] 
+  O3428 (learn-condition) -  :I  [level 6] 
+  O3428 (learn-condition) -  :I  [level 6] 
+  O3428 (learn-condition) -  :I  [level 6] 
+  O3429 (learn-condition) -  :I  [level 6] 
+  O3429 (learn-condition) -  :I  [level 6] 
+  O3429 (learn-condition) -  :I  [level 6] 
+  O3429 (learn-condition) -  :I  [level 6] 
+  O3429 (learn-condition) -  :I  [level 6] 
+  O3429 (learn-condition) -  :I  [level 6] 
+  O3429 (learn-condition) -  :I  [level 6] 
+  O3429 (learn-condition) -  :I  [level 6] 
+  O3430 (learn-condition) -  :I  [level 6] 
+  O3430 (learn-condition) -  :I  [level 6] 
+  O3430 (learn-condition) -  :I  [level 6] 
+  O3430 (learn-condition) -  :I  [level 6] 
+  O3431 (learn-condition) -  :I  [level 6] 
+  O3431 (learn-condition) -  :I  [level 6] 
+  O3431 (learn-condition) -  :I  [level 6] 
+  O3431 (learn-condition) -  :I  [level 6] 
+  O3433 (learn-condition) -  :I  [level 6] 
+  O3433 (learn-condition) -  :I  [level 6] 
+  O3433 (learn-condition) -  :I  [level 6] 
+  O3433 (learn-condition) -  :I  [level 6] 
+  O3433 (learn-condition) -  :I  [level 6] 
+  O3433 (learn-condition) -  :I  [level 6] 
+  O3433 (learn-condition) -  :I  [level 6] 
+  O3433 (learn-condition) -  :I  [level 6] 
+  O3436 (learn-condition) -  :I  [level 6] 
+  O3436 (learn-condition) -  :I  [level 6] 
+  O3436 (learn-condition) -  :I  [level 6] 
+  O3436 (learn-condition) -  :I  [level 6] 
+  O3436 (learn-condition) -  :I  [level 6] 
+  O3436 (learn-condition) -  :I  [level 6] 
+  O3436 (learn-condition) -  :I  [level 6] 
+  O3436 (learn-condition) -  :I  [level 6] 
+  O3437 (learn-condition) -  :I  [level 6] 
+  O3437 (learn-condition) -  :I  [level 6] 
+  O3437 (learn-condition) -  :I  [level 6] 
+  O3437 (learn-condition) -  :I  [level 6] 
+  O3438 (learn-condition) -  :I  [level 6] 
+  O3438 (learn-condition) -  :I  [level 6] 
+  O3438 (learn-condition) -  :I  [level 6] 
+  O3438 (learn-condition) -  :I  [level 6] 
+  O3438 (learn-condition) -  :I  [level 6] 
+  O3438 (learn-condition) -  :I  [level 6] 
+  O3438 (learn-condition) -  :I  [level 6] 
+  O3438 (learn-condition) -  :I  [level 6] 
+  O3439 (learn-condition) -  :I  [level 6] 
+  O3439 (learn-condition) -  :I  [level 6] 
+  O3439 (learn-condition) -  :I  [level 6] 
+  O3439 (learn-condition) -  :I  [level 6] 
+  O3439 (learn-condition) -  :I  [level 6] 
+  O3439 (learn-condition) -  :I  [level 6] 
+  O3439 (learn-condition) -  :I  [level 6] 
+  O3439 (learn-condition) -  :I  [level 6] 
+  O3440 (learn-condition) -  :I  [level 6] 
+  O3441 (learn-condition) -  :I  [level 6] 
+  O3441 (learn-condition) -  :I  [level 6] 
+  O3441 (learn-condition) -  :I  [level 6] 
+  O3441 (learn-condition) -  :I  [level 6] 
+  O3441 (learn-condition) -  :I  [level 6] 
+  O3441 (learn-condition) -  :I  [level 6] 
+  O3441 (learn-condition) -  :I  [level 6] 
+  O3441 (learn-condition) -  :I  [level 6] 
+  O3442 (learn-condition) -  :I  [level 6] 
+  O3442 (learn-condition) -  :I  [level 6] 
+  O3442 (learn-condition) -  :I  [level 6] 
+  O3442 (learn-condition) -  :I  [level 6] 
+  O3443 (learn-condition) -  :I  [level 6] 
+  O3443 (learn-condition) -  :I  [level 6] 
+  O3443 (learn-condition) -  :I  [level 6] 
+  O3443 (learn-condition) -  :I  [level 6] 
+  O3444 (learn-condition) -  :I  [level 6] 
+  O3446 (learn-condition) -  :I  [level 6] 
+  O3447 (learn-condition) -  :I  [level 6] 
+
+unary indifferents:
+  O3403 (learn-condition) =  :I  [level 6] 
+  O3404 (learn-condition) =  :I  [level 6] 
+ ... and much more
+  

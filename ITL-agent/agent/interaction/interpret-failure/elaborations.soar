@@ -1,0 +1,13 @@
+sp {interpret-failure*elaborate*failure
+   (state <s> ^name interpret-failure
+              ^superstate.operator.failure <failure>)
+-->
+   (<s> ^failure <failure>)
+}
+
+sp {interpret-failure*elaborate*current-purpose
+   (state <s> ^name interpret-failure
+              ^top-state.interaction.stack.segment.purpose <p>)
+-->
+   (<s> ^current-purpose <p>)
+}

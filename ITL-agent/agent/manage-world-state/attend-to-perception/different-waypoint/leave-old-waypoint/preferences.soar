@@ -1,0 +1,9 @@
+sp {leave-old-waypoint*prefer*extract-metric-info*over*change-world-state
+   (state <s> ^name leave-old-waypoint
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name extract-metric-info)
+   (<o2> ^name change-world-state)
+-->
+   (<s> ^operator <o1> > <o2>)
+}

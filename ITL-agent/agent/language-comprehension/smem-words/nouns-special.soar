@@ -1,0 +1,23 @@
+smem --add {
+           
+           (<where> ^spelling |where|
+                    ^structure-type QP
+                    ^number singular
+                    ^question true)
+         
+                      
+           (<what> ^spelling |what|
+                   ^structure-type QP
+                   ^number singular
+                   ^question true)
+          
+                                 
+           (<there> ^spelling |there|
+                    ^structure-type DPX
+                    ^referent <ref>
+                    ^number singular)           
+            (<ref> ^handle there 
+                  ^property <prop>)
+            (<prop> ^handle handle
+                    ^type visual)
+}

@@ -1,0 +1,28 @@
+#########################################################
+#
+# Discrepancy: new-belief-object
+#   There is an object in belief that is not in perception
+# Params: 
+#   object-info <obj-info> - The new belief object
+# Handling:
+#   attend-to-perception: new-belief-object
+#
+#########################################################
+
+# Note: A little bit of a hack, but when a new belief object is added to the world
+#   (i.e. from instruction, smem, TCN) we add a ^new-belief-object flag onto it
+#   Then check to see if it matches an existing object. 
+#   If it does not, then we remove the flag and it stays in the world
+
+#sp {perception-monitor*detect-discrepancies*new-belief-object
+#   (state <s> ^superstate nil
+#              ^perception-monitor <perc-mon>)
+#   (<perc-mon> ^object-monitor.object-info <obj-info>
+#               ^discrepancies <discs>)
+#   (<obj-info> ^new-belief-object true)
+#-->
+#   (<discs> ^new-belief-object <disc>)
+#   (<disc> ^object-info <obj-info>)
+#}
+
+

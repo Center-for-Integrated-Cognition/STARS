@@ -1,0 +1,10 @@
+struct robot_termination_condition_t
+{
+    int64_t utime;
+
+    string name;
+
+    int32_t num_params;
+    string param_names[num_params];
+    string param_values[num_params];
+}

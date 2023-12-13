@@ -1,0 +1,142 @@
+classes {
+  c# {
+    labels = ["door", ""];
+    ids = [1, 3, 5, 8, 10, 12];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["intersection", ""];
+    ids = [2, 4, 6, 7, 9, 11];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp01", ""];
+    ids = [1];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp02", ""];
+    ids = [2];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp03", ""];
+    ids = [3];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp04", ""];
+    ids = [4];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp05", ""];
+    ids = [5];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp06", ""];
+    ids = [6];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp07", ""];
+    ids = [7];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp08", ""];
+    ids = [8];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp09", ""];
+    ids = [9];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp10", ""];
+    ids = [10];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp11", ""];
+    ids = [11];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+  c# {
+    labels = ["wp12", ""];
+    ids = [12];
+    probs = [1.0, 0.0];
+    mean = 1.0;
+    stddev = 0.0;
+    minRange = 1.0;
+    maxRange = 2.0;
+  }
+
+}

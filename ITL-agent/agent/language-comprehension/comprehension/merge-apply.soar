@@ -1,0 +1,1086 @@
+############################################################################
+### Apply MERGE
+
+sp {apply*merge
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^not-merged-receiver <receiver>
+          ^not-merged-assigner <assigner>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>
+              -^lt.repeatable true
+               ^lt.syntactic-structure { <> nil <> reverse-merge <stype> <> conj-predicate })
+-->
+   (<seg> ^not-merged-receiver <receiver> -
+          ^not-merged-assigner <assigner> -
+          ^merged-assigner <assigner>)
+   (<assigner> ^merged-receiver <receiver>)
+   (<pword> ^<stype> <receiver>)
+}
+
+sp {apply*merge*filler-word
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^not-merged-receiver <receiver>
+          ^not-merged-assigner <assigner>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> -^lt.repeatable true
+                ^lt.syntactic-structure nil)
+-->
+   (<seg> ^not-merged-receiver <receiver> -
+          ^not-merged-assigner <assigner> -
+          ^merged-assigner <assigner>)
+   (<assigner> ^merged-receiver <receiver>)
+}
+
+sp {apply*merge*repeatable
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^not-merged-receiver <receiver>
+          ^not-merged-assigner <assigner>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>
+               ^lt <lt>)
+   (<lt> ^repeatable true
+         ^syntactic-structure  { <> nil <stype> })
+-->
+   (<seg> ^not-merged-receiver <receiver> -
+          ^merged-assigner <assigner>)
+   (<assigner> ^merged-receiver <receiver>)
+   (<pword> ^<stype> <receiver>)
+}
+
+sp {apply*merge*filler-word*repeatable
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^not-merged-receiver <receiver>
+          ^not-merged-assigner <assigner>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^lt <lt>)
+   (<lt> ^repeatable true
+         ^syntactic-structure nil)
+-->
+   (<seg> ^not-merged-receiver <receiver> -
+          ^merged-assigner <assigner>)
+   (<assigner> ^merged-receiver <receiver>)
+}
+
+sp {apply*merge*conj-predicate
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^not-merged-receiver <receiver>
+          ^not-merged-assigner <assigner>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>
+              -^lt.repeatable true
+               ^lt.syntactic-structure conj-predicate)
+-->
+   (<seg> ^not-merged-receiver <receiver> -
+          ^not-merged-assigner <assigner> -
+          ^merged-assigner <assigner>)
+   (<assigner> ^merged-receiver <receiver>)
+   (<pword> ^predicate <receiver>)
+}
+## Merging receiver that has unfilled assigner - remove it.
+
+sp {apply*merge*remove-unfilled-assigner
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^not-merged-receiver <receiver>
+          ^not-merged-assigner <assigner>)
+   (<op> ^name merge
+         ^receiver <receiver>)
+   (<assigner> ^parent-receiver <receiver>)
+-->
+   (<seg> ^not-merged-assigner <assigner> -)
+}
+######Update last-merge
+
+sp {apply*merge*last-merge
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^last-merge <lm>
+          ^not-merged-receiver <receiver>
+          ^not-merged-assigner <assigner>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^lt.syntactic-structure <stype>)
+-->
+   (<seg> ^last-merge <nm>
+                      <lm> -)
+   (<nm> ^assigner <assigner>
+         ^receiver <receiver>
+         ^structure-type <stype>)
+}
+
+######Copy up semantics
+sp {apply*merge*copy-semantics
+ #:interrupt
+   (state <s> ^operator <op>)
+   (<op> ^name merge
+         ^receiver.semantics <sem>
+         ^assigner <ass>)
+   (<ass> ^parent-receiver.semantics <sem2>)
+   (<sem> ^<att> <value>)
+   -(<value> ^handle by1)            ### ADD JEL 8/23
+   -(<ass> ^lt.semantic-structure)   ### ADD JEL
+-->
+   #(write (crlf) |Copy ^semantics ^| <att> | | <value> | from | <sem> | to | <sem2>)
+   (<sem2> ^<att> <value>)
+   (<ass> ^process-semantics <value>)
+}
+
+######Copy up message-type
+sp {apply*merge*copy-message-type*semantics
+  #:interrupt
+   (state <s> ^operator <op>)
+   (<op> ^name merge
+         ^receiver.lt.message-type <ms-type>
+         ^assigner.parent-receiver <pword>)
+   (<pword> ^semantics <sem2>
+            ^lt.structure-type S)
+-->
+   #(write (crlf) |Copy ^message-type | <ms-type> | to | <sem2>)
+   (<sem2> ^message-type <ms-type>)
+}
+
+######Copy up message-type
+sp {apply*merge*copy-message-type
+  #:interrupt
+   (state <s> ^operator <op>)
+   (<op> ^name merge
+         ^receiver.lt.message-type <ms-type>
+         ^assigner.parent-receiver <pword>)
+   (<pword> ^lt.structure-type S)
+-->
+   #(write (crlf) |Copy ^message-type | <ms-type> | to | <pword>)
+   (<pword> ^message-type <ms-type>)
+}
+
+######Copy up first-word status
+sp {apply*merge*copy-first-word
+  #:interrupt
+   (state <s> ^operator <op>
+              ^segment.not-merged-assigner <assigner>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>)
+   (<receiver> ^current-word.first-word true)
+  -(<pword> ^constraint.<att> <val>)                  # why?
+   (<pword> ^current-word <wd>)
+-->
+   #(write (crlf) |Copy ^first-word true from | <receiver> | to | <pword>)
+   (<pword> ^first-word true)
+   (<wd> ^first-word true)
+}
+############################################################
+## Special Cases (not good to have these, but ...)
+                 
+sp {apply*merge*relation-value
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^not-merged-receiver <receiver>
+          ^not-merged-assigner <assigner>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>
+               ^lt <rv>)
+   (<pword> ^lt <lla>)
+   (<lla> ^relation-source <rv>)
+   (<receiver> ^lt.relation <relation>)
+-->
+   #(write (crlf) |Inherited relation-source | <relation> | usually for THAT IS.|)
+   (<lla> ^relation <relation>)
+}
+ 
+sp {apply*merge*relation-value*inherit*2
+#  :interrupt
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^not-merged-receiver <receiver>
+          ^not-merged-assigner <assigner>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>)
+   (<pword> ^lt <lla>
+            ^structure-type CONJ-C-ADJ)
+   (<receiver> ^lt.relation <relation>)
+-->
+#(write (crlf) |Inherited relation-source | <relation> | usually for THAT IS.|)
+   (<lla> ^relation <relation>)
+}
+
+                 
+sp {apply*merge*relation-value*semantics
+   #:interrupt
+   (state <s> ^operator <op>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>)
+   (<receiver> ^semantics <sem> 
+               ^lt-referent <con>)
+   (<relation> ^handle by1) 
+   (<sem> ^<att> <relation>)
+-->
+#(write (crlf) |Inherited relation-source | <relation> | usually for THAT IS.... by|)
+   (<sem> ^<att> <relation> -)
+   (<con> ^relation <relation>)
+}
+### Strip assigner - preposition is something like "named" that wants a raw token - no meaning
+             
+sp {apply*merge*strip-assigners
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^not-merged-receiver <receiver>
+          ^not-merged-assigner <assigner2>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^lt.strip-assigners true)
+   (<assigner2> ^parent-receiver <receiver>)
+-->
+   #(write (crlf) |Strip assigners from | <receiver> | because it is quoted: named.|)
+   (<seg> ^not-merged-assigner <assigner2> -)
+}
+
+######Add Constraints
+## Copy constraints from assigner to parent-receiver
+##
+## Changed to move to parent.-receiver.head structure which is where the
+##  appropriate referent should be.  
+
+### MUST UPDATE
+sp {apply*merge*push-constraint
+  #:interrupt
+   (state <s> ^operator <op>
+              ^segment.not-merged-receiver <receiver>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner.lt.constraint <con>)
+   -(<receiver> ^constraint <con>)
+-->
+   #(write (crlf) |Add constraint | <con> | to | <receiver> | from lt.|)
+   (<receiver> ^constraint <con>)
+}
+
+sp {apply*merge*push-constraint*receiver-assigner*DP-RC
+  #:interrupt
+   (state <s> ^operator <op>
+              ^segment.not-merged-receiver <receiver>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner.parent-receiver <pr>)
+    (<pr> -^constraint <con>
+           ^structure-type RC)
+    (<receiver> ^constraint <con>
+                ^structure-type << C-ADJ-P DP >>)
+-->
+   #(write (crlf) |Add DP/C-ADJ-P constraint | <con> | to RC parent-receiver | <pr> | from receiver.|)
+   (<pr> ^constraint <con>)
+}
+
+
+sp {apply*merge*push-constraint*receiver-assigner*RCP-D
+  #:interrupt
+   (state <s> ^operator <op>
+              ^segment.not-merged-receiver <receiver>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner.parent-receiver <pr>)
+    (<pr> -^constraint <con>
+           ^structure-type << CN D QUANT >>) # Maybe should be lt.converts-to DP
+    (<receiver> ^constraint <con>
+                ^structure-type RCP)
+   -{(<con> ^handle <handle>)
+     (<pr> ^constraint.handle <handle>)}
+-->
+   #(write (crlf) |Add RCP constraint | <con> | to D parent-receiver | <pr> | from receiver.|)
+   (<pr> ^constraint <con>)
+}
+
+
+sp {apply*merge*push-constraint*clear-ground-tested
+  #:interrupt
+   (state <s> ^operator <op>
+               ^segment.not-merged-receiver <receiver>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner.lt.constraint <con>)
+   (<receiver> ^ground-tested <gt>)
+-->
+   #(write (crlf) |Remove ground tested | <gt>)
+   (<receiver> ^ground-tested <gt> -)
+}
+
+##
+sp {apply*merge*constraint*possessive
+ #:interrupt   
+   (state <s> ^operator <op>
+              ^segment.not-merged-assigner <assigner>)
+   (<op> ^name merge
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>)
+   (<pword> ^lt.referent <ref>
+            ^structure-type POS)
+   (<ref> ^handle <handle>)
+  -(<pword> ^constraint <ref>)
+-->
+#(write (crlf) |Add possesive constraint ^handle | <handle> | to | <pword> | from assigner:| <assigner>)
+   (<pword> ^constraint <ref>)
+}
+
+## Doesn't seem to be used at all.  Removed 3/1/2015 JEL
+#sp {apply*merge*constraint*selector
+#:interrupt
+#   (state <s> ^operator <op>
+#              ^segment.not-merged-receiver <receiver>)
+#   (<op> ^name merge
+#         ^receiver <receiver>
+#         ^assigner <assigner>)
+#   (<assigner> ^parent-receiver <pword>)
+#   (<receiver> ^lt.selector <selector>)
+#  -(<pword> ^constraint.selector <selector>)
+#-->
+#   #(write (crlf) |Add constraint.selector | <selector> | to | <pword> | from lt.|)
+#   (<pword> ^constraint <c>)
+#   (<c> ^selector <selector>)
+#}
+
+sp {apply*merge*constraint*features*name
+ #:interrupt   
+   (state <s> ^operator <op>
+              ^segment.not-merged-receiver <receiver>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>)
+   (<receiver> ^lt-referent <id>)
+   (<id> -^property
+          ^<< handle name >> <handle>)
+  -(<pword> ^constraint <id>)
+-->
+   #(write (crlf) |*****Add constraint name | <handle> | to | <pword> | from lt.referent.|)
+   (<pword> ^constraint <id>)
+}
+
+sp {apply*merge*constraint*features
+ #:interrupt   
+   (state <s> ^operator <op>
+              ^segment.not-merged-receiver <receiver>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>)
+   (<receiver> ^lt-referent <id>)
+   (<id> ^property <pf>)
+   (<pf> ^<< handle name >> <name>
+         ^value <value>)
+  -(<pword> ^constraint <id>)
+-->
+   #(write (crlf) |Add constraint ^| <name>  | | <value> | to | <pword> | from lt:| <id>)
+   (<pword> ^constraint <id>)
+}
+
+sp {apply*merge*constraint*features2
+ #:interrupt   
+   (state <s> ^operator <op>
+              ^segment.not-merged-receiver <receiver>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>)
+   (<receiver> ^lt-referent <id>
+              -^lt.singleton-DP true)
+   (<id> ^property <pf>
+         ^<< handle name >> { <> category <value> })
+   (<pf> ^<< handle name >> <name>
+        -^value)
+  -(<pword> ^constraint <id>)
+-->
+   #(write (crlf) |Add constraint ^| <name>  | | <value> | to | <pword> | from lt:| <id>)
+   (<pword> ^constraint <id>)
+}
+
+# AM: EDIT: Added singleton-DP so that for PN like Bob, it will copy constraint
+#     to the lower receiver and not the parent-receiver
+sp {apply*merge*constraint*features2*singleton-DP
+ #:interrupt   
+   (state <s> ^operator <op>
+              ^segment.not-merged-receiver <receiver>)
+   (<op> ^name merge
+         ^receiver <receiver>)
+   (<receiver> ^lt-referent <id>
+               ^lt.singleton-DP true
+               ^structure-type DP)
+   (<id> ^property <pf>
+         ^<< handle name >> { <> category <value> })
+   (<pf> ^<< handle name >> <name>
+        -^value)
+  -(<receiver> ^constraint <id>)
+-->
+#(write (crlf) |Add constraint ^| <name>  | | <value> | to | <receiver> | from lt:| <id>)
+   (<receiver> ^constraint <id>)
+}
+
+
+sp {apply*merge*constraint*preposition-right-conversion
+ #:interrupt
+   (state <s> ^operator <op>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>
+                    ^structure-type DP)
+   (<pword> ^lt <pll>)
+   (<receiver> ^structure-type DP
+                    ^<< head noun >> <dp>)
+   (<dp> ^lt <xxi>
+         ^head.head <head>)
+   (<head> ^referent <sg>)
+   (<xxi> ^relation <sr>
+          ^semantic-structure relation)
+   (<pll> ^converts-to  <ctrs>
+          ^spelling <spell>
+          ^structure-type <st>)
+-->
+   #(write (crlf) |apply*merge*constraint*preposition-right-conversion|)
+   (<pword> ^head <head>
+            ^lt <new-lli>
+                <pll> -)
+   (<new-lli> ^relation <sr>
+              ^semantic-structure relation
+              ^converts-to  <ctrs>
+              ^directional false
+              ^spelling <spell>
+              ^structure-type <st>)
+}
+sp {apply*merge*constraint*preposition-noun
+ # :interrupt
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>
+               ^structure-type << PP CONJP C-ADJ-P >>)
+   (<pword> ^structure-type << D DP CN RC >>
+           -^head.lt.semantic-structure relation) # don't do this if part of 'to the left of'
+   (<receiver> ^structure-type << PP CONJP C-ADJ-P >>
+              -^lt.relation-type ternary
+              -^lt.directional true
+               ^lt.relation.handle { <> of1 <sr> }  # Of is a special case...
+               ^head <head>)
+   (<head> ^referent <obj>)   
+-->
+   (<seg> ^new-constraint <nc>)
+   (<nc> ^object <pword> #<head>  # was <pword>
+         ^constraint <c>)
+   (<pword> ^constraint <c>) #<head> # was <pword>
+   (<c> ^relation <srx>)
+   (<srx> ^2 <obj>
+          ^handle <sr>)
+ #  (write (crlf) |Add new constraint to | <pword> | relation: | <sr> | object: | <obj>)
+}
+###
+#sp {apply*merge*constraint*preposition-noun
+#  #:interrupt
+#   (state <s> ^operator <op>
+#              ^segment <seg>)
+#   (<op> ^name merge
+#         ^receiver <receiver>
+#         ^assigner <assigner>)
+#   (<assigner> ^parent-receiver <pword>
+#               ^structure-type << PP CONJP C-ADJ-P >>)
+#   (<pword> ^structure-type << D DP CN RC >>
+#           -^head.lt.semantic-structure relation) # don't do this if part of 'to the left of'
+#   (<receiver> ^structure-type << PP CONJP C-ADJ-P >>
+#              -^lt.relation-type ternary
+#               ^lt.relation.handle { <> of1 <sr> }  # Of is a special case...
+#               ^head <head>)
+#   (<head> ^referent <obj>)   
+#-->
+#   (<seg> ^new-constraint <nc>)
+#   (<nc> ^object <pword> #<head>  # was <pword>
+#         ^constraint <c>)
+#   (<pword> ^constraint <c>) #<head> # was <pword>
+#   (<c> ^relation <srx>)
+#   (<srx> ^2 <obj>
+#          ^handle <sr>)
+#   #(write (crlf) |Add new constraint to | <pword> | relation: | <sr> | object: | <obj>)
+#}
+
+sp {apply*merge*constraint*preposition-noun*CONJ-C
+  #:interrupt
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>
+               ^structure-type << CONJ-C-ADJ-P >>)
+   (<pword> ^structure-type << D DP CN RC >>
+           -^head.lt.semantic-structure relation) # don't do this if part of 'to the left of'
+   (<receiver> ^structure-type << PP CONJP CONJ-C-ADJ-P >>
+              -^lt.relation-type ternary
+              -^lt.directional true
+               ^lt.relation.handle { <> of1 <sr> }  # Of is a special case...
+               ^head.head <head>)
+   (<head> ^referent <obj>)   
+-->
+   (<seg> ^new-constraint <nc>)
+   (<nc> ^object <pword> #<head>  # was <pword>
+         ^constraint <c>)
+   (<pword> ^constraint <c>) #<head> # was <pword>
+   (<c> ^relation <srx>)
+   (<srx> ^2 <obj>
+          ^handle <sr>)
+   #(write (crlf) |Add new constraint to | <pword> | relation: | <sr> | object: | <obj>)
+}
+
+sp {apply*merge*constraint*preposition-noun*ternary
+  #:interrupt
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>
+               ^structure-type << PP CONJP C-ADJ-P >>)
+   (<pword> ^structure-type << D DP CN RC >>
+           -^head.lt.semantic-structure relation) # don't do this if part of 'to the left of'
+   (<receiver> ^structure-type << PP CONJP C-ADJ-P >>
+               ^lt.relation-type ternary
+              -^lt.directional true
+               ^lt.relation.handle <sr>
+               ^head <head>
+               ^complement <comp>)
+   (<head> ^referent <obj>)
+   (<comp> ^referent <comp-obj>)   
+-->
+   (<seg> ^new-constraint <nc>)
+   (<nc> ^object <pword> #<head>  # was <pword>
+         ^constraint <c>)
+   (<pword> ^constraint <c>) #<head> # was <pword>
+   (<c> ^relation <srx>)
+   (<srx> ^2 <obj>
+          ^3 <comp-obj>
+          ^handle <sr>)
+   #(write (crlf) |Add new constraint to | <pword> | ternary relation: | <sr> | object: | <obj> | object2: | <comp-obj>)
+}
+
+sp {apply*merge*constraint*preposition-noun*semantics
+  #:interrupt
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>
+               ^structure-type << PP CONJP C-ADJ-P >>)
+   (<pword> ^structure-type << D DP CN >>)
+   (<receiver> ^structure-type << PP CONJP C-ADJ-P >>
+               ^semantics.relation <spr>)
+-->
+   (<seg> ^new-constraint <nc>)
+   (<nc> ^object <pword>
+         ^constraint <c>)
+   (<pword> ^constraint <c>)
+   (<c> ^relation <spr>)
+   #(write (crlf) |Add new (semantic) constraint to | <pword> | relation: | <spr>)
+}
+
+sp {apply*merge*constraint*PP*merge*of
+ # :interrupt
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>)
+   (<pword> ^structure-type << D CN >>
+            ^head.lt-referent <ref1>) 
+   (<receiver> ^structure-type PP
+               ^lt.relation.handle of1
+               ^head.head.lt-referent <ref>
+              -^head.referent) #
+--> 
+   (<ref1> ^relation <srx>)
+   (<srx> ^2 <ref>
+          ^handle of1)
+   #(write (crlf) |Add new constraint of1 to | <pword> | relation: of1 handle: | <ref>)
+}
+
+
+sp {apply*merge*constraint*PP*merge*of*referent
+ # :interrupt
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>)
+   (<pword> ^structure-type << D CN >>
+            ^head.lt-referent <ref1>
+           -^head.lt.spelling << left-noun right-noun >>) 
+  -{(<pword> ^head.lt <lt>)
+    (<lt> ^structure-type N
+          ^spelling << right left >>)}  # spreading way for right-noun
+   (<receiver> ^structure-type PP
+               ^lt.relation.handle of1
+               #^head.head.lt-referent <ref>
+               ^head.referent <ref>) #
+--> 
+   (<ref1> ^relation <srx>)
+   (<srx> ^2 <ref>
+          ^handle of1)
+   #(write (crlf) |Add new constraint of1 to | <pword> | relation: of1 handle: | <ref>)
+}
+
+
+sp {apply*merge*constraint*PP*merge*of*referent*no-lt-referent
+ # :interrupt
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>)
+   (<pword> ^structure-type << D CN >>
+           -^head.lt-referent <ref1>
+           -^head.lt.spelling << left-noun right-noun >>)
+  -{(<pword> ^head.lt <lt>)
+    (<lt> ^structure-type N
+          ^spelling << right left >>)}  # spreading way for right-noun
+   (<receiver> ^structure-type PP
+               ^lt.relation.handle of1
+               #^head.head.lt-referent <ref>
+               ^head.referent <ref>) #
+--> 
+   (<seg> ^new-constraint <nc>)
+   (<nc> ^object <pword>
+         ^constraint <c>)
+   (<pword> ^constraint <c>)
+   (<c> ^relation <spr>)
+   (<spr> ^2 <ref>
+          ^handle of1)
+   #(write (crlf) |Add new (semantic) constraint to | <pword> | relation: | <spr>)
+#   (<pword> ^relation <srx>)
+#   (<srx> ^2 <ref>
+#          ^handle of1)
+#   #(write (crlf) |Add new constraint of1 to | <pword> | relation: of1 handle: | <ref>)
+}
+############### ... the relation that is named ...
+sp {apply*merge*constraint*RCP*merge*noun
+ # :interrupt
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>)
+   (<pword> ^structure-type  << D CN >>
+            ^head.lt-referent <ref>) 
+   (<receiver> ^structure-type RCP
+               ^<< complement predicate >> <comp>)  # Added Predicate - JEL 9/1/2016 to support ignore the relation that is named below
+   (<comp> ^lt.relation.handle <named>   #  named
+           ^head.lt.relation.handle <head>) #
+--> 
+   (<ref> ^relation <srx>)
+   (<srx> ^2 <head>
+          ^handle <named>)
+   #(write (crlf) |Add new constraint to | <pword> | relation: | <named> | handle: | <head>)
+}
+
+### 
+sp {apply*merge*forward-grounding*to-preposition-verb*binary
+   (state <s> ^operator <op>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>)
+   (<pword> ^structure-type << VP GP >>)
+   (<receiver> ^structure-type << PP CONJP C-ADJ-P >>
+              -^lt.relation-type ternary
+               ^lt.relation <sr>
+               ^head.referent <sg>) 
+-->
+   (<pword> ^<sr> <sg>
+            ^relation <srr>)
+   (<srr> ^2 <sg>
+          ^handle <sr>)}
+
+sp {apply*merge*forward-grounding*to-preposition-verb*ternary
+   (state <s> ^operator <op>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>)
+   (<pword> ^structure-type << VP GP >>)
+   (<receiver> ^structure-type << PP CONJP C-ADJ-P >>
+               ^lt.relation-type ternary
+               ^lt.relation <sr>
+               ^head.referent <sg>
+               ^complement.referent <cr>) 
+-->
+   (<pword> ^<sr> <sg>
+            ^relation <srr>)
+   (<srr> ^2 <sg>
+          ^3 <cr> 
+          ^handle <sr>)}
+
+sp {apply*merge*constraint*preposition-noun-special # for named
+  #:interrupt
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>
+               ^structure-type PP)
+   (<pword> ^structure-type  << D CN >>
+            ^head.lt-referent <ref>) 
+   (<receiver> ^structure-type PP
+              -^lt.relation-type ternary
+               ^lt.relation.handle <sr>
+               ^head.lt.relation.handle <obj>)   
+-->
+   (<ref> ^relation <srx>)
+   (<srx> ^2 <obj>
+          ^handle <sr>)
+   #(write (crlf) |Add new constraint to | <ref> | relation: | <sr> | object: | <obj>)
+}
+
+
+sp {apply*merge*constraint*preposition-noun-special*ternary # for named
+  #:interrupt
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>
+               ^structure-type PP)
+   (<pword> ^structure-type  << D CN >>
+            ^head.lt-referent <ref>) 
+   (<receiver> ^structure-type PP
+               ^lt.relation-type ternary
+               ^lt.relation.handle <sr>
+               ^head.lt.relation.handle <obj>
+               ^complement.lt.relation.handle <rh>)   
+-->
+   (<ref> ^relation <srx>)
+   (<srx> ^2 <obj>
+          ^3 <rh>
+          ^handle <sr>)
+   #(write (crlf) |Add new constraint to | <ref> | relation: | <sr> | object: | <obj> | object2: | <rh>)
+}
+
+
+###############
+## For to the left of
+sp {apply*merge*constraint*to-the-left-of
+  #:interrupt
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pword>
+               ^structure-type DP)
+   (<pword> ^structure-type P)
+   (<receiver> ^head.lt <lt>
+               ^complement <com>)
+   (<lt> ^relation.handle <right-left>
+         ^semantic-structure relation) 
+   (<com> ^lt.relation.handle of1
+          ^head.referent <garbage>)
+-->
+   (<seg> ^new-constraint <nc>)
+   (<nc> ^object <pword>
+         ^constraint <c>)
+   (<pword> ^constraint <c>)
+   (<c> ^relation <srx>)
+   (<srx> ^2 <garbage>
+          ^handle <right-left>)
+   #(write (crlf) |Add new constraint to | <pword> | relation: | <right-left> | object: | <garbage>)
+}
+
+
+###### MERGE syntactic-referent-type from  
+###  Tictactoe is a game - red is a color 
+sp {apply*merge*assign-syntactic-referent-type-not-name
+ #:interrupt
+   (state <s> ^operator <op>
+              ^smem.command <cmd>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^lt <lla> 
+               ^parent-receiver <pword>)
+   (<lla> -^structure-type) 
+   (<pword> ^structure-type CP
+            ^head.head.lt <lt>)
+   (<lt> -^spelling |name|
+         ^syntactic-referent-type <srt>)
+   (<receiver> -^structure-type
+                    ^lt <lli>)
+-->
+   (<cmd> ^store <lli>)
+   (<receiver> ^structure-type <srt>)
+   (<lli> ^structure-type <srt>)}
+
+sp {apply*merge*assign-syntactic-referent-type*name
+ #:interrupt
+   (state <s> ^operator <op>
+              ^smem.command <cmd>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^lt <lla> 
+               ^parent-receiver <pword>)
+   (<lla> -^structure-type) 
+   (<pword> ^structure-type CP
+            ^head <head>)
+   (<head> ^head.lt.spelling |name|
+           ^complement.head.head.lt.syntactic-referent-type <srt>) #of the action/game/color/relation
+   (<receiver> -^structure-type
+               ^lt <lli>)
+-->
+   (<cmd> ^store <lli>)
+   (<receiver> ^structure-type <srt>)
+   (<lli> ^structure-type <srt>)}
+
+######
+sp {apply*merge*define-new-verb
+   #:interrupt
+   (state <s> ^operator <op>
+              ^segment <seg>
+              ^smem.command <cmd>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<assigner> ^lt <lla>)
+   (<lla>  ^structure-type U
+           ^predicted-structure-type V)
+   (<receiver> -^structure-type
+                ^lt <lli>)
+   (<lli> ^spelling <spell>)
+-->
+   (<seg> ^new-verb <lli>)}
+
+sp {apply*merge*clear-new-word
+  # :interrupt
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^unknown-word <uw>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner.lt <lla>)
+   (<lla>  ^structure-type U)
+   (<receiver> ^lt.spelling <uw>)
+-->
+   (<seg> ^unknown-word <uw> -)}
+
+########################################
+###### Clean-up retrieved-stack
+
+sp {apply*merge*clean-up-retrieved-stack1
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^not-merged-receiver <uri>
+          ^retrieved-stack <rs>)
+   (<rs> ^item <uri>
+        -^prior.item <ps>)
+   (<op> ^name merge
+         ^receiver <uri>
+         ^assigner <uai>)
+   (<uai> ^parent-receiver <ps>)
+-->
+   (<rs> ^item <uri> -
+               <ps>)
+   #(write (crlf) |Replace item | <uri> | with parent of assigner: | <ps>)
+}
+
+sp {apply*merge*clean-up-retrieved-stack1-2
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^not-merged-receiver <uri>
+          ^retrieved-stack <rs>)
+   (<rs> ^item <uri>
+        ^prior <prior>)
+   (<prior> ^item <ps>)
+   (<op> ^name merge
+         ^receiver <uri>
+         ^assigner <uai>)
+   (<uai> ^parent-receiver <ps>)
+-->
+   (<seg> ^retrieved-stack <rs> - <prior>)
+   (<ps> ^merged-with true)
+   #(write (crlf) |Pop item | <uri>)
+}
+#
+sp {apply*merge*clean-up-retrieved-stack2
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^not-merged-receiver <uri>
+          ^retrieved-stack <rs>)
+   (<rs> ^prior <p>
+        -^item <ps>)
+   (<p> ^item <uri>)
+  -(<p> ^prior.item <ps>)
+   (<op> ^name merge
+         ^receiver <uri>
+         ^assigner <uai>)
+   (<uai> ^parent-receiver <ps>)
+  -->
+   (<p> ^item <uri> -
+               <ps>)
+   #(write (crlf) |Replace prior item | <uri> | with parent of assigner: | <ps>)
+}
+
+sp {apply*merge*clean-up-retrieved-stack2-5
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^not-merged-receiver <uri>
+          ^retrieved-stack <rs>)
+   (<rs> ^prior <p>
+        -^item <ps>)
+   (<p> ^item <uri>
+         ^prior <p2>)
+   (<p2> ^item <ps>)
+   (<op> ^name merge
+         ^receiver <uri>
+         ^assigner <uai>)
+   (<uai> ^parent-receiver <ps>)
+  -->
+   (<rs> ^prior <p> -
+                <p2>)
+   #(write (crlf) |Remove prior item | <uri> |. Parent of assigner: | <ps> | is already in the stack.|)
+}
+
+
+sp {apply*merge*clean-up-retrieved-stack2*duplicate
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^not-merged-receiver <uri>
+          ^retrieved-stack <rs>)
+   (<rs> ^prior <p>
+         ^item <ps>)
+   (<p> ^item <uri>
+        ^prior <ppp>)
+   (<op> ^name merge
+         ^receiver <uri>
+         ^assigner <uai>)
+   (<uai> ^parent-receiver <ps>)
+-->
+   (<rs> ^prior <p> - <ppp>)
+   #(write (crlf) |Pop stack of item | <uri>)
+}
+
+###### Remove exclusive assigner
+
+sp {apply*merge*remove-exclusive-assigner
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^not-merged-assigner <uai>)
+   (<uai> ^lt <x-ass>
+          ^parent-receiver <pr>)  #JEL 6/15/2015
+   (<op> ^name merge
+         ^assigner <assigner>)
+   (<assigner> ^parent-receiver <pr>
+               ^lt.exclusive <x-ass>)
+-->
+   (<seg> ^not-merged-assigner <uai> -)
+   #(write (crlf) |Remove assigner sibling of | <assigner> |: | <uai>)
+}
+
+
+###########################
+#### Remove stale assigners
+
+
+sp {apply*merge*remove-stale-assigners*noun
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^not-merged-assigner <assigner>)
+   (<op> ^name merge
+         ^assigner <sit>)
+   (<sit> ^structure-type N)
+   (<assigner> ^structure-type << ADJ D >>
+               ^parent-receiver <sit>)
+-->
+   (<seg> ^not-merged-assigner <assigner> -)
+  # (<sit> ^removed-assigner <assinger>)
+   #(write (crlf) |Remove stale assigner: | <assigner>)
+}
+
+
+########
+## Remove failed construction
+
+
+sp {apply*merge*remove-failed-construction
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<seg> ^failed-construction true)
+   (<op> ^name merge)
+-->
+   (<seg> ^failed-construction true -)
+}
+
+sp {apply*merge*remove-processing-result-failure
+   (state <s> ^operator <op>
+              ^segment.original-sentence <is>)
+   (<is> ^processing-result failure)
+   (<op> ^name merge)
+-->
+   (<is> ^processing-result failure -)
+}
+
+########
+## Remove failed grounding for nil referent
+##  Assigner should not have a referent!
+sp {apply*merge*remove-failed-construction*referent-nil
+   #:interrupt
+   (state <s> ^operator <op>
+              ^segment <seg>)
+   (<op> ^name merge
+         ^receiver <uri>
+        -^assigner.lt.referent )
+   (<uri> ^failed-grounding <fg>)
+-->
+   (<uri> ^failed-grounding <fg> -)
+   #(write (crlf) |Removed failed grounded because no referent: | <fg>)
+}
+
+
+#####################################################
+#### Monitor
+sp {apply*merge*monitor
+   (state <s> ^operator <op>)
+   (<op> ^name merge
+         ^receiver <receiver>
+         ^assigner <assigner>)
+   (<receiver> ^lt.<< construction spelling >> <word2>)
+   (<assigner> ^parent-receiver <wws>
+               ^lt.syntactic-structure <ss>
+               ^structure-type <stype>)
+   (<wws> ^current-word.<< construction spelling >> <word1>)
+-->
+   #(write (crlf) |Merge: | <stype> |, assigner (| <assigner> |): | <word1> |, receiver (| <receiver> |): | <word2> |, structure: | <ss>)
+}

@@ -1,0 +1,129 @@
+data type;object handle;response;prompt type;mismatch type;mismatch;detail
+unviable_response;cream1_instance_15;the goal is that the cream is in the refrigerator and the door is closed;recurse_prompt;ungrounded-object;door1;NA
+unviable_response;cream1_instance_15;the goal is that the cream is in the refrigerator and the door is open;repair_prompt;uninterpretable;parser;NA
+unviable_response;cream1_instance_15;the goal is that the cream is in the fridge and the fridge door is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;orange-juice1_instance_16;the goal is that the orange-juice is in the refrigerator and the door is closed;recurse_prompt;ungrounded-object;door1;NA
+unviable_response;orange-juice1_instance_16;the goal is that the orange-juice is in the refrigerator and the door is open;repair_prompt;uninterpretable;parser;NA
+unviable_response;orange-juice1_instance_16;the goal is that the orange-juice is in the refrigerator and the light is off;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;chips1_instance_17;the goal is that the chips are in the cabinet and the cabinet is closed;recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;chips1_instance_17;the goal is that the chips are in the pantry and the pantry door is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;chips1_instance_17;the goal is that the chips are in the pantry and the door to the pantry is closed;recurse_prompt;ungrounded-object;door1;NA
+unviable_response;chips1_instance_17;the goal is that the chips are in the pantry and the bag is in the recycling bin;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;chips1_instance_17;the goal is that the chips are in the pantry and the bag is in the recycling bin;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;chips1_instance_17;the goal is that the chips are in the pantry and the bag is in the recycling bin;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;chips1_instance_17;the goal is that the chips are in the pantry and the bag is in the trash;recurse_prompt;unknown-word;trash;NA
+unviable_response;chips1_instance_17;the goal is that the chips are in the pantry and the door is closed;recurse_prompt;ungrounded-object;door1;NA
+unviable_response;chips1_instance_17;the goal is that the chips are in the pantry and the bag is in the garbage;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;chips1_instance_17;the goal is that the chips are in the pantry and the bag is in the garbage;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;chips1_instance_17;the goal is that the chips are in the pantry and the bag is in the garbage;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;chips1_instance_17;the goal is that the chips are in the cabinet;recurse_prompt_end_branch;ungrounded-object;cabinet1;NA
+unviable_response;chips1_instance_17;the goal is that the chips are in the cupboard and the door to the cupboard is closed;repair_recurse_prompt;ungrounded-object;door1;NA
+unviable_response;chips1_instance_17;the goal is that the chips are in the cabinet and the door to the cabinet is closed;repair_recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;chips1_instance_17;the goal is that the chips are in the cabinet and the door to the cabinet is closed;repair_recurse_prompt;ungrounded-object;door1;NA
+unviable_response;chips1_instance_17;the goal is that the chips are in the fridge and the door to the fridge is closed;repair_recurse_prompt;ungrounded-object;door1;NA
+unviable_response;chips1_instance_17;the goal is that the chips are in the pantry and the bag is in the garbage can;repair_prompt;uninterpretable;parser;NA
+unviable_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the cabinet and the cabinet is closed;recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the pantry and the kitchen is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the pantry and the bag is in the recycling bin;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the pantry and the bag is in the recycling bin;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the pantry and the bag is in the recycling bin;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the kitchen cupboard and the kitchen cupboard is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the pantry and the door is closed;recurse_prompt;ungrounded-object;door1;NA
+unviable_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the kitchen cabinet and the cabinet is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;yogurt1_instance_19;the goal is that the yogurt is in the refrigerator and the door is closed;recurse_prompt;ungrounded-object;door1;NA
+unviable_response;yogurt1_instance_19;the goal is that the yogurt is in the fridge and the fridge door is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;eggs1_instance_20;the goal is that the eggs are in the refrigerator and the door is closed;recurse_prompt;ungrounded-object;door1;NA
+unviable_response;eggs1_instance_20;the goal is that the eggs are in the refrigerator and the door is open;repair_prompt;uninterpretable;parser;NA
+unviable_response;flour1_instance_21;the goal is that the flour is in the cabinet and the cabinet is closed;recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;flour1_instance_21;the goal is that the flour is in the kitchen cupboard and the cupboard is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;flour1_instance_21;the goal is that the flour is in the pantry and the pantry door is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;flour1_instance_21;the goal is that the flour is in the pantry and the bag is empty;recurse_prompt;affordance-mismatch;empty;bag1
+unviable_response;flour1_instance_21;the goal is that the flour is in the pantry and the bag is empty;recurse_prompt;affordance-mismatch;empty;bag1
+unviable_response;flour1_instance_21;the goal is that the flour is in the pantry and the bag is empty;recurse_prompt;affordance-mismatch;empty;bag1
+unviable_response;flour1_instance_21;the goal is that the flour is in the pantry and the bag is empty;recurse_prompt;affordance-mismatch;empty;bag1
+unviable_response;flour1_instance_21;the goal is that the flour is in the pantry and the bag is empty;recurse_prompt;affordance-mismatch;empty;bag1
+unviable_response;flour1_instance_21;the goal is that the flour is in the pantry and the bag is empty;recurse_prompt;affordance-mismatch;empty;bag1
+unviable_response;flour1_instance_21;the goal is that the flour is in the pantry and the bag is empty;recurse_prompt;affordance-mismatch;empty;bag1
+unviable_response;flour1_instance_21;the goal is that the flour is in the pantry and the bag is empty;recurse_prompt;affordance-mismatch;empty;bag1
+unviable_response;flour1_instance_21;the goal is that the flour is in the pantry and the bag is empty;recurse_prompt;affordance-mismatch;empty;bag1
+unviable_response;flour1_instance_21;the goal is that the flour is in the pantry and the door is closed;recurse_prompt;ungrounded-object;door1;NA
+unviable_response;flour1_instance_21;the goal is that the flour is in the kitchen cupboard;recurse_prompt_end_branch;uninterpretable;parser;NA
+unviable_response;flour1_instance_21;the goal is that the flour is in the closet and the closet is closed;repair_recurse_prompt;unknown-word;closet;NA
+unviable_response;flour1_instance_21;the goal is that the flour is in the cupboard and the door is closed;repair_recurse_prompt;ungrounded-object;door1;NA
+unviable_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the cabinet and the cabinet is closed;initial_prompt;ungrounded-object;cabinet1;NA
+unviable_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the kitchen-drawer and the kitchen-drawer is closed;recurse_prompt;unknown-word;kitchen-drawer;NA
+unviable_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the cabinet;initial_prompt_end_branch;ungrounded-object;cabinet1;NA
+unviable_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the pantry and the kitchen is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the pantry and the door is closed;recurse_prompt;ungrounded-object;door1;NA
+unviable_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the pantry and the bag is in the recycling bin;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the pantry and the bag is in the recycling bin;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the pantry and the bag is in the recycling bin;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the kitchen drawer and the kitchen drawer is closed;repair_prompt;uninterpretable;parser;NA
+unviable_response;paper-plates1_instance_23;the goal is that the paper-plates are in the cabinet and the cabinet is closed;initial_prompt;ungrounded-object;cabinet1;NA
+unviable_response;paper-plates1_instance_23;the goal is that the paper-plates are in the kitchen cupboard and the kitchen cupboard is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-plates1_instance_23;the goal is that the paper-plates are in the pantry and the bag is in the recycling bin;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;paper-plates1_instance_23;the goal is that the paper-plates are in the pantry and the bag is in the recycling bin;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;paper-plates1_instance_23;the goal is that the paper-plates are in the pantry and the bag is in the recycling bin;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;paper-plates1_instance_23;the goal is that the paper-plates are in the cabinet;initial_prompt_end_branch;ungrounded-object;cabinet1;NA
+unviable_response;paper-plates1_instance_23;the goal is that the paper-plates are in the kitchen cabinet and the cabinet is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-plates1_instance_23;the goal is that the paper-plates are in the pantry and the door is closed;recurse_prompt;ungrounded-object;door1;NA
+unviable_response;paper-plates1_instance_23;the goal is that the paper-plates are in the kitchen cupboard;recurse_prompt_end_branch;uninterpretable;parser;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the cabinet and the cabinet is closed;recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the door to the pantry is closed;recurse_prompt;ungrounded-object;door1;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the bag is in the trash;recurse_prompt;unknown-word;trash;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the cabinet;recurse_prompt_end_branch;ungrounded-object;cabinet1;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the cupboard and the door to the cupboard is closed;repair_recurse_prompt;ungrounded-object;door1;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the door to the fridge is closed;repair_prompt;ungrounded-object;door1;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the door to the pantry is open;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the door to the kitchen is closed;repair_recurse_prompt;ungrounded-object;door1;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the door to the refrigerator is closed;repair_recurse_prompt;ungrounded-object;door1;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the bag is in the trash can;repair_recurse_prompt;unknown-word;trash;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the fridge and the door to the fridge is closed;repair_recurse_prompt;ungrounded-object;door1;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the cupboard and the window is closed;repair_recurse_prompt;unknown-word;window;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the door to the kitchen is open;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the window to the kitchen is closed;repair_recurse_prompt;unknown-word;window;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the window is closed;repair_prompt;unknown-word;window;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the bag is in the kitchen;repair_recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the bag is in the kitchen;repair_recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the bag is in the kitchen;repair_recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the kitchen window is closed;repair_recurse_prompt;unknown-word;window;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the door to the oven is closed;repair_prompt;ungrounded-object;door1;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the door to the oven is closed;repair_prompt;ungrounded-object;oven1;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the door to the stove is closed;repair_recurse_prompt;ungrounded-object;door1;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the door to the stove is closed;repair_recurse_prompt;ungrounded-object;stove1;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the light is off;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the refrigerator is off;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the bag is in the garbage can;repair_prompt;uninterpretable;parser;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the bag is in the garbage;repair_prompt_end_branch;affordance-mismatch;grabbable;bag1
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the bag is in the garbage;repair_prompt_end_branch;affordance-mismatch;grabbable;bag1
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the bag is in the garbage;repair_prompt_end_branch;affordance-mismatch;grabbable;bag1
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the bag is in the recycling bin;repair_recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the bag is in the recycling bin;repair_recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the pantry and the bag is in the recycling bin;repair_recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;granola1_instance_25;the goal is that the granola is in the cabinet and the cabinet is closed;recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;granola1_instance_25;the goal is that the bag of granola is in the pantry and the pantry is closed;recurse_prompt;ungrounded-object;bag1;NA
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the pantry door is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the recycling bin;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the recycling bin;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the recycling bin;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the door to the pantry is closed;recurse_prompt;ungrounded-object;door1;NA
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the recycle bin;recurse_prompt;unknown-word;recycle;NA
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the trash;recurse_prompt;unknown-word;trash;NA
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the garbage;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the garbage;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the garbage;recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the door is closed;recurse_prompt;ungrounded-object;door1;NA
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the trash can;repair_prompt;unknown-word;trash;NA
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the garbage can;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the kitchen;repair_recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the kitchen;repair_recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the kitchen;repair_recurse_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;granola1_instance_25;the goal is that the bag of granola is in the pantry and the pantry is open;repair_prompt;uninterpretable;parser;NA
+unviable_response;granola1_instance_25;the goal is that the bag of granola is in the fridge and the fridge is closed;repair_recurse_prompt;ungrounded-object;bag1;NA
+unviable_response;granola1_instance_25;the goal is that the bag of granola is in the pantry;repair_prompt_end_branch;ungrounded-object;bag1;NA
+unviable_response;granola1_instance_25;the goal is that the bag of granola is in the fridge and the fridge is open;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the trash bin;repair_recurse_prompt;unknown-word;trash;NA
+unviable_response;cheese1_instance_26;the goal is that the cheese is in the refrigerator and the door is closed;recurse_prompt;ungrounded-object;door1;NA
+unviable_response;cheese1_instance_26;the goal is that the cheese is in the refrigerator and the door is open;repair_prompt;uninterpretable;parser;NA
+unviable_response;hummus1_instance_29;the goal is that the bag of groceries is in the fridge and the fridge is closed;recurse_prompt;ungrounded-object;bag1;NA
+unviable_response;hummus1_instance_29;the goal is that the bag of groceries is in the fridge;recurse_prompt_end_branch;ungrounded-object;bag1;NA

@@ -1,0 +1,169 @@
+######################################################
+#
+# Propose: init-agent
+#
+######################################################
+
+sp {top-state*propose*init-agent
+   (state <s> ^top-state <s>
+             -^name rosie)
+-->
+   (<s> ^operator <o> + > =)
+   (<o> ^name init-agent)
+}
+
+#######################################################
+# 
+# Propose: interaction 
+#
+########################################################
+
+sp {top-state*propose*interaction*status-change
+   (state <s> ^top-state <s>
+             -^agent-params.parser-test true
+              ^interaction.status.<any> <status>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name interaction
+        ^type status-change
+        ^status-info <status>
+        ^status-type <any>)
+}
+
+sp {top-state*propose*interaction*interaction-change
+   (state <s> ^top-state <s>
+             -^agent-params.parser-test true
+              ^interaction.changes.<type> <change>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name interaction
+        ^type interaction-change
+        ^change-info <change>
+        ^change-type <type>)
+}
+
+#######################################################
+# 
+# Propose: satisfy-purpose
+#
+########################################################
+
+sp {top-state*propose*satisfy-purpose
+   (state <s> ^top-state <s>
+             #-^parser-testing true
+		      ^interaction.stack.segment.purpose {<p> <> none})
+   (<p> -^type << goal-description >>
+	     -^category goal)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name satisfy-purpose
+        ^purpose <p>)
+}
+
+sp {top-state*reject*satisfy-purpose*if*executing*task
+   (state <s> ^superstate nil
+              ^operator <o> +)
+   (<o> ^name satisfy-purpose
+        ^purpose <p>)
+   (<p> ^type execute-task
+        ^parameters.task-operator <task>)
+-->
+   (<s> ^operator <o> -)
+}
+
+# satisfy-purpose/task-event/learn-task-goal will create a task-goal and add to parameters
+#   once this happens, hand control over to execute-task by retracting satisfy-purpose
+sp {top-state*reject*satisfy-purpose*learn-task-goal*if*created*goal
+   (state <s> ^superstate nil
+              ^operator <o> +)
+   (<o> ^name satisfy-purpose
+        ^purpose <p>)
+   (<p> ^type learn-task-goal
+        ^parameters.task-goal <goal>)
+-->
+   (<s> ^operator <o> -)
+}
+
+sp {top-state*reject*satisfy-purpose*if*executing*learned*game
+   (state <s> ^superstate nil
+              ^operator <o> +
+              ^task-stack.queued-tasks.task <task>)
+   (<o> ^name satisfy-purpose
+        ^purpose.type << finished-game-learning learn-puzzle-name >>)
+-->
+   (<s> ^operator <o> -)
+}
+
+#######################################################
+# 
+# Propose: execute-task
+#
+########################################################
+
+sp {top-state*propose*execute-task
+   (state <s> ^superstate nil
+              ^task-stack.top { <seg> <> none })
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name execute-task
+        ^task-segment <seg>)
+}
+#sp {top-state*pref*execute-taskz
+#   (state <s> ^superstate nil
+#              ^operator <o> +)
+#   (<o> ^name execute-task)
+#-->
+#   (write (cmd print <o> -d 3))
+#}
+#sp {top-state*pref*execute-task2z
+#   (state <s> #^superstate nil
+#   		  	  ^impasse tie
+#   		  	  ^superstate <ss>
+#              ^superstate.operator <o> +)
+#   (<o> ^name execute-task)
+#   (<ss> ^task-stack <ts>)
+#   (<ts> ^push-task-operator <tso>)
+#-->
+#(write (cmd print <tso> -d 4))
+#(write (cmd pref <tso> -w))
+#(write (cmd print <ts> -d 6))
+##(write (cmd matches top-state*propose*execute-task*unpushed*task -w))
+#(interrupt)
+#}
+
+sp {top-state*elaborate*task-stack*push-task-segment*lowest*queued*task
+   (state <s> ^superstate nil
+              ^task-stack <stack>)
+   (<stack> ^top none
+            ^queued-tasks <queue>)
+   (<queue> ^task <task>)
+   (<task> ^order <order>
+           ^task-operator <task-op>)
+   -{(<queue> ^task.order < <order>)}
+   -{(<queue> ^task {<task2> < <task>})
+   	 (<task2> ^order <order>)}
+-->
+   (<stack> ^push-task-operator <task-op>)
+}
+
+sp {top-state*propose*execute-task*unpushed*task
+   (state <s> ^superstate nil
+              ^task-stack <stack>)
+   (<stack> ^top none
+            ^push-task-operator <task-op>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name execute-task)
+}
+
+#sp {top-state*propose*lookup-preposition
+#   (state <s> ^prepositions.prep.name <name>
+#              ^superstate nil
+#              ^top-state.robot-state.arm.action wait
+#             -^found-prep.type <name>)
+#-->
+#   (<s> ^operator <o> + =)
+#   (<o> ^name lookup-preposition
+#        ^type <name>)
+#}
+#

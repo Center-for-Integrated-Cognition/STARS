@@ -1,0 +1,59 @@
+### For the internal environment, simulate the turn-off command on the top-state world ###
+
+sp {op_turn-off1*propose*simulate-turn-off-command
+   (state <s> ^name op_turn-off1
+              ^problem-space.execution-type external
+              ^agent-params.domain internal
+              ^current-task-segment <seg>)
+   (<seg> ^turn-off-command <cmd>)
+   (<cmd> -^status success)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name simulate-turn-off-command
+        ^item-type command-operator
+        ^command <cmd>)
+}
+
+sp {op_turn-off1*apply*simulate-turn-off-command*mark*command*success
+   (state <s> ^name op_turn-off1
+              ^operator <o>)
+   (<o> ^name simulate-turn-off-command
+        ^command <cmd>)
+-->
+   (<cmd> ^status success)
+}
+
+
+### simulate-perception = false, change on the object directly ###
+
+sp {op_turn-off1*apply*simulate-turn-off-command*turn*off
+   (state <s> ^name op_turn-off1
+              ^operator <o>
+             -^agent-params.simulate-perception true)
+   (<o> ^name simulate-turn-off-command
+        ^command.object.predicates <preds>)
+   (<preds> ^is-activated1 activated1)
+-->
+   (<preds> ^is-activated1 activated1 -
+            ^is-activated1 not-activated1)
+}
+
+
+### simulate-perception = true, change on the perception-monitor ###
+
+sp {op_turn-off1*apply*simulate-turn-off-command*simulate-perception*turn*off
+   (state <s> ^name op_turn-off1
+              ^operator <o>
+              ^agent-params.simulate-perception true
+              ^top-state.perception-monitor.object-monitor.object-info <obj-info>)
+   (<o> ^name simulate-turn-off-command
+        ^command.object <obj>)
+   (<obj-info> ^input-link-obj.source-obj.predicates <src-preds>
+               ^world-obj <obj>)
+   (<src-preds> ^is-activated1 activated1)
+-->
+   (<src-preds> ^is-activated1 activated1 -
+                ^is-activated1 not-activated1)
+}
+
+

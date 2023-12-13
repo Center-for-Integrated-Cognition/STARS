@@ -1,0 +1,51 @@
+Different portions of the APRIL Toolkit have different licensing
+terms. The availability of this code via a public git repository
+should be in no way construed as an implicit license for any use. Only
+the explicit permissions below apply to the code.
+
+LICENSING ALGORITHM
+
+Apply the rules in order, terminating if you encounter an "END
+ALGORITHM".
+
+1. If the file is in the directory:
+
+     java/src/april/{applanix, config, dynamixel, graph, image, jcam,
+     jmat, jserial, laser, lcm, lcmtypes, procman, sim, tag, util,
+     velodyne, viewer, vis}
+
+     OR
+
+     src/{common, hokuyo, kvh, lcmtypes, sick}
+
+     OR
+
+     lcmtypes/
+
+   THEN
+
+     This file is licensed under the terms of the GPLv2 or successor.
+
+     Alternative licenses use may be available by contacting
+     ebolson@umich.edu.
+
+     END ALGORITHM.
+
+2. If the file was created after September 23, 2013:
+
+   THEN
+
+     The file has not yet been assigned a license and no rights are
+     granted. This is likely an oversight; please contact us so that we
+     can categorize the file appropriately.
+
+     END ALGORITHM.
+
+3. This file is licensed for academic and/or non-commerical use. No
+   commercial use is permitted. However, additional licenses may be
+   available; please contact ebolson@umich.edu.
+
+   END ALGORITHM.
+
+
+Last updated September 23, 2013.

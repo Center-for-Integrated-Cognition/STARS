@@ -1,0 +1,51 @@
+sp {learn-new-subtask*prefer*generalize*over*others
+   (state <s> ^name learn-new-subtask
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name << generalize-task-operator generalize-task-argument >>)
+   (<o2> ^name << add-subtask-to-tcn add-node-to-goal-graph add-composite-goal-predicate smem-store >>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {learn-new-subtask*prefer*add-subtask-to-tcn*over*others
+   (state <s> ^name learn-new-subtask
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name add-subtask-to-tcn)
+   (<o2> ^name << add-node-to-goal-graph add-composite-goal-predicate smem-store >>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {learn-new-subtask*prefer*add-node-to-goal-graph*over*smem-store
+   (state <s> ^name learn-new-subtask
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name << add-node-to-goal-graph add-composite-goal-predicate >>)
+   (<o2> ^name smem-store)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {learn-new-subtask*prefer*smem-store*over*complete
+   (state <s> ^name learn-new-subtask
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name smem-store)
+   (<o2> ^name complete-learn-new-subtask)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+#JK2022 check if this rule is actually needed... (repeat bug)
+sp {add-node-to-goal-graph*prefer*smem-query*retrieved-previous*over*repeat-node
+   (state <s> ^name add-node-to-goal-graph
+              ^quiescence t
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name smem-query ^query-info.result-name retrieved-previous)
+   (<o2> ^name smem-query ^query-info.result-name repeat-node)
+-->
+   (<s> ^operator <o1> > <o2>)
+}

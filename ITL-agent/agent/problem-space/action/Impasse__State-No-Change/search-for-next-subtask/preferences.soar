@@ -1,0 +1,9 @@
+sp {search-for-next-subtask*prefer*result*operators*over*task-operators
+   (state <s> ^name search-for-next-subtask
+              ^operator <o1> +
+              ^operator <o2> +
+              ^task-operator <o2>)
+   (<o1> ^name << return-created-subtask initiate-interaction >>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}

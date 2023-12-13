@@ -1,0 +1,308 @@
+############################# category-ontology.txt ################################
+# This is the common ontology for categories used by Rosie in most domains. 
+#   It defines a supercat/subcat hierarchy, e.g. a table is a subcategory of furniture
+#   And each category can have affordances specified for it and all subcategories
+#
+# This file is intended to be sourced by a test-agent during configuration
+# (Add line 'config-file init-smem/category-ontology.txt' to smem config file)
+
+template category _HANDLE_ _WORD_ _SUPER_ _AFFORDANCE_* {
+   entity1 entity none1
+      person person entity1
+      object object entity1
+         obstacle1 obstacle object
+         block block object grabbable1
+         laptop1 laptop object grabbable1
+         garbage1 garbage object receptacle1 always-open1
+         bag1 bag object receptacle1 always-open1
+         #backpack1 backpack object receptacle1 openable1
+         bin1 bin object receptacle1 always-open1
+         kitchenware1 kitchenware object grabbable1
+            utensil1 utensil kitchenware1
+               fork1 fork utensil1
+               knife1 knife utensil1
+               spoon1 spoon utensil1
+               plastic-fork1 plastic-fork utensil1
+               plastic-knife1 plastic-knife utensil1
+               plastic-spoon1 plastic-spoon utensil1
+            mug1 mug kitchenware1 fillable1
+            can1 can kitchenware1 fillable1
+            bottle1 bottle kitchenware1 fillable1
+            jar1 jar kitchenware1 fillable1
+            cup1 cup kitchenware1 fillable1
+            glass1 glass kitchenware1 fillable1
+            pitcher1 pitcher kitchenware1 fillable1 dispenser1
+            carton1 carton kitchenware1 fillable1 dispenser1
+            bowl1 bowl kitchenware1 fillable1 dispenser1
+            plate1 plate kitchenware1
+            napkin1 napkin kitchenware1
+            #  Recyclables
+            aquafina-bottle1 aquafina-bottle kitchenware1
+            #metal-can1 metal-can kitchenware1
+            plastic-bottle1 plastic-bottle kitchenware1
+            pepsi-can1 pepsi-can kitchenware1
+            #vernors-can1 vernors-can kitchenware1
+            water-bottle1 water-bottle kitchenware1
+            plastic-water-bottle1 plastic-water-bottle kitchenware1
+            dasani-bottle1 dansani-bottle kitchenware1
+            bubly-can1 bubly-can kitchenware1
+            coke-can1 coke-can kitchenware1
+            sprite-can1 sprite-can kitchenware1
+            coke-bottle1 coke-bottle kitchenware1
+            soda-bottle1 soda-bottle kitchenware1
+            pop-can1 pop-can kitchenware1
+            la-croix-can1 la-croix-can kitchenware1
+            spindrift-can1 spindrift-can kitchenware1
+            perrier-bottle1 perrier-bottle kitchenware1
+            san-pellegrino-bottle1 san-pellegrino-bottle kitchenware1
+            san-pellegrino-can1 san-pellegrino-can kitchenware1
+            evian-bottle1 evian-bottle kitchenware1
+            pepsi-bottle1 pepsi-bottle kitchenware1
+            #rc-cola-can1 rc-cola-can kitchenware1
+            cheerwine-can1 cheerwine-can kitchenware1
+            empty-soup-can1 empty-soup-can kitchenware1
+            #  Trashables
+            #paper-bowl1 paper-bowl kitchenware1
+            paper-cup1 paper-cup kitchenware1
+            paper-plate1 paper-plate kitchenware1
+            paper-plates1 paper-plates kitchenware1
+            pop-tart-wrapper1 pop-tart-wrapper kitchenware1
+            tissue1 tissue kitchenware1
+            paper-napkin1 paper-napkin kitchenware1
+            #plastic-champagne-flute1 plastic-champagne-flute kitchenware1
+            #solo-cup1 solo-cup kitchenware1
+            #  Washables
+            ceramic-plate1 ceramic-plate kitchenware1
+            ceramic-cereal-bowl1 ceramic-cereal-bowl kitchenware1
+            cheese-grater1 cheese-grater kitchenware1
+            garlic-press1 garlic-press kitchenware1
+            cookie-sheet1 cookie-sheet kitchenware1
+            cutting-board1 cutting-board kitchenware1
+            metal-fork1 metal-fork kitchenware1
+            metal-knife1 metal-knife kitchenware1
+            metal-spoon1 metal-spoon kitchenware1
+            potato-peeler1 potato-peeler kitchenware1
+            steak-knife1 steak-knife kitchenware1
+            serving-spoon1 serving-spoon kitchenware1
+            bread-knife1 bread-knife kitchenware1
+            paring-knife1 paring-knife kitchenware1
+            #orange-peeler1 orange-peeler kitchenware1
+            apple-corer1 apple-corer kitchenware1
+            measuring-spoon1 measuring-spoon kitchenware1
+            measuring-cup1 measuring-cup kitchenware1
+            bottle-opener1 bottle-opener kitchenware1
+            #lemon-juicer1 lemon-juicer kitchenware1
+            #water-pitcher1 water-pitcher kitchenware1
+            tupperware-container1 tupperware-container kitchenware1 
+            rubbermaid-container1 rubbermaid-container kitchenware1
+            coffee-cup1 coffee-cup kitchenware1
+            paper-coffee-cup1 paper-coffee-cup kitchenware1
+            #coffee-mug1 coffee-mug kitchenware1
+            glass-tumbler1 glass-tumbler kitchenware1
+            #bodega-glass1 bodega-glass kitchenware1
+            #cheese-knife1 cheese-knife kitchenware1
+            cake-cutter1 cake-cutter kitchenware1
+            shot-glass1 shot-glass kitchenware1
+            #porcelain-serving-bowl1 porcelain-serving-bowl kitchenware1
+            #salad-tongs1 salad-tongs kitchenware1
+            spatula1 spatula kitchenware1
+            slotted-serving-spoon1 slotted-serving-spoon kitchenware1
+            colander1 colander kitchenware1
+            corkscrew1 corkscrew kitchenware1
+            #pie-plate1 pie-plate kitchenware1
+            whisk1 whisk kitchenware1
+            #  Storables (Pantry)
+            aluminum-foil-box1 aluminum-foil-box kitchenware1
+            cereal-box1 cereal-box kitchenware1 dispenser1
+            flour1 flour kitchenware1 dispenser1
+            box-of-crackers1 box-of-crackers kitchenware1
+            box-of-ziplock-bags1 box-of-ziplock-bags kitchenware1
+            #box-of-saran-wrap1 box-of-saran-wrap kitchenware1
+            #box-of-little-debbies1 box-of-little-debbies kitchenware1
+            box-of-ho-hos1 box-of-ho-hos kitchenware1
+            box-of-twinkies1 box-of-twinkies kitchenware1
+            box-of-pasta1 box-of-pasta kitchenware1
+            can-of-soup1 can-of-soup kitchenware1
+            #  Storables (Cabinet)
+            #ceramic-plate ceramic-plate kitchenware1
+            #ceramic-cereal-bowl ceramic-cereal-bowl kitchenware1
+            #cutting-board cutting-board kitchenware1
+            #  Storables (Perishables) - look under food
+            #new cannonical objects
+            soda-can1 soda-can kitchenware1
+            newspaper1 newspaper kitchenware1
+            plastic-cup1 plastic-cup kitchenware1
+            plastic-cups1 plastic-cups kitchenware1
+            ceramic-bowl1 ceramic-bowl kitchenware1
+            coffee-grinder1 coffee-grinder kitchenware1
+            box-of-aluminum-foil1 box-of-aluminum-foil kitchenware1
+            pop-tart-box1 pop-tart-box kitchenware1
+            granola-bars1 granola-bars kitchenware1
+            crackers1 crackers kitchenware1
+            jar-of-salsa1 jar-of-salsa kitchenware1
+            #new atypical objects
+            gerolsteiner-bottle1 gerolsteiner-bottle kitchenware1
+            metal-can1 metal-can kitchenware1
+            vernors-can1 vernors-can kitchenware1
+            rc-cola-can1 rc-cola-can kitchenware1
+            wall-street-journal1 wall-street-journal kitchenware1
+            #mango-peel1 mango-peel kitchenware1
+            paper-bowl1 paper-bowl kitchenware1 fillable1
+            plastic-silverware1 plastic-silverware kitchenware1 fillable1
+            plastic-champagne-flute1 plastic-champagne-flute kitchenware1 fillable1
+            solo-cup1 solo-cup kitchenware1 fillable1
+            cheese-knife1 cheese-knife kitchenware1
+            orange-peeler1 orange-peeler kitchenware1
+            lemon-juicer1 lemon-juicer kitchenware1
+            church-key1 church-key kitchenware1
+            bottle-screw1 bottle-screw kitchenware1
+            pie-plate1 pie-plate kitchenware1
+            porcelain-serving-bowl1 porcelain-serving-bowl kitchenware1
+            bodega-glass1 bodega-glass kitchenware1 fillable1
+            #orange-peeler1 orange-peeler kitchenware1
+            salad-tongs1 salad-tongs kitchenware1
+            coffee-mug1 coffee-mug kitchenware1 fillable1
+            #bodega-glass1 bodega-glass kitchenware1
+            #porcelain-serving-bowl1 porcelain-serving-bowl kitchenware1
+            water-pitcher1 water-pitcher kitchenware1 fillable1
+            bamboo-serving-tray1 bamboo-serving-tray kitchenware1
+            #froot-loops1 froot-loops kitchenware1
+            box-of-saran-wrap1 box-of-saran-wrap kitchenware1
+            #box-of-little-debbies1 box-of-little-debbies kitchenware1
+            #nature-valley-bars1 nature-valley-bars kitchenware1
+            #cheezits1 cheezits kitchenware1
+            #almond-milk1 almond-milk kitchenware1
+            #oat-milk-creamer1 oat-milk-creamer kitchenware1
+            #horseradish1 horseradish kitchenware1
+            #tub-of-guacamole1 tub-of-guacamole kitchenware1
+            #cheese-block1 cheese-block kitchenware1
+         officesupplies1 office-supplies object grabbable1
+            pencil1 pencil officesupplies1
+            pen1 pen officesupplies1
+            stapler1 stapler officesupplies1
+         furniture1 furniture object
+            table1 table furniture1 surface1
+            desk1 desk furniture1 surface1
+            chair1 chair furniture1
+            pantry1 pantry furniture1 receptacle1 openable1
+            counter1 counter furniture1 surface1
+            cupboard1 cupboard furniture1 receptacle1 openable1
+            drawer1 drawer furniture1 receptacle1 openable1
+            sink1 sink furniture1 receptacle1 always-open1 drain1
+            rack1 rack furniture1 receptacle1 always-open1
+            shelves1 shelves furniture1 surface1
+            shelf1 shelf furniture1 surface1
+            bookshelf1 bookshelf furniture1 receptacle1 always-open1
+            cabinet1 cabinet furniture1 receptacle1 openable1
+            door1 door furniture1 openable1
+         appliance1 appliance object
+            fridge1 fridge appliance1 receptacle1 openable1
+            dishwasher1 dishwasher appliance1 receptacle1 openable1 activatable1
+            stove1 stove appliance1 surface1 receptacle1 openable1 activatable1
+            oven1 oven appliance1 surface1 receptacle1 openable1 activatable1
+            microwave1 microwave appliance1 receptacle1 openable1 activatable1
+            computer1 computer appliance1
+            copier1 copier appliance1 surface1
+            cooler1 watercooler appliance1 receptacle1 always-open1 dispenser1
+         groceries1 groceries object grabbable1
+            eggs1 eggs groceries1
+         food1 food object grabbable1 perishable1
+            cereal1 cereal food1 pourable1
+            box-of-little-debbies1 box-of-little-debbies food1
+            nature-valley-bars1 nature-valley-bars food1
+            cheezits1 cheezits food1
+            froot-loops1 froot-loops food1 pourable1
+            hummus1 hummus food1
+            #eggs1 eggs food1
+            granola1 granola food1
+            boxed-pasta1 boxed-pasta food1
+            can-of-beans1 can-of-beans food1
+            chips1 chips food1
+            drink1 drink food1 pourable1
+               water1 water drink1
+               milk1 milk drink1
+               soda1 soda drink1
+               juice1 juice drink1
+               tea1 tea drink1
+               apple-juice1 apple-juice drink1
+               apple-cider1 apple-cider drink1
+               cream1 cream drink1
+               grape-juice1 grape-juice drink1
+               half-and-half1 half-and-half drink1
+               orange-juice1 orange-juice drink1
+               oat-milk1 oat-milk drink1
+               soy-milk1 soy-milk drink1
+               almond-milk1 almond-milk drink1
+               oat-milk-creamer1 oat-milk-creamer drink1
+            dairy1 dairy food1
+               tub-of-margarine1 tub-of-margarine dairy1
+               butter1 butter dairy1
+               sour-cream1 sour-cream dairy1
+               block-of-cheese1 block-of-cheese dairy1
+               cheese-block1 cheese-block dairy1
+               cheese1 cheese dairy1
+               yogurt1 yogurt dairy1
+            baked-goods1 baked-goods food1
+               muffin1 muffin baked-goods1
+               bagel1 bagel baked-goods1
+               piece-of-bread1 piece-of-bread baked-goods1
+               english-muffin1 english-muffin baked-goods1
+	         fruit1 fruit food1
+               apple1 apple fruit1
+               apple-core1 apple-core fruit1
+               avocado1 avocado fruit1
+               banana-peel1 banana-peel fruit1
+               donut1 donut fruit1
+               pineapple1 pineapple fruit1
+               tomato1 tomato fruit1
+               jar-of-pickles1 jar-of-pickles fruit1
+               cherry-pits1 cherry-pits fruit1
+               grape-seeds1 grape-seeds fruit1
+               bunch-of-grapes1 bunch-of-grapes fruit1
+               mango-peel1 mango-peel fruit1
+            condiment1 condiment food1
+               bottle-of-mustard1 bottle-of-mustard condiment1
+               ketchup1 ketchup condiment1
+               mustard1 mustard condiment1
+               salt1 salt condiment1
+               pepper1 pepper condiment1
+               jar-of-pickle-relish1 jar-of-pickle-relish condiment1
+               horseradish1 horseradish condiment1
+               tub-of-guacamole1 tub-of-guacamole condiment1
+         box1 box object grabbable1 fillable1 dispenser1
+         ball1 ball object grabbable1
+         book1 book object grabbable1
+         novel1 novel object grabbable1
+         reading-book1 reading-book object grabbable1
+         reference-book1 reference-book object grabbable1
+         dictionary1 dictionary object grabbable1
+         folder1 folder object grabbable1
+         file1 file object grabbable1
+         button1 button object pressable1
+         screen1 screen object
+         package1 package object grabbable1
+         papers1 papers object grabbable1
+         lightswitch1 lightswitch object activatable1
+         lamp1 lamp object
+      location location entity1
+         room1 room location
+            bathroom1 bathroom room1
+            office1 office room1
+            kitchen1 kitchen room1
+         hall1 hallway location
+         intersection1 intersection location
+            t-intersection1 t-intersection intersection1
+         waypoint1 waypoint location
+         wall1 wall location
+      message message entity1
+         question question message
+         response response message
+         yes1 yes message
+         no1 nope message
+      event1 event entity1
+         meeting1 meeting event1
+         tasks1 tasks event1
+         dinner1 dinner event1
+
+}
+

@@ -1,0 +1,502 @@
+### COPY OBJECT ARGUMENT
+
+# Propose copy-argument for each object argument
+
+# Not using a map, non-abstract object, just directly copy the object reference
+sp {task-utils*copy-task-argument*propose*copy-task-argument*object*shallow*no*object-map
+   (state <s> ^copy-task-argument <arg>)
+   (<arg> ^arg-type object
+          ^source-arg.id <obj>
+         -^arg-copy
+          ^object-map none)
+   (<obj> -^abstract true)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type shallow
+        ^object <obj>)
+}
+
+# We are using a map which has the object, use the map copy of the object
+sp {task-utils*copy-task-argument*propose*copy-task-argument*object*shallow*using*object-map
+   (state <s> ^copy-task-argument <arg>)
+   (<arg> ^arg-type object
+          ^source-arg.id <src-obj>
+         -^arg-copy
+          ^object-map.<src-obj> <obj-copy>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type shallow
+        ^object <obj-copy>)
+}
+
+# Deep copy an abstract object
+sp {task-utils*copy-task-argument*propose*copy-task-argument*object*abstract*deep-copy
+   (state <s> ^copy-task-argument <arg>)
+   (<arg> ^arg-type object
+          ^source-arg.id <obj>
+         -^arg-copy)
+   (<obj> ^abstract true)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type deep
+        ^object <obj>)
+}
+
+
+# The object is not in the object-map, deep copy it
+sp {task-utils*copy-task-argument*propose*copy-task-argument*object*deep
+   (state <s> ^copy-task-argument <arg>)
+   (<arg> ^arg-type object
+          ^source-arg.id <src-obj>
+         -^arg-copy
+          ^object-map { <map> <> none })
+   (<map> -^<src-obj> <obj-copy>)
+   (<src-obj> -^abstract true)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type deep
+        ^object <src-obj>)
+   (interrupt)
+   (write (crlf) |copy-task-operator: Non-abstract object not on the object-map?| (crlf))
+   (write (cmd p -d 4 <src-obj>) (crlf))
+}
+
+
+### Apply the copy-argument by creating an object argument
+sp {task-utils*copy-task-argument*apply*copy-task-argument*object*shallow*copy
+   (state <s> ^operator <o>)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type shallow
+        ^object <obj>)
+-->
+   (<arg> ^arg-copy <copy>)
+   (<copy> ^arg-type object
+           ^id <obj>)
+}
+
+# ENUMERATE: 0-12 OBJECT PREDICATES
+
+sp {task-utils*copy-task-argument*apply*copy-task-argument*object*deep*copy*0*predicates
+   (state <s> ^operator <o>)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type deep
+        ^object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> -^<p1> <v1>)
+
+-->
+   (<arg> ^arg-copy <copy>)
+   (<copy> ^arg-type object
+           ^id <new-obj>)
+   (<new-obj> ^item-type object
+              ^abstract true
+              ^predicates <new-preds>)
+}
+
+sp {task-utils*copy-task-argument*apply*copy-task-argument*object*deep*copy*1*predicates
+   (state <s> ^operator <o>)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type deep
+        ^object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> ^<p1> <v1>
+           -^<pN> { <vN> <> <v1> })
+-->
+   (<arg> ^arg-copy <copy>)
+   (<copy> ^arg-type object
+           ^id <new-obj>)
+   (<new-obj> ^item-type object
+              ^abstract true
+              ^predicates <new-preds>)
+   (<new-preds> ^<p1> <v1>)
+}
+
+
+sp {task-utils*copy-task-argument*apply*copy-task-argument*object*deep*copy*2*predicates
+   (state <s> ^operator <o>)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type deep
+        ^object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> ^<p1> <v1>
+            ^<p2> { <v2> > <v1> }
+           -^<pN> { <vN> <> <v2> <> <v1> })
+-->
+   (<arg> ^arg-copy <copy>)
+   (<copy> ^arg-type object
+           ^id <new-obj>)
+   (<new-obj> ^item-type object
+              ^abstract true
+              ^predicates <new-preds>)
+   (<new-preds> ^<p1> <v1>
+                ^<p2> <v2>)
+}
+
+sp {task-utils*copy-task-argument*apply*copy-task-argument*object*deep*copy*3*predicates
+   (state <s> ^operator <o>)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type deep
+        ^object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> ^<p1> <v1>
+            ^<p2> { <v2> > <v1> }
+            ^<p3> { <v3> > <v2> }
+           -^<pN> { <vN> <> <v3> <> <v2> <> <v1> })
+-->
+   (<arg> ^arg-copy <copy>)
+   (<copy> ^arg-type object
+           ^id <new-obj>)
+   (<new-obj> ^item-type object
+              ^abstract true
+              ^predicates <new-preds>)
+   (<new-preds> ^<p1> <v1>
+                ^<p2> <v2>
+                ^<p3> <v3>)
+}
+
+sp {task-utils*copy-task-argument*apply*copy-task-argument*object*deep*copy*4*predicates
+   (state <s> ^operator <o>)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type deep
+        ^object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> ^<p1> <v1>
+            ^<p2> { <v2> > <v1> }
+            ^<p3> { <v3> > <v2> }
+            ^<p4> { <v4> > <v3> }
+           -^<pN> { <vN> <> <v4> <> <v3> <> <v2> <> <v1> })
+-->
+   (<arg> ^arg-copy <copy>)
+   (<copy> ^arg-type object
+           ^id <new-obj>)
+   (<new-obj> ^item-type object
+              ^abstract true
+              ^predicates <new-preds>)
+   (<new-preds> ^<p1> <v1>
+                ^<p2> <v2>
+                ^<p3> <v3>
+                ^<p4> <v4>)
+}
+
+sp {task-utils*copy-task-argument*apply*copy-task-argument*object*deep*copy*5*predicates
+   (state <s> ^operator <o>)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type deep
+        ^object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> ^<p1> <v1>
+            ^<p2> { <v2> > <v1> }
+            ^<p3> { <v3> > <v2> }
+            ^<p4> { <v4> > <v3> }
+            ^<p5> { <v5> > <v4> }
+           -^<pN> { <vN> <> <v5> <> <v4> <> <v3> <> <v2> <> <v1> })
+-->
+   (<arg> ^arg-copy <copy>)
+   (<copy> ^arg-type object
+           ^id <new-obj>)
+   (<new-obj> ^item-type object
+              ^abstract true
+              ^predicates <new-preds>)
+   (<new-preds> ^<p1> <v1>
+                ^<p2> <v2>
+                ^<p3> <v3>
+                ^<p4> <v4>
+                ^<p5> <v5>)
+}
+     
+sp {task-utils*copy-task-argument*apply*copy-task-argument*object*deep*copy*6*predicates
+   (state <s> ^operator <o>)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type deep
+        ^object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> ^<p1> <v1>
+            ^<p2> { <v2> > <v1> }
+            ^<p3> { <v3> > <v2> }
+            ^<p4> { <v4> > <v3> }
+            ^<p5> { <v5> > <v4> }
+            ^<p6> { <v6> > <v5> }
+           -^<pN> { <vN> <> <v6> <> <v5> <> <v4> <> <v3> <> <v2> <> <v1> })
+-->
+   (<arg> ^arg-copy <copy>)
+   (<copy> ^arg-type object
+           ^id <new-obj>)
+   (<new-obj> ^item-type object
+              ^abstract true
+              ^predicates <new-preds>)
+   (<new-preds> ^<p1> <v1>
+                ^<p2> <v2>
+                ^<p3> <v3>
+                ^<p4> <v4>
+                ^<p5> <v5>
+                ^<p6> <v6>)
+}
+           
+sp {task-utils*copy-task-argument*apply*copy-task-argument*object*deep*copy*7*predicates
+   (state <s> ^operator <o>)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type deep
+        ^object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> ^<p1> <v1>
+            ^<p2> { <v2> > <v1> }
+            ^<p3> { <v3> > <v2> }
+            ^<p4> { <v4> > <v3> }
+            ^<p5> { <v5> > <v4> }
+            ^<p6> { <v6> > <v5> }
+            ^<p7> { <v7> > <v6> }
+           -^<pN> { <vN> <> <v7> <> <v6> <> <v5> <> <v4> <> <v3> <> <v2> <> <v1> })
+-->
+   (<arg> ^arg-copy <copy>)
+   (<copy> ^arg-type object
+           ^id <new-obj>)
+   (<new-obj> ^item-type object
+              ^abstract true
+              ^predicates <new-preds>)
+   (<new-preds> ^<p1> <v1>
+                ^<p2> <v2>
+                ^<p3> <v3>
+                ^<p4> <v4>
+                ^<p5> <v5>
+                ^<p6> <v6>
+                ^<p7> <v7>)
+}
+        
+sp {task-utils*copy-task-argument*apply*copy-task-argument*object*deep*copy*8*predicates
+   (state <s> ^operator <o>)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type deep
+        ^object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> ^<p1> <v1>
+            ^<p2> { <v2> > <v1> }
+            ^<p3> { <v3> > <v2> }
+            ^<p4> { <v4> > <v3> }
+            ^<p5> { <v5> > <v4> }
+            ^<p6> { <v6> > <v5> }
+            ^<p7> { <v7> > <v6> }
+            ^<p8> { <v8> > <v7> }
+           -^<pN> { <vN> <> <v8> <> <v7> <> <v6> <> <v5> <> <v4> <> <v3> <> <v2> <> <v1> })
+-->
+   (<arg> ^arg-copy <copy>)
+   (<copy> ^arg-type object
+           ^id <new-obj>)
+   (<new-obj> ^item-type object
+              ^abstract true
+              ^predicates <new-preds>)
+   (<new-preds> ^<p1> <v1>
+                ^<p2> <v2>
+                ^<p3> <v3>
+                ^<p4> <v4>
+                ^<p5> <v5>
+                ^<p6> <v6>
+                ^<p7> <v7>
+                ^<p8> <v8>)
+}
+
+sp {task-utils*copy-task-argument*apply*copy-task-argument*object*deep*copy*9*predicates
+   (state <s> ^operator <o>)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type deep
+        ^object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> ^<p1> <v1>
+            ^<p2> { <v2> > <v1> }
+            ^<p3> { <v3> > <v2> }
+            ^<p4> { <v4> > <v3> }
+            ^<p5> { <v5> > <v4> }
+            ^<p6> { <v6> > <v5> }
+            ^<p7> { <v7> > <v6> }
+            ^<p8> { <v8> > <v7> }
+            ^<p9> { <v9> > <v8> }
+           -^<pN> { <vN> <> <v9> <> <v8> <> <v7> <> <v6> <> <v5> <> <v4> <> <v3> <> <v2> <> <v1> })
+-->
+   (<arg> ^arg-copy <copy>)
+   (<copy> ^arg-type object
+           ^id <new-obj>)
+   (<new-obj> ^item-type object
+              ^abstract true
+              ^predicates <new-preds>)
+   (<new-preds> ^<p1> <v1>
+                ^<p2> <v2>
+                ^<p3> <v3>
+                ^<p4> <v4>
+                ^<p5> <v5>
+                ^<p6> <v6>
+                ^<p7> <v7>
+                ^<p8> <v8>
+                ^<p9> <v9>)
+}
+        
+sp {task-utils*copy-task-argument*apply*copy-task-argument*object*deep*copy*10*predicates
+   (state <s> ^operator <o>)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type deep
+        ^object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> ^<p1> <v1>
+            ^<p2> { <v2> > <v1> }
+            ^<p3> { <v3> > <v2> }
+            ^<p4> { <v4> > <v3> }
+            ^<p5> { <v5> > <v4> }
+            ^<p6> { <v6> > <v5> }
+            ^<p7> { <v7> > <v6> }
+            ^<p8> { <v8> > <v7> }
+            ^<p9> { <v9> > <v8> }
+            ^<p10> { <v10> > <v9> }
+           -^<pN> { <vN> <> <v10> <> <v9> <> <v8> <> <v7> <> <v6> <> <v5> <> <v4> <> <v3> <> <v2> <> <v1> })
+-->
+   (<arg> ^arg-copy <copy>)
+   (<copy> ^arg-type object
+           ^id <new-obj>)
+   (<new-obj> ^item-type object
+              ^abstract true
+              ^predicates <new-preds>)
+   (<new-preds> ^<p1> <v1>
+                ^<p2> <v2>
+                ^<p3> <v3>
+                ^<p4> <v4>
+                ^<p5> <v5>
+                ^<p6> <v6>
+                ^<p7> <v7>
+                ^<p8> <v8>
+                ^<p9> <v9>
+                ^<p10> <v10>)
+}
+
+sp {task-utils*copy-task-argument*apply*copy-task-argument*object*deep*copy*11*predicates
+   (state <s> ^operator <o>)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type deep
+        ^object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> ^<p1> <v1>
+            ^<p2> { <v2> > <v1> }
+            ^<p3> { <v3> > <v2> }
+            ^<p4> { <v4> > <v3> }
+            ^<p5> { <v5> > <v4> }
+            ^<p6> { <v6> > <v5> }
+            ^<p7> { <v7> > <v6> }
+            ^<p8> { <v8> > <v7> }
+            ^<p9> { <v9> > <v8> }
+            ^<p10> { <v10> > <v9> }
+            ^<p11> { <v11> > <v10> }
+           -^<pN> { <vN> <> <v11> <> <v10> <> <v9> <> <v8> <> <v7> <> <v6> <> <v5> <> <v4> <> <v3> <> <v2> <> <v1> })
+-->
+   (<arg> ^arg-copy <copy>)
+   (<copy> ^arg-type object
+           ^id <new-obj>)
+   (<new-obj> ^item-type object
+              ^abstract true
+              ^predicates <new-preds>)
+   (<new-preds> ^<p1> <v1>
+                ^<p2> <v2>
+                ^<p3> <v3>
+                ^<p4> <v4>
+                ^<p5> <v5>
+                ^<p6> <v6>
+                ^<p7> <v7>
+                ^<p8> <v8>
+                ^<p9> <v9>
+                ^<p10> <v10>
+                ^<p11> <v11>)
+}
+
+sp {task-utils*copy-task-argument*apply*copy-task-argument*object*deep*copy*12*predicates
+   (state <s> ^operator <o>)
+   (<o> ^name copy-task-argument
+        ^argument <arg>
+        ^arg-type object
+        ^copy-type deep
+        ^object <obj>)
+   (<obj> ^predicates <preds>)
+   (<preds> ^<p1> <v1>
+            ^<p2> { <v2> > <v1> }
+            ^<p3> { <v3> > <v2> }
+            ^<p4> { <v4> > <v3> }
+            ^<p5> { <v5> > <v4> }
+            ^<p6> { <v6> > <v5> }
+            ^<p7> { <v7> > <v6> }
+            ^<p8> { <v8> > <v7> }
+            ^<p9> { <v9> > <v8> }
+            ^<p10> { <v10> > <v9> }
+            ^<p11> { <v11> > <v10> }
+            ^<p12> { <v12> > <v11> }
+           -^<pN> { <vN> <> <v12> <> <v11> <> <v10> <> <v9> <> <v8> <> <v7> <> <v6> <> <v5> <> <v4> <> <v3> <> <v2> <> <v1> })
+-->
+   (<arg> ^arg-copy <copy>)
+   (<copy> ^arg-type object
+           ^id <new-obj>)
+   (<new-obj> ^item-type object
+              ^abstract true
+              ^predicates <new-preds>)
+   (<new-preds> ^<p1> <v1>
+                ^<p2> <v2>
+                ^<p3> <v3>
+                ^<p4> <v4>
+                ^<p5> <v5>
+                ^<p6> <v6>
+                ^<p7> <v7>
+                ^<p8> <v8>
+                ^<p9> <v9>
+                ^<p10> <v10>
+                ^<p11> <v11>
+                ^<p12> <v12>)
+}
+
+# TODO: Linked objects?
+
+#sp {retrospective-learning*elaborate*copy-subtask-info*argument-info*object*matches-world*linked
+#   (state <s> ^name retrospective-learning
+#              ^operator <o> +
+#              ^current-task-segment.added <obj>
+#              ^world.objects.object <link-obj>)
+#   (<o> ^name copy-subtask-info
+#        ^argument-info <arg-info>)
+#   (<arg-info> ^arg-type object
+#              -^source.id.predicates.category message
+#               ^source.id.handle <obj-handle>)
+#   (<obj> ^handle <obj-handle>
+#          ^linked-to.handle <link-handle>)
+#   (<link-obj> ^handle <link-handle>)
+#-->
+#   (<arg-info> ^matches-world <link-obj>)
+#}

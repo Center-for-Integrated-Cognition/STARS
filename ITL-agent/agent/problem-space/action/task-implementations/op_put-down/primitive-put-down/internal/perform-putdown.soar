@@ -1,0 +1,40 @@
+sp {primitive-put-down*internal*propose*perform-putdown
+   (state <s> ^name primitive-put-down
+              ^agent-params.domain internal
+              ^problem-space.execution-type external
+              ^held-object.predicates.is-grabbed1 grabbed1)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name perform-putdown)
+}
+
+sp {primitive-put-down*internal*apply*perform-putdown*add*predicate
+   (state <s> ^name primitive-put-down
+              ^agent-params.domain internal
+              ^operator.name perform-putdown
+              ^held-object <obj>
+              ^predicate-handle <pred-h>
+              ^destination <dest>
+              ^world.predicates.predicate <pred>)
+   (<pred> ^handle <pred-h>)
+   -{ (<pred> ^instance <i>)
+      (<i> ^1 <obj> ^2 <dest>) }
+-->
+   (<pred> ^instance <i>)
+   (<i> ^1 <obj> ^2 <dest>)
+}
+
+sp {primitive-put-down*internal*apply*perform-putdown*add*predicate*in*current-location
+   (state <s> ^name primitive-put-down
+              ^agent-params.domain internal
+              ^operator.name perform-putdown
+              ^held-object <obj>
+              ^world.robot.current-location <loc>
+              ^world.predicates.predicate <pred>)
+   (<pred> ^handle in1)
+   -{ (<pred> ^instance <i>)
+      (<i> ^1 <obj> ^2 <loc>) }
+-->
+   (<pred> ^instance <i>)
+   (<i> ^1 <obj> ^2 <loc>)
+}

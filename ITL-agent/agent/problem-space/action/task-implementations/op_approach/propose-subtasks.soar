@@ -1,0 +1,64 @@
+### For the magicbot, we break approach into drive and face subtasks
+
+# First, go to the goal coordinate
+sp {op_approach1*propose*op_go-to-xy1
+   (state <s> ^name op_approach1
+              ^problem-space.execution-type external
+              ^agent-params.domain magicbot
+              ^goal-coord <coord>
+             -^current-task-segment.drive-command.status success)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name op_go-to-xy1
+        ^item-type task-operator
+        ^task-handle go-to-xy1
+        ^arg1 <arg1>)
+   (<arg1> ^arg-type coordinate
+           ^coord <coord>)
+}
+
+sp {op_approach1*apply*pop-task-segment*op_go-to-xy1*mark*drive-command*success
+   (state <s> ^name op_approach1
+              ^operator <o>
+              ^current-task-segment <seg>)
+   (<o> ^name pop-task-segment
+        ^segment <child-seg>)
+   (<child-seg> ^status success
+                ^task-operator.name op_go-to-xy1)
+-->
+   (<seg> ^drive-command.status success)
+}
+
+### Second, face the object
+sp {op_approach1*propose*op_face1*target-object
+   (state <s> ^name op_approach1
+              ^problem-space.execution-type external
+              ^agent-params.domain magicbot
+              ^target-object <obj>
+              ^current-task-segment.drive-command.status success
+             -^current-task-segment.face-command.status success)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name op_face1
+        ^item-type task-operator
+        ^task-handle face1
+        ^arg1 <arg1>)
+   (<arg1> ^arg-type object
+           ^id <obj>)
+
+   (<s> ^require-subtask op_face1)
+}
+
+sp {op_approach1*apply*pop-task-segment*op_face1*mark*face-command*success
+   (state <s> ^name op_approach1
+              ^operator <o>
+              ^current-task-segment <seg>)
+   (<o> ^name pop-task-segment
+        ^segment <child-seg>)
+   (<child-seg> ^status success
+                ^task-operator <task-op>)
+   (<task-op> ^name op_face1
+              ^arg1.arg-type object)
+-->
+   (<seg> ^face-command.status success)
+}

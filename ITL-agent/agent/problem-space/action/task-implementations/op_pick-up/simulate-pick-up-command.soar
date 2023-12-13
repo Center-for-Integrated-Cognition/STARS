@@ -1,0 +1,67 @@
+# Simulate the pick-up-command (internal world)
+
+sp {execute*op_pick-up1*propose*simulate-pick-up-command
+   (state <s> ^name op_pick-up1
+              ^problem-space.execution-type external
+              ^agent-params.domain internal
+              ^current-task-segment <seg>)
+   (<seg> ^pick-up-command <cmd>)
+   (<cmd> ^name pick-up
+          ^object <obj>
+         -^status success)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name simulate-pick-up-command
+        ^item-type command-operator
+        ^command <cmd>)
+}
+
+sp {execute*op_pick-up1*apply*simulate-pick-up-command*mark*command*success
+   (state <s> ^name op_pick-up1
+              ^operator <o>)
+   (<o> ^name simulate-pick-up-command
+        ^command <cmd>)
+-->
+   (<cmd> ^status success)
+}
+
+# Change the holding-object on the simulated input link
+sp {execute*op_pick-up1*apply*simulate-pick-up-command*add*arm*holding-object
+   (state <s> ^name op_pick-up1
+              ^agent-params.simulate-perception true
+              ^operator <o>
+              ^top-state.perception-monitor.input-link.self.arm <arm>)
+   (<o> ^name simulate-pick-up-command
+        ^command.object.perception-id <perc-id>)
+-->
+   (<arm> ^holding-object <perc-id>)
+}
+
+# Remove any world relations involving that object
+sp {execute*op_pick-up1*apply*simulate-pick-up-command*remove*predicates
+   (state <s> ^name op_pick-up1
+              ^operator <o>
+              ^agent-params.simulate-perception true
+              ^world.predicates.predicate <pred>)
+   (<o> ^name simulate-pick-up-command
+        ^command.object <obj>)
+   (<pred> ^instance <i>)
+   (<i> ^<num> <obj>)
+-->
+   (<pred> ^instance <i> -)
+}
+
+# If not simulating perception, just changed the is-grabbed predicate on the object
+sp {execute*op_pick-up1*apply*simulate-pick-up-command*add*is-grabbed1*grabbed
+   (state <s> ^name op_pick-up1
+              ^operator <o>
+             -^agent-params.simulate-perception true
+              ^target-object.predicates <preds>)
+   (<o> ^name simulate-pick-up-command
+        ^command.object.predicates <preds>)
+   (<preds> ^is-grabbed1 not-grabbed1)
+-->
+   (<preds> ^is-grabbed1 not-grabbed1 -
+            ^is-grabbed1 grabbed1)
+}
+

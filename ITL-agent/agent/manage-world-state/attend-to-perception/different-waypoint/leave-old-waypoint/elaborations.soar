@@ -1,0 +1,23 @@
+# old-waypoint: the waypoint we are leaving (elaborated from superoperator)
+sp {leave-old-waypoint*elaborate*old-waypoint
+   (state <s> ^name leave-old-waypoint
+              ^superstate.operator.old-waypoint <wp>)
+-->
+   (<s> ^old-waypoint <wp>)
+}
+
+# old-location: the location (if any) we are leaving
+sp {leave-old-waypoint*elaborate*old-location
+   (state <s> ^name leave-old-waypoint
+              ^top-state.world.robot.current-location <old-loc>)
+-->
+   (<s> ^old-location <old-loc>)
+}
+
+# new-waypoint
+sp {leave-old-waypoint*elaborate*new-waypoint*superoperator
+   (state <s> ^name leave-old-waypoint
+              ^superstate.operator.new-waypoint <wp>)
+-->
+   (<s> ^new-waypoint <wp>)
+}

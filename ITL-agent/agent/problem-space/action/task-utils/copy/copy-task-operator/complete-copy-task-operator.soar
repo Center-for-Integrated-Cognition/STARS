@@ -1,0 +1,276 @@
+sp {task-utils*copy-task-operator*propose*complete-copy-task-operator
+   (state <s> ^copy-task-op-workspace <ws>)
+-->
+   (<s> ^operator <o> + < =)
+   (<o> ^name complete-copy-task-operator
+        ^workspace <ws>)
+}
+
+sp {task-utils*copy-task-operator*prefer*higher*workspace
+   (state <s> ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name << complete-copy-task-operator copy-task-argument >>
+         ^workspace <ws>)
+   (<o2> ^name << complete-copy-task-operator copy-task-argument >>
+         ^workspace < <ws>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {task-utils*copy-task-operator*apply*complete-copy-task-operator*reject
+   (state <s> ^operator <o> +)
+   (<o> ^name << complete-copy-task-operator copy-task-argument >>
+        ^workspace <ws>)
+   (<ws> ^copy-name <name>
+         ^destination.<name> <copy>)
+-->
+   (<s> ^operator <o> -)
+}
+
+sp {task-utils*copy-task-operator*apply*complete-copy-task-operator*create*task-op-copy
+   (state <s> ^operator <o>)
+   (<o> ^name complete-copy-task-operator
+        ^workspace <ws>)
+   (<ws> ^task-operator <src>)
+   (<src> ^name <name>
+          ^task-handle <h>
+         -^subtask-handle)
+-->
+   (<ws> ^task-op-copy <copy>)
+   (<copy> ^name <name>
+           ^item-type task-operator
+           ^task-handle <h>)
+}
+
+sp {task-utils*copy-task-operator*apply*complete-copy-task-operator*create*task-op-copy*subtask-handle
+   (state <s> ^operator <o>)
+   (<o> ^name complete-copy-task-operator
+        ^workspace <ws>)
+   (<ws> ^task-operator <src>)
+   (<src> ^name <name>
+          ^task-handle <h>
+          ^subtask-handle <sub-h>)
+-->
+   (<ws> ^task-op-copy <copy>)
+   (<copy> ^name <name>
+           ^item-type task-operator
+           ^task-handle <h>
+           ^subtask-handle <sub-h>)
+}
+
+# ARGSTATUS
+## Also, arg-status
+#sp {task-utils*copy-task-operator*apply*complete-copy-task-operator*copy*arg-status
+#   (state <s> ^operator <o>)
+#   (<o> ^name complete-copy-task-operator
+#        ^workspace <ws>)
+#   (<ws> ^copy-argument <arg>)
+#   (<arg> ^source-arg.arg-status <status>
+#          ^arg-copy <arg-copy>)
+#-->
+#   (<arg-copy> ^arg-status <status>)
+#}
+#sp {task-utils*copy-task-operator*apply*complete-copy-task-operator*copy*arg-status*unknown
+#   (state <s> ^operator <o>)
+#   (<o> ^name complete-copy-task-operator
+#        ^workspace <ws>)
+#   (<ws> ^copy-argument <arg>)
+#   (<arg> ^source-arg <src>
+#          ^arg-copy <arg-copy>)
+#   (<src> -^arg-status)
+#-->
+#   (<arg-copy> ^arg-status unknown)
+#}
+
+
+# Copy the arguments onto the task-op-copy 
+# ENUMERATE: 0-5 TASK ARGUMENTS
+
+sp {task-utils*copy-task-operator*apply*complete-copy-task-operator*create*deep-copy*0*arg
+   (state <s> ^operator <o>)
+   (<o> ^name complete-copy-task-operator
+        ^workspace <ws>)
+   (<ws> ^num-args 0
+         ^not-copied true
+         ^task-op-copy <copy>)
+-->
+   (<ws> ^task-op-deep-copy <copy>)
+}
+
+sp {task-utils*copy-task-operator*apply*complete-copy-task-operator*create*deep-copy*1*arg
+   (state <s> ^operator <o>)
+   (<o> ^name complete-copy-task-operator
+        ^workspace <ws>)
+   (<ws> ^num-args 1
+         ^not-copied true
+         ^copy-arg1 <arg1>
+         ^task-op-copy <copy>)
+   (<arg1> ^arg-name <arg1-name> ^arg-copy <arg-copy1> ^arg-type <arg1-type>)
+-->
+   (<ws> ^task-op-deep-copy <copy>)
+   (<copy> ^<arg1-name> <arg-copy1>)
+   (<arg-copy1> ^arg-type <arg1-type>)
+}
+
+sp {task-utils*copy-task-operator*apply*complete-copy-task-operator*create*deep-copy*2*arg
+   (state <s> ^operator <o>)
+   (<o> ^name complete-copy-task-operator
+        ^workspace <ws>)
+   (<ws> ^num-args 2
+         ^not-copied true
+         ^copy-arg1 <arg1>
+         ^copy-arg2 <arg2>
+         ^task-op-copy <copy>)
+   (<arg1> ^arg-name <arg1-name> ^arg-copy <arg-copy1> ^arg-type <arg1-type>)
+   (<arg2> ^arg-name <arg2-name> ^arg-copy <arg-copy2> ^arg-type <arg2-type>)
+-->
+   (<ws> ^task-op-deep-copy <copy>)
+   (<copy> ^<arg1-name> <arg-copy1>
+           ^<arg2-name> <arg-copy2>)
+   (<arg-copy1> ^arg-type <arg1-type>)
+   (<arg-copy2> ^arg-type <arg2-type>)
+}
+
+sp {task-utils*copy-task-operator*apply*complete-copy-task-operator*create*deep-copy*3*arg
+   (state <s> ^operator <o>)
+   (<o> ^name complete-copy-task-operator
+        ^workspace <ws>)
+   (<ws> ^num-args 3
+         ^not-copied true
+         ^copy-arg1 <arg1>
+         ^copy-arg2 <arg2>
+         ^copy-arg3 <arg3>
+         ^task-op-copy <copy>)
+   (<arg1> ^arg-name <arg1-name> ^arg-copy <arg-copy1> ^arg-type <arg1-type>)
+   (<arg2> ^arg-name <arg2-name> ^arg-copy <arg-copy2> ^arg-type <arg2-type>)
+   (<arg3> ^arg-name <arg3-name> ^arg-copy <arg-copy3> ^arg-type <arg3-type>)
+-->
+   (<ws> ^task-op-deep-copy <copy>)
+   (<copy> ^<arg1-name> <arg-copy1>
+           ^<arg2-name> <arg-copy2>
+           ^<arg3-name> <arg-copy3>)
+   (<arg-copy1> ^arg-type <arg1-type>)
+   (<arg-copy2> ^arg-type <arg2-type>)
+   (<arg-copy3> ^arg-type <arg3-type>)
+}
+
+sp {task-utils*copy-task-operator*apply*complete-copy-task-operator*create*deep-copy*4*arg
+   (state <s> ^operator <o>)
+   (<o> ^name complete-copy-task-operator
+        ^workspace <ws>)
+   (<ws> ^num-args 4
+         ^not-copied true
+         ^copy-arg1 <arg1>
+         ^copy-arg2 <arg2>
+         ^copy-arg3 <arg3>
+         ^copy-arg4 <arg4>
+         ^task-op-copy <copy>)
+   (<arg1> ^arg-name <arg1-name> ^arg-copy <arg-copy1> ^arg-type <arg1-type>)
+   (<arg2> ^arg-name <arg2-name> ^arg-copy <arg-copy2> ^arg-type <arg2-type>)
+   (<arg3> ^arg-name <arg3-name> ^arg-copy <arg-copy3> ^arg-type <arg3-type>)
+   (<arg4> ^arg-name <arg4-name> ^arg-copy <arg-copy4> ^arg-type <arg4-type>)
+-->
+   (<ws> ^task-op-deep-copy <copy>)
+   (<copy> ^<arg1-name> <arg-copy1>
+           ^<arg2-name> <arg-copy2>
+           ^<arg3-name> <arg-copy3>
+           ^<arg4-name> <arg-copy4>)
+   (<arg-copy1> ^arg-type <arg1-type>)
+   (<arg-copy2> ^arg-type <arg2-type>)
+   (<arg-copy3> ^arg-type <arg3-type>)
+   (<arg-copy4> ^arg-type <arg4-type>)
+}
+
+sp {task-utils*copy-task-operator*apply*complete-copy-task-operator*create*deep-copy*5*arg
+   (state <s> ^operator <o>)
+   (<o> ^name complete-copy-task-operator
+        ^workspace <ws>)
+   (<ws> ^num-args 5
+         ^not-copied true
+         ^copy-arg1 <arg1>
+         ^copy-arg2 <arg2>
+         ^copy-arg3 <arg3>
+         ^copy-arg4 <arg4>
+         ^copy-arg5 <arg5>
+         ^task-op-copy <copy>)
+   (<arg1> ^arg-name <arg1-name> ^arg-copy <arg-copy1> ^arg-type <arg1-type>)
+   (<arg2> ^arg-name <arg2-name> ^arg-copy <arg-copy2> ^arg-type <arg2-type>)
+   (<arg3> ^arg-name <arg3-name> ^arg-copy <arg-copy3> ^arg-type <arg3-type>)
+   (<arg4> ^arg-name <arg4-name> ^arg-copy <arg-copy4> ^arg-type <arg4-type>)
+   (<arg5> ^arg-name <arg5-name> ^arg-copy <arg-copy5> ^arg-type <arg5-type>)
+-->
+   (<ws> ^task-op-deep-copy <copy>)
+   (<copy> ^<arg1-name> <arg-copy1>
+           ^<arg2-name> <arg-copy2>
+           ^<arg3-name> <arg-copy3>
+           ^<arg4-name> <arg-copy4>
+           ^<arg5-name> <arg-copy5>)
+   (<arg-copy1> ^arg-type <arg1-type>)
+   (<arg-copy2> ^arg-type <arg2-type>)
+   (<arg-copy3> ^arg-type <arg3-type>)
+   (<arg-copy4> ^arg-type <arg4-type>)
+   (<arg-copy5> ^arg-type <arg5-type>)
+}
+
+sp {task-utils*copy-task-operator*apply*complete-copy-task-operator*create*deep-copy*6*arg
+   (state <s> ^operator <o>)
+   (<o> ^name complete-copy-task-operator
+        ^workspace <ws>)
+   (<ws> ^num-args 6
+         ^not-copied true
+         ^copy-arg1 <arg1>
+         ^copy-arg2 <arg2>
+         ^copy-arg3 <arg3>
+         ^copy-arg4 <arg4>
+         ^copy-arg5 <arg5>
+         ^copy-arg6 <arg6>
+         ^task-op-copy <copy>)
+   (<arg1> ^arg-name <arg1-name> ^arg-copy <arg-copy1> ^arg-type <arg1-type>)
+   (<arg2> ^arg-name <arg2-name> ^arg-copy <arg-copy2> ^arg-type <arg2-type>)
+   (<arg3> ^arg-name <arg3-name> ^arg-copy <arg-copy3> ^arg-type <arg3-type>)
+   (<arg4> ^arg-name <arg4-name> ^arg-copy <arg-copy4> ^arg-type <arg4-type>)
+   (<arg5> ^arg-name <arg5-name> ^arg-copy <arg-copy5> ^arg-type <arg5-type>)
+   (<arg6> ^arg-name <arg6-name> ^arg-copy <arg-copy6> ^arg-type <arg6-type>)
+-->
+   (<ws> ^task-op-deep-copy <copy>)
+   (<copy> ^<arg1-name> <arg-copy1>
+           ^<arg2-name> <arg-copy2>
+           ^<arg3-name> <arg-copy3>
+           ^<arg4-name> <arg-copy4>
+           ^<arg5-name> <arg-copy5>
+           ^<arg6-name> <arg-copy6>)
+   (<arg-copy1> ^arg-type <arg1-type>)
+   (<arg-copy2> ^arg-type <arg2-type>)
+   (<arg-copy3> ^arg-type <arg3-type>)
+   (<arg-copy4> ^arg-type <arg4-type>)
+   (<arg-copy5> ^arg-type <arg5-type>)
+   (<arg-copy6> ^arg-type <arg6-type>)
+}
+
+###### RETURN RESULT (LEARN RULES) ######
+
+sp {__COPY__TASK__*anystate*apply*copy-task-operator
+   (state <s> ^operator <o>)
+   (<o> ^name complete-copy-task-operator
+        ^workspace <ws>)
+   (<ws> ^learning application-rule
+         ^task-op-deep-copy <copy>
+         ^destination <dest>
+         ^copy-name <name>)
+-->
+   (<dest> ^<name> <copy>)
+}
+
+sp {__COPY__TASK__*anystate*copy-task-operator*elaborate*copy
+   (state <s> ^operator <o>)
+   (<o> ^name complete-copy-task-operator
+        ^workspace <ws>)
+   (<ws> ^learning elaboration-rule
+         ^task-op-deep-copy <copy>
+         ^destination <dest>
+         ^copy-name <name>)
+-->
+   (<dest> ^<name> <copy>)
+}
+
+

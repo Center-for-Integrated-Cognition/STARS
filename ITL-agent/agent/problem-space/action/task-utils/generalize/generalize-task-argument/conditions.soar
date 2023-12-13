@@ -1,0 +1,36 @@
+### GENERALIZE CONDITIONS
+
+sp {task-utils*generalize-task-argument*elaborate*generalize-task-argument*conditions*as*predicate-set
+   (state <s> ^generalize-task-argument <ga>)
+   (<ga> ^arg-type conditions
+         ^instantiation <i>)
+-->
+   (<s> ^generalize-task-argument <gps>)
+   (<gps> ^arg-type predicate-set
+          ^instantiation <i>)
+   (<ga> ^gen-pred-set <gps>)
+}
+
+sp {task-utils*generalize-task-argument*propose*generalize-task-argument*conditions
+   (state <s> ^generalize-task-argument <arg>)
+   (<arg> ^arg-type conditions
+          ^gen-pred-set.general-arg-rep <gen-rep>
+         -^general-arg-rep)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name generalize-task-argument
+        ^argument <arg>
+        ^arg-type conditions
+        ^general-arg-rep <gen-rep>)
+}
+
+sp {task-utils*generalize-task-argument*apply*generalize-task-argument*conditions
+   (state <s> ^operator <o>)
+   (<o> ^name generalize-task-argument
+        ^arg-type conditions
+        ^argument <arg>
+        ^general-arg-rep <gen-rep>)
+-->
+   (<arg> ^general-arg-rep <gen-rep>)
+}
+

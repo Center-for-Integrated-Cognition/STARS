@@ -1,0 +1,18 @@
+# Find all the belief objects that intersect the grown object's volume
+
+# intersect-command: see agent/svs-command-operators
+sp {attend-to-perception*grown-object*propose*intersect-command
+   (state <s> ^name attend-to-perception
+              ^discrepancy-type grown-object
+              ^object-info.perception-obj.id <id>
+             -^intersect-command.result)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name intersect-command
+        ^object-id <id>
+        ^candidate-set <perc-objs>)
+   (<perc-objs> ^type tag_select
+                ^a.type all_nodes
+                ^tag_name object-source
+                ^tag_value belief)
+}

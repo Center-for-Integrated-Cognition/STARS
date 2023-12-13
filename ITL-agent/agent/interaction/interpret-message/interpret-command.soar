@@ -1,0 +1,335 @@
+###################################################################
+#
+# interpret-command
+#   A command given by the instructor to the agent to do something
+#   Construction: *-VP-T
+#     E.g. 'Store the red sphere', 'Put the green large block in the pantry'
+#
+###################################################################
+
+#######
+# OPERATOR PROPOSAL
+#######
+sp {interpret-message*propose*interpret-action-command
+   (state <s> ^name interpret-message
+              ^instructor-message <msg>
+              -^top-state.dialog-context
+              -^new-segment-info
+             -^task-operator <op>
+             -^interpreted true)
+   (<msg> ^message-type command -^action.word-structure.spelling |what's| -^action.word-structure.spelling |whats| -^action.handle load1 -^action.handle load)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name interpret-action-command
+        ^command-message <msg>)
+}
+
+
+sp {interpret-message*apply*interpret-action-command*root-task-handle
+   (state <s> ^name interpret-message
+              ^top-state <ts>
+              ^operator <o>)
+   (<o> ^name interpret-action-command
+        ^command-message <msg>)           
+   (<msg> ^action.handle <handle>)
+   (<ts> -^root-task-handle)
+-->
+   (<ts> ^root-task-handle <handle>)
+}
+
+sp {interpret-message*reject*interpret-action-command*stop-following
+  (state <s> ^name interpret-message
+             ^operator <o> +
+             ^instructor-message.action.handle stop1
+             ^top-state.task-stack.bottom.task-operator.name op_follow-person1)
+  (<o> ^name interpret-action-command)
+-->
+  (<s> ^operator <o> -)
+}
+
+sp {interpret-message*propose*interpret-stop-following-command
+  (state <s> ^name interpret-message
+             ^instructor-message.action.handle stop1
+             ^top-state.task-stack.bottom.task-operator.name op_follow-person1
+             -^interpreted)
+-->
+  (<s> ^operator <o> +)
+  (<o> ^name interpret-stop-following-command)
+}
+
+sp {interpret-message*apply*interpret-stop-following-command
+  (state <s> ^name interpret-message
+             ^operator.name interpret-stop-following-command
+             ^instructor-message <msg>
+             ^top-state.task-stack.bottom <bot>)
+-->
+  (<bot> ^told-stop true)
+  (<s> ^interpreted <msg>)
+}
+
+#JK
+sp {interpret-message*propose*interpret-conditional-predicate*command
+   (state <s> ^name interpret-message
+              ^instructor-message <msg>
+              ^top-state.dialog-context.type game-learning)
+   (<msg> ^message-type command
+          -^action.handle load
+          -^action.handle attend
+           -^action.handle load1
+	  -^action.handle describe1
+          -^action.handle attend1
+          -^interaction-status.failure
+          -^action.handle ignore
+          -^interpreted true)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name interpret-conditional-predicate
+        ^message <msg>)
+}
+
+sp {interpret-message*propose*interpret-attend-list
+   (state <s> ^name interpret-message
+              ^instructor-message <msg>
+              ^top-state.dialog-context <dc>)
+   (<msg> ^message-type command
+          ^action.handle attend
+          -^interpreted true)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name interpret-attend-list
+        ^message <msg>)
+}
+
+sp {interpret-message*propose*interpret-ignore-list
+   (state <s> ^name interpret-message
+              ^instructor-message <msg>
+              ^top-state.dialog-context <dc>)
+   (<msg> ^message-type command
+          ^action.handle ignore
+          -^interpreted true)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name interpret-ignore-list
+        ^message <msg>)
+}
+
+sp {interpret-message*apply*interpret-action-command
+   (state <s> ^name interpret-message
+              ^operator <o>
+              ^instructor-message <msg>)
+   (<o> ^name interpret-action-command
+       -^custom-handling true)
+   (<msg> ^action <action>)
+   (<action> ^handle <task-handle>		
+             -^agent-explanation)
+  -{(<s> ^agent-params.use-puzzle-based-teaching true)
+   (<action> -^handle move1)}
+-->
+#(interrupt)
+   (<s> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type execute-task
+        ^parameters.command-message <msg>
+        ^satisfaction.task-event <e>)
+   (<e> ^type completed-task
+        ^task-handle <task-handle>)
+   (<msg> ^interpreted true)
+}
+
+sp {interpret-message*apply*interpret-action-command*game-teach
+   (state <s> ^name interpret-message
+              ^operator <o>
+              ^smem.command <sc>
+              ^agent-params.use-puzzle-based-teaching true
+              ^instructor-message <msg>)
+   (<o> ^name interpret-action-command
+       -^custom-handling true)
+   (<msg> ^action <action> ^reference-info.constraint.category <cat>)
+   (<action> ^handle <task-handle>
+            -^handle move1
+             -^agent-explanation)
+-->
+   (<s> ^new-segment-info <info>
+        ^mark-interpreted <msg>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type learn-puzzle-name
+        ^parameters.message <msg>
+        ^satisfaction <sat>)
+   (<msg> ^predicate.handle (concat <task-handle> <cat>))
+   (<sat> ^learning-event.type game)
+   #
+   (<sc> ^store <ws> <ref> <prop>)
+   (<ws> ^structure-type N ^number singular ^object-feature handle ^referent <ref> ^spelling (concat <task-handle> <cat>))
+   (<ref> ^property <prop> ^handle (concat <task-handle> <cat>) ^word-structure <ws>)
+   (<prop> ^handle concept ^type conceptual)
+}
+
+# tidy kitchen
+# (I227 ^action N16 ^arg1 O50 ^message-type command
+#        ^reference-info R799)
+#   (N16 ^handle tidy1 ^item-type action)
+#   (O50 ^handle loc-kitchen1 ^item-type object ^predicates P54
+#          ^root-category kitchen1 ^waypoint wp04)
+#     (P54 ^category kitchen1 ^category room1 ^category location
+#            ^contents1 empty1 ^is-confirmed1 confirmed1 ^is-visible1 visible1
+#            ^modifier1 current1)
+#   (R799 ^arg-name arg1 ^constraint C4442 ^referent O50)
+#     (C4442 ^category kitchen1)
+
+# The name of the puzzle is tidy-kitchen.
+# (I261 ^arg1 I306
+#        ^message-type object-description ^predicate N90)
+#   (I306 ^2 I307 ^handle of1 ^item-type predicate)
+#     (I307 ^2 N67 ^handle name1)
+#       (N67 ^handle puzzle1 ^property L612 (@100117))
+#         (L612 ^handle concept ^type conceptual)
+#   (N90 ^handle tidy-kitchen2 ^item-type predicate
+#          ^word-structure N89 (@999000))
+#     (N89 ^referent R909 (@999001) ^spelling tidy-kitchen)
+#       (R909 ^handle tidy-kitchen2 ^word-structure N89 (@999000))
+
+# sp {interpret-message*apply*interpret-object-description*puzzle-name*store*smem
+#    (state <s> ^name interpret-message
+              
+#               ^operator <o>)
+#    (<o> ^name interpret-object-description
+#         ^message <msg>)
+#    (<msg> ^arg1.{2} <q> ^predicate.word-structure <ws>)
+#    (<ws> ^referent <ref>)
+#    (<q> ^handle name1 ^{2}.<< game handle >> << game1 puzzle1 >>)
+# -->
+#     (<sc> ^store <ws> <ref> <prop>)
+#     (<ws> ^structure-type N ^number singular ^object-feature handle)
+#     (<ref> ^property <prop>)
+#     (<prop> ^handle concept ^type conceptual)
+# }
+
+
+sp {interpret-message*apply*interpert-action-command*mark*message*learning-action
+   (state <s> ^name interpret-message
+              ^operator.name interpret-action-command
+              ^instructor-message <msg>
+              ^top-state.interaction.stack.segment.purpose.type << get-next-subaction get-next-goal >>)
+-->
+   (<msg> ^task-source instruction)
+}
+
+sp {interpret-message*apply*interpret-action-command*pop-segment*existing-task
+   (state <s> ^name interpret-message
+              ^operator <o>
+              ^top-state.interaction.stack.segment.purpose.type execute-task)
+   (<o> ^name interpret-action-command
+       -^custom-handling true)
+-->
+   (<s> ^terminate-segment true
+        ^pop-current-task true)
+}
+
+######################################################
+## Special Command: Complete the following tasks
+######################################################
+#
+#sp {interpret-message*elaborate*interpret-action-command*custom-handling*complete-following-tasks
+#   (state <s> ^name interpret-message
+#              ^operator <o> +
+#              ^instructor-message <msg>)
+#   (<o> ^name interpret-action-command)
+#   (<msg> ^action.handle complete1
+#          ^arg1.predicates <preds>)
+#   (<preds> ^modifier1 following1
+#            ^category tasks1)
+#-->
+#   (<o> ^command-type complete-following-tasks
+#        ^custom-handling true)
+#}
+#
+#sp {interpret-message*apply*interpret-action-command*complete-following-tasks
+#   (state <s> ^name interpret-message
+#              ^operator <o>
+#              ^instructor-message <msg>
+#              ^top-state.task-stack.bottom <bot>)
+#   (<o> ^name interpret-action-command
+#        ^command-type complete-following-tasks)
+#-->
+#   (<bot> ^begin-composite-goal true)
+#   (<msg> ^interpreted true)
+#   (<s> ^interpreted true)
+#}
+
+#####################################################
+# Special Command: Interrupt store
+#####################################################
+
+sp {interpret-message*elaborate*interpret-action-command*custom-handling*interrupt
+   (state <s> ^name interpret-message
+              ^operator <o> +
+              ^instructor-message <msg>)
+   (<o> ^name interpret-action-command)
+   (<msg> ^action.handle interrupt1
+          ^action.handle { <task-h> <> interrupt1 })
+-->
+   (<o> ^command-type interrupt
+        ^custom-handling true
+        ^task-handle <task-h>)
+}
+
+sp {interpret-message*apply*interpret-action-command*interrupt
+   (state <s> ^name interpret-message
+              ^operator <o>
+              ^instructor-message <msg>
+              ^top-state.task-stack.segments.segment <seg>)
+   (<o> ^name interpret-action-command
+        ^command-type interrupt
+        ^task-handle <task-h>)
+   (<seg> ^task-operator.task-handle <task-h>)
+-->
+   (<seg> ^interrupt-task true)
+   (<msg> ^interpreted true)
+   (<s> ^interpreted true)
+}
+
+#####################################################
+# Special Command: Continue move
+#####################################################
+
+sp {interpret-message*elaborate*interpret-action-command*custom-handling*continue
+   (state <s> ^name interpret-message
+              ^operator <o> +
+              ^instructor-message <msg>)
+   (<o> ^name interpret-action-command)
+   (<msg> ^action.handle continue1
+          ^action.handle { <task-h> <> continue1 })
+-->
+   (<o> ^command-type continue
+        ^custom-handling true
+        ^task-handle <task-h>)
+}
+
+sp {interpret-message*apply*interpret-action-command*continue*remove*interrupt-task
+   (state <s> ^name interpret-message
+              ^operator <o>
+              ^instructor-message <msg>
+              ^top-state.task-stack.segments.segment <seg>)
+   (<o> ^name interpret-action-command
+        ^command-type continue
+        ^task-handle <task-h>)
+   (<seg> ^task-operator.task-handle <task-h>
+          ^interrupt-task true)
+-->
+   (<seg> ^interrupt-task true -)
+}
+
+sp {interpret-message*apply*interpret-action-command*continue*mark*interpreted
+   (state <s> ^name interpret-message
+              ^operator <o>
+              ^instructor-message <msg>
+              ^top-state.task-stack <stack>)
+   (<o> ^name interpret-action-command
+        ^command-type continue
+        ^task-handle <task-h>)
+-->
+   (<msg> ^interpreted true)
+   (<s> ^interpreted true)
+}

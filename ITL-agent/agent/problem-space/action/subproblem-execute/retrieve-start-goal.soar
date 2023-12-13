@@ -1,0 +1,84 @@
+
+# If the current-task-segment does not have a ^current-goal.handle
+# retrieve the TCN for the task and elaborate the start goal handle as ^current-goal.handle
+
+sp {subproblem*execute*propose*retrieve-start-goal
+   (state <s> ^name <name>
+              ^problem-space.subproblem execute
+              ^task-operator <task-op>
+              ^current-task-segment <seg>)
+   (<task-op> ^task-handle <task-h>
+              ^name <name>)
+   (<seg> -^current-goal)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name retrieve-start-goal
+        ^task-handle <task-h>)
+}
+
+# Query the TCN
+sp {subproblem*execute*apply*retrieve-start-goal*smem*query
+   (state <s> ^problem-space.subproblem execute
+              ^operator <o>
+              ^smem.command <cmd>)
+   (<o> ^name retrieve-start-goal
+        ^task-handle <task-h>)
+-->
+   (<cmd> ^query <q>
+          ^depth 15)
+   (<q> ^item-type action
+        ^handle <task-h>)
+}
+
+# Copy TCN.goal-graph.handle as the current-goal and cleanup query
+sp {subproblem*execute*apply*retrieve-start-goal*copy*result*current-goal*handle
+   (state <s> ^problem-space.subproblem execute
+              ^operator <o>
+              ^task-operator <task-op>
+              ^current-task-segment <seg>
+              ^smem <smem>)
+   (<o> ^name retrieve-start-goal
+        ^task-handle <task-h>)
+   (<smem> ^command <cmd>
+           ^result <res>)
+   (<cmd> ^query <q>)
+   (<res> ^success <q>
+          ^retrieved.goal-graph.handle <goal-h>)
+   (<q> ^handle <task-h>)
+-->
+   (<seg> ^current-goal.handle <goal-h>)
+}
+
+sp {subproblem*execute*apply*retrieve-start-goal*clear*command
+   (state <s> ^problem-space.subproblem execute
+              ^operator.name retrieve-start-goal
+              ^smem <smem>)
+   (<smem> ^command <cmd>
+           ^result.success <q>)
+   (<cmd> ^query <q>
+          ^<param> <val>)
+-->
+   (<cmd> ^<param> <val> -)
+}
+
+### OPERATOR NO CHANGE - the TCN does not have a goal graph, so we create one 
+# (using task-utils/add-node-to-goal-graph)
+sp {subproblem*execute*retrieve-start-goal*propose*add-node-to-goal-graph
+   (state <s> ^name retrieve-start-goal
+              ^superstate.operator.task-handle <task-h>)
+-->
+   (<s> ^operator <o> + >)
+   (<o> ^name add-node-to-goal-graph
+        ^type start
+        ^task-handle <task-h>)
+}
+
+sp {subproblem*execute*retrieve-start-goal*apply*add-node-to-goal-graph*copy*result
+   (state <s> ^name retrieve-start-goal
+              ^operator <o>
+              ^superstate.current-task-segment <seg>)
+   (<o> ^name add-node-to-goal-graph
+        ^add-node-result <goal-h>)
+-->
+   (<seg> ^current-goal.handle <goal-h>)
+}

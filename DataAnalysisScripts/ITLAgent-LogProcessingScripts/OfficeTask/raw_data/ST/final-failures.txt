@@ -1,0 +1,52 @@
+(L6 ^failure F133 ^failure F119 ^failure F110 ^failure F106 ^failure F99
+       ^failure F78 ^failure F72 ^failure F63 ^failure F33)
+  (F133 ^evaluation E8163 ^handle |19|
+         ^object-desc |plastic-water-bottle on the desk|
+         ^sentence |the goal is that the plastic-water-bottle is in the recycling bin and the recycling bin is closed|)
+    (E8163 ^affordance-mismatch A481 ^interpreted true ^issue-count 1)
+      (A481 ^clause I12123 ^obj-desc bin1 ^object O81 ^object-desc R25020
+             ^property closed ^type affordance2)
+  (F119 ^evaluation E7200 ^handle |18| ^object-desc |novel on the desk|
+         ^sentence |the goal is that the novel is on the bookshelf and the bookshelf is closed|)
+    (E7200 ^affordance-mismatch A474 ^affordance-mismatch A473
+           ^interpreted true ^issue-count 2)
+      (A474 ^clause I10630 ^obj-desc bookshelf1 ^object O176
+             ^object-desc R22055 ^property surface ^type affordance1)
+      (A473 ^clause I10691 ^obj-desc bookshelf1 ^object O176
+             ^object-desc R22128 ^property closed ^type affordance2)
+  (F110 ^evaluation E6597 ^handle |17| ^object-desc |dictionary on the desk|
+         ^sentence |the goal is that the dictionary is on the shelf and the shelf is closed|)
+    (E6597 ^interpreted true ^issue-count 1 ^type ungrounded-obj1
+           ^ungrounded-object P6400)
+      (P6400 ^handle new-object-id212 ^item-type object ^predicates P6401
+             ^predicates-copied true)
+  (F106 ^evaluation E5710 ^handle |16| ^object-desc |sprite-can on the desk|
+         ^sentence |the goal is that the sprite-can is in the recycling bin and the recycling bin is closed|)
+    (E5710 ^affordance-mismatch A457 ^interpreted true ^issue-count 1)
+      (A457 ^clause I8481 ^obj-desc bin1 ^object O81 ^object-desc R17658
+             ^property closed ^type affordance2)
+  (F99 ^evaluation E4847 ^handle |15| ^object-desc |tissue on the desk|
+         ^sentence |the goal is that the tissue is in the trash can and the trash can is closed|)
+    (E4847 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F78 ^evaluation E4330 ^handle |14| ^object-desc |book on the desk|
+         ^sentence |the goal is that the book is on the shelf and the shelf is closed|)
+    (E4330 ^interpreted true ^issue-count 1 ^type ungrounded-obj1
+           ^ungrounded-object P4366)
+      (P4366 ^handle new-object-id116 ^item-type object ^predicates P4367
+             ^predicates-copied true)
+  (F72 ^evaluation E2791 ^handle |12| ^object-desc |pencil on the desk|
+         ^sentence |the goal is that the pencil is in the desk drawer and the drawer is closed|)
+    (E2791 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F63 ^evaluation E1020 ^handle |11|
+         ^object-desc |paper-coffee-cup on the desk|
+         ^sentence |the goal is that the paper-coffee-cup is in the trash can and the trash can is closed|)
+    (E1020 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F33 ^evaluation E687 ^handle |10| ^object-desc |pen on the desk|
+         ^sentence |the goal is that the pen is in the desk drawer and the drawer is closed|)
+    (E687 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+
+

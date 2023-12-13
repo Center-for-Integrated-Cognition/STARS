@@ -1,0 +1,57 @@
+scale 0.5
+robot 30.0 20.0 0.0
+# Building map with an outer ring of rooms surrounding inner rooms and a ring hallway in between
+# Recommend scale = 0.5
+
+#         CX CY Y  W  H
+# Rooms
+region  4 30 21 0 24 16 
+
+# Halls
+
+
+# Room 4: Mess Hall
+#         category    X     Y     Z     ROT    LEN   WID   HGT   R   G   B   # preds
+Bin                  26.00 14.50 0.02     90   2.00  2.00  1.20 0 0 255      1 property=recycling1
+Table               21.00 19.00 0.00      0   3.00  8.00  1.00               0
+Dishwasher           33.50 27.75 0.02    270   1.75  3.00  2.50             0
+Counter             40.50 21.80 0.00    180   2.00  6.40  1.50               0 
+Cupboard             29.50  28.00  0.01   270   1.50  3.50  3.00               0
+Drawer2              33.50  14.25  0.01  90   1.50  3.00  2.00               0
+Fridge              37.00 27.75 0.00    270   1.50  3.00  4.00               0
+Pantry             24.75  27.50  0.01   270   2.00  4.00  4.00               0
+Sink                40.50 17.05 0.50    180   2.00  3.05  0.50               0
+Garbage             29.50 14.50 0.02     90   2.00  2.00  1.20  80 150  80   0 
+Rack                38.00 14.50 0.50     90   2.00  3.00  0.50                1 property=dish1
+Bag                 26.50 20.50 0.01     90   1.75  1.50  1.00               0 
+Bag                 27.50 22.50 0.01     90   1.50  1.75  1.00               0 
+Bag                 26.50 18.50 0.01     90   1.75  1.50  1.00               0 
+
+SimObject cream1           26.00  20.00 0.02      0   0.35  0.35  0.79  200 200 200   1 rectangle
+SimObject orange-juice1    26.00 21.00  0.02     0   0.35  0.35  0.60  255 127   0  1 cylinder
+SimObject chips1           27.90  22.00 0.02      0   0.50  0.20  0.60   250 249 246  1 rectangle
+SimObject boxed-pasta1     27.50  22.75 0.02      0   0.10  0.50  0.60   255 215 0  1 rectangle
+SimObject yogurt1          27.25  22.75  0.02     0   0.25  0.25  0.50  160 180 170  1 cylinder
+SimObject eggs1            26.75  18.50  0.02     0   0.20  0.60  0.20   255 215 0  1 rectangle
+SimObject flour1           26.25  18.00 0.02      0   0.35  0.35  0.79  200 200 200   1 rectangle
+SimObject plastic-cups1  27.00 20.50 0.02      0   0.25  0.25  0.6  220 220 220   1 cylinder
+SimObject paper-plates1  27.90  22.40 0.03      0   0.40  0.40  0.3  200 200 200   1 cylinder
+SimObject can-of-beans1  27.10  18.00  0.02     0   0.25  0.30  0.5  160 180 170   1 cylinder
+SimObject granola1       26.25  18.90  0.02     0   0.50  0.20  0.50   150  75 0  1 rectangle
+SimObject cheese1        26.60 20.20  0.02     0   0.2  0.70  0.20   255 215 0  1 rectangle
+SimObject butter1        27.20 22.20  0.02     0   0.2  0.70  0.20   255 215 0  1 rectangle
+SimObject apple-cider1   27.00 21.00  0.02     0   0.35  0.35  0.60  255 127   0  1 cylinder
+SimObject hummus1        26.25  18.50  0.03     0   0.25  0.25  0.30  210 180 140  1 cylinder
+
+
+
+#### WAYPOINT MAP 
+
+##### WALLS
+
+wallchain 4
+18 29
+42 29
+42 13
+18 13
+18 29

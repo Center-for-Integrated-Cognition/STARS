@@ -1,0 +1,130 @@
+## If fail to find definitive object ("the") in working memory, then 
+##  search semantic memory.
+
+sp {ground-referent*propose*index-semantic-memory
+  #:interrupt
+   (state <s> ^name ground-referent
+             -^superstate.name evaluate-operator
+              ^quiescence t                # no chunking because failure              
+              ^proto-referents none
+             -^indexed-semantic-memory true  # indicates this has been tried 
+              ^constraint-lt.specifier definite)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name index-semantic-memory)
+}
+
+sp {ground-referent*compare*index-semantic-memory
+   (state <s> ^name ground-referent
+              ^operator <op1> +
+                        <op2> +)
+   (<op1> ^name index-semantic-memory)
+   (<op2> ^name failed-grounding)
+-->
+   (<s> ^operator <op1> > <op2>)
+}
+
+### AM 8/19 - Changed how objects are indexed into semantic memory, 
+
+sp {ground-referent*apply*index-semantic-memory*not-cat-loc-name
+   (state <s> ^operator.name index-semantic-memory
+             -^superstate.name evaluate-operator
+             -^constraint.property.handle << category >>)
+-->
+   (<s> ^sm-proto-referent <pr>)
+   (<pr> ^predicates <pred>
+         ^item-type object)
+   (<pred> ^object-instance true
+           ^item-type object) # AM: EDIT: This only should work for objects
+   #(write (crlf) |Nothing passed all constraints for definite non-name/location/category referent. Checking Semantic Memory.|)
+}
+
+# If it has a category it must match the root-category of the object
+# (e.g. 'the kitchen' will match a kitchen object, but not 'the location')
+sp {ground-referent*apply*index-semantic-memory*category
+   (state <s> ^operator.name index-semantic-memory
+             -^superstate.name evaluate-operator
+              ^constraint <con>)
+   (<con> ^property.handle category 
+          ^handle <cat>)
+-->
+   (<s> ^sm-proto-referent <pr>)
+   (<pr> ^predicates <pred>
+         ^item-type object)
+   (<pred> ^item-type object
+   	     ^object-instance true
+           ^category <cat>
+           ^root-category <cat>)
+   #(write (crlf) |Nothing passed all constraints for definite category referent. Checking Semantic Memory.|)
+}
+
+# AM: I don't think we need this anymore (the default behavior is sufficient)
+#sp {ground-referent*apply*index-semantic-memory*proper-name
+#   (state <s> ^operator.name index-semantic-memory
+#             -^superstate.name evaluate-operator
+#              ^constraint <con>)
+#   (<con> ^property <prop>
+#          ^item-type <item-type>)
+#   (<prop> ^handle proper-name)
+#-->
+#   (<s> ^sm-proto-referent <pr>)
+#   (<pr> ^predicates <pred>)
+#   (<pred> ^item-type object # AM: EDIT: This only works for objects
+#   	     ^object-instance true)
+#  # (write (crlf) |Nothing passed all constraints for definite location/name referent. | <item-type> |. Checking Semantic Memory.|)
+#}
+
+sp {ground-referent*apply*index-semantic-memory*smem
+   (state <s> ^operator <op>
+              ^smem.command <com>
+              ^<< sm-proto-referent proto-referent >> <ref>)
+   (<op> ^name index-semantic-memory)
+   (<ref> ^predicates-copied true
+          ^predicates <pred>)
+-->   
+   #(write (crlf) |Attempt retrieval for: | <pred>)
+   (<com> ^query <pred> 
+          ^depth 19)
+}
+
+sp {ground-referent*apply*index-semantic-memory*smem*success
+   (state <s> ^operator.name index-semantic-memory
+              ^smem <smem>
+              ^constraints <cons>
+              ^superstate.operator <so>)
+   (<smem> ^result.retrieved <rli>
+           ^command <com>)
+   (<com> ^query <q>)
+   (<so> ^parameter <p>
+         ^<< double-constraints constraints >> <c>)
+-->
+   (<s> ^indexed-semantic-memory true)             # finish this operator
+   (<cons> ^referent <rli>)                        # the results
+   (<c> ^ground-tested <p>)                        # finish ground-referent
+   (<com> ^query <q> -
+          ^depth 19 -)
+   #(write (crlf) |Found referent in smem: | <rli>)
+}
+
+sp {ground-referent*apply*index-semantic-memory*smem*fail
+   (state <s> ^superstate.operator <so>
+              ^operator.name index-semantic-memory 
+              ^smem <smem>)
+   (<smem> ^result.failure <t>)
+-->
+#(write (crlf) |No lexical item found in semantic memory.|)
+   (<s> ^failed-semantic-retrieval true
+        ^indexed-semantic-memory true) 
+}
+
+sp {ground-referent*apply*index-semantic-memory*smem*fail*no-change
+   #:interrupt
+   (state <ss> ^superstate <s> ^impasse no-change)   
+   (state <s> ^superstate.operator <so>
+              ^operator.name index-semantic-memory)
+-->
+ #  (write (crlf) |No lexical item found in semantic memory.|)
+   (<s> ^failed-semantic-retrieval true
+        ^indexed-semantic-memory true) 
+}
+

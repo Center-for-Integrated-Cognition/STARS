@@ -1,0 +1,29 @@
+
+sp {task-utils*push-task-segment*prefer*smem-query*best
+   (state <s> ^name push-task-segment
+              ^operator <o> +)
+   (<o> ^name smem-query)
+-->
+   (<s> ^operator <o> >)
+}
+
+sp {task-utils*push-task-segment*prefer*attend-to-perception*over*change-world-state
+   (state <s> ^name push-task-segment
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name attend-to-perception)
+   (<o2> ^name change-world-state)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {task-utils*push-task-segment*prefer*others*over*add-predicate-to-world
+   (state <s> ^name push-task-segment
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name << attend-to-perception change-world-state >>)
+   (<o2> ^name add-predicate-to-world)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+

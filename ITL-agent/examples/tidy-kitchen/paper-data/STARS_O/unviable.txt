@@ -1,0 +1,264 @@
+data type;object handle;response;prompt type;mismatch type;mismatch;detail
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the recycling bin and the recycling bin is closed;initial_prompt;affordance-mismatch;closed;bin1
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the bin and the bin is closed;recurse_prompt;affordance-mismatch;closed;bin1
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the recycle-bin and the recycle-bin is closed;recurse_prompt;unknown-word;recycle-bin;NA
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the trashcan and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the trash can and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the trash and the trash is closed;recurse_prompt;affordance-mismatch;closed;garbage1
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the recycle-bin and the bin is closed;recurse_prompt;unknown-word;recycle-bin;NA
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the trash and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the trash and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the recycle bin and the recycle bin is closed;repair_recurse_prompt;unknown-word;recycle;NA
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the garbage can and the garbage can is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the wastebasket and the wastebasket is closed;repair_recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the recycling bin and the bin is closed;repair_prompt;affordance-mismatch;closed;bin1
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the trash and the garbage can is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the garbage and the garbage can is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;soda-can1_instance_13;the goal is that the soda-can is in the recycling bin and the recycling bin is closed;recurse_prompt;affordance-mismatch;closed;bin1
+unviable_response;soda-can1_instance_13;the goal is that the soda-can is in the trashcan and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;soda-can1_instance_13;the goal is that the soda-can is in the trash can and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;soda-can1_instance_13;the goal is that the soda-can is in the trash and the trash is closed;initial_prompt;affordance-mismatch;closed;garbage1
+unviable_response;soda-can1_instance_13;the goal is that the soda-can is in the recycle bin and the recycle bin is closed;recurse_prompt;unknown-word;recycle;NA
+unviable_response;soda-can1_instance_13;the goal is that the soda-can is in the recycling bin and the bin is closed;recurse_prompt;affordance-mismatch;closed;bin1
+unviable_response;soda-can1_instance_13;the goal is that the soda-can is in the recycling bin and the table is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;soda-can1_instance_13;the goal is that the soda-can is in the recycle bin;recurse_prompt_end_branch;unknown-word;recycle;NA
+unviable_response;soda-can1_instance_13;the goal is that the soda-can is in the garbage can and the garbage can is closed;repair_prompt;uninterpretable;parser;NA
+unviable_response;soda-can1_instance_13;the goal is that the soda-can is in the wastebasket and the wastebasket is closed;repair_recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;soda-can1_instance_13;the goal is that the soda-can is in the garbage and the garbage is closed;repair_recurse_prompt;affordance-mismatch;closed;garbage1
+unviable_response;soda-can1_instance_13;the goal is that the soda-can is in the trash bin and the trash bin is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the bin and the bin is closed;recurse_prompt;affordance-mismatch;closed;bin1
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the recycling bin and the recycling bin is closed;recurse_prompt;affordance-mismatch;closed;bin1
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the trash can and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the trashcan and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the recycling bin and the bin is closed;recurse_prompt;affordance-mismatch;closed;bin1
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the trash and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the trash and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the trash and the trash is closed;recurse_prompt;affordance-mismatch;closed;garbage1
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the garbage can and the garbage can is closed;repair_prompt;uninterpretable;parser;NA
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the wastebasket and the wastebasket is closed;repair_recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the garbage and the garbage can is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the trash and the garbage can is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the trash and the trash bin is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the trash and the trashcan is empty;repair_recurse_prompt;unknown-word;trashcan;NA
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the trash and the trash is empty;repair_prompt;affordance-mismatch;empty;garbage1
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the trash and the garbage can is empty;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the trash and the trash can is empty;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the trash and the trashcan is clean;repair_recurse_prompt;unknown-word;trashcan;NA
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the bin and the bin is closed;recurse_prompt;affordance-mismatch;closed;bin1
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the trash can and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the garbage can and the garbage can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the trash and the trash is closed;initial_prompt;affordance-mismatch;closed;garbage1
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the trashcan and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the garbage and the garbage is closed;recurse_prompt;affordance-mismatch;closed;garbage1
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the trash and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the trash and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the wastebasket and the wastebasket is closed;repair_recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the trash and the garbage can is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the trash and the trashcan is empty;repair_recurse_prompt;unknown-word;trashcan;NA
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the trash and the trash is empty;repair_prompt;affordance-mismatch;empty;garbage1
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the trash and the garbage can is empty;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the trash and the bin is empty;repair_recurse_prompt;affordance-mismatch;empty;bin1
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the trash and the trash can is empty;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-plate1_instance_18;the goal is that the paper-plate is in the trash and the trashcan is clean;repair_recurse_prompt;unknown-word;trashcan;NA
+unviable_response;plastic-fork1_instance_19;the goal is that the plastic-fork is in the garbage can and the garbage can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-fork1_instance_19;the goal is that the plastic-fork is in the trash can and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-fork1_instance_19;the goal is that the plastic-fork is in the sink and the sink is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-fork1_instance_19;the goal is that the plastic-fork is in the trash and the trash is closed;recurse_prompt;affordance-mismatch;closed;garbage1
+unviable_response;plastic-fork1_instance_19;the goal is that the plastic-fork is in the sink and the sink is empty;recurse_prompt;affordance-mismatch;empty;sink1
+unviable_response;plastic-fork1_instance_19;the goal is that the plastic-fork is in the sink and the sink is full of water;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-fork1_instance_19;the goal is that the plastic-fork is in the sink and the sink is clear;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-fork1_instance_19;the goal is that the plastic-fork is in the garbage and the garbage is in the kitchen;recurse_prompt;affordance-mismatch;grabbable;garbage1
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the sink and the sink is full of water;initial_prompt;uninterpretable;parser;NA
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the dishwasher and the dishwasher is turned on;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the sink and the sink is empty;recurse_prompt;affordance-mismatch;empty;sink1
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the sink and the sink is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the trash and the trash is closed;recurse_prompt;affordance-mismatch;closed;garbage1
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the sink and the sink is clear;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the trash can and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the sink and the sink is full of soapy water;recurse_prompt;unknown-word;soapy;NA
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the trashcan and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the dishwasher and the dishwasher is on;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the trash and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the trash and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the garbage can and the garbage can is closed;repair_prompt;uninterpretable;parser;NA
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the wastebasket and the wastebasket is closed;repair_recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the trash and the garbage can is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the garbage and the garbage can is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;bottle-opener1_instance_25;the goal is that the kitchen is tidy and the bottle-opener is in the drawer;recurse_prompt;uninterpretable;parser;NA
+unviable_response;bottle-opener1_instance_25;the goal is that the kitchen is tidy;recurse_prompt_end_branch;uninterpretable;parser;NA
+unviable_response;ceramic-plate1_instance_27;the goal is that the ceramic-plate is in the dishwasher and the dishwasher is turned on;initial_prompt;uninterpretable;parser;NA
+unviable_response;ceramic-plate1_instance_27;the goal is that the ceramic-plate is in the dishwasher and the dishwasher is on;recurse_prompt;uninterpretable;parser;NA
+unviable_response;ceramic-plate1_instance_27;the goal is that the ceramic-plate is in the sink and the sink is full of soapy water;recurse_prompt;unknown-word;soapy;NA
+unviable_response;ceramic-plate1_instance_27;the goal is that the ceramic-plate is in the sink and the sink is full of water;recurse_prompt;uninterpretable;parser;NA
+unviable_response;ceramic-plate1_instance_27;the goal is that the ceramic-plate is in the sink and the sink is empty;recurse_prompt;affordance-mismatch;empty;sink1
+unviable_response;ceramic-plate1_instance_27;the goal is that the ceramic-plate is in the sink and the sink is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;ceramic-plate1_instance_27;the goal is that the ceramic-plate is in the sink and the water is running;recurse_prompt;unknown-word;running;NA
+unviable_response;ceramic-plate1_instance_27;the goal is that the ceramic-plate is in the sink and the water is running;recurse_prompt;ungrounded-object;water1;NA
+unviable_response;ceramic-plate1_instance_27;the goal is that the ceramic-plate is in the sink and the water is turned on;repair_prompt;uninterpretable;parser;NA
+unviable_response;glass-tumbler1_instance_29;the goal is that the glass-tumbler is in the dishwasher and the dishwasher is turned on;initial_prompt;uninterpretable;parser;NA
+unviable_response;glass-tumbler1_instance_29;the goal is that the glass-tumbler is in the sink and the sink is full of soapy water;recurse_prompt;unknown-word;soapy;NA
+unviable_response;glass-tumbler1_instance_29;the goal is that the glass-tumbler is in the sink and the sink is empty;recurse_prompt;affordance-mismatch;empty;sink1
+unviable_response;glass-tumbler1_instance_29;the goal is that the glass-tumbler is in the sink and the sink is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;glass-tumbler1_instance_29;the goal is that the glass-tumbler is in the dishwasher and the dishwasher is on;recurse_prompt;uninterpretable;parser;NA
+unviable_response;glass-tumbler1_instance_29;the goal is that the glass-tumbler is in the sink and the sink is full of water;recurse_prompt;uninterpretable;parser;NA
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the trash can and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the garbage can and the garbage can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the trashcan and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the trash and the trash is closed;initial_prompt;affordance-mismatch;closed;garbage1
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the trash and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the trash and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the garbage and the garbage is in the kitchen;recurse_prompt;affordance-mismatch;grabbable;garbage1
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the trash and the garbage can is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the garbage and the garbage can is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the trash and the trashcan is empty;repair_recurse_prompt;unknown-word;trashcan;NA
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the trash and the garbage can is empty;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the garbage and the garbage can is empty;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the trash and the trash is empty;repair_prompt;affordance-mismatch;empty;garbage1
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the trash and the trash can is empty;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the trash and the trashcan is clean;repair_recurse_prompt;unknown-word;trashcan;NA
+unviable_response;ketchup1_instance_44;the goal is that there is no ketchup on the table;recurse_prompt;ungrounded-object;ketchup1;NA
+unviable_response;ketchup1_instance_44;the goal is that ketchup is in fridge and fridge is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;ketchup1_instance_44;the goal is that ketchup is in fridge;recurse_prompt_end_branch;uninterpretable;parser;NA
+unviable_response;ketchup1_instance_44;the goal is that there is no ketchup on the floor;repair_prompt;unknown-word;floor;NA
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the bin and the bin is closed;recurse_prompt;affordance-mismatch;closed;bin1
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the recycling bin and the recycling bin is closed;recurse_prompt;affordance-mismatch;closed;bin1
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the recycling bin and the bin is closed;recurse_prompt;affordance-mismatch;closed;bin1
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the trash and the trash is closed;initial_prompt;affordance-mismatch;closed;garbage1
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the trash and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the trash and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the trash and the trash is in the kitchen;recurse_prompt;affordance-mismatch;grabbable;garbage1
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the trash and the garbage can is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the garbage and the garbage can is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the trash and the trash bin is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the trash and the trashcan is empty;repair_recurse_prompt;unknown-word;trashcan;NA
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the trash and the trash is empty;repair_prompt;affordance-mismatch;empty;garbage1
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the trash and the garbage can is empty;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the trash and the trash can is empty;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;coke-can1_instance_14;the goal is that the coke-can is in the trash and the trashcan is clean;repair_recurse_prompt;unknown-word;trashcan;NA
+unviable_response;newspaper1_instance_16;the goal is that the newspaper is in the recycling bin and the recycling bin is closed;initial_prompt;affordance-mismatch;closed;bin1
+unviable_response;newspaper1_instance_16;the goal is that the newspaper is in the recycling bin and the bin is closed;recurse_prompt;affordance-mismatch;closed;bin1
+unviable_response;newspaper1_instance_16;the goal is that the newspaper is in the trash can and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;newspaper1_instance_16;the goal is that the newspaper is in the trash and the trash is closed;recurse_prompt;affordance-mismatch;closed;garbage1
+unviable_response;newspaper1_instance_16;the goal is that the newspaper is in the trash and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;apple-core1_instance_17;the goal is that the apple-core is in the bin and the bin is closed;initial_prompt;affordance-mismatch;closed;bin1
+unviable_response;apple-core1_instance_17;the goal is that the apple-core is in the trash can and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;apple-core1_instance_17;the goal is that the apple-core is in the garbage can and the garbage can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;apple-core1_instance_17;the goal is that the apple-core is in the trashcan and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;apple-core1_instance_17;the goal is that the apple-core is in the trash and the trash is closed;recurse_prompt;affordance-mismatch;closed;garbage1
+unviable_response;apple-core1_instance_17;the goal is that the apple-core is in the garbage and the garbage is in the kitchen;recurse_prompt;affordance-mismatch;grabbable;garbage1
+unviable_response;apple-core1_instance_17;the goal is that the apple-core is in the wastebasket and the wastebasket is closed;repair_recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the trash and the trash is closed;initial_prompt;affordance-mismatch;closed;garbage1
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the trash can and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the trash and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the trash and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the garbage can and the garbage can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the garbage and the garbage is closed;recurse_prompt;affordance-mismatch;closed;garbage1
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the garbage and the garbage is in the kitchen;recurse_prompt;affordance-mismatch;grabbable;garbage1
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the trash and the garbage can is closed;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the trash and the trashcan is empty;repair_recurse_prompt;unknown-word;trashcan;NA
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the trash and the trash is empty;repair_prompt;affordance-mismatch;empty;garbage1
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the trash and the garbage can is empty;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the garbage and the garbage can is empty;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the trash and the trash can is empty;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the trash and the counter is clear;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-cup1_instance_21;the goal is that the paper-cup is in the trash and the trashcan is clean;repair_recurse_prompt;unknown-word;trashcan;NA
+unviable_response;plate1_instance_28;the goal is that the plate is in the dishwasher and the dishwasher is turned on;initial_prompt;uninterpretable;parser;NA
+unviable_response;plate1_instance_28;the goal is that the plate is in the dishwasher and the dishwasher is on;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plate1_instance_28;the goal is that the plate is in the sink and the sink is full of water;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plate1_instance_28;the goal is that the plate is in the sink and the sink is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plate1_instance_28;the goal is that the plate is in the sink and the water is running;recurse_prompt;unknown-word;running;NA
+unviable_response;plate1_instance_28;the goal is that the plate is in the sink and the water is running;recurse_prompt;ungrounded-object;water1;NA
+unviable_response;plate1_instance_28;the goal is that the plate is in the sink and the sink is empty;recurse_prompt;affordance-mismatch;empty;sink1
+unviable_response;plate1_instance_28;the goal is that the plate is in the sink and the water is on;repair_prompt;uninterpretable;parser;NA
+unviable_response;plate1_instance_28;the goal is that the plate is in the sink and the water is turned on;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;steak-knife1_instance_30;the goal is that the steak-knife is in the dishwasher and the dishwasher is turned on;recurse_prompt;uninterpretable;parser;NA
+unviable_response;steak-knife1_instance_30;the goal is that the steak-knife is in the dishwasher and the dishwasher is on;recurse_prompt;uninterpretable;parser;NA
+unviable_response;steak-knife1_instance_30;the goal is that the steak-knife is in the dishwasher and the dishwasher is running;recurse_prompt;unknown-word;running;NA
+unviable_response;mug1_instance_31;the goal is that the mug is in the dishwasher and the dishwasher is turned on;initial_prompt;uninterpretable;parser;NA
+unviable_response;coffee-grinder1_instance_36;the goal is that the coffee-grinder is in the cabinet and the cabinet is closed;recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;coffee-grinder1_instance_36;the goal is that the coffee-grinder is on the shelf and the shelf is tidy;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;box-of-aluminum-foil1_instance_38;the goal is that the box-of-aluminum-foil is in the cabinet and the cabinet is closed;recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;box-of-aluminum-foil1_instance_38;the goal is that the box-of-aluminum-foil is in the cabinet;recurse_prompt_end_branch;ungrounded-object;cabinet1;NA
+unviable_response;box-of-aluminum-foil1_instance_38;the goal is that the box-of-aluminum-foil is in the trash can;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;granola-bars1_instance_40;the goal is that the granola-bars are in the pantry and the counter is clear;recurse_prompt;uninterpretable;parser;NA
+unviable_response;half-and-half1_instance_43;the goal is that half-and-half is in the fridge and the fridge is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;half-and-half1_instance_43;the goal is that half-and-half is in fridge and fridge is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;half-and-half1_instance_43;the goal is that half-and-half is in refrigerator and the refrigerator is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;half-and-half1_instance_43;the goal is that half-and-half is in fridge;recurse_prompt_end_branch;uninterpretable;parser;NA
+unviable_response;paring-knife1_instance_22;the goal is that the paring-knife is in the knife block and the dish rack is empty;recurse_prompt;uninterpretable;parser;NA
+unviable_response;paring-knife1_instance_22;the goal is that the paring-knife is in the knife block and the knife block is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;paring-knife1_instance_22;the goal is that the paring-knife is in the knife block;recurse_prompt_end_branch;uninterpretable;parser;NA
+unviable_response;metal-fork1_instance_23;the goal is that the metal-fork is in the dishwasher and the dishwasher is turned on;recurse_prompt;uninterpretable;parser;NA
+unviable_response;metal-fork1_instance_23;the goal is that the dish rack is empty and the metal-fork is in the drawer;recurse_prompt;affordance-mismatch;empty;rack1
+unviable_response;metal-fork1_instance_23;the goal is that the kitchen is tidy and the metal-fork is in the drawer;recurse_prompt;uninterpretable;parser;NA
+unviable_response;metal-fork1_instance_23;the goal is that the metal-fork is in the dishwasher and the dishwasher is on;recurse_prompt;uninterpretable;parser;NA
+unviable_response;metal-fork1_instance_23;the goal is that the dish rack is empty;recurse_prompt_end_branch;affordance-mismatch;empty;rack1
+unviable_response;metal-fork1_instance_23;the goal is that the kitchen is tidy;recurse_prompt_end_branch;uninterpretable;parser;NA
+unviable_response;mug1_instance_32;the goal is that the mug is in the cabinet and the cabinet is closed;recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;mug1_instance_32;the goal is that the mug is in the dishwasher and the dishwasher is turned on;initial_prompt;uninterpretable;parser;NA
+unviable_response;mug1_instance_32;the goal is that the mug is in the cupboard and the dish rack is empty;recurse_prompt;affordance-mismatch;empty;rack1
+unviable_response;mug1_instance_32;the goal is that the mug is in the dishwasher and the dishwasher is on;recurse_prompt;uninterpretable;parser;NA
+unviable_response;mug1_instance_32;the goal is that the mug is in the dishwasher and the dishwasher is started;recurse_prompt;unknown-word;started;NA
+unviable_response;mug1_instance_32;the goal is that the mug is in the dish rack and the dish rack is empty;recurse_prompt;affordance-mismatch;empty;rack1
+unviable_response;mug1_instance_32;the goal is that the mug is in the dish rack and the dish rack is tidy;recurse_prompt;uninterpretable;parser;NA
+unviable_response;mug1_instance_32;the goal is that the mug is in the dish rack and the dish rack is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;mug1_instance_32;the goal is that the mug is in the dish rack and the dish rack is in the cupboard;recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;mug1_instance_32;the goal is that the mug is in the sink and the sink is full of water;repair_prompt;uninterpretable;parser;NA
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the cabinet and the cabinet is closed;recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the dish cabinet and the dish cabinet is closed;recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the dish rack and the dish rack is empty;recurse_prompt;affordance-mismatch;empty;rack1
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the dish rack and the dish rack is tidy;recurse_prompt;uninterpretable;parser;NA
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the dish rack and the dish rack is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the dish rack and the dish rack is in the cabinet;recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the dish rack and the dish rack is in the cabinet;recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the cabinet;recurse_prompt_end_branch;ungrounded-object;cabinet1;NA
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the dish rack and the dish rack is in the dishwasher;recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the dish rack and the dish rack is in the sink;recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the dish rack and the dish rack is in the cupboard;recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the cabinet and the cabinet is open;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the sink and the sink is empty;repair_recurse_prompt;affordance-mismatch;empty;sink1
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the dish rack and the dish rack is in the dish cabinet;repair_prompt;ungrounded-object;cabinet1;NA
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the dish rack and the dish rack is in the dish cabinet;repair_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the dish cabinet and the dish cabinet is open;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the dish rack and the dish rack is on the counter;repair_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the dish rack and the dish rack is under the sink;repair_recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the dish rack and the dish rack is next to the dish cabinet;repair_recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the dish rack and the dish rack is next to the dish cabinet;repair_recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the cabinet and the cabinet is closed;recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the dishwasher and the dishwasher is turned on;recurse_prompt;uninterpretable;parser;NA
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the dish cabinet and the dish cabinet is closed;recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the dish rack and the dish rack is in the cupboard;recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the dishwasher and the dishwasher is on;recurse_prompt;uninterpretable;parser;NA
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the cabinet;recurse_prompt_end_branch;ungrounded-object;cabinet1;NA
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the dish rack and the dish rack is in the cabinet;repair_prompt;ungrounded-object;cabinet1;NA
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the dish rack and the dish rack is in the cabinet;repair_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the sink and the sink is full of water;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the dish rack and the dish rack is in the dish cabinet;repair_prompt;ungrounded-object;cabinet1;NA
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the dish rack and the dish rack is in the dish cabinet;repair_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the sink and the sink is full of soapy water;repair_recurse_prompt;unknown-word;soapy;NA
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the dish cabinet and the dish cabinet is open;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the dish rack and the dish rack is on the counter;repair_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the dish rack and the dish rack is next to the dish cabinet;repair_recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the dish rack and the dish rack is next to the dish cabinet;repair_recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the dish rack and the dish rack is under the sink;repair_recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the dish rack and the dish rack is in the sink;repair_recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the cabinet and the cabinet is closed;recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the dish rack and the dish rack is in the cupboard;recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the dishwasher and the dishwasher is turned on;recurse_prompt;uninterpretable;parser;NA
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the dish rack and the dish rack is empty;recurse_prompt;affordance-mismatch;empty;rack1
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the dish rack and the dish rack is tidy;recurse_prompt;uninterpretable;parser;NA
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the dish rack and the dish rack is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the cabinet;recurse_prompt_end_branch;ungrounded-object;cabinet1;NA
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the dish rack and the dish rack is in the sink;recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the dish rack and the dish rack is in the cabinet;recurse_prompt;ungrounded-object;cabinet1;NA
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the dish rack and the dish rack is in the cabinet;recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the dish rack and the dish rack is in the kitchen;recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the sink and the sink is empty;repair_prompt;affordance-mismatch;empty;sink1
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the sink and the water is running;repair_recurse_prompt;unknown-word;running;NA
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the sink and the water is running;repair_recurse_prompt;ungrounded-object;water1;NA
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the sink and the sink is full of water;repair_recurse_prompt;uninterpretable;parser;NA
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the dish rack and the dish rack is on the counter;repair_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the dish rack and the dish rack is under the sink;repair_recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the dish rack and the dish rack is next to the sink;repair_recurse_prompt;affordance-mismatch;grabbable;rack1
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the sink and the water is on;repair_prompt;uninterpretable;parser;NA
+unviable_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the sink and the water is turned on;repair_recurse_prompt;uninterpretable;parser;NA

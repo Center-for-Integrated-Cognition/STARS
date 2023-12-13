@@ -1,0 +1,18 @@
+
+
+# Souce file "smem-fix.soar"
+source smem-fix.soar
+
+# Souce file "test-smem-bug.soar"
+#source test-smem-bug.soar
+
+# Souce file "send-message.soar"
+source send-message.soar
+
+# Source child problem space "test-sets"
+pushd test-sets
+source test-sets_source.soar
+popd
+
+# Souce file "test-svs.soar"
+source test-svs.soar

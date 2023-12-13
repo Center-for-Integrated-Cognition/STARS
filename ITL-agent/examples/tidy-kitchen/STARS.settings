@@ -1,0 +1,42 @@
+sp {top-state*elaborate*agent-params*perception
+   (state <s> ^top-state <s>
+              ^agent-params <params>)
+-->
+   (<params> ^minimum-property-confidence 0.2)  # The minimum confidence an input-link object property can have before being accepted
+   (<params> ^property-ambiguity-threshold 0.8) # If an input-link object property has more than 1 value, 
+                                                #   don't accept the best if another is within this percentange of its confidence
+#Property learning flags
+   # (<params> ^use-puzzle-based-teaching true)
+   # (<params> ^use-default-primitive-actions true)
+   # (<params> ^learn-without-grounding true)
+   # (<params> ^learn-multiple-versions true)
+   (<params> ^use-learning-visualization false)
+#####################
+ 
+   (<params> ^use-language-model true)
+   ##(<params> ^store-prompts true)
+   ##(<params> ^retry-human-reject true)
+   
+   (<params> ^use-search true)
+   (<params> ^use-lm-selection true)
+   (<params> ^agent-lm-evaluation true)
+   (<params> ^lm-condition lm) #lm-human human lm
+
+   (<params> ^stability-check-duration 0)#2)#1	# How many seconds to wait before checking whether an object is stable (and thus not noise)
+   (<params> ^pos-diff-threshold .02)		# How far an object should have moved before the difference is considered significant
+   (<params> ^vol-low-ratio-threshold .8) #.8	# How much an object must have shrunk before the difference is considered significant
+   (<params> ^vol-high-ratio-threshold 1.2)#1.2  # How much an object must have grown before the difference is considered significant
+   (<params> ^max-stability-checks 5)		# How many times an object will be checked for stability before concluding that it must exist
+   (<params> ^occlusion-threshold .15) #.1		# How much an object must be occluded before we determine we shouldn't be able to see it well
+   (<params> ^occlusion-check-period 3)		# How often (in seconds) an occluded object will be rechecked to see if we can see it now
+#   (<params> ^clear-view-distance .01)		# How far away the closest object must be from the target before it's considered clear
+#   (<params> ^stale-match-distance .1)		# How close an object has to be to be considered a match for a stale object
+#   (<params> ^maximum-stale-distance .1)	# How close a stale object is to a new object to be considered a possible match (convex distance)
+   (<params> ^contained-threshold .33)		# How much of a given object should be overlapped by another before it's considered inside it
+   (<params> ^contained-by-threshold .5)	# How much an existing object should be overlapped by another before it's considered a match
+#   (<params> ^update-object-period 3)		# How often (in seconds) a non-occluded object should be rechecked (update pos/bbox)
+   (<params> ^recheck-growth-delay 5)		#
+#   (<params> ^aggressive-match-distance .05)
+#   (<params> ^vol-low-candidate-match .6)
+#   (<params> ^vol-high-candidate-match 1.4)
+}

@@ -1,0 +1,102 @@
+(L6 ^failure F841 ^failure F836 ^failure F815 ^failure F454 ^failure F447
+       ^failure F444 ^failure F434 ^failure F425 ^failure F413 ^failure F409
+       ^failure F153 ^failure F119 ^failure F115 ^failure F100 ^failure F93
+       ^failure F77 ^failure F67)
+  (F841 ^evaluation E52731 ^handle |35|
+         ^object-desc |a ceramic-bowl in the dish rack|
+         ^sentence |the goal is that the ceramic-bowl is in the cabinet|)
+    (E52731 ^interpreted true ^issue-count 1 ^type ungrounded-obj1
+           ^ungrounded-object P106773)
+      (P106773 ^handle new-object-id305 ^item-type object ^predicates P106774
+             ^predicates-copied true)
+  (F836 ^evaluation E51390 ^handle |34|
+         ^object-desc |a ceramic-plate in the dish rack|
+         ^sentence |the goal is that the ceramic-plate is in the cabinet|)
+    (E51390 ^interpreted true ^issue-count 1 ^type ungrounded-obj1
+           ^ungrounded-object P104386)
+      (P104386 ^handle new-object-id302 ^item-type object ^predicates P104387
+             ^predicates-copied true)
+  (F815 ^evaluation E45628 ^handle |22|
+         ^object-desc |a paring-knife in the dish rack|
+         ^sentence |the goal is that the paring-knife is in the knife block|)
+    (E45628 ^failure failed-interpretation ^interpreted false ^issue-count 2
+           ^type ungrounded-obj1 ^type uninterpreted ^ungrounded-object P94606)
+      (P94606 ^handle new-object-id280 ^item-type object ^predicates P94607
+             ^predicates-copied true)
+  (F454 ^evaluation E35402 ^handle |43|
+         ^object-desc |a half-and-half on the counter|
+         ^sentence |the goal is that half-and-half is in the fridge and the fridge is closed|)
+    (E35402 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F447 ^evaluation E34656 ^handle |40|
+         ^object-desc |a granola-bars on the counter|
+         ^sentence |the goal is that the granola-bars are in the pantry and the counter is clear|)
+    (E34656 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F444 ^evaluation E34034 ^handle |38|
+         ^object-desc |a box-of-aluminum-foil on the counter|
+         ^sentence |the goal is that the box-of-aluminum-foil is in the cabinet and the cabinet is closed|)
+    (E34034 ^interpreted true ^issue-count 1 ^type ungrounded-obj1
+           ^ungrounded-object P71438)
+      (P71438 ^handle new-object-id226 ^item-type object ^predicates P71439
+             ^predicates-copied true)
+  (F434 ^evaluation E30829 ^handle |28| ^object-desc |a plate on the counter|
+         ^sentence |the goal is that the plate is in the dishwasher and the dishwasher is turned on|)
+    (E30829 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F425 ^evaluation E29699 ^handle |21|
+         ^object-desc |a paper-cup on the counter|
+         ^sentence |the goal is that the paper-cup is in the trash and the trash can is closed|)
+    (E29699 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F413 ^evaluation E27586 ^handle |16|
+         ^object-desc |a newspaper on the counter|
+         ^sentence |the goal is that the newspaper is in the recycling bin and the recycling bin is closed|)
+    (E27586 ^affordance-mismatch A65578 ^interpreted true ^issue-count 1)
+      (A65578 ^clause I66779 ^obj-desc bin1 ^object O500 ^object-desc R79941
+             ^property closed ^type affordance2)
+  (F409 ^evaluation E26749 ^handle |14|
+         ^object-desc |a coke-can on the counter|
+         ^sentence |the goal is that the coke-can is in the recycling bin and the recycling bin is closed|)
+    (E26749 ^affordance-mismatch A65561 ^interpreted true ^issue-count 1)
+      (A65561 ^clause I65564 ^obj-desc bin1 ^object O500 ^object-desc R77430
+             ^property closed ^type affordance2)
+  (F153 ^evaluation E14287 ^handle |46|
+         ^object-desc |an apple-juice on the table|
+         ^sentence |the goal is that there is no apple-juice on the table and the apple-juice is in the fridge|)
+    (E14287 ^interpreted true ^issue-count 1 ^type ungrounded-obj1
+           ^ungrounded-object P22737)
+      (P22737 ^handle new-object-id145 ^item-type object ^predicates P22738
+             ^predicates-copied true ^relation I20744)
+  (F119 ^evaluation E8042 ^handle |25|
+         ^object-desc |a bottle-opener on the table|
+         ^sentence |the goal is that the kitchen is tidy and the bottle-opener is in the drawer|)
+    (E8042 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F115 ^evaluation E7548 ^handle |20|
+         ^object-desc |a plastic-cup on the table|
+         ^sentence |the goal is that the plastic-cup is in the dishwasher and the dishwasher is on|)
+    (E7548 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F100 ^evaluation E6205 ^handle |19|
+         ^object-desc |a plastic-fork on the table|
+         ^sentence |the goal is that the plastic-fork is in the garbage and the garbage is in the kitchen|)
+    (E6205 ^affordance-mismatch A1008 ^interpreted true ^issue-count 1)
+      (A1008 ^clause I9059 ^obj-desc garbage1 ^object O463 ^object-desc R20522
+             ^property grabbable ^type affordance3)
+  (F93 ^evaluation E4547 ^handle |18|
+         ^object-desc |a paper-plate on the table|
+         ^sentence |the goal is that the paper-plate is in the trashcan and the trashcan is closed|)
+    (E4547 ^interpreted true ^issue-count 1 ^type unknown-word
+           ^unknown-word trashcan)
+  (F77 ^evaluation E2410 ^handle |13| ^object-desc |a soda-can on the table|
+         ^sentence |the goal is that the soda-can is in the recycling bin and the table is clean|)
+    (E2410 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F67 ^evaluation E1379 ^handle |12|
+         ^object-desc |a plastic-bottle on the table|
+         ^sentence |the goal is that the plastic-bottle is in the recycle-bin and the bin is closed|)
+    (E1379 ^interpreted true ^issue-count 1 ^type unknown-word
+           ^unknown-word recycle-bin)
+
+

@@ -1,0 +1,23 @@
+# Elaborate the problem-space when the superstate in an execute task problem-space
+
+sp {subproblem*execute*elaborate*problem-space*world*copy-type
+   (state <s> ^problem-space <ps>)
+   (<ps> ^name action
+         ^subproblem execute
+         ^world <world>)
+-->
+   (<world> ^copy-type shallow)
+}
+
+sp {subproblem*execute*elaborate*problem-space*attend-to-perception*yes
+   (state <s> ^problem-space <ps>
+             -^child-task-segment
+             -^force-state-no-change true)
+   (<ps> ^name action
+         ^subproblem execute)
+-->
+   (<ps> ^attend-to-perception yes)
+}
+
+
+            

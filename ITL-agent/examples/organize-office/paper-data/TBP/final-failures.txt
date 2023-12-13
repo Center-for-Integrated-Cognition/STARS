@@ -1,0 +1,42 @@
+(L6 ^failure F63 ^failure F59 ^failure F57 ^failure F53 ^failure F47
+       ^failure F42 ^failure F38)
+  (F63 ^evaluation E5013 ^handle |18| ^object-desc |novel on the desk|
+         ^sentence |the goal is that the novel is on the bookshelf and the bookshelf is closed|)
+    (E5013 ^affordance-mismatch A11827 ^affordance-mismatch A11826
+           ^interpreted true ^issue-count 2)
+      (A11827 ^clause I14734 ^obj-desc bookshelf1 ^object O389
+             ^object-desc R15048 ^property surface ^type affordance1)
+      (A11826 ^clause I14795 ^obj-desc bookshelf1 ^object O389
+             ^object-desc R15121 ^property closed ^type affordance2)
+  (F59 ^evaluation E4663 ^handle |17| ^object-desc |dictionary on the desk|
+         ^sentence |the goal is that the dictionary is on the shelf and the shelf is closed|)
+    (E4663 ^interpreted true ^issue-count 1 ^type ungrounded-obj1
+           ^ungrounded-object P9107)
+      (P9107 ^handle new-object-id44 ^item-type object ^predicates P9108
+             ^predicates-copied true)
+  (F57 ^evaluation E4302 ^handle |16| ^object-desc |sprite-can on the desk|
+         ^sentence |the goal is that the sprite-can is in the recycling bin and the recycling bin is closed|)
+    (E4302 ^affordance-mismatch A11808 ^interpreted true ^issue-count 1)
+      (A11808 ^clause I13738 ^obj-desc bin1 ^object O119 ^object-desc R12986
+             ^property closed ^type affordance2)
+  (F53 ^evaluation E4009 ^handle |15| ^object-desc |tissue on the desk|
+         ^sentence |the goal is that the tissue is in the trash can and the trash can is closed|)
+    (E4009 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F47 ^evaluation E3645 ^handle |14| ^object-desc |book on the desk|
+         ^sentence |the goal is that the book is on the shelf|)
+    (E3645 ^interpreted true ^issue-count 1 ^type ungrounded-obj1
+           ^ungrounded-object P8213)
+      (P8213 ^handle new-object-id28 ^item-type object ^predicates P8214
+             ^predicates-copied true)
+  (F42 ^evaluation E2977 ^handle |12| ^object-desc |pencil on the desk|
+         ^sentence |the goal is that the pencil is in the desk drawer and the drawer is closed|)
+    (E2977 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F38 ^evaluation E2705 ^handle |11|
+         ^object-desc |paper-coffee-cup on the desk|
+         ^sentence |the goal is that the paper-coffee-cup is in the trash can and the trash can is closed|)
+    (E2705 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+
+

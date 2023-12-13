@@ -1,0 +1,42 @@
+sp {subproblem*execute*elaborate*propose-wait*sent*command
+   (state <s> ^problem-space.subproblem execute
+              ^current-task-segment.<cmd-name> <cmd>
+             -^operator.name wait)
+   (<cmd> ^item-type output-command
+         -^status)
+-->
+   (<s> ^operator <o> + < =)
+   (<o> ^name wait)
+}
+
+sp {subproblem*execute*elaborate*propose-wait*sent*command*status*running
+   (state <s> ^problem-space.subproblem execute
+              ^current-task-segment.<cmd-name> <cmd>
+             -^operator.name wait)
+   (<cmd> ^item-type output-command
+          ^status << sent received running executing >>)
+-->
+   (<s> ^operator <o> + < =)
+   (<o> ^name wait)
+}
+
+sp {subproblem*execute*elaborate*propose-wait*active-ongoing-goal*satisfied
+   (state <s> ^problem-space.subproblem execute
+              ^active-ongoing-goal true
+              ^desired.satisfied true
+             -^operator.name wait)
+-->
+   (<s> ^operator <o> + < =)
+   (<o> ^name wait)
+}
+
+### If the agent is waiting for a start-clause to be satisfied, 
+# propose wait
+sp {subproblem*execute*elaborate*propose-wait*waiting-to-start
+   (state <s> ^problem-space.subproblem execute
+              ^waiting-to-start true
+             -^operator.name wait)
+-->
+   (<s> ^operator <o> + < =)
+   (<o> ^name wait)
+}

@@ -1,0 +1,53 @@
+(L6 ^failure F82 ^failure F72 ^failure F67 ^failure F60 ^failure F53
+       ^failure F48)
+  (F82 ^evaluation E12721 ^handle |25| ^object-desc |a granola in the bag|
+         ^sentence |the goal is that the granola is in the pantry and the bag is in the garbage|)
+    (E12721 ^affordance-mismatch A16885 ^affordance-mismatch A16886
+           ^affordance-mismatch A16887 ^interpreted true ^issue-count 1)
+      (A16885 ^clause I28626 ^obj-desc bag1 ^object O724 ^object-desc R38865
+             ^property grabbable ^type affordance3)
+      (A16886 ^clause I28626 ^obj-desc bag1 ^object O202 ^object-desc R38865
+             ^property grabbable ^type affordance3)
+      (A16887 ^clause I28626 ^obj-desc bag1 ^object O631 ^object-desc R38865
+             ^property grabbable ^type affordance3)
+  (F72 ^evaluation E10494 ^handle |23|
+         ^object-desc |a paper-plates in the bag|
+         ^sentence |the goal is that the paper-plates are in the kitchen cupboard|)
+    (E10494 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F67 ^evaluation E9094 ^handle |22| ^object-desc |a plastic-cups in the bag|
+         ^sentence |the goal is that the plastic-cups are in the pantry and the bag is in the recycling bin|)
+    (E9094 ^affordance-mismatch A16828 ^affordance-mismatch A16829
+           ^affordance-mismatch A16830 ^interpreted true ^issue-count 1)
+      (A16828 ^clause I23234 ^obj-desc bag1 ^object O631 ^object-desc R27878
+             ^property grabbable ^type affordance3)
+      (A16829 ^clause I23234 ^obj-desc bag1 ^object O724 ^object-desc R27878
+             ^property grabbable ^type affordance3)
+      (A16830 ^clause I23234 ^obj-desc bag1 ^object O202 ^object-desc R27878
+             ^property grabbable ^type affordance3)
+  (F60 ^evaluation E8247 ^handle |21| ^object-desc |a flour in the bag|
+         ^sentence |the goal is that the flour is in the kitchen cupboard|)
+    (E8247 ^failure failed-interpretation ^interpreted false ^issue-count 1
+           ^type uninterpreted)
+  (F53 ^evaluation E5615 ^handle |18| ^object-desc |a boxed-pasta in the bag|
+         ^sentence |the goal is that the boxed-pasta is in the pantry and the bag is in the recycling bin|)
+    (E5615 ^affordance-mismatch A16727 ^affordance-mismatch A16728
+           ^affordance-mismatch A16729 ^interpreted true ^issue-count 1)
+      (A16727 ^clause I18078 ^obj-desc bag1 ^object O202 ^object-desc R17272
+             ^property grabbable ^type affordance3)
+      (A16728 ^clause I18078 ^obj-desc bag1 ^object O631 ^object-desc R17272
+             ^property grabbable ^type affordance3)
+      (A16729 ^clause I18078 ^obj-desc bag1 ^object O724 ^object-desc R17272
+             ^property grabbable ^type affordance3)
+  (F48 ^evaluation E4775 ^handle |17| ^object-desc |a chips in the bag|
+         ^sentence |the goal is that the chips are in the pantry and the bag is in the garbage|)
+    (E4775 ^affordance-mismatch A16709 ^affordance-mismatch A16710
+           ^affordance-mismatch A16711 ^interpreted true ^issue-count 1)
+      (A16709 ^clause I16859 ^obj-desc bag1 ^object O724 ^object-desc R14761
+             ^property grabbable ^type affordance3)
+      (A16710 ^clause I16859 ^obj-desc bag1 ^object O202 ^object-desc R14761
+             ^property grabbable ^type affordance3)
+      (A16711 ^clause I16859 ^obj-desc bag1 ^object O631 ^object-desc R14761
+             ^property grabbable ^type affordance3)
+
+

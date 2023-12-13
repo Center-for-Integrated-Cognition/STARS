@@ -1,0 +1,20 @@
+source elaborate-interaction.soar
+
+source elaborate-state.soar
+
+source elaborate-svs.soar
+
+source elaborate-task-stack.soar
+
+# Souce file "waypoints.soar"
+source waypoints.soar
+
+
+# Souce file "top-state-problem-space.soar"
+source top-state-problem-space.soar
+
+# Souce file "agent-info.soar"
+source agent-info.soar
+
+# Souce file "default-locations.soar"
+source default-locations.soar

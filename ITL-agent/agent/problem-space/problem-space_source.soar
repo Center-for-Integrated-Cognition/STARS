@@ -1,0 +1,17 @@
+# Source child problem space "learning"
+pushd learning
+source learning_source.soar
+popd
+
+# Source child problem space "world"
+pushd world
+source world_source.soar
+popd
+
+# Souce file "default-desired-copy.soar"
+source default-desired-copy.soar
+
+# Source child problem space "action"
+pushd action
+source action_source.soar
+popd

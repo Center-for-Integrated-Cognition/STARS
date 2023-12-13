@@ -1,0 +1,21 @@
+### construct conditions argument 
+
+sp {task-utils*construct-task-argument*conditions*construct*using*clause
+   (state <s> ^construct-task-argument <arg>)
+   (<arg> ^arg-type conditions
+          ^source <src>)
+-->
+   (<s> ^construct-task-argument <cta>)
+   (<cta> ^arg-type clause
+          ^source <src>)
+   (<arg> ^construct-clause <cta>)
+}
+
+sp {task-utils*construct-task-argument*conditions*copy*construct-clause*result
+   (state <s> ^construct-task-argument <arg>)
+   (<arg> ^arg-type conditions
+          ^construct-clause.created-arg <cond>)
+-->
+   (<arg> ^created-arg <cond>)
+}
+

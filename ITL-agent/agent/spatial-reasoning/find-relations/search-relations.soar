@@ -1,0 +1,96 @@
+sp {find-relations*propose*relation-search*build-answerlist*id
+   (state <s> ^name find-relations
+              ^prep <type>
+              ^prep-link <pl>
+              ^obj <bid>
+              ^top-state.object <obj>)
+   (<pl> ^prep.name <type>)
+   (<obj> ^id <id>
+          ^belief-id <bid>)
+-->
+   (<s> ^relationships <rels>)
+   (<rels> ^with <id>)
+}
+
+sp {find-relations*propose*copy-relationship
+   (state <s> ^name find-relations
+              ^prep <name>
+              ^relationships <rels>)
+   (<rels> -^preposition <name>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name copy-relationships
+        ^rel <rels>)
+}
+
+sp {find-relations*apply*copy-relationship*name
+   (state <s> ^name find-relations
+              ^prep <name>
+              ^operator <o>
+              ^relationships <rels>)
+   (<o> ^name copy-relationships
+        ^rel <rels>)
+-->
+   (<rels> ^preposition <name>)
+}
+
+sp {find-relations*apply*copy-relationship
+   (state <s> ^name find-relations
+              ^operator <o>
+              ^prep <name>
+              ^extract-prepositions.extract-info.result.pair <pair>
+              ^obj <id>
+              ^ind <ind>
+              ^other <ind2>
+              ^relationships <rels>
+              ^top-state.object <obj>)
+   (<pair> ^<ind> <id> ^<ind2> <bid2>)
+   (<o> ^name copy-relationships
+        ^rel <rels>)
+   (<obj> ^id <id2>
+          ^belief-id <bid2>)
+-->
+   (<rels> ^relations <r>)
+   (<r> ^name <name> ^obj <id2> ^matched true) 
+}
+
+sp {find-relations*apply*copy-relationship*three-args
+   (state <s> ^name find-relations
+              ^prep {<name> << linear-with >>}
+              ^operator <o>
+              ^prep-link <pl>
+#              ^ind <ind>
+              ^obj <id>
+#              ^other <ind2>
+              ^prep-link.prep2 <p>
+              ^relationships <rels>)
+   (<p> ^name <name> ^pair <pair>)
+   (<pair> ^a <id> ^b <id2> ^c <id3>)
+   (<o> ^name copy-relationships
+        ^rel <rels>)
+-->
+   (<rels> ^relations <r>)
+   (<r> ^name <name> ^obj1 <id2> ^obj2 <id3> ^matched true) 
+}
+
+sp {find-relations*propose*complete-relations-search
+   (state <s> ^name find-relations
+              ^prep <name>
+              ^relationships <rels>)
+   (<rels> ^preposition <name>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name complete-relations-search
+        ^type true
+        ^category svs)
+}
+
+sp {find-relations*apply*complete-relations-search
+   (state <s> ^name find-relations
+              ^operator <o>
+              ^superstate <ss>
+              ^relationships <rels>)
+   (<o> ^name complete-relations-search)
+-->
+   (<ss> ^relationships <rels>)
+}

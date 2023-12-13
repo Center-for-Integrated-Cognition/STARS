@@ -1,0 +1,34 @@
+sp {evaluate-predicate*eval-condition*impasse
+   (state <s> ^superstate <ss>
+              ^choices none
+              ^attribute state
+              ^impasse no-change)
+   (<ss> ^list <l>)
+   (<l> ^game <g>)
+-->
+#(write (cmd print <ss>))
+   (force-learn <s>) #COMMENT JAMES UNCHUNKED VERSION
+   (<s> ^name evaluate-predicate
+        ^linkstate <ss>
+        ^result <r>)
+}
+sp {evaluate-predicate*propose*resolve-conditions
+   (state <s> ^name evaluate-predicate
+             -^result.set <set>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name resolve-conditions)
+}
+
+sp {evaluate-predicate*elaborate*problemspace*games
+   (state <s> ^superstate.problemspace {<ps> << games >>})
+-->
+   (<s> ^problemspace <ps>)
+}
+
+sp {evaluate-predicate*elaborate*problemspace*game-heuristics
+   (state <s> ^superstate <ss>)
+   (<ss> ^name learn-predicate ^problemspace game-heuristics)
+-->
+   (<s> ^problemspace game-heuristics)
+}

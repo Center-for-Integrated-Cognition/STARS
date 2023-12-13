@@ -1,0 +1,125 @@
+sp {termination-processing*propose*create-new-adjective
+  #:interrupt
+   (state <s> ^name termination-processing
+              ^quiescence t  
+             -^stored-message <sem>
+              ^segment.semantics <sem>)
+   (<sem> ^message-type adjective-definition
+          ^arg1.word-structure <nw>
+          ^property.handle << color size >>)
+   (<nw> -^structure-type)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name create-new-adjective
+         ^word <nw>
+         ^structure-type ADJ
+         ^item-type predicate)
+}
+
+sp {termination-processing*propose*create-new-adjective-verb
+ #:interrupt
+   (state <s> ^name termination-processing
+              ^quiescence t  
+             -^stored-message <sem>
+              ^segment.semantics <sem>)
+   (<sem> ^message-type adjective-definition
+          ^arg1.word-structure <nw>
+          ^property.handle action)
+   (<nw> -^structure-type)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name create-new-adjective
+         ^word <nw>
+         ^structure-type V
+         ^item-type action) 
+}
+
+sp {termination-processing*propose*create-new-relation
+ #:interrupt
+   (state <s> ^name termination-processing
+              ^quiescence t  
+             -^stored-message <sem>
+              ^segment.semantics <sem>)
+   (<sem> ^message-type adjective-definition
+          ^arg1.word-structure <nw>
+          ^property.handle << relation predicate >>)
+   (<nw> -^structure-type)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name create-new-adjective
+         ^word <nw>
+         ^structure-type P
+         ^item-type predicate) 
+}
+
+sp {termination-processing*propose*create-new-noun*shape
+ #:interrupt
+   (state <s> ^name termination-processing
+              ^quiescence t  
+             -^stored-message <sem>
+              ^segment.semantics <sem>)
+   (<sem> ^message-type adjective-definition
+          ^arg1.word-structure <nw>
+          ^property.handle shape)
+   (<nw> -^structure-type)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name create-new-adjective
+         ^word <nw>
+         ^structure-type N
+         ^item-type object) ## Maybe concept?
+}
+
+sp {termination-processing*propose*create-new-noun*not-shape
+ #:interrupt
+   (state <s> ^name termination-processing
+              ^quiescence t  
+             -^stored-message <sem>
+              ^segment.semantics <sem>)
+   (<sem> ^message-type adjective-definition
+          ^arg1.word-structure <nw>
+          ^property.handle { <> predicate <> relation <> action <> color <> size <> shape})
+   (<nw> -^structure-type)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name create-new-adjective
+         ^word <nw>
+         ^structure-type N
+         ^item-type concept)
+}
+
+sp {termination-processing*apply*create-new-adjective
+ #:interrupt
+   (state <s> ^operator <op>
+              ^top-state <ss>)
+   (<ss> ^smem.command <cmd>)
+   (<op> ^name create-new-adjective
+         ^word <nw>
+         ^structure-type <type>
+         ^item-type <item>)
+   (<nw> ^referent <ref>
+         ^spelling <dd>)   
+-->      
+   #(write (crlf) |Update | <type> |: | <dd>)
+   (<s> ^checked <dd>)   # so detect used but unknown word doesn't get selected.
+   (<cmd> ^store <nw> <ref>)
+   (<nw> ^structure-type <type>)
+   (<ref> ^item-type <item>)
+}
+
+
+### Remove index-word-failure because this sentence is defining it.
+sp {termination-processing*apply*remove-interaction-status
+ #:interrupt
+   (state <s> ^operator <op>
+              ^segment.semantics <sem>)
+   (<op> ^name create-new-adjective)
+   (<sem> ^interaction-status <status>)
+   (<status> ^failure <failure>)
+   (<failure> ^type << unknown-word index-word-failure >>)
+-->
+   (<sem> ^interaction-status <status> -)
+   (<status> ^failure <failure> -)
+}
+
+

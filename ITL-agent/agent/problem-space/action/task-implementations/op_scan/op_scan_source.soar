@@ -1,0 +1,7 @@
+source elaborations.soar
+source action-models.soar
+
+source send-scan-command.soar
+
+source handle-execution-failure.soar
+source complete-task.soar

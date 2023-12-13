@@ -1,0 +1,184 @@
+##!
+# @file
+#
+# @created p 20181129
+# File: sentence-complete.soar
+# Author: Peter 
+# Created: 29 November 2018
+#
+# Desc: Code to run within the Rosie agent
+#       after all operations in a sentence are done.
+#
+#    Basically in either test or normal mode, for the Lucia parser,
+#    This should remove ^action, ^action-result, and ^ comprehension
+#    from the top state and put the message that was built
+#    on the interaction stack.
+#
+#    If we are in hypothetical mode, delete from the world
+#    all objects that have ^dialog-object true.
+#
+
+
+##############  SENTENCE-COMPLETE FOR LUCIA MODE    #########################
+
+#   Propose when all sentence processing is done
+#   When we're on the top state in test mode
+sp {top-state*propose*sentence-complete
+   (state <s> ^name rosie
+              ^top-state <ts>)
+   (<ts> ^agent-params <params>
+         ^action <action>
+         ^action-results <results>
+         ^comprehension <comprehension>
+         ^interaction.status <status>)
+   (<params> ^parser lucia)
+  -(<status> ^new-message )
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name sentence-complete)
+}
+
+#   Apply in test mode
+sp {top-state*apply*sentence-complete
+   (state <s> ^operator <o>
+              ^top-state <ts>)
+   (<o> ^name sentence-complete)
+   (<ts> ^agent-params <params>
+         ^action <action>
+         ^action-results <results>
+         ^comprehension <comprehension>
+         ^interaction.status <status>)
+   (<params> ^parser lucia)
+   (<results> ^r <message>)
+  -(<status> ^new-message )
+-->
+   #    Delete the intermediate results and post the final message
+   (<ts> ^action <action> -
+         ^action-results <results> -
+         ^comprehension <comprehension> -)
+   (<status> ^new-message <message>)
+}
+
+#   In hypothetical mode, delete from the world
+#   all objects that have ^dialog-object true.
+sp {top-state*apply*sentence-complete*delete-hypothetical-objects
+   (state <s> ^top-state <ts> 
+              ^problem-space comprehender
+              ^operator <o>
+              ^comprehension <c>
+              ^world.objects <objects>)
+   (<o> ^name sentence-complete)
+   #	Only with the lucia parser
+   (<ts> ^agent-params <params>
+         ^comprehension <c>)
+   (<params> ^parser lucia)
+   #    Only do this for a hypothetical sentence
+   #    Does this really make sense?
+   (<c> ^hypothetical true)
+   #    Look for something to delete
+   (<objects> ^object <object>)
+   (<object> ^predicates.dialog-object true)
+-->
+   #    Delete the object
+   (<objects> ^object <object> -)
+}
+
+#   In hypothetical mode, delete the salient link for
+#   any salient object.
+#   PL 8/27/2020 This was changed.
+#   Previously, it would delete only a link for
+#   a salient that has ^dialog-object true.
+#   Now in hypothetical mode any salient is always
+#   deleted here. This seems to work with
+#   all our regression tests, so I guess it's OK.
+sp {comprehender*apply*sentence-complete*delete-hypothetical-salient
+   (state <s> ^top-state <ts> 
+              ^problem-space comprehender
+              ^operator <o>
+              ^comprehension <c>
+              ^discourse <discourse>)
+   (<o> ^name sentence-complete)
+   #	Only with the lucia parser
+   (<ts> ^agent-params <params>
+         ^comprehension <c>)
+   (<params> ^parser lucia)
+   #    Only do this for a hypothetical sentence
+   #    Does this really make sense?
+   (<c> ^hypothetical true)
+   #    Look for something to delete
+   (<discourse> ^salient { <salient> <> nil })
+#   (<discourse> ^salient <salient>)
+#   (<salient> ^reference.referent <referent>)
+#   (<referent> ^predicates.dialog-object true)
+-->
+   #    Delete the salient
+   (<discourse> ^salient <salient> -
+                ^salient nil)
+}
+
+
+##############  SENTENCE-COMPLETE FOR ROSIE MODE    #########################
+
+#   When we're in the dialog-event state in normal mode
+sp {dialog-event*propose*sentence-complete
+   (state <s> ^name dialog-event
+              ^top-state <ts>
+              ^action <action>
+              ^action-results <results>)
+   (<ts> ^agent-params <params>
+         ^comprehension <comprehension>
+         ^interaction.status <status>)
+   (<params> ^parser lucia)
+  -(<status> ^new-message )
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name sentence-complete)
+}
+
+#   Apply in normal mode
+sp {dialog-event*apply*sentence-complete
+   (state <s> ^name dialog-event
+              ^operator <o>
+              ^top-state <ts>
+              ^action <action>
+              ^action-results <results>)
+   (<o> ^name sentence-complete)
+   (<ts> ^agent-params <params>
+         ^comprehension <comprehension>
+         ^interaction.status <status>)
+   (<params> ^parser lucia)
+   (<results> ^r <message>)
+  -(<status> ^new-message )
+-->
+   #    Delete the intermediate results
+   (<s> ^action <action> -
+        ^action-results <results> -)
+   (<ts> ^comprehension <comprehension> -)
+   #    Post the message and the dialog event info
+   (<status> ^new-message <message>
+             ^performed <performed>)
+   (<performed> ^dialog-event <d>)
+   (<d> ^originator agent
+        ^type process-sentence)
+}
+
+#   In hypothetical mode, delete from the world
+#   all objects that have ^dialog-object true.
+sp {dialog-event*apply*sentence-complete*delete-hypothetical-objects
+   (state <s> ^name dialog-event
+              ^top-state <ts> 
+              ^operator <o>)
+   (<o> ^name sentence-complete)
+   (<ts> ^agent-params <params>
+         ^comprehension <c>
+         ^world.objects <objects>)
+   (<params> ^parser lucia)
+   #    Only do this for a hypothetical sentence
+   (<c> ^hypothetical true)
+   #    Look for something to delete
+   (<objects> ^object <object>)
+   (<object> ^predicates.dialog-object true)
+-->
+   #    Delete the object
+   (<objects> ^object <object> -)
+}

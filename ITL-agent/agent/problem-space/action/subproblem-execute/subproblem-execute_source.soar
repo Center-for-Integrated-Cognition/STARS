@@ -1,0 +1,53 @@
+# Elaborations
+source elaborations.soar
+source problem-space.soar
+
+source preferences.soar
+
+### Set up the substate
+source remove-start-of-execution-flag.soar
+source mark-start-time.soar
+source retrieve-start-goal.soar
+source add-object-to-world.soar
+
+### Propose and execute subtasks
+source copy-task-operator.soar
+source push-task-segment.soar
+source propose-child-task.soar
+source wait.soar
+source pop-task-segment.soar
+
+source handle-start-clause.soar
+source handle-end-clause.soar
+source handle-repeat-command.soar
+
+### Learn new goals from instruction
+source learn-task-goal.soar
+pushd learn-task-goal
+source learn-task-goal_source.soar
+popd
+
+source add-node-to-goal-graph.soar
+source complete-composite-goal.soar
+
+### Learn new subtasks from instruction/search
+source learn-new-subtask.soar
+pushd learn-new-subtask
+source learn-new-subtask_source.soar
+popd
+
+### Handle failures
+source handle-execution-failure.soar
+pushd handle-execution-failure
+source handle-execution-failure_source.soar
+popd
+
+source wait-after-command.soar
+source select-next-goal.soar
+#source change-child-task-goal.soar
+source restart-task.soar
+source complete-task.soar
+
+
+source report-maintenance-goal-achieved.soar
+source clear-state-no-change.soar

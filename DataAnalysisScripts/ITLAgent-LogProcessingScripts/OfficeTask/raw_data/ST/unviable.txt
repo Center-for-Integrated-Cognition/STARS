@@ -1,0 +1,86 @@
+data type;object handle;response;prompt type;mismatch type;mismatch;detail
+unviable_response;pen1_instance_10;the goal is that the pen is in the desk drawer and the drawer is closed;initial_prompt;uninterpretable;parser;NA
+unviable_response;pen1_instance_10;the goal is that the pen is in the pen holder on the desk;recurse_prompt;unknown-word;holder;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the trash can and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the trashcan and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the trash and the trash is closed;initial_prompt;affordance-mismatch;closed;garbage1
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the wastebasket and the wastebasket is under the desk;recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the trash and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the trash and the desk is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the trash and the office is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the wastebasket and the wastebasket is in the office;recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the trash and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the waste bin and the waste bin is closed;recurse_prompt;unknown-word;waste;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the wastebasket and the wastebasket is in the closet;recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the trash and the office is tidy;recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the wastebasket and the wastebasket is in the correct place;recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the trash and the desk is clear;recurse_prompt;uninterpretable;parser;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the trash and the trash is in the office;recurse_prompt;affordance-mismatch;grabbable;garbage1
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the trash and the trash is in the office;recurse_prompt;affordance-mismatch;receptacle;office1
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the wastebasket;recurse_prompt_end_branch;unknown-word;wastebasket;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the wastebasket and the wastebasket is in its place;recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the trash and the trash is in the closet;recurse_prompt;unknown-word;closet;NA
+unviable_response;paper-coffee-cup1_instance_11;the goal is that the paper-coffee-cup is in the trash and the trash is in its proper place;recurse_prompt;unknown-word;its;NA
+unviable_response;pencil1_instance_12;the goal is that the pencil is in the desk drawer and the drawer is closed;initial_prompt;uninterpretable;parser;NA
+unviable_response;pencil1_instance_12;the goal is that the pencil is in the desk drawer and the desk drawer is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;pencil1_instance_12;the goal is that the pencil is in the pencil cup and the pencil cup is on the desk;recurse_prompt;uninterpretable;parser;NA
+unviable_response;pencil1_instance_12;the goal is that the pencil is in the pencil cup on the desk;recurse_prompt;uninterpretable;parser;NA
+unviable_response;pencil1_instance_12;the goal is that the pencil is in the pencil holder on the desk;recurse_prompt;unknown-word;holder;NA
+unviable_response;pencil1_instance_12;the goal is that the pencil is in the pencil cup;recurse_prompt_end_branch;uninterpretable;parser;NA
+unviable_response;folder1_instance_13;the goal is that the folder is in the desk drawer and the drawer is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;book1_instance_14;the goal is that the book is on the shelf and the shelf is closed;initial_prompt;ungrounded-object;shelf1;NA
+unviable_response;book1_instance_14;the goal is that the book is on the shelf and the shelf is organized;recurse_prompt;unknown-word;organized;NA
+unviable_response;book1_instance_14;the goal is that the book is on the shelf and the shelf is organized;recurse_prompt;ungrounded-object;shelf1;NA
+unviable_response;book1_instance_14;the goal is that the book is on the shelf;initial_prompt_end_branch;ungrounded-object;shelf1;NA
+unviable_response;book1_instance_14;the goal is that the book is in the bookshelf and the bookshelf is closed;recurse_prompt;affordance-mismatch;closed;bookshelf1
+unviable_response;tissue1_instance_15;the goal is that the tissue is in the trash can and the trash can is closed;initial_prompt;uninterpretable;parser;NA
+unviable_response;tissue1_instance_15;the goal is that the tissue is in the trashcan and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;tissue1_instance_15;the goal is that the tissue is in the wastebasket and the wastebasket is under the desk;recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;tissue1_instance_15;the goal is that the tissue is in the trash and the trash is closed;recurse_prompt;affordance-mismatch;closed;garbage1
+unviable_response;tissue1_instance_15;the goal is that the tissue is in the wastebasket and the wastebasket is in the office;recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;tissue1_instance_15;the goal is that the tissue is in the wastebasket and the wastebasket is closed;recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;tissue1_instance_15;the goal is that the tissue is in the wastebasket and the wastebasket is in the closet;recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;tissue1_instance_15;the goal is that the tissue is in the wastebasket and the wastebasket is in the correct place;recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;tissue1_instance_15;the goal is that the tissue is in the wastebasket;recurse_prompt_end_branch;unknown-word;wastebasket;NA
+unviable_response;tissue1_instance_15;the goal is that the tissue is in the wastebasket and the desk is clean;recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;tissue1_instance_15;the goal is that the tissue is in the wastebasket and the wastebasket is in its place;recurse_prompt;unknown-word;wastebasket;NA
+unviable_response;sprite-can1_instance_16;the goal is that the sprite-can is in the recycling bin and the recycling bin is closed;initial_prompt;affordance-mismatch;closed;bin1
+unviable_response;sprite-can1_instance_16;the goal is that the sprite-can is in the trash and the office is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;sprite-can1_instance_16;the goal is that the sprite-can is in the trash and the trash is closed;recurse_prompt;affordance-mismatch;closed;garbage1
+unviable_response;sprite-can1_instance_16;the goal is that the sprite-can is in the recycling bin and the desk is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;sprite-can1_instance_16;the goal is that the sprite-can is in the trash and the desk is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;sprite-can1_instance_16;the goal is that the sprite-can is in the recycling bin and the desk is clear;recurse_prompt;uninterpretable;parser;NA
+unviable_response;sprite-can1_instance_16;the goal is that the sprite-can is in the trash and the office is tidy;recurse_prompt;uninterpretable;parser;NA
+unviable_response;dictionary1_instance_17;the goal is that the dictionary is on the shelf and the shelf is closed;initial_prompt;ungrounded-object;shelf1;NA
+unviable_response;dictionary1_instance_17;the goal is that the dictionary is on the bookshelf and the bookshelf is closed;recurse_prompt;affordance-mismatch;closed;bookshelf1
+unviable_response;dictionary1_instance_17;the goal is that the dictionary is on the bookshelf and the bookshelf is closed;recurse_prompt;affordance-mismatch;surface;bookshelf1
+unviable_response;dictionary1_instance_17;the goal is that the dictionary is on the shelf and the shelf is organized;recurse_prompt;unknown-word;organized;NA
+unviable_response;dictionary1_instance_17;the goal is that the dictionary is on the shelf and the shelf is organized;recurse_prompt;ungrounded-object;shelf1;NA
+unviable_response;dictionary1_instance_17;the goal is that the dictionary is on the shelf;initial_prompt_end_branch;ungrounded-object;shelf1;NA
+unviable_response;dictionary1_instance_17;the goal is that the dictionary is on the bookshelf;recurse_prompt_end_branch;affordance-mismatch;surface;bookshelf1
+unviable_response;novel1_instance_18;the goal is that the novel is on the bookshelf and the bookshelf is closed;recurse_prompt;affordance-mismatch;closed;bookshelf1
+unviable_response;novel1_instance_18;the goal is that the novel is on the bookshelf and the bookshelf is closed;recurse_prompt;affordance-mismatch;surface;bookshelf1
+unviable_response;novel1_instance_18;the goal is that the novel is in the bookshelf and the bookshelf is closed;recurse_prompt;affordance-mismatch;closed;bookshelf1
+unviable_response;novel1_instance_18;the goal is that the novel is on the shelf and the shelf is organized;initial_prompt;unknown-word;organized;NA
+unviable_response;novel1_instance_18;the goal is that the novel is on the shelf and the shelf is organized;initial_prompt;ungrounded-object;shelf1;NA
+unviable_response;novel1_instance_18;the goal is that the novel is on the shelf and the shelf is closed;recurse_prompt;ungrounded-object;shelf1;NA
+unviable_response;novel1_instance_18;the goal is that the novel is on the bookshelf and the bookshelf is organized;recurse_prompt;unknown-word;organized;NA
+unviable_response;novel1_instance_18;the goal is that the book is on the shelf and the shelf is closed;recurse_prompt;ungrounded-object;shelf1;NA
+unviable_response;novel1_instance_18;the goal is that the book is on the shelf and the shelf is organized;recurse_prompt;unknown-word;organized;NA
+unviable_response;novel1_instance_18;the goal is that the book is on the shelf and the shelf is organized;recurse_prompt;ungrounded-object;shelf1;NA
+unviable_response;novel1_instance_18;the goal is that the novel is on the bookshelf and the desk is clear;recurse_prompt;uninterpretable;parser;NA
+unviable_response;novel1_instance_18;the goal is that the novel is on the bookshelf;recurse_prompt_end_branch;affordance-mismatch;surface;bookshelf1
+unviable_response;plastic-water-bottle1_instance_19;the goal is that the plastic-water-bottle is in the recycling bin and the recycling bin is closed;initial_prompt;affordance-mismatch;closed;bin1
+unviable_response;plastic-water-bottle1_instance_19;the goal is that the plastic-water-bottle is in the trash can and the trash can is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-water-bottle1_instance_19;the goal is that the plastic-water-bottle is in the recycle bin and the recycle bin is closed;recurse_prompt;unknown-word;recycle;NA
+unviable_response;plastic-water-bottle1_instance_19;the goal is that the plastic-water-bottle is in the trashcan and the trashcan is closed;recurse_prompt;unknown-word;trashcan;NA
+unviable_response;plastic-water-bottle1_instance_19;the goal is that the plastic-water-bottle is in the recycling bin and the desk is clean;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-water-bottle1_instance_19;the goal is that the plastic-water-bottle is in the recycling bin and the desk is clear;recurse_prompt;uninterpretable;parser;NA
+unviable_response;plastic-water-bottle1_instance_19;the goal is that the plastic-water-bottle is in the recycle bin;recurse_prompt_end_branch;unknown-word;recycle;NA
+unviable_response;plastic-water-bottle1_instance_19;the goal is that the plastic-water-bottle is in the recycle bin and the desk is clean;recurse_prompt;unknown-word;recycle;NA
+unviable_response;plastic-water-bottle1_instance_19;the goal is that the plastic-water-bottle is in the trash and the trash is closed;recurse_prompt;affordance-mismatch;closed;garbage1
+unviable_response;plastic-water-bottle1_instance_19;the goal is that the plastic-water-bottle is in the trash can;recurse_prompt_end_branch;uninterpretable;parser;NA
+unviable_response;stapler1_instance_8;the goal is that the stapler is in the desk drawer and the drawer is closed;initial_prompt;uninterpretable;parser;NA
+unviable_response;stapler1_instance_8;the goal is that the stapler is in the desk drawer and the desk drawer is closed;recurse_prompt;uninterpretable;parser;NA
+unviable_response;stapler1_instance_8;the goal is that the stapler is in the desk drawer;initial_prompt_end_branch;uninterpretable;parser;NA
+unviable_response;file1_instance_9;the goal is that the file is in the filing cabinet and the desk is clear;recurse_prompt;uninterpretable;parser;NA

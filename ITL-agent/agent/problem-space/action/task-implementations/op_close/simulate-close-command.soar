@@ -1,0 +1,58 @@
+### For the internal environment, simulate the close command on the top-state world ###
+
+sp {op_close1*propose*simulate-close-command
+   (state <s> ^name op_close1
+              ^problem-space.execution-type external
+              ^agent-params.domain internal
+              ^current-task-segment <seg>)
+   (<seg> ^close-command <cmd>)
+   (<cmd> -^status success)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name simulate-close-command
+        ^item-type command-operator
+        ^command <cmd>)
+}
+
+sp {op_close1*apply*simulate-close-command*mark*command*success
+   (state <s> ^name op_close1
+              ^operator <o>)
+   (<o> ^name simulate-close-command
+        ^command <cmd>)
+-->
+   (<cmd> ^status success)
+}
+
+
+### simulate-perception = false, change on the object directly ###
+
+sp {op_close1*apply*simulate-close-command*change*predicate
+   (state <s> ^name op_close1
+              ^operator <o>
+             -^agent-params.simulate-perception true)
+   (<o> ^name simulate-close-command
+        ^command.object.predicates <preds>)
+   (<preds> ^is-open1 open2)
+-->
+   (<preds> ^is-open1 open2 -
+            ^is-open1 not-open1)
+}
+
+
+### simulate-perception = true, change on the perception-monitor ###
+
+sp {op_close1*apply*simulate-close-command*simulate-perception*change*il-predicate
+   (state <s> ^name op_close1
+              ^operator <o>
+              ^agent-params.simulate-perception true
+              ^top-state.perception-monitor.object-monitor.object-info <obj-info>)
+   (<o> ^name simulate-close-command
+        ^command.object <obj>)
+   (<obj-info> ^input-link-obj.source-obj.predicates <src-preds>
+               ^world-obj <obj>)
+   (<src-preds> ^is-open1 open2)
+-->
+   (<src-preds> ^is-open1 open2 -
+                ^is-open1 not-open1)
+}
+

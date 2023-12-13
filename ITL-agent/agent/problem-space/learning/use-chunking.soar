@@ -1,0 +1,9 @@
+# problem-space.learning.use chunking
+#    If there, turns on chunking in the state (using force-learn)
+                                              
+sp {chunk*in*selection*space	
+   (state <s> ^problem-space.learning.use chunking)
+-->
+   (force-learn <s>)
+}
+

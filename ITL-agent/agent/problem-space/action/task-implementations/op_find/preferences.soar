@@ -1,0 +1,82 @@
+#########################################################
+# Elaborate strategy categories, from specific to general
+#########################################################
+
+sp {op_find1*prefer*higher*strategy-level
+   (state <s> ^name op_find1
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^strategy-level <lvl>)
+   (<o2> ^strategy-level < <lvl>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {op_find1*equal*preference*same*strategy-level
+   (state <s> ^name op_find1
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^strategy-level <lvl>)
+   (<o2> ^strategy-level <lvl>)
+-->
+   (<s> ^operator <o1> = <o2>)
+}
+
+# Strategies based on knowledge in short term memory
+sp {op_find1*categorize*stm
+   (state <s> ^name op_find1
+              ^operator <o> +)
+   (<o> ^name << op_go-to-location1 op_face1 op_open1 op_find1 >> )
+-->
+   (<o> ^strategy-level 10)
+}
+
+# Strategies based on exploring the local environment
+sp {op_find1*categorize*local-exploration
+   (state <s> ^name op_find1
+              ^operator <o> +)
+   (<o> ^name << op_scan1 >> )
+-->
+   (<o> ^strategy-level 8)
+}
+
+# Strategies based on knowledge in long term memory
+sp {op_find1*categorize*ltm
+   (state <s> ^name op_find1
+              ^operator <o> +)
+   (<o> ^name << op_recall1 >> )
+-->
+   (<o> ^strategy-level 6)
+}
+
+# Prefer the smem recalls over epmem (mostly for determinism)
+sp {op_find1*prefer*recall*smem*over*epmem
+   (state <s> ^name op_find1
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^subtask-handle << find1recall1 find1recall2 >>)
+   (<o2> ^subtask-handle << find1recall3 >>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+# Strategies for asking for help
+sp {op_find1*categorize*interaction
+   (state <s> ^name op_find1
+              ^operator <o> +)
+   (<o> ^name << initiate-interaction >> )
+-->
+   (<o> ^strategy-level 4)
+}
+
+# Strategies based on exploring the entire environment
+sp {op_find1*categorize*global-exploration
+   (state <s> ^name op_find1
+              ^operator <o> +)
+   (<o> ^name << op_explore1 >> )
+-->
+   (<o> ^strategy-level 2)
+}
+
+
+

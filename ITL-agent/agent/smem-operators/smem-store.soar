@@ -1,0 +1,43 @@
+sp {new*anystate*elaborate*smem-concepts-to-store*true
+   (state <s> ^store-concept <lti>
+             -^stored <lti>)
+-->
+   (<s> ^smem-concepts-to-store true)
+}
+
+sp {new*anystate*propose*smem-store*create-cue
+   (state <s> ^smem-concepts-to-store true)
+-->
+   (<s> ^operator <o> +, =, >)
+   (<o> ^name smem-store)
+}
+
+sp {new*anystate*apply*smem-store*create-cue
+   (state <s> ^smem.command <cmd>
+              ^operator <op>
+              ^store-concept <lti>)
+   (<op> ^name smem-store)
+-->
+   (<cmd> ^store <lti>)
+}
+
+sp {new*anystate*apply*smem-store*create-cue*clear
+   (state <s> ^smem.command <cmd>
+              ^operator <op>)
+   (<op> ^name smem-store)
+   (<cmd> ^{<command> << retrieve query >>} <olti>)
+-->
+   (<cmd> ^<command> <olti> -)
+}
+   
+sp {new*anystate*apply*smem-store*copy-result*copy
+   (state <s> ^operator.name smem-store
+              ^smem <smem>
+              ^store-concept <lti>)
+   (<smem> ^command <cmd>
+           ^result.{ << success failure >> } <lti>)
+   (<cmd> ^store <lti>)
+-->
+   (<s> ^stored <lti>)
+   (<cmd> ^store <lti> -)
+}

@@ -1,0 +1,56 @@
+###################################################
+#
+# Discrepancy: moved-object
+#   The positions of the belief and perception objs are significantly different
+# Handling: attend-to-perception/moved-object
+#
+# object-info.differences
+#   compare-position <compare> - svs filter
+#   pos-diff <diff> - svs filter result 
+#
+###################################################
+
+# Extract a filter computing the distance between the belief and perception object centroids
+sp {detect-discrepancies*shrunken-object*elaborate*object-info*compare-position*svs-filter
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor.object-info <obj-info>
+              ^svs.command <cmd>)
+   (<obj-info> ^perception-obj.id <perc-id>
+               ^belief-obj.id <bel-id>
+               ^differences <diffs>)
+-->
+   (<cmd> ^extract <compare>)
+   (<compare> ^type distance 
+              ^a <a>
+              ^b <b>
+              ^distance_type centroid)
+   (<a> ^type node
+        ^id <perc-id>)
+   (<b> ^type node
+        ^id <bel-id>)
+   (<diffs> ^compare-position <compare>)
+}
+
+sp {detect-discrepancies*shrunken-object*elaborate*object-info*pos-diff
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor.object-info.differences <diffs>)
+   (<diffs> ^compare-position.result.record.value <val>)
+-->
+   (<diffs> ^pos-diff <val>)
+}
+
+# If the position difference exceeds a threshold, report it
+sp {perception-monitor*detect-discrepancies*moved-object
+   (state <s> ^superstate nil
+              ^agent-params.pos-diff-threshold <thresh>
+              ^perception-monitor <perc-mon>)
+   (<perc-mon> ^discrepancies <discs>
+               ^object-monitor.object-info <obj-info>)
+   (<obj-info> ^differences <diffs>)
+   (<diffs> ^pos-diff > <thresh>)
+-->
+   (<discs> ^moved-object <disc>)
+   (<disc> ^object-info <obj-info>)
+}
+
+

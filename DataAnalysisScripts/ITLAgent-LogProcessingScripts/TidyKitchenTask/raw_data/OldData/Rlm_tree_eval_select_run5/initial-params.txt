@@ -1,0 +1,18 @@
+(P3 ^agent-lm-evaluation true ^contained-by-threshold 0.500000
+       ^contained-threshold 0.330000 ^debug-ids true ^debug-wait-limit 0
+       ^domain internal ^hypothetical false ^lm-condition lm
+       ^magicbot-reachable-distance 1.500000 ^magicbot-skip-face false
+       ^max-stability-checks 5 ^minimum-property-confidence 0.200000
+       ^navigation-ignore-doors false ^occlusion-check-period 3
+       ^occlusion-threshold 0.150000 ^parser laird ^parser-test false
+       ^pos-diff-threshold 0.020000 ^print-incoming-messages false
+       ^print-new-task true ^print-outgoing-messages false
+       ^print-parsed-messages true ^print-perception false
+       ^property-ambiguity-threshold 0.800000 ^recheck-growth-delay 5
+       ^report-tasks-to-output-link true ^retrospective-search-depth 4
+       ^sentence-source scripts ^simulate-perception true
+       ^stability-check-duration 0 ^use-language-model true
+       ^use-lm-selection true ^use-search true
+       ^vol-high-ratio-threshold 1.200000 ^vol-low-ratio-threshold 0.800000)
+
+

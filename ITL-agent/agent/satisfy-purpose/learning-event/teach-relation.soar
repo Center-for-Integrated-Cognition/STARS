@@ -1,0 +1,90 @@
+sp {learning-event*propose*learn-relation
+   (state <s> ^name learning-event
+              ^purpose <p>)
+   (<p> ^type teach-relation
+        ^parameters <params>)
+   (<params> ^object <obj1>
+             ^relation <rel>)
+   (<rel> ^handle <handle> ^2 <obj2>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name learn-relation
+        ^handle <handle>
+        ^1 <obj1>
+        ^2 <obj2>)
+}
+
+sp {learn-relation*elaborate*problem-space
+   (state <s> ^name learn-relation)
+-->
+   (<s> ^problem-space <ps>)
+   (<ps> ^attend-to-perception yes)
+}
+
+sp {learn-relation*elaborate*obj1
+   (state <s> ^name learn-relation
+              ^superstate.operator.{1} <obj>)
+-->
+   (<s> ^obj1 <obj>)
+}
+
+sp {learn-relation*elaborate*obj2
+   (state <s> ^name learn-relation
+              ^superstate.operator.{2} <obj>)
+-->
+   (<s> ^obj2 <obj>)
+}
+
+sp {learn-relation*elaborate*predicate-handle
+   (state <s> ^name learn-relation
+              ^superstate.operator.handle <h>)
+-->
+   (<s> ^predicate-handle <h>)
+}
+
+sp {learn-relation*propose*add-object-to-world
+   (state <s> ^name learn-relation
+              ^{ << obj1 obj2 >> } <obj>
+             -^add-object-result.source-obj <obj>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name add-object-to-world
+        ^source-obj <obj>)
+}
+
+sp {learn-relation*propose*complete-learn-relation
+   (state <s> ^name learn-relation)
+-->
+   (<s> ^operator <o> + <)
+   (<o> ^name complete-learn-relation)
+}
+
+sp {learn-relation*apply*complete-learn-relation*add
+   (state <s> ^name learn-relation
+              ^operator.name complete-learn-relation
+              ^obj1 <obj1>
+              ^obj2 <obj2>
+              ^predicate-handle <h>
+              ^add-object-result <res1> <res2>
+              ^top-state.world.predicates.predicate <p>)
+   (<res1> ^source-obj <obj1>
+           ^world-obj <wobj1>)
+   (<res2> ^source-obj <obj2>
+           ^world-obj <wobj2>)
+   (<p> ^handle <h>)
+   -{(<p> ^instance <cur-i>)
+     (<cur-i> ^1 <wobj1> ^2 <wobj2>)}
+
+-->
+   (<p> ^instance <i> ^imagined <i>)
+   (<i> ^1 <wobj1> ^2 <wobj2>)
+}
+
+sp {learn-relation*apply*complete-learn-relation*performed
+   (state <s> ^name learn-relation
+              ^operator.name complete-learn-relation
+              ^top-state.interaction.status <status>)
+-->
+   (<status> ^performed.learning-event.type relation)
+}
+

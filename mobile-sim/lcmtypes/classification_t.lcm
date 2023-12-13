@@ -1,0 +1,7 @@
+struct classification_t
+{
+    string category; // e.g. 'color'
+    string name; // e.g. 'red'
+
+    double confidence; // [0-1]
+}

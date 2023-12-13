@@ -1,0 +1,199 @@
+
+# If there is no current goal, ask the instructor for one
+sp {task-state-no-change*propose*initiate-interaction*get-next-goal
+   (state <s> ^name task-state-no-change
+              ^desired.satisfied true
+              ^task-operator <task-op>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name initiate-interaction
+        ^type get-next-goal
+        ^task-operator <task-op>)
+}
+
+#JK2023 obsolete for repeat strategy
+# sp {task-state-no-change*propose*initiate-interaction*get-next-goal*language-model
+#    (state <s> ^name task-state-no-change
+#               ^top-state <ts> 
+#               ^desired.satisfied true
+#               ^objects.object <object>
+#               ^task-operator <task-op>)
+#    (<object> ^obj <obj>)
+#    (<ts> ^agent-params.use-language-model true
+#          -^evaluated-object.obj <obj>)
+# -->
+#    (<s> ^operator <o> + =)
+#    (<o> ^name initiate-interaction
+#         ^type get-next-goal
+#         ^object <object>
+#         ^task-operator <task-op>)
+# }
+#new version
+# evaluated object
+# (O86590 ^obj O533 ^obj-on O243 ^prep in1)
+#   (O533 ^handle plate1_5 ^item-type object ^perception-id plate1_5
+#          ^predicates P114 ^root-category plate1)
+#   (O243 ^handle rack1_38 ^item-type object ^perception-id rack1_38
+#          ^predicates P39 ^root-category rack1)
+
+sp {task-state-no-change*propose*initiate-interaction*get-next-goal*language-model
+   (state <s> ^name task-state-no-change
+              ^top-state <ts> 
+              ^desired.satisfied true
+              ^lm-objects.object <object>
+              ^task-operator <task-op>)
+   (<object> ^obj <obj> ^prep <prep> ^obj-on <obj2>)
+   (<obj> ^root-category <rc> ^handle <handle2>)
+   (<task-op> -^task-handle <handle>)
+   (<ts> ^agent-params.use-language-model true ^lm-failures <lmf> ^root-task-handle <handle>
+         -^evaluated-object.obj.handle <handle2>)
+ -{(<ts> ^evaluated-object <eo>)
+    (<eo> ^obj <eobj> ^prep <prep> ^obj-on <obj2>)
+    (<eobj> ^root-category <rc> ^handle <h>)
+    -{(<lmf> ^failure <f>)
+      (<f> ^handle <h>)}}
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name initiate-interaction
+        ^type get-next-goal
+        ^object <object>
+        ^task-operator <task-op>)
+}
+#doesn't have an evaluate object of category
+#where that object is not a failure...
+#first fails
+#second is good
+#so new evaluated and without failure
+
+# If we are currently learning a composite goal, ask the instructor for the next subtask for that goal
+sp {task-state-no-change*propose*initiate-interaction*get-next-subaction*learning-composite-goal
+   (state <s> ^name task-state-no-change
+              ^desired.handle <node-h>
+              ^superstate.current-task-segment.learning-composite-goal <node-h>
+              ^task-operator.task-handle <task-h>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name initiate-interaction
+        ^type get-next-subaction
+        ^task-handle <task-h>)
+}
+
+## If there are next goals but none of their conditions are met, ask for an alternative
+#sp {task-state-no-change*elaborate*unmet-goal-conditions*true
+#   (state <s> ^name task-state-no-change
+#              ^unmet-conditions <any>)
+#-->
+#   (<s> ^unmet-goal-conditions true)
+#}
+#sp {task-state-no-change*propose*initiate-interaction*get-goal-alternative
+#   (state <s> ^name task-state-no-change
+#              ^unmet-goal-conditions true
+#              ^desired.satisfied true
+#              ^task-operator <task-op>)
+#-->
+#   (<s> ^operator <o> + =)
+#   (<o> ^name initiate-interaction
+#        ^type get-goal-alternative
+#        ^task-operator <task-op>)
+#}
+
+sp {task-state-no-change*apply*initiate-interaction*get-next-goal*mark*learning*needed
+   (state <s> ^name task-state-no-change
+              ^operator <o>
+              ^quiescence t
+              ^superstate.current-task-segment <seg>)
+   (<o> ^name initiate-interaction
+        ^type << get-next-goal get-goal-alternative >>)
+-->
+   (<seg> ^policy-learning-needed true)
+}
+
+######
+# language model use
+#JK2022
+#priority order
+#JK2023 obsolete for repeat strategy
+# sp {task-state-no-change*prefer*initiate-interaction*get-next-goal*object-bias*language-model
+#    (state <s> ^name task-state-no-change
+#               ^operator <o> +
+#               ^operator <o2> +)
+#    (<o> ^name initiate-interaction
+#         ^type get-next-goal
+#         ^object.order <rc>)
+#    (<o2> ^name initiate-interaction
+#         ^type get-next-goal
+#         ^object.order {<rc2> > <rc>})
+# -->
+#    (<s> ^operator <o> > <o2>)
+# }
+#new version alphanumeric bias by handle
+sp {task-state-no-change*prefer*initiate-interaction*get-next-goal*object-bias*language-model
+   (state <s> ^name task-state-no-change
+              ^operator <o> +
+              ^operator <o2> +)
+   (<o> ^name initiate-interaction
+        ^type get-next-goal
+        ^object.obj.handle <h>)
+   (<o2> ^name initiate-interaction
+        ^type get-next-goal
+        ^object.obj.handle {<h2> > <h>})
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+
+sp {task-state-no-change*prefer*initiate-interaction*get-next-goal*object-bias*language-model*object
+   (state <s> ^name task-state-no-change
+              ^operator <o> +
+              ^operator <o2> +)
+   (<o> ^name initiate-interaction
+        ^type get-next-goal
+        ^object)
+   (<o2> ^name initiate-interaction
+        ^type get-next-goal
+        -^object)
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+#JK2023 likely will need to move...
+#might be ok..
+#JK2023 TODO copy to old queries so can repopulate for action learning...
+#commenting out for actions
+sp {task-state-no-change*apply*initiate-interaction*cleanup-lmr
+   (state <s> ^name task-state-no-change
+              ^top-state <ts> 
+              ^operator <o>)
+   (<o> ^name initiate-interaction
+        ^type get-next-goal
+        ^object <obj>)
+   (<ts> ^agent-params.use-language-model true
+         #^agent-params.use-search true
+         -^agent-params.store-prompts true
+         ^lm-responses <lmr>)
+   (<lmr> ^<something> <wme>)
+-->
+   (<lmr> ^<something> <wme> -)
+}
+
+#JK2023 make specific rule to check for search depth...
+sp {task-state-no-change*apply*initiate-interaction*cleanup-lmr*lm-human
+   (state <s> ^name task-state-no-change
+              ^top-state <ts> 
+              ^operator <o>)
+   (<o> ^name initiate-interaction
+        ^type get-next-goal
+        ^object.obj.handle <handle>)
+   (<ts> ^agent-params.use-language-model true
+         #^agent-params.lm-condition lm-human
+         ^agent-params.store-prompts true
+         #-^agent-params.use-search true #actually just matters if search depth is less than 4
+         ^past-lm-responses <plr>
+         ^lm-responses <lmr>)
+   (<lmr> ^response <resp>)
+   (<resp> -^object-handle <handle>)
+-->
+  (<plr> ^lm-responses <lmr>)
+  (<ts> ^lm-responses <lmr> -)
+  (<ts> ^lm-responses <lmr2>)
+}

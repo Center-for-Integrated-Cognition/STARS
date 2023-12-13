@@ -1,0 +1,95 @@
+sp {add-node-to-goal-graph*prefer*create-node*over*edges
+   (state <s> ^name add-node-to-goal-graph
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^item-type create-node-operator)
+   (<o2> ^name << create-graph-edge move-graph-edge-head move-graph-edge-tail >>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {add-node-to-goal-graph*prefer*create-node*over*smem*stores
+   (state <s> ^name add-node-to-goal-graph
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^item-type create-node-operator)
+   (<o2> ^name << smem-store change-goal-handles >>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {add-node-to-goal-graph*prefer*change*edges*over*smem*stores
+   (state <s> ^name add-node-to-goal-graph
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name << create-graph-edge move-graph-edge-head move-graph-edge-tail >>)
+   (<o2> ^name << smem-store change-goal-handles >>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {add-node-to-goal-graph*prefer*change-goal-handles*over*smem-store
+   (state <s> ^name add-node-to-goal-graph
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name change-goal-handles)
+   (<o2> ^name smem-store)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+#JK2022 check if these rules are actually needed for repeat exit bug fix...
+sp {add-node-to-goal-graph*prefer*create-graph-edge*repeat-goal*head*over*start-goal
+   (state <s> ^name add-node-to-goal-graph
+              ^quiescence t
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name create-graph-edge ^head.item-type repeat-goal ^tail.item-type intermediate-goal)
+   (<o2> ^name create-graph-edge ^head.item-type start-goal ^tail.item-type repeat-goal)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {add-node-to-goal-graph*prefer*create-graph-edge*intermediate-goal*tail*over*loop-exit
+   (state <s> ^name add-node-to-goal-graph
+              ^quiescence t
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name create-graph-edge ^head.item-type repeat-goal ^tail.item-type intermediate-goal)
+   (<o2> ^name create-graph-edge ^head.item-type repeat-goal ^tail.item-type loop-exit)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {add-node-to-goal-graph*prefer*create-graph-edge*repeat-goal*tail*over*loop-exit
+   (state <s> ^name add-node-to-goal-graph
+              ^quiescence t
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name create-graph-edge ^head.item-type start-goal ^tail.item-type repeat-goal)
+   (<o2> ^name create-graph-edge ^head.item-type repeat-goal ^tail.item-type loop-exit)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {add-node-to-goal-graph*prefer*create-graph-edge*create-loop-exit-node*over*create-repeat-node*create-intermediate-node
+   (state <s> ^name add-node-to-goal-graph
+              ^quiescence t
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name create-loop-exit-node)
+   (<o2> ^name << create-repeat-node create-intermediate-node >>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {add-node-to-goal-graph*prefer*create-graph-edge*create-repeat-node*over*create-intermediate-node
+   (state <s> ^name add-node-to-goal-graph
+              ^quiescence t
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name create-repeat-node)
+   (<o2> ^name create-intermediate-node)
+-->
+   (<s> ^operator <o1> > <o2>)
+}

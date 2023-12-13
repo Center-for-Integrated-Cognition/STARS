@@ -1,0 +1,1 @@
+data type;object handle;response;prompt type;human reply

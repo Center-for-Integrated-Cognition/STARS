@@ -1,0 +1,22 @@
+data type;object handle;response;prompt type;mismatch type;mismatch;detail
+unviable_response;chips1_instance_17;the goal is that the chips are in the pantry and the pantry door is closed;initial_prompt;uninterpretable;parser;NA
+unviable_response;chips1_instance_17;the goal is that the chips are in the pantry and the door is shut;initial_prompt;unknown-word;shut;NA
+unviable_response;chips1_instance_17;the goal is that the chips are in the pantry and the door is shut;initial_prompt;ungrounded-object;door1;NA
+unviable_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the pantry and the bag is in the recycling bin;initial_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the pantry and the bag is in the recycling bin;initial_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;boxed-pasta1_instance_18;the goal is that the boxed-pasta is in the pantry and the bag is in the recycling bin;initial_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the cabinet and the cabinet is closed;initial_prompt;ungrounded-object;cabinet1;NA
+unviable_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the kitchen and the kitchen is clean;initial_prompt;uninterpretable;parser;NA
+unviable_response;paper-plates1_instance_23;the goal is that the paper-plates are in the cabinet and the cabinet is closed;initial_prompt;ungrounded-object;cabinet1;NA
+unviable_response;paper-plates1_instance_23;the goal is that the bag is in the pantry and the pantry is closed;initial_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;paper-plates1_instance_23;the goal is that the bag is in the pantry and the pantry is closed;initial_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;paper-plates1_instance_23;the goal is that the bag is in the pantry and the pantry is closed;initial_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the cabinet and the cabinet is closed;initial_prompt;ungrounded-object;cabinet1;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans are in the cabinet and the cabinet is closed;initial_prompt;ungrounded-object;cabinet1;NA
+unviable_response;granola1_instance_25;the goal is that the granola is in the cabinet and the cabinet is closed;initial_prompt;ungrounded-object;cabinet1;NA
+unviable_response;granola1_instance_25;the goal is that the granola is in the cupboard and the bag is in the recycling bin;initial_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;granola1_instance_25;the goal is that the granola is in the cupboard and the bag is in the recycling bin;initial_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;granola1_instance_25;the goal is that the granola is in the cupboard and the bag is in the recycling bin;initial_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;butter1_instance_27;the goal is that the grocery items are in the fridge and the fridge is closed;initial_prompt;unknown-word;grocery;NA
+unviable_response;apple-cider1_instance_28;the goal is that the apple-cider is in fridge and fridge is closed;initial_prompt;uninterpretable;parser;NA
+unviable_response;hummus1_instance_29;the goal is that there is no hummus in the kitchen;initial_prompt;ungrounded-object;hummus1;NA

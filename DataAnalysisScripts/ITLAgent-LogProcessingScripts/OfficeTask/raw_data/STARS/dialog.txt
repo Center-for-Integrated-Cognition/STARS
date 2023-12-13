@@ -1,0 +1,13 @@
+Instructor: Organize office.
+Rosie: What is the next goal or subtask of organize?
+Instructor: Repeat the following tasks while an object is on the desk.
+Rosie: What is the next goal or subtask of organize?
+Instructor: Clear an object that is on the desk.
+Rosie: What is the next goal or subtask of clear?
+Instructor: You are done.
+Rosie: What is the next goal or subtask of organize?
+Instructor: Repeat.
+Rosie: What is the next goal or subtask of organize?
+Instructor: You are done.
+Rosie: I'm ready for a new task
+

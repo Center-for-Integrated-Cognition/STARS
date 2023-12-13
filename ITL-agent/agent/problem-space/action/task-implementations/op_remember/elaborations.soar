@@ -1,0 +1,68 @@
+# If the word 'permanently' was used, use long-term memory, otherwise working memory
+sp {op_remember1*elaborate*operator*memory-type*ltm
+   (state <s> ^operator <o> +)
+   (<o> ^name op_remember1
+        ^modifiers.handle permanent1)
+-->
+   (<o> ^memory-type ltm)
+}
+
+sp {op_remember1*elaborate*operator*memory-type*wm
+   (state <s> ^operator <o> +)
+   (<o> ^name op_remember1
+       -^modifiers.handle permanent1)
+-->
+   (<o> ^memory-type wm)
+}
+
+### Copy memory-type to substate
+sp {op_remember1*elaborate*memory-type*superoperator
+   (state <s> ^name op_remember1
+              ^superstate.operator.memory-type <t>)
+-->
+   (<s> ^memory-type <t>)
+}
+
+# Turn "Remember the current location as the office of Mary"
+# Into an edge in the smem graph, where
+# (arg3) ----(arg2)---> (arg1), e.g., 
+# (Mary) ---(office)--> (cur-loc)
+sp {op_remember1*memory-type*ltm*elaborate*objects
+   (state <s> ^name op_remember1
+              ^memory-type ltm
+              ^task-operator <task-op>)
+   (<task-op> ^arg1.id <tail>
+              ^arg2.id <edge>
+              ^arg3.id <head>)
+-->
+   (<s> ^head-object <head>
+        ^edge-object <edge>
+        ^tail-object <tail>)
+}
+
+# Retrieve the head and tail objects from smem
+# (See problem-space/action/task-utils/retrieve-smem-object.soar)
+sp {op_remember1*elaborate*retrieve-smem-object
+   (state <s> ^name op_remember1
+              ^memory-type ltm
+              ^problem-space.execution-type external
+              ^desired.handle remember1goal1
+              ^{ <type> << head-object tail-object >> } <obj>)
+-->
+   (<s> ^retrieve-smem-object <rso>)
+   (<rso> ^type <type>
+          ^object <obj>)
+}
+
+sp {op_remember1*elaborate*retrieve-smem-object*reference-info
+   (state <s> ^name op_remember1
+              ^memory-type ltm
+              ^retrieve-smem-object <rso>
+              ^task-operator.<arg-name> <arg>)
+   (<rso> ^object <obj>)
+   (<arg> ^id <obj>
+          ^reference-info <ref-info>)
+-->
+   (<rso> ^reference-info <ref-info>)
+}
+

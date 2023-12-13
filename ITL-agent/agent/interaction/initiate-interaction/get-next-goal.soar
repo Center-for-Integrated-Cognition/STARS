@@ -1,0 +1,412 @@
+#################### get-next-goal ######################
+# Parameters:
+#    task-operator - the task-operator representing the task
+#                      for which we are asking for the goal
+
+# Push a new segment to get the goal from the instructor
+sp {anystate*apply*initiate-interaction*get-next-goal*push*segment
+   (state <s> ^operator <o>
+              ^quiescence t
+              ^top-state.interaction.changes <chgs>)
+   (<o> ^name initiate-interaction
+        ^type get-next-goal
+        ^task-operator <aop>)
+-->
+   (<chgs> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+           ^originator agent)
+   (<p> ^type get-next-goal
+        ^parameters.task-operator <aop>
+        ^satisfaction.dialog-event <de>)
+   (<de> ^type goal-description command
+         ^originator instructor)
+}
+
+# Send an outgoing message to ask for the goal
+sp {anystate*apply*initiate-interaction*get-next-goal*send*message*get-next-goal
+   (state <s> ^operator <o>
+              ^quiescence t
+	     -^top-state.agent-params.use-language-model true
+              ^top-state.interaction.changes <chgs>)
+   (<o> ^name initiate-interaction
+        ^type get-next-goal
+        ^task-operator.task-handle <task-h>)
+-->
+   (<chgs> ^outgoing-message <msg>)
+   (<msg> ^type get-next-goal
+          ^complete-message true
+          ^fields <f>)
+   (<f> ^task-handle <task-h>)
+}
+
+#############################################3
+# using language model
+
+# JK2023
+# obsolete for new repeat strategy
+# sp {task-state-no-change*elaborate*objects
+#    (state <s> ^name task-state-no-change
+#               ^top-state.agent-params.use-language-model true)
+# -->
+# (interrupt)
+#    (<s> ^objects <objects>)
+# }
+#new version
+sp {task-state-no-change*elaborate*objects
+   (state <s> ^name task-state-no-change
+              ^quiescence t
+              ^top-state.root-task-handle <handle>
+             -^task-operator.task-handle <handle>
+              ^top-state.agent-params.use-language-model true)
+-->
+   (<s> ^lm-objects <objects>)
+}
+
+
+#obsolete
+# sp {task-state-no-change*elaborate*objects*object*on-table
+#    (state <s> ^name task-state-no-change
+#               ^objects <objects>
+#               ^quiescence t
+#               ^top-state.agent-params.use-language-model true
+#               ^top-state.world <w>)
+#    (<w> ^objects.object <obj>
+#         ^predicates.predicate <p>)
+#    (<p> ^handle <prep> ^instance <in>)
+#    (<in> ^1 <obj> ^2 <obj2>)
+#    (<obj> ^predicates.affordance1 grabbable1)
+#    (<obj2> -^root-category kitchen1) #JK make this more general
+# -->
+#    (<objects> ^object <o>)
+#    (<o> ^obj <obj> ^obj-on <obj2> ^prep <prep>)
+# }
+#new version
+#send relation not with room...
+sp {task-state-no-change*elaborate*objects*object*prep-object
+   (state <s> ^name task-state-no-change
+              ^lm-objects <objects>
+              ^quiescence t
+              ^task-operator.task-handle <th>
+              ^superstate.superstate.best-pref-eval <op>
+              ^top-state.agent-params.use-language-model true
+              ^top-state.world <w>)
+   (<op> ^task-handle <th> ^arg1 <arg1>)
+   (<arg1> ^id <obj>)
+   (<w> ^predicates.predicate <p>)
+   (<p> ^handle <prep> ^instance <inst>)
+   (<inst> ^1 <obj> ^2 <obj2>)
+   (<obj2> -^predicates.category room1)
+-->
+   (<objects> ^object <o>)
+   (<o> ^obj <obj> ^obj-on <obj2> ^prep <prep>)
+}
+
+
+sp {task-state-no-change*elaborate*objects*object*prep-object*only-in*room
+   (state <s> ^name task-state-no-change
+              ^lm-objects <objects>
+              ^quiescence t
+              ^task-operator.task-handle <th>
+              ^superstate.superstate.best-pref-eval <op>
+              ^top-state.agent-params.use-language-model true
+              ^top-state.world <w>)
+   (<op> ^task-handle <th> ^arg1 <arg1>)
+   (<arg1> ^id <obj>)
+   (<w> ^predicates <pred>)
+   (<pred> ^predicate <p2>)
+   (<p2> ^handle <prep2> ^instance <inst2>)
+   (<inst2> ^1 <obj> ^2 <obj3>)
+   (<obj3> ^predicates.category room1)
+   -{(<pred> ^predicate <p>)
+     (<p> ^handle <prep> ^instance <inst>)
+     (<inst> ^1 <obj> ^2 <obj2>)
+     (<obj2> -^predicates.category room1)}
+-->
+   (<objects> ^object <o>)
+   (<o> ^obj <obj> ^obj-on <obj3> ^prep <prep2>)
+}
+
+# # obect order for AAAI-22 experiments
+# # oj
+# # ketchup
+# # milk
+# # plate
+
+# # then glass
+# #  mug
+# #  fork
+# # bottle
+# # can
+# # napkin
+# # cup
+# # soda
+
+# # temporary rules to enforce order
+
+# sp {task-state-no-change*elaborate*objects*object*order*milk
+#    (state <s> ^name task-state-no-change
+#               ^quiescence t
+#               ^top-state.agent-params.use-language-model true
+#               ^objects.object <o>)
+#    (<o> ^obj <obj> ^obj-on <obj2> ^prep <prep>)
+#    (<obj> ^root-category milk1)
+# -->
+#    (<o> ^order 9)
+# }
+# sp {task-state-no-change*elaborate*objects*object*order*juice
+#    (state <s> ^name task-state-no-change
+#               ^quiescence t
+#               ^top-state.agent-params.use-language-model true
+#               ^objects.object <o>)
+#    (<o> ^obj <obj> ^obj-on <obj2> ^prep <prep>)
+#    (<obj> ^root-category juice1)
+# -->
+#    (<o> ^order 2)
+# }
+
+# sp {task-state-no-change*elaborate*objects*object*order*ketchup
+#    (state <s> ^name task-state-no-change
+#               ^quiescence t
+#               ^top-state.agent-params.use-language-model true
+#               ^objects.object <o>)
+#    (<o> ^obj <obj> ^obj-on <obj2> ^prep <prep>)
+#    (<obj> ^root-category ketchup1)
+# -->
+#    (<o> ^order 3)
+# }
+
+# sp {task-state-no-change*elaborate*objects*object*order*plate
+#    (state <s> ^name task-state-no-change
+#               ^quiescence t
+#               ^top-state.agent-params.use-language-model true
+#               ^objects.object <o>)
+#    (<o> ^obj <obj> ^obj-on <obj2> ^prep <prep>)
+#    (<obj> ^root-category plate1)
+# -->
+#    (<o> ^order 4)
+# }
+
+# sp {task-state-no-change*elaborate*objects*object*order*glass
+#    (state <s> ^name task-state-no-change
+#               ^quiescence t
+#               ^top-state.agent-params.use-language-model true
+#               ^objects.object <o>)
+#    (<o> ^obj <obj> ^obj-on <obj2> ^prep <prep>)
+#    (<obj> ^root-category glass1)
+# -->
+#    (<o> ^order 5)
+# }
+
+# sp {task-state-no-change*elaborate*objects*object*order*mug
+#    (state <s> ^name task-state-no-change
+#               ^quiescence t
+#               ^top-state.agent-params.use-language-model true
+#               ^objects.object <o>)
+#    (<o> ^obj <obj> ^obj-on <obj2> ^prep <prep>)
+#    (<obj> ^root-category mug1)
+# -->
+#    (<o> ^order 6)
+# }
+
+# sp {task-state-no-change*elaborate*objects*object*order*fork
+#    (state <s> ^name task-state-no-change
+#               ^quiescence t
+#               ^top-state.agent-params.use-language-model true
+#               ^objects.object <o>)
+#    (<o> ^obj <obj> ^obj-on <obj2> ^prep <prep>)
+#    (<obj> ^root-category fork1)
+# -->
+#    (<o> ^order 7)
+# }
+
+# sp {task-state-no-change*elaborate*objects*object*order*bottle
+#    (state <s> ^name task-state-no-change
+#               ^quiescence t
+#               ^top-state.agent-params.use-language-model true
+#               ^objects.object <o>)
+#    (<o> ^obj <obj> ^obj-on <obj2> ^prep <prep>)
+#    (<obj> ^root-category bottle1)
+# -->
+#    (<o> ^order 8)
+# }
+
+# sp {task-state-no-change*elaborate*objects*object*order*can
+#    (state <s> ^name task-state-no-change
+#               ^quiescence t
+#               ^top-state.agent-params.use-language-model true
+#               ^objects.object <o>)
+#    (<o> ^obj <obj> ^obj-on <obj2> ^prep <prep>)
+#    (<obj> ^root-category can1)
+# -->
+#    (<o> ^order 1)
+# }
+
+# sp {task-state-no-change*elaborate*objects*object*order*napkin
+#    (state <s> ^name task-state-no-change
+#               ^quiescence t
+#               ^top-state.agent-params.use-language-model true
+#               ^objects.object <o>)
+#    (<o> ^obj <obj> ^obj-on <obj2> ^prep <prep>)
+#    (<obj> ^root-category napkin1)
+# -->
+#    (<o> ^order 10)
+# }
+
+# sp {task-state-no-change*elaborate*objects*object*order*cup
+#    (state <s> ^name task-state-no-change
+#               ^quiescence t
+#               ^top-state.agent-params.use-language-model true
+#               ^objects.object <o>)
+#    (<o> ^obj <obj> ^obj-on <obj2> ^prep <prep>)
+#    (<obj> ^root-category cup1)
+# -->
+#    (<o> ^order 11)
+# }
+
+# sp {task-state-no-change*elaborate*objects*object*order*soda
+#    (state <s> ^name task-state-no-change
+#               ^quiescence t
+#               ^top-state.agent-params.use-language-model true
+#               ^objects.object <o>)
+#    (<o> ^obj <obj> ^obj-on <obj2> ^prep <prep>)
+#    (<obj> ^root-category soda1)
+# -->
+#    (<o> ^order 12)
+# }
+# ##############
+
+#obsolete version
+# sp {apply*operator*copy*task-goal
+#    (state <s> ^superstate nil
+#               ^io.input-link.language.sentence.complete-sentence <sentence>
+#              -^task-goal
+#               ^top-state.agent-params.use-language-model true
+#               ^operator <op>)
+# -->
+#    (<s> ^task-goal <sentence>)
+# }
+
+#obsolete version
+# sp {anystate*apply*initiate-interaction*get-next-goal*send*message*get-next-goal*mod
+#    (state <s> ^operator <o>
+#               ^quiescence t
+#               ^io.output-link <ol>
+#               ^top-state.agent-params.use-language-model true
+#               #^objects.object <object>
+#               ^top-state <ts>)
+#    (<ts> ^world <w>
+#         #-^lm-responses.response.goal
+#          #^io.input-link.language.sentence.complete-sentence <sentence>
+#          ^task-goal <sentence>
+#          ^interaction.changes <chgs>)
+#    (<w> ^robot.current-location <loc>)
+#    (<o> ^name initiate-interaction
+#         ^type get-next-goal
+#         ^object <object>
+#         ^task-operator.task-handle <task-h>)
+# -->
+#    (<ol> ^lm-request <msg>)
+#    (<msg> ^type get-next-goal
+#           ^complete-message true
+#           ^template stylized-steps
+#           #^object <rc>
+#           #^obj <obj>
+#           ^robot-location <loc>
+#           #^obj-on <obj2>
+#           ^object <object>
+#           ^task-goal <sentence>
+#           ^task-handle <task-h>
+#           ^fields <f>)
+#    (<f> ^task-handle <task-h>)
+#    (<ts> ^evaluated-object <object>)
+# }
+
+#repeat version
+
+# sp {anystate*apply*initiate-interaction*get-next-goal*interrupt
+# :interrupt
+#   (state <s> ^operator <o>)
+#   (<o> ^name initiate-interaction
+#        ^type get-next-goal)
+# -->
+# }
+
+sp {anystate*apply*initiate-interaction*get-next-goal*send*message*get-next-goal*mod
+#:interrupt
+   (state <s> ^operator <o>
+              ^quiescence t
+              ^io.output-link <ol>
+              ^top-state.agent-params.use-language-model true
+              ^top-state <ts>)
+   (<ts> ^world <w>
+        #-^lm-responses.response.goal
+         ^root-task <sentence>
+         ^interaction.changes <chgs>)
+   (<w> ^robot.current-location <loc>)
+   (<o> ^name initiate-interaction
+        ^type get-next-goal
+        ^object <object>
+        ^task-operator.task-handle <task-h>)
+   (<object> ^obj.handle <handle>)
+-->
+#(interrupt)
+   (<ol> ^lm-request <msg>)
+   (<msg> ^type get-next-goal
+          ^complete-message true
+          ^template stylized-steps
+          #^object <rc>
+          #^obj <obj>
+          ^robot-location <loc>
+          #^obj-on <obj2>
+          ^object <object>
+          ^object-handle <handle>
+          ^task-goal <sentence>
+          ^task-handle <task-h>
+          ^fields <f>)
+   (<f> ^task-handle <task-h>)
+   (<ts> ^evaluated-object <object>)
+   (<chgs> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+           ^originator agent)
+   (<p> ^type wait-for-lm-response
+        ^satisfaction.learning-event <de>)
+   (<de> ^type lm-response)
+}
+
+#only should allow if goals and actions accepted with yes (maybe just goal?)
+#yes want this...
+sp {anystate*apply*initiate-interaction*get-next-goal*send*message*get-next-goal*lm
+   (state <s> ^operator <o>
+              ^quiescence t
+              ^top-state.agent-params.use-language-model true
+              #^top-state.lm-responses.response.goal.human-response yes #this is problem...
+              ^top-state.interaction.changes <chgs>)
+   (<o> ^name initiate-interaction
+        ^type get-next-goal
+       -^object
+        ^task-operator.task-handle <task-h>)
+-->
+   (<chgs> ^outgoing-message <msg>)
+   (<msg> ^type get-next-goal
+          ^complete-message true
+          ^fields <f>)
+   (<f> ^task-handle <task-h>)
+}
+
+sp {anystate*apply*initiate-interaction*get-next-goal*send*message*get-next-goal*instructor-goal-given
+#:interrupt
+   (state <s> ^operator <o>
+              ^quiescence t
+              ^top-state.agent-params.use-language-model true
+              ^top-state.lm-responses.instructor-goal.applied yes #this is problem...
+              ^top-state.interaction.changes <chgs>)
+   (<o> ^name initiate-interaction
+        ^type get-next-goal
+        ^task-operator.task-handle <task-h>)
+-->
+   (<chgs> ^outgoing-message <msg>)
+   (<msg> ^type get-next-goal
+          ^complete-message true
+          ^fields <f>)
+   (<f> ^task-handle <task-h>)
+}

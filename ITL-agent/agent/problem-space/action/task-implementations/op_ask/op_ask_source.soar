@@ -1,0 +1,25 @@
+###################### op_ask1 #######################
+# Ask a question by saying a message and waiting for a response
+#   Add the answer to the world if not there, then mark it answered
+# domains = all
+#
+# (<s> ^operator <o> +)
+# (<o> ^name op_ask1
+#      ^arg1 <arg1>)
+# (<arg1> ^arg-type object ^id <obj>)
+# (<obj> ^predicates.sentence <sentence>)
+
+
+source elaborations.soar
+source preferences.soar
+
+source learn-action-model.soar
+
+# Say the question and push a new segment to wait for the response
+source send-ask-command.soar
+
+# If the answer was not a world object, construct one from the answer and add to the world
+source add-object-to-world.soar
+
+# Mark the answered object with modifier1=answered1
+source mark-object-answered.soar

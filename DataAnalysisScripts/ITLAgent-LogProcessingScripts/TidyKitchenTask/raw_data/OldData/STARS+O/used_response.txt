@@ -1,0 +1,36 @@
+data type;object handle;response;prompt type
+used_response;apple-juice1_instance_46;the goal is that the apple-juice is in the fridge and the fridge is closed;initial_prompt
+used_response;bottle-opener1_instance_25;the goal is that the bottle-opener is in the drawer and the drawer is closed;initial_prompt
+used_response;ceramic-plate1_instance_27;the goal is that the ceramic-plate is in the dishwasher and the dishwasher is closed;recurse_prompt
+used_response;cereal-box1_instance_37;the goal is that the cereal-box is in the pantry and the pantry is closed;recurse_prompt
+used_response;glass-tumbler1_instance_29;the goal is that the glass-tumbler is in the dishwasher and the dishwasher is closed;recurse_prompt
+used_response;ketchup1_instance_44;the goal is that the ketchup is in the fridge and the fridge is closed;initial_prompt
+used_response;milk1_instance_42;the goal is that the milk is in the fridge and the fridge is closed;initial_prompt
+used_response;paper-plate1_instance_18;the goal is that the paper-plate is in the garbage;recurse_prompt_end_branch
+used_response;pepsi-can1_instance_15;the goal is that the pepsi-can is in the recycling bin;recurse_prompt_end_branch
+used_response;plastic-bottle1_instance_12;the goal is that the plastic-bottle is in the recycling bin;repair_prompt
+used_response;plastic-cup1_instance_20;the goal is that the plastic-cup is in the trash;repair_prompt
+used_response;plastic-fork1_instance_19;the goal is that the plastic-fork is in the garbage;repair_prompt
+used_response;pop-tart-box1_instance_39;the goal is that the pop-tart-box is in the pantry and the pantry is closed;recurse_prompt
+used_response;soda-can1_instance_13;the goal is that the soda-can is in the recycling bin;repair_prompt
+used_response;apple-core1_instance_17;the goal is that the apple-core is in the trash;recurse_prompt_end_branch
+used_response;box-of-aluminum-foil1_instance_38;the goal is that the box-of-aluminum-foil is in the pantry and the pantry is closed;recurse_prompt
+used_response;coffee-grinder1_instance_36;the goal is that the coffee-grinder is in the cupboard and the cupboard is closed;initial_prompt
+used_response;coke-can1_instance_14;the goal is that the coke-can is in the recycling bin;repair_prompt
+used_response;corkscrew1_instance_26;the goal is that the corkscrew is in the drawer and the drawer is closed;initial_prompt
+used_response;crackers1_instance_41;the goal is that the crackers are in the pantry and the pantry is closed;recurse_prompt
+used_response;granola-bars1_instance_40;the goal is that the granola-bars are in the pantry and the pantry is closed;recurse_prompt
+used_response;half-and-half1_instance_43;the goal is that the half-and-half is in the refrigerator and the refrigerator is closed;recurse_prompt
+used_response;jar-of-salsa1_instance_45;the goal is that the jar-of-salsa is in the fridge and the fridge is closed;initial_prompt
+used_response;mug1_instance_31;the goal is that the mug is in the dishwasher and the dishwasher is closed;recurse_prompt
+used_response;newspaper1_instance_16;the goal is that the newspaper is in the recycling bin;repair_prompt
+used_response;paper-cup1_instance_21;the goal is that the paper-cup is in the garbage;recurse_prompt_end_branch
+used_response;plate1_instance_28;the goal is that the plate is in the dishwasher and the dishwasher is closed;recurse_prompt
+used_response;steak-knife1_instance_30;the goal is that the steak-knife is in the dishwasher and the dishwasher is closed;recurse_prompt
+used_response;ceramic-bowl1_instance_35;the goal is that the ceramic-bowl is in the cupboard and the cupboard is closed;initial_prompt
+used_response;ceramic-plate1_instance_34;the goal is that the ceramic-plate is in the cupboard and the cupboard is closed;initial_prompt
+used_response;glass-tumbler1_instance_33;the goal is that the glass-tumbler is in the cupboard and the cupboard is closed;initial_prompt
+used_response;metal-fork1_instance_23;the goal is that the metal-fork is in the drawer and the drawer is closed;initial_prompt
+used_response;mug1_instance_32;the goal is that the mug is in the cupboard and the cupboard is closed;recurse_prompt
+used_response;paring-knife1_instance_22;the goal is that the paring-knife is in the drawer and the drawer is closed;initial_prompt
+used_response;steak-knife1_instance_24;the goal is that the steak-knife is in the drawer and the drawer is closed;initial_prompt

@@ -1,0 +1,17 @@
+agent-name = rosie
+agent-source = /home/april/probcog/agent/_agent_source.soar
+smem-source = /home/april/probcog/agent/init-smem/init-smem_source.soar
+
+decision-throttle-ms = 0
+
+verbose = false
+write-to-stdout = false
+enable-log = false
+spawn-debugger = false
+
+watch-level = 0
+
+message-source = tablet
+broadcast-output = true
+send-svs-info = true
+

@@ -1,0 +1,207 @@
+sp {comprehend-word*propose*retrieve-semantic-substructure
+   (state <s> ^name  << comprehend-word comprehend-construction >>
+               ^expand.assigners { <> nil <a1> })
+  -(<a1> ^structure-type)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name retrieve-semantic-substructure
+         ^feature assigner
+         ^lti <a1>)
+}
+
+sp {comprehend-word*propose*retrieve-semantic-substructure*super-type
+   #:interrupt
+   (state <s> ^name  << comprehend-word comprehend-construction >>
+              ^expand.super-type { <> nil <a1> })
+  -(<a1> ^structure-type)
+-->
+   (<s> ^operator <op> + =, >)
+   (<op> ^name retrieve-semantic-substructure
+         ^feature super-type
+         ^lti <a1>)
+}
+sp {comprehend-word*propose*retrieve-semantic-substructure*constraint
+   (state <s> ^name  << comprehend-word comprehend-construction >>
+              ^expand.constraint { <> nil <a1> })
+  -(<a1> ^<pos>)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name retrieve-semantic-substructure
+         ^feature constraint
+         ^lti <a1>
+        )
+} 
+sp {comprehend-word*propose*retrieve-semantic-substructure*assigner-constraints
+   (state <s> ^name  << comprehend-word comprehend-construction >>
+              ^expand.assigners.constraint { <> nil <a1> })
+  -(<a1> ^<pos>)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name retrieve-semantic-substructure
+         ^feature constraint
+         ^lti <a1>
+        )
+}
+sp {comprehend-word*propose*retrieve-semantic-substructure*assigner-default
+   (state <s> ^name  << comprehend-word comprehend-construction >>
+              ^expand.assigners.default { <> nil <a1> })
+  -(<a1> ^<pos>)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name retrieve-semantic-substructure
+         ^feature default
+         ^lti <a1>)
+}
+sp {comprehend-word*propose*retrieve-semantic-substructure*constraint-property
+   (state <s> ^name  << comprehend-word comprehend-construction >>
+              ^expand.constraint.property { <> nil <a1> })
+  -(<a1> ^<pos>)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name retrieve-semantic-substructure
+         ^feature constraint-property
+         ^lti <a1>)
+}
+sp {comprehend-word*propose*retrieve-semantic-substructure*grounding
+   (state <s> ^name  << comprehend-word comprehend-construction >>
+              ^expand.referent { <> nil <a1> })
+  -(<a1> ^<pos>)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name retrieve-semantic-substructure
+         ^feature referent
+         ^lti <a1>)
+}
+
+sp {comprehend-word*propose*retrieve-semantic-substructure*grounding*referent2
+   (state <s> ^name  << comprehend-word comprehend-construction >>
+              ^expand.referent2 { <> nil <a1> })
+  -(<a1> ^<pos>)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name retrieve-semantic-substructure
+         ^feature referent2
+         ^lti <a1>)}
+
+sp {comprehend-word*propose*retrieve-semantic-substructure*grounding*quantity
+   (state <s> ^name  << comprehend-word comprehend-construction >>
+              ^expand.constraint.quantity { <> nil <a1> })
+  -(<a1> ^<pos>)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name retrieve-semantic-substructure
+         ^feature quantity
+         ^lti <a1>)}
+
+sp {comprehend-word*propose*retrieve-semantic-substructure*grounding*id
+   (state <s> ^name  << comprehend-word comprehend-construction >>
+              ^expand.referent <a1>)
+  -(<a1> ^<pos>)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name retrieve-semantic-substructure
+         ^feature referent-id
+         ^lti <a1>
+       )
+}
+sp {comprehend-word*propose*retrieve-semantic-substructure*relation
+   (state <s> ^name  << comprehend-word comprehend-construction >>
+              ^expand.relation { <> nil <a1> })
+  -(<a1> ^<pos>)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name retrieve-semantic-substructure
+         ^feature relation
+         ^lti <a1>
+     )
+}
+
+sp {comprehend-word*propose*retrieve-semantic-substructure*referent
+   (state <s> ^name  << comprehend-word comprehend-construction >>
+              ^expand.referent { <> nil <a1> })
+  -(<a1> ^<pos>)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name retrieve-semantic-substructure
+         ^feature referent
+         ^lti <a1>
+      )
+}
+
+sp {comprehend-word*propose*retrieve-semantic-substructure*referent*id*property
+   (state <s> ^name  << comprehend-word comprehend-construction >>
+              ^expand.referent.property { <> nil <a1> })
+  -(<a1> ^<pos>)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name retrieve-semantic-substructure
+         ^feature property
+         ^lti <a1>
+       )
+}
+
+
+sp {comprehend-word*propose*retrieve-semantic-substructure*empty
+   (state <s> ^name  << comprehend-word comprehend-construction >>
+              ^expand <a1>)
+  -(<a1> ^<pos>)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name retrieve-semantic-substructure
+         ^feature none
+         ^lti <a1>
+       )
+}
+#
+#sp {comprehend-word*propose*retrieve-semantic-substructure*referent*id
+#   (state <s> ^name comprehend-word
+#              ^retrievals <ret>
+#              ^expand.referent <a1>)
+#  -(<a1> ^<pos>)
+#-->
+#   (<s> ^operator <op> + =)
+#   (<op> ^name retrieve-semantic-substructure
+#         ^feature id
+#         ^lti <a1>
+#         ^retrievals <ret>)
+#}
+
+#########
+
+sp {comprehend-word*apply*retrieve-semantic-substructure
+  #:interrupt
+   (state <s> ^operator <o>
+              ^retrievals <ret>
+              ^smem.command <cmd>)
+   (<o> ^name retrieve-semantic-substructure
+        ^lti <a1>
+        ^feature <att>)
+-->
+   #(write (crlf) |Retrieve | <a1> | from attribute | <att>)
+   (<cmd> ^retrieve <a1>
+          ^depth 2)   
+ #  (<a1> ^retrieved true)
+}
+
+sp {comprehend-word*apply*retrieve-semantic-substructure*clean-up
+   (state <s> ^operator <o>
+              ^smem.command <cmd>)
+   (<o> ^name retrieve-semantic-substructure
+        ^lti <a1>) 
+   (<cmd> ^retrieve {<> <a1> <a2> })
+-->
+   (<cmd> ^retrieve <a2> -
+          ^depth 2 -)
+}
+
+
+sp {comprehend-word*apply*retrieve-semantic-substructure*fail
+   (state <s> ^operator <o>
+              ^smem <smem>)
+   (<smem> ^result.failure <t>)
+   (<o> ^name retrieve-semantic-substructure
+        ^lti <a1>)
+-->
+   #(write (crlf) |No assigner item found in semantic memory: | <a1>)
+  # (interrupt)
+}

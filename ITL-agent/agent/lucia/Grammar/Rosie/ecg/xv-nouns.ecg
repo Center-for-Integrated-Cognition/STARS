@@ -1,0 +1,125 @@
+// Places
+construction ROOM
+   subcase of CommonNoun
+   form
+      constraints
+         self.f.orth <-- "room"
+   meaning: Room
+
+// Objects
+construction LIGHTS
+   subcase of CommonNoun
+   constructional
+      constraints
+         self.features.number <-- "pl"
+   form
+      constraints
+         self.f.orth <-- "lights"
+   meaning: Lights
+
+//  PL 9/16/2020
+//  The following lexical is being replaced
+//  It did not work well and needs to be treated
+//  more like locations.
+//  This showed up in the Games 017 sentence:
+//      The solution has three steps.
+//  and was used in Base #195:
+//      Follow these steps.
+//  A new version will be in Games/017.ecg.
+//construction STEPS
+//   subcase of CommonNoun
+//   constructional
+//      constraints
+//         self.features.number <-- "pl"
+//   form
+//      constraints
+//         self.f.orth <-- "steps"
+//   meaning: Steps
+
+// Proper Nouns
+construction ROSIE
+// NOT a subcase of ProperName because
+// this has a special use, it is not a RefExpr.
+// It only is used as the subject of an imperative.
+//   subcase of ProperName
+   subcase of Agent
+   form
+      constraints
+         self.f.orth <-- "rosie"
+   meaning: Rosie
+
+construction BOB
+   subcase of ProperName, Agent
+   form
+      constraints
+         self.f.orth <-- "bob"
+   meaning: Bob
+
+// Categories of things
+construction ACTION
+   subcase of PropertyClassName
+   form
+     constraints
+        self.f.orth <-- "action"
+   meaning: PropertyClass
+      constraints
+         self.m.name <-- "action2"
+
+construction RELATION
+   subcase of PropertyClassName
+   form
+     constraints
+        self.f.orth <-- "relation"
+   meaning: PropertyClass
+      constraints
+         self.m.name <-- "relation1"
+
+//  Concepts
+construction QUESTION
+   subcase of CommonNoun
+   form
+      constraints
+         self.f.orth <-- "question"
+   meaning: Question
+
+construction ANSWER
+   subcase of CommonNoun
+   form
+      constraints
+         self.f.orth <-- "answer"
+   meaning: Answer
+
+construction RESPONSE
+   subcase of CommonNoun
+   form
+      constraints
+         self.f.orth <-- "response"
+   meaning: Response
+
+construction MESSAGE
+   subcase of CommonNoun
+   form
+      constraints
+         self.f.orth <-- "message"
+   meaning: Message
+
+//  Units
+construction MINUTE
+   subcase of UnitsName
+   form
+      constraints
+         self.f.orth <-- "minute"
+   meaning
+      constraints
+         self.m.type <-- "time"
+         self.m.concept-handle <-- "minutes"
+
+construction MINUTES
+   subcase of UnitsName
+   form
+      constraints
+         self.f.orth <-- "minutes"
+   meaning
+      constraints
+         self.m.type <-- "time"
+         self.m.concept-handle <-- "minutes"

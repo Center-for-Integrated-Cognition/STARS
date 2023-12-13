@@ -1,0 +1,94 @@
+###################################
+# Code for using Analysis and Repair strategy (analyzing affordances) (Paper Section 4.2)
+#######################################
+sp {evaluate-affordance*elaborate*clause*type
+   (state <s> ^name evaluate-affordance
+              ^superstate.operator <o>)
+   (<o> ^name evaluate-affordance
+       ^clause <c>
+	    ^type <t>)
+-->
+   (<s> ^clause <c>
+	     ^type <t>)
+}
+
+sp {evaluate-affordance*retrieve*property*affordance
+   (state <s> ^name evaluate-affordance
+              ^type property
+              ^clause <sc>)
+   (<sc> ^arg1 <a1> ^predicate <p> ^reference-info <r>)
+   (<a1> ^item-type object ^predicates <preds> ^root-category <rc>)
+   (<p> ^item-type predicate ^property <prop> ^handle <handle>)
+   (<prop> ^handle <attr>)
+   (<preds> -^<attr>)
+   (<r> ^arg-name arg1)
+-->
+#(interrupt)
+  (<s> ^smem-query <query>)
+  (<query> ^cue <cue>
+           ^depth 1
+           ^destination <s>
+           ^result-name violated-affordance)
+   (<cue> ^property <prop> ^handle <handle>)
+}
+
+sp {evaluate-affordance*retrieve*property*affordance*spelling
+   (state <s> ^name evaluate-affordance
+              ^type property
+              ^violated-affordance <va>
+              ^clause <sc>)
+-->
+  (<s> ^smem-query <query>)
+  (<query> ^cue <cue>
+           ^depth 1
+           ^destination <s>
+           ^result-name violated-affordance-spelling)
+  (<cue> ^referent <va> ^spelling <spell>)
+}
+
+
+
+
+###########################################################################################
+# want to connect to openable1 afforance... smem lookup?
+#property affordance
+sp {evaluate-affordance*apply*complete-evaluate-affordance*property
+   (state <s> ^name evaluate-affordance
+              ^superstate.evaluation <e>
+              ^type property
+              ^clause <sc>
+              ^violated-affordance-spelling.spelling <affordance>
+              ^operator <o>)
+   (<o> ^name complete-evaluate-affordance)
+   (<sc> ^arg1 <a1> ^predicate <p> ^reference-info <r>)
+   (<a1> ^item-type object ^predicates <preds> ^root-category <rc>)
+   (<p> ^item-type predicate ^property <prop>)
+   (<prop> ^handle <attr>)
+   (<preds> -^<attr>)
+   (<r> ^arg-name arg1)# ^constraint <c>)
+   (<e> ^issue-count <ic>)
+-->
+   (<e> ^issue-count <ic> -)
+   (<e> ^issue-count (+ <ic> 1))
+   (<e> ^affordance-mismatch <am>)
+   (<am> ^type affordance2 ^object <a1> ^property <affordance> ^clause <sc> ^object-desc <r> ^obj-desc <rc>)
+}
+
+
+#complete analysis
+sp {evaluate-affordance*propose*complete-evaluate-parse
+   (state <s> ^name evaluate-affordance)
+-->
+   (<s> ^operator <o> + < =)
+   (<o> ^name complete-evaluate-affordance)
+}
+
+sp {evaluate-affordance*apply*evaluate-affordance
+   (state <s> ^name evaluate-affordance
+              ^clause <sc>
+              ^superstate <ss>
+              ^operator <o>)
+   (<o> ^name complete-evaluate-affordance)
+-->
+   (<ss> ^evaluated-clause <sc>)
+}

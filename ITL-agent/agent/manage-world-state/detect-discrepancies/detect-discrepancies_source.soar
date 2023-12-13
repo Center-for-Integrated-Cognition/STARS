@@ -1,0 +1,18 @@
+
+source elaborations.soar
+
+source ignore-discrepancy.soar
+
+source new-perception-object.soar
+source new-belief-object.soar
+source missing-object.soar
+
+source grown-object.soar
+source moved-object.soar
+source shrunken-object.soar
+
+source different-object-status.soar
+source different-object-predicate.soar
+source different-robot-status.soar
+source different-waypoint.soar
+

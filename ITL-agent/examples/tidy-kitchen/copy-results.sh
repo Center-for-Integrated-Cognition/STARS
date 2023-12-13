@@ -1,0 +1,9 @@
+cp initial*.txt data/$1
+cp final*.txt data/$1
+cp dialog.txt data/$1
+cp script.txt data/$1
+cp cic.log data/$1
+cp prompt.log data/$1
+cp first-sentence-stats.txt data/$1
+cp compare-results.sh data/$1
+cp replace_*.sh data/$1

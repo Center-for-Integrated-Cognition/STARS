@@ -1,0 +1,32 @@
+# Source child problem space "train-on-object"
+pushd train-on-object
+source train-on-object_source.soar
+popd
+
+# Souce file "proposals.soar"
+source proposals.soar
+
+# Souce file "elaborations.soar"
+source elaborations.soar
+
+
+# Source child problem space "learn-predicate-info"
+pushd learn-predicate-info
+source learn-predicate-info_source.soar
+popd
+
+# Source child problem space "learn-location"
+pushd learn-location
+source learn-location_source.soar
+popd
+
+# Souce file "teach-relation.soar"
+source teach-relation.soar
+
+pushd equate-objects
+source equate-objects_source.soar
+popd
+
+pushd learn-whenever-task
+source learn-whenever-task_source.soar
+popd

@@ -1,0 +1,61 @@
+### direction-handle ###
+# The direction the agent should turn (defaults to right)
+
+sp {op_turn1*elaborate*direction-handle*from*task-operator
+   (state <s> ^name op_turn1
+              ^task-operator.arg1.handle <dir-handle>)
+-->
+   (<s> ^direction-handle <dir-handle>)
+}
+
+sp {op_turn1*elaborate*direction-handle*default
+   (state <s> ^name op_turn1
+             -^direction-handle <> right1)
+-->
+   (<s> ^direction-handle right1)
+}
+
+sp {op_turn1*elaborate*degrees*arg2
+   (state <s> ^name op_turn1
+              ^task-operator.arg2 <arg2>)
+   (<arg2> ^arg-type measure
+           ^unit degrees
+           ^number <n>)
+-->
+   (<s> ^degrees <n>)
+}
+
+# If we are using the end-clause to stop, just start turning a whole bunch
+sp {op_turn1*elaborate*degrees*end-clause
+   (state <s> ^name op_turn1
+             -^task-operator.arg2.arg-type measure
+             ^task-operator.end-clause <end>)
+   -{(<end> ^<pnum>.unit times)}
+-->
+   (<s> ^degrees 999999)
+}
+
+
+### direction-id ###
+# The smem LTI with info about the direction to turn towards
+
+sp {op_turn1*elaborate*smem-query*lookup*direction-handle
+   (state <s> ^name op_turn1
+			     ^direction-handle <dir-handle>)
+-->
+   (<s> ^smem-query <q>)
+   (<q> ^cue <cue>
+        ^depth 15)
+	(<cue> ^handle <dir-handle>)
+}
+
+sp {op_turn1*elaborate*direction-id*from*smem-query*result
+   (state <s> ^name op_turn1
+              ^direction-handle <dir-handle>
+              ^smem-query.result <dir-id>)
+   (<dir-id> ^handle <dir-handle>)
+-->
+   (<s> ^direction-id <dir-id>)
+}
+
+

@@ -1,0 +1,9 @@
+struct url_t
+{
+    int64_t utime;
+
+    // url in "protocol://network?key1=value1&key2=value2..." format as
+    // parsed by lcm.lcm.URLParser. Note: 'network' can be an absolute
+    // or relative file path
+    string url;
+}

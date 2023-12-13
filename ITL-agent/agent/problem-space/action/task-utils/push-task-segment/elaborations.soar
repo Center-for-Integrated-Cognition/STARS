@@ -1,0 +1,148 @@
+sp {task-utils*push-task-segment*elaborate*world
+   (state <s> ^name push-task-segment
+              ^top-state.world <w>)
+-->
+   (<s> ^world <w>)
+}
+
+sp {task-utils*push-task-segment*elaborate*task-stack
+   (state <s> ^name push-task-segment
+              ^superstate.task-stack <stack>)
+-->
+   (<s> ^task-stack <stack>)
+}
+
+sp {task-utils*push-task-segment*elaborate*task-operator*from*superoperator
+   (state <s> ^name push-task-segment
+              ^superstate.operator.task-operator <task-op>)
+-->
+   (<s> ^task-operator <task-op>)
+}
+
+sp {task-utils*push-task-segment*elaborate*attend-to-perception
+   (state <s> ^name push-task-segment)
+-->
+   (<s> ^problem-space <ps>
+        ^default-problem-space no)
+   (<ps> ^attend-to-perception yes)
+}
+
+## Task objects found on the task-operator
+
+sp {task-utils*push-task-segment*elaborate*task-object-set
+   (state <s> ^name push-task-segment)
+-->
+   (<s> ^task-object-set <set>)
+}
+
+sp {task-utils*push-task-segment*elaborate*task-object*from*task-operator*object
+   (state <s> ^name push-task-segment
+              ^task-operator.<arg-name> <arg>
+              ^task-object-set <set>)
+   (<arg> ^arg-type object
+          ^id <obj>)
+-->
+   (<set> ^task-object <obj>)
+}
+
+sp {task-utils*push-task-segment*elaborate*task-object*from*task-operator*predicate
+   (state <s> ^name push-task-segment
+              ^task-operator.<arg-name> <arg>
+              ^task-object-set <set>)
+   (<arg> ^arg-type partial-predicate
+          ^2 <obj>)
+-->
+   (<set> ^task-object <obj>)
+}
+
+sp {task-utils*push-task-segment*elaborate*task-object*from*task-operator*clause
+   (state <s> ^name push-task-segment
+              ^task-operator.<clause-name> <clause>
+              ^task-object-set <set>)
+   (<clause> ^arg-type temporal-clause
+             ^<pnum> <clause-pred>)
+   (<clause-pred> ^{ << 1 2 3 4 5 >> } <obj>)
+-->
+   (<set> ^task-object <obj>)
+}
+
+############# object-slots ##########
+## Find every object slot for the task from the goal predicates and subtasks
+#
+## Mark them as explicit (also appears in the procedural link) or implicit (not in the procedural link)
+#
+#sp {task-utils*push-task-segment*elaborate*object-slots
+#   (state <s> ^name push-task-segment)
+#-->
+#   (<s> ^object-slots <slots>)
+#}
+#
+##sp {task-utils*push-task-segment*elaborate*object-slots*from*goal
+##   (state <s> ^name push-task-segment
+##              ^object-slots <slots>
+##              ^task-concept-network.goal.<sg-num> <subgoal>)
+##   (<subgoal> ^<pred-num> <pred>)
+##   (<pred> ^{ << 1 2 3 4 5 >> } <obj-slot>)
+##-->
+##   (<slots> ^object-slot <obj-slot>)
+##}
+#
+#sp {task-utils*push-task-segment*elaborate*object-slots*from*subtasks*object*arg
+#   (state <s> ^name push-task-segment
+#              ^object-slots <slots>
+#              ^task-concept-network.procedural.subtasks.subtask <sub>)
+#   (<sub> ^<arg-name> <arg>)
+#   (<arg> ^arg-type object
+#          ^id <obj-slot>)
+#-->
+#   (<slots> ^object-slot <obj-slot>)
+#}
+#
+#sp {task-utils*push-task-segment*elaborate*object-slots*from*subtasks*predicate*arg
+#   (state <s> ^name push-task-segment
+#              ^object-slots <slots>
+#              ^task-concept-network.procedural.subtasks.subtask <sub>)
+#   (<sub> ^<arg-name> <arg>)
+#   (<arg> ^arg-type partial-predicate
+#          ^2 <obj-slot>)
+#-->
+#   (<slots> ^object-slot <obj-slot>)
+#}
+#
+#sp {task-utils*push-task-segment*elaborate*object-slot*explicit*matches*object*arg
+#   (state <s> ^name push-task-segment
+#              ^object-slots <slots>
+#              ^task-concept-network.procedural.<arg-name> <arg>
+#              ^task-operator.<arg-name> <ex-arg>)
+#   (<slots> ^object-slot <obj-slot>)
+#   (<arg> ^arg-type object
+#          ^id <obj-slot>)
+#   (<ex-arg> ^arg-type object)
+#-->
+#   (<slots> ^explicit <obj-slot>)
+#}
+#
+#sp {task-utils*push-task-segment*elaborate*object-slot*explicit*matches*predicate*arg
+#   (state <s> ^name push-task-segment
+#              ^object-slots <slots>
+#              ^task-concept-network.procedural.<arg-name> <arg>
+#              ^task-operator.<arg-name> <ex-arg>)
+#   (<slots> ^object-slot <obj-slot>)
+#   (<arg> ^arg-type partial-predicate
+#          ^id <obj-slot>)
+#   (<ex-arg> ^arg-type partial-predicate)
+#-->
+#   (<slots> ^explicit <obj-slot>)
+#}
+#
+#sp {task-utils*push-task-segment*elaborate*object-slot*implicit
+#   (state <s> ^name push-task-segment
+#              ^object-slots <slots>
+#              ^task-concept-network.procedural.<arg-name> <arg>)
+#   (<slots> ^object-slot <obj-slot>
+#            -^explicit <obj-slot>)
+#   (<obj-slot> ^default.<prop> <any>)
+#-->
+#   (<slots> ^implicit <obj-slot>)
+#}
+#

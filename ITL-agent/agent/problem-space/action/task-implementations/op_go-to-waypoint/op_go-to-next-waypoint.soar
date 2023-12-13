@@ -1,0 +1,34 @@
+
+sp {op_go-to-waypoint1*external*propose*op_go-to-next-waypoint1
+   (state <s> ^name op_go-to-waypoint1
+              ^problem-space.execution-type external
+              ^current-waypoint.next <next-wp>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name op_go-to-next-waypoint1
+        ^item-type task-operator
+        ^task-handle go-to-next-waypoint1
+        ^arg1 <arg1>)
+   (<arg1> ^arg-type waypoint
+           ^id <next-wp>)
+}
+
+sp {op_go-to-waypoint1*elaborate*op_go-to-next-waypoint1*terminal*true
+   (state <s> ^name op_go-to-waypoint1
+              ^operator <o> +
+              ^desired-waypoint <wp>)
+   (<o> ^name op_go-to-next-waypoint1
+        ^arg1.id <wp>)
+-->
+   (<o> ^terminal true)
+}
+
+sp {op_go-to-waypoint1*elaborate*op_go-to-next-waypoint1*terminal*false
+   (state <s> ^name op_go-to-waypoint1
+              ^operator <o> +
+              ^desired-waypoint <wp>)
+   (<o> ^name op_go-to-next-waypoint1
+        ^arg1.id <> <wp>)
+-->
+   (<o> ^terminal false)
+}

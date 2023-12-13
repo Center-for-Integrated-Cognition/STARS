@@ -1,0 +1,192 @@
+########################################################
+#
+# Handling Task Objects
+# When we push a new task segment, we need to make sure
+#   any objects needed for the task are in the world
+# Some objects will need to be constructed and added
+#
+########################################################
+
+#### Add all implicit objects from the task to the world
+
+## Task objects found on the task-operator
+
+sp {task-utils*push-task-segment*elaborate*task-object*from*task-operator*object
+   (state <s> ^name push-task-segment
+              ^task-operator.<arg-name> <arg>
+              ^task-object-set <set>)
+   (<arg> ^arg-type object
+          ^id <obj>)
+-->
+   (<set> ^task-object <obj>)
+}
+
+sp {task-utils*push-task-segment*elaborate*task-object*from*task-operator*predicate
+   (state <s> ^name push-task-segment
+              ^task-operator.<arg-name> <arg>
+              ^task-object-set <set>)
+   (<arg> ^arg-type partial-predicate
+          ^2 <obj>)
+-->
+   (<set> ^task-object <obj>)
+}
+
+sp {task-utils*push-task-segment*elaborate*task-object*from*task-operator*clause
+   (state <s> ^name push-task-segment
+              ^task-operator.<clause-name> <clause>
+              ^task-object-set <set>)
+   (<clause> ^arg-type temporal-clause
+             ^<pnum> <clause-pred>)
+   (<clause-pred> ^{ << 1 2 3 4 5 >> } <obj>)
+-->
+   (<set> ^task-object <obj>)
+}
+
+
+### Step 2: A world object must be constructed for any implicit task arguments (from TCN)
+
+# construct-world-object (Implemented in manage-world-state/construct-world-object.soar)
+sp {task-utils*push-task-segment*propose*construct-world-object*implicit*task-object
+   (state <s> ^name push-task-segment
+              ^object-slots.implicit <obj-slot>
+             -^constructed-world-object.source <obj-slot>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name construct-world-object
+        ^source-type tcn-obj-slot
+        ^source-obj <obj-slot>)
+}
+
+sp {task-utils*push-task-segment*elaborate*task-object*from*constructed*obj-slot
+   (state <s> ^name push-task-segment
+              ^object-slots.implicit <obj-slot>
+              ^constructed-world-object <cons>
+              ^task-object-set <set>)
+   (<cons> ^source <obj-slot>
+           ^result <obj>)
+-->
+   (<set> ^task-object <obj>)
+}
+
+
+### Step 3: Map each task object to a world object
+
+sp {task-utils*push-task-segment*elaborate*object-mappings
+   (state <s> ^name push-task-segment)
+-->
+   (<s> ^object-mappings <maps>)
+}
+
+sp {task-utils*push-task-segment*elaborate*object-mappings*mapping
+   (state <s> ^name push-task-segment
+              ^task-object-set.task-object <obj>
+              ^object-mappings <maps>)
+-->
+   (<maps> ^mapping <map>)
+   (<map> ^task-object <obj>)
+}
+
+# If the object is already on the world, use it
+sp {task-utils*push-task-segment*elaborate*object-mappings*mapping*direct
+   (state <s> ^name push-task-segment
+              ^object-mappings.mapping <map>
+              ^world.objects.object <obj>)
+   (<map> ^task-object <obj>)
+-->
+   (<map> ^world-object <obj>)
+}
+
+# If the object matches handles with a world object, elaborate it
+sp {task-utils*push-task-segment*elaborate*object-mappings*mapping*handle
+   (state <s> ^name push-task-segment
+              ^object-mappings.mapping <map>
+              ^world.objects.object <wobj>)
+   (<map> ^task-object <tobj>
+         -^world-object <tobj>)
+   (<tobj> ^handle <h>)
+   (<wobj> ^handle <h>)
+-->
+   (<map> ^world-object <wobj>)
+}
+
+# If the object was mapped to an exisitng world object, use it
+sp {task-utils*push-task-segment*elaborate*object-mappings*mapping*merged-into
+   (state <s> ^name push-task-segment
+              ^object-mappings.mapping <map>
+              ^world.objects.object <wobj>)
+   (<map> ^task-object <tobj>
+         -^world-object <tobj>)
+   (<tobj> ^merged-into <wobj>)
+-->
+   (<map> ^world-object <wobj>)
+}
+
+# If there is no world object mapping, add the object to the world
+sp {task-utils*push-task-segment*propose*change-world-state*add-object-to-world
+   (state <s> ^name push-task-segment
+              ^object-mappings.mapping <map>)
+   (<map> ^task-object <tobj>
+         -^world-object <wobj>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name change-world-state
+        ^add-object-to-world <add>)
+   (<add> ^object <tobj>)
+}
+
+#### Step 4: replace any references in the task operator
+sp {task-utils*push-task-segment*propose*replace-task-object
+   (state <s> ^name push-task-segment
+              ^object-mappings.mapping <map>)
+   (<map> ^task-object <tobj>
+          ^world-object { <wobj> <> <tobj> })
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name replace-task-object
+        ^task-object <tobj>
+        ^replacement <wobj>)
+}
+
+sp {task-utils*push-task-segment*apply*replace-task-object*arg-type*object
+   (state <s> ^name push-task-segment
+              ^operator <o>
+              ^task-operator.<arg-name> <arg>)
+   (<o> ^name replace-task-object
+        ^task-object <tobj>
+        ^replacement <robj>)
+   (<arg> ^arg-type object
+          ^id <tobj>)
+-->
+   (<arg> ^id <tobj> -
+          ^id <robj>)
+}
+
+sp {task-utils*push-task-segment*apply*replace-task-object*arg-type*partial-predicate
+   (state <s> ^name push-task-segment
+              ^operator <o>
+              ^task-operator.<arg-name> <arg>)
+   (<o> ^name replace-task-object
+        ^task-object <tobj>
+        ^replacement <robj>)
+   (<arg> ^arg-type partial-predicate
+          ^2 <tobj>)
+-->
+   (<arg> ^2 <tobj> -
+          ^2 <robj>)
+}
+
+sp {task-utils*push-task-segment*apply*replace-task-object*arg-type*clauses
+   (state <s> ^name push-task-segment
+              ^operator <o>
+              ^task-operator.<clause-name> <clause>)
+   (<clause> ^arg-type temporal-clause
+             ^<pnum> <clause-pred>)
+   (<o> ^name replace-task-object
+        ^task-object <tobj>
+        ^replacement <robj>)
+   (<clause-pred> ^{ <num> << 1 2 3 4 5 >> } <tobj>)
+-->
+   (<clause-pred> ^<num> <tobj> -
+                  ^<num> <robj>)
+}
+

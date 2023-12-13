@@ -1,0 +1,48 @@
+# The task-stack grows downward
+#   The top task is the highest level, subtasks are pushed onto the bottom
+
+# Elaborate top task onto set of task segments 
+sp {top-state*elaborate*task-stack*top*task*segment
+   (state <s> ^superstate nil
+              ^task-stack <stack>)
+   (<stack> ^top { <seg> <> none }
+            ^segments <segs>)
+-->
+   (<segs> ^segment <seg>)
+}
+
+# Elaborate other segments onto the set
+sp {top-state*elaborate*segments*next*segment
+   (state <s> ^superstate nil
+              ^task-stack.segments <segs>)
+   (<segs> ^segment <seg>)
+   (<seg> ^next { <next> <> none })
+-->
+   (<segs> ^segment <next>)
+}
+
+sp {top-state*elaborate*task-stack*bottom*depth*1
+   (state <s> ^superstate nil
+              ^task-stack.top { <top> <> none })
+-->
+   (<top> ^depth 1)
+}
+
+sp {top-state*elaborate*task-stack*depth*increment
+   (state <s> ^superstate nil
+              ^task-stack.segments.segment <seg>)
+   (<seg> ^depth <d>
+          ^next { <n> <> none })
+-->
+   (<n> ^depth (+ <d> 1))
+}
+
+# Elaborates a set of objects that are involved in the current task
+# (don't want to delete them until the task is finished)
+sp {top-state*elaborate*task-stack*task-objects*object
+   (state <s> ^superstate nil
+              ^task-stack.segments.segment.task-objects <objs>)
+   (<objs> ^{ << added-object task-object goal-object >> } <obj>)
+-->
+   (<objs> ^object <obj>)
+}

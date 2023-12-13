@@ -1,0 +1,813 @@
+#   Soar code produced automatically 
+#   from file '..\Lucia\Grammars\Rosie\ecg\properties.ecg'.
+
+#   SMALL construction
+sp {comprehend-word*apply*lexical-access*SMALL-small
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |small|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name SMALL
+          ^is <a>
+          ^orth |small|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Property
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a SMALL)
+   (<e-meaning> ^schema PropertyDescriptor
+                ^target <meaning>)
+}
+
+#   SMALL self.m.class <-- @size constraint
+sp {comprehend-word*SMALL-constraint*self-m-class*ASSIGN*AT-size
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a SMALL
+          ^orth |small|
+          ^m <l-slot1>)
+   (<l-slot1> ^class { <target> <> |size| })
+-->
+   (<l-slot1> ^class <target> -
+              ^class |size|)
+}
+
+#   SMALL self.m.name <-- "small1" constraint
+sp {comprehend-word*SMALL-constraint*self-m-name*ASSIGN*small1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a SMALL
+          ^orth |small|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |small1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |small1|)
+}
+
+#   MEDIUM construction
+sp {comprehend-word*apply*lexical-access*MEDIUM-medium
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |medium|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name MEDIUM
+          ^is <a>
+          ^orth |medium|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Property
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a MEDIUM)
+   (<e-meaning> ^schema PropertyDescriptor
+                ^target <meaning>)
+}
+
+#   MEDIUM self.m.class <-- @size constraint
+sp {comprehend-word*MEDIUM-constraint*self-m-class*ASSIGN*AT-size
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a MEDIUM
+          ^orth |medium|
+          ^m <l-slot1>)
+   (<l-slot1> ^class { <target> <> |size| })
+-->
+   (<l-slot1> ^class <target> -
+              ^class |size|)
+}
+
+#   MEDIUM self.m.name <-- "medium1" constraint
+sp {comprehend-word*MEDIUM-constraint*self-m-name*ASSIGN*medium1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a MEDIUM
+          ^orth |medium|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |medium1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |medium1|)
+}
+
+#   BIG construction
+sp {comprehend-word*apply*lexical-access*BIG-big
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |big|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name BIG
+          ^is <a>
+          ^orth |big|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Property
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a BIG)
+   (<e-meaning> ^schema PropertyDescriptor
+                ^target <meaning>)
+}
+
+#   BIG self.m.class <-- @size constraint
+sp {comprehend-word*BIG-constraint*self-m-class*ASSIGN*AT-size
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a BIG
+          ^orth |big|
+          ^m <l-slot1>)
+   (<l-slot1> ^class { <target> <> |size| })
+-->
+   (<l-slot1> ^class <target> -
+              ^class |size|)
+}
+
+#   BIG self.m.name <-- "large1" constraint
+sp {comprehend-word*BIG-constraint*self-m-name*ASSIGN*large1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a BIG
+          ^orth |big|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |large1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |large1|)
+}
+
+#   LARGE construction
+sp {comprehend-word*apply*lexical-access*LARGE-large
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |large|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name LARGE
+          ^is <a>
+          ^orth |large|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Property
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a LARGE)
+   (<e-meaning> ^schema PropertyDescriptor
+                ^target <meaning>)
+}
+
+#   LARGE self.m.class <-- @size constraint
+sp {comprehend-word*LARGE-constraint*self-m-class*ASSIGN*AT-size
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a LARGE
+          ^orth |large|
+          ^m <l-slot1>)
+   (<l-slot1> ^class { <target> <> |size| })
+-->
+   (<l-slot1> ^class <target> -
+              ^class |size|)
+}
+
+#   LARGE self.m.name <-- "large1" constraint
+sp {comprehend-word*LARGE-constraint*self-m-name*ASSIGN*large1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a LARGE
+          ^orth |large|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |large1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |large1|)
+}
+
+#   GREEN construction
+sp {comprehend-word*apply*lexical-access*GREEN-green
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |green|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name GREEN
+          ^is <a>
+          ^orth |green|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Property
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a GREEN)
+   (<e-meaning> ^schema PropertyDescriptor
+                ^target <meaning>)
+}
+
+#   GREEN self.m.class <-- @color constraint
+sp {comprehend-word*GREEN-constraint*self-m-class*ASSIGN*AT-color
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a GREEN
+          ^orth |green|
+          ^m <l-slot1>)
+   (<l-slot1> ^class { <target> <> |color| })
+-->
+   (<l-slot1> ^class <target> -
+              ^class |color|)
+}
+
+#   GREEN self.m.name <-- "green1" constraint
+sp {comprehend-word*GREEN-constraint*self-m-name*ASSIGN*green1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a GREEN
+          ^orth |green|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |green1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |green1|)
+}
+
+#   RED construction
+sp {comprehend-word*apply*lexical-access*RED-red
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |red|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name RED
+          ^is <a>
+          ^orth |red|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Property
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a RED)
+   (<e-meaning> ^schema PropertyDescriptor
+                ^target <meaning>)
+}
+
+#   RED self.m.class <-- @color constraint
+sp {comprehend-word*RED-constraint*self-m-class*ASSIGN*AT-color
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a RED
+          ^orth |red|
+          ^m <l-slot1>)
+   (<l-slot1> ^class { <target> <> |color| })
+-->
+   (<l-slot1> ^class <target> -
+              ^class |color|)
+}
+
+#   RED self.m.name <-- "red1" constraint
+sp {comprehend-word*RED-constraint*self-m-name*ASSIGN*red1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a RED
+          ^orth |red|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |red1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |red1|)
+}
+
+#   PURPLE construction
+sp {comprehend-word*apply*lexical-access*PURPLE-purple
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |purple|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name PURPLE
+          ^is <a>
+          ^orth |purple|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Property
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a PURPLE)
+   (<e-meaning> ^schema PropertyDescriptor
+                ^target <meaning>)
+}
+
+#   PURPLE self.m.class <-- @color constraint
+sp {comprehend-word*PURPLE-constraint*self-m-class*ASSIGN*AT-color
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a PURPLE
+          ^orth |purple|
+          ^m <l-slot1>)
+   (<l-slot1> ^class { <target> <> |color| })
+-->
+   (<l-slot1> ^class <target> -
+              ^class |color|)
+}
+
+#   PURPLE self.m.name <-- "purple1" constraint
+sp {comprehend-word*PURPLE-constraint*self-m-name*ASSIGN*purple1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a PURPLE
+          ^orth |purple|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |purple1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |purple1|)
+}
+
+#   ORANGE construction
+sp {comprehend-word*apply*lexical-access*ORANGE-orange
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |orange|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name ORANGE
+          ^is <a>
+          ^orth |orange|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Property
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a ORANGE)
+   (<e-meaning> ^schema PropertyDescriptor
+                ^target <meaning>)
+}
+
+#   ORANGE self.m.class <-- @color constraint
+sp {comprehend-word*ORANGE-constraint*self-m-class*ASSIGN*AT-color
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a ORANGE
+          ^orth |orange|
+          ^m <l-slot1>)
+   (<l-slot1> ^class { <target> <> |color| })
+-->
+   (<l-slot1> ^class <target> -
+              ^class |color|)
+}
+
+#   ORANGE self.m.name <-- "orange1" constraint
+sp {comprehend-word*ORANGE-constraint*self-m-name*ASSIGN*orange1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a ORANGE
+          ^orth |orange|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |orange1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |orange1|)
+}
+
+#   CLEAR construction
+sp {comprehend-word*apply*lexical-access*CLEAR-clear
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |clear|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name CLEAR
+          ^is <a>
+          ^orth |clear|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Property
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a CLEAR)
+   (<e-meaning> ^schema PropertyDescriptor
+                ^target <meaning>)
+}
+
+#   CLEAR self.m.class <-- @property constraint
+sp {comprehend-word*CLEAR-constraint*self-m-class*ASSIGN*AT-property
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a CLEAR
+          ^orth |clear|
+          ^m <l-slot1>)
+   (<l-slot1> ^class { <target> <> |property| })
+-->
+   (<l-slot1> ^class <target> -
+              ^class |property|)
+}
+
+#   CLEAR self.m.name <-- "clear" constraint
+sp {comprehend-word*CLEAR-constraint*self-m-name*ASSIGN*clear
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a CLEAR
+          ^orth |clear|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |clear| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |clear|)
+}
+
+#   OFF construction
+sp {comprehend-word*apply*lexical-access*OFF-off
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |off|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name OFF
+          ^is <a>
+          ^orth |off|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Property
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a OFF)
+   (<e-meaning> ^schema PropertyDescriptor
+                ^target <meaning>)
+}
+
+#   OFF self.m.class <-- @state constraint
+sp {comprehend-word*OFF-constraint*self-m-class*ASSIGN*AT-state
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a OFF
+          ^orth |off|
+          ^m <l-slot1>)
+   (<l-slot1> ^class { <target> <> |state| })
+-->
+   (<l-slot1> ^class <target> -
+              ^class |state|)
+}
+
+#   OFF self.m.name <-- "off2" constraint
+sp {comprehend-word*OFF-constraint*self-m-name*ASSIGN*off2
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a OFF
+          ^orth |off|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |off2| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |off2|)
+}
+
+#   COOKED construction
+sp {comprehend-word*apply*lexical-access*COOKED-cooked
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |cooked|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name COOKED
+          ^is <a>
+          ^orth |cooked|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Property
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a COOKED)
+   (<e-meaning> ^schema PropertyDescriptor
+                ^target <meaning>)
+}
+
+#   COOKED self.m.class <-- @state constraint
+sp {comprehend-word*COOKED-constraint*self-m-class*ASSIGN*AT-state
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a COOKED
+          ^orth |cooked|
+          ^m <l-slot1>)
+   (<l-slot1> ^class { <target> <> |state| })
+-->
+   (<l-slot1> ^class <target> -
+              ^class |state|)
+}
+
+#   COOKED self.m.name <-- "cooked1" constraint
+sp {comprehend-word*COOKED-constraint*self-m-name*ASSIGN*cooked1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a COOKED
+          ^orth |cooked|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |cooked1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |cooked1|)
+}
+
+#   RIGHT construction
+sp {comprehend-word*apply*lexical-access*RIGHT-right
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |right|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name RIGHT
+          ^is <a>
+          ^orth |right|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Direction
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a RIGHT)
+   (<e-meaning> ^schema PropertyDescriptor
+                ^target <meaning>)
+}
+
+#   RIGHT self.m.class <-- @relative-direction1 constraint
+sp {comprehend-word*RIGHT-constraint*self-m-class*ASSIGN*AT-relative-direction1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a RIGHT
+          ^orth |right|
+          ^m <l-slot1>)
+   (<l-slot1> ^class { <target> <> |relative-direction1| })
+-->
+   (<l-slot1> ^class <target> -
+              ^class |relative-direction1|)
+}
+
+#   RIGHT self.m.name <-- "right1" constraint
+sp {comprehend-word*RIGHT-constraint*self-m-name*ASSIGN*right1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a RIGHT
+          ^orth |right|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |right1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |right1|)
+}
+
+#   LEFT construction
+sp {comprehend-word*apply*lexical-access*LEFT-left
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |left|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name LEFT
+          ^is <a>
+          ^orth |left|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Direction
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a LEFT)
+   (<e-meaning> ^schema PropertyDescriptor
+                ^target <meaning>)
+}
+
+#   LEFT self.m.class <-- @relative-direction1 constraint
+sp {comprehend-word*LEFT-constraint*self-m-class*ASSIGN*AT-relative-direction1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a LEFT
+          ^orth |left|
+          ^m <l-slot1>)
+   (<l-slot1> ^class { <target> <> |relative-direction1| })
+-->
+   (<l-slot1> ^class <target> -
+              ^class |relative-direction1|)
+}
+
+#   LEFT self.m.name <-- "left1" constraint
+sp {comprehend-word*LEFT-constraint*self-m-name*ASSIGN*left1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a LEFT
+          ^orth |left|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |left1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |left1|)
+}
+
+#   AROUND construction
+sp {comprehend-word*apply*lexical-access*AROUND-around
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |around|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name AROUND
+          ^is <a>
+          ^orth |around|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Direction
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a AROUND)
+   (<e-meaning> ^schema PropertyDescriptor
+                ^target <meaning>)
+}
+
+#   AROUND self.m.class <-- @relative-direction1 constraint
+sp {comprehend-word*AROUND-constraint*self-m-class*ASSIGN*AT-relative-direction1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a AROUND
+          ^orth |around|
+          ^m <l-slot1>)
+   (<l-slot1> ^class { <target> <> |relative-direction1| })
+-->
+   (<l-slot1> ^class <target> -
+              ^class |relative-direction1|)
+}
+
+#   AROUND self.m.name <-- "around1" constraint
+sp {comprehend-word*AROUND-constraint*self-m-name*ASSIGN*around1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a AROUND
+          ^orth |around|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |around1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |around1|)
+}
+
+#   FORWARD-direction construction
+sp {comprehend-word*apply*lexical-access*FORWARD-direction-forward
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |forward|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name FORWARD-direction
+          ^is <a>
+          ^orth |forward|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Direction
+          ^first-lex nil
+          ^evokes <e-meaning>)
+   (<a> ^a FORWARD-direction)
+   (<e-meaning> ^schema PropertyDescriptor
+                ^target <meaning>)
+}
+
+#   FORWARD-direction self.m.class <-- @relative-direction1 constraint
+sp {comprehend-word*FORWARD-direction-constraint*self-m-class*ASSIGN*AT-relative-direction1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a FORWARD-direction
+          ^orth |forward|
+          ^m <l-slot1>)
+   (<l-slot1> ^class { <target> <> |relative-direction1| })
+-->
+   (<l-slot1> ^class <target> -
+              ^class |relative-direction1|)
+}
+
+#   FORWARD-direction self.m.name <-- "forward" constraint
+sp {comprehend-word*FORWARD-direction-constraint*self-m-name*ASSIGN*forward
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a FORWARD-direction
+          ^orth |forward|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |forward| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |forward|)
+}
+

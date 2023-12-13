@@ -1,0 +1,25 @@
+###################### op_approach1 #######################
+# Drive up to a visible object which is not in reach
+# domains = cozmo, magicbot, ai2thor
+# goal is that the object is now reachable
+# 
+# (<s> ^operator <o> +)
+# (<o> ^name op_approach1
+#      ^arg1 <arg1>)
+# (<arg1> ^arg-type object ^id <obj>)
+# 
+
+source propose-op_approach.soar
+source action-models.soar
+
+source elaborations.soar
+source preferences.soar
+
+source extract-robot-position.soar
+source extract-target-transform.soar
+source compute-goal-coord.soar
+
+source propose-subtasks.soar
+
+source send-approach-command.soar
+source simulate-approach-command.soar

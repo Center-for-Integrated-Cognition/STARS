@@ -1,0 +1,11 @@
+(L6 ^failure F372 ^failure F354)
+  (F372 ^evaluation E56271 ^handle mug1_instance_32
+         ^object-desc |a mug in the dish rack|
+         ^sentence |the goal is that the mug is in the dish rack|)
+    (E56271 ^interpreted true ^issue-count 0)
+  (F354 ^evaluation E53238 ^handle glass-tumbler1_instance_33
+         ^object-desc |a glass-tumbler in the dish rack|
+         ^sentence |the goal is that the glass-tumbler is in the dish rack|)
+    (E53238 ^interpreted true ^issue-count 0)
+
+

@@ -1,0 +1,11 @@
+sp {attend-to-perception*shrunken-object*prefer*intersect*overlap*over*others
+   (state <s> ^name attend-to-perception
+              ^discrepancy-type shrunken-object
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name << intersect-command overlap-command >>)
+   (<o2> ^name << occlusion-command change-world-state >>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+

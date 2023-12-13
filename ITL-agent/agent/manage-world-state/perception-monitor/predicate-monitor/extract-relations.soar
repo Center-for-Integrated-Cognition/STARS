@@ -1,0 +1,140 @@
+####################################################################
+#
+# Extracting relations on the top-state
+# Given an object and a relation predicate handle
+#   This code will take care of creating the svs filters needed
+#   to extract the relation
+# It will return all objects that are in the given relation
+#   with the given object
+# (E.G. given obj7 and relation 'on', returns all objects on obj7)
+# 
+# To use, simply create the following structure on top-state
+# (state <s> ^perception-monitor.predicate-monitor <mon>)
+#   (<mon> ^predicate-info <pred-info>)
+#     (<pred-info> ^predicate-handle <pred-handle>
+#                  ^object-test <test>)
+#       (<test> ^object <obj>)
+# 
+# Result: Extracts the relations through SVS and will copy all different matching world objects
+#         as object-test.match <obj> 
+# 
+####################################################################
+
+sp {top-state*perception-monitor*predicate-monitor*object-test*elaborate*axis*filters*global
+   (state <s> ^superstate nil
+              ^perception-monitor.predicate-monitor.predicate-info <pred-info>)
+   (<pred-info> ^smem-info.relation <r>
+               -^smem-info.reference-frame local
+                ^object-test <test>)
+   (<r> ^axis <axis>)
+   (<test> ^object.svs-obj.id <id>)
+-->
+   (<test> ^<axis> <axis-filter>)
+   (<axis-filter> ^type axis_relation_select
+                  ^axis <axis>
+                  ^a <a>)
+   (<a> ^type node
+        ^id <id>
+        ^base a)
+}
+
+sp {top-state*perception-monitor*predicate-monitor*object-test*elaborate*axis*filters*local
+   (state <s> ^superstate nil
+              ^perception-monitor.predicate-monitor.predicate-info <pred-info>)
+   (<pred-info> ^smem-info.relation <r>
+                ^smem-info.reference-frame local
+                ^object-test <test>)
+   (<r> ^axis <axis>)
+   (<test> ^object.svs-obj.id <id>)
+-->
+   (<test> ^<axis> <axis-filter>)
+   (<axis-filter> ^type axis_relation_select
+                  ^axis <axis>
+                  ^a <a>
+                  ^reference <ref>)
+   (<a> ^type node
+        ^id <id>
+        ^base a)
+   (<ref> ^type node
+          ^id robot)
+}
+
+sp {top-state*perception-monitor*predicate-monitor*object-test*copy*relation*types
+   (state <s> ^perception-monitor.predicate-monitor.predicate-info <pred-info>)
+   (<pred-info> ^smem-info.relation <r>
+                ^object-test <test>)
+   (<test> ^<axis> <axis-filter>)
+   (<r> ^axis <axis>
+        ^type <type>)
+-->
+   (<axis-filter> ^<type> true )
+}
+
+sp {top-state*perception-monitor*predicate-monitor*object-test*copy*top*bottom
+   (state <s> ^perception-monitor.predicate-monitor.predicate-info <pred-info>)
+   (<pred-info> ^smem-info.relation <r>
+                ^object-test <test>)
+   (<test> ^<axis> <axis-filter>)
+   (<r> ^axis <axis>
+        ^bottom <bot> ^top <top>)
+-->
+   (<axis-filter> ^bottom <bot> ^top <top>)
+}
+
+# Link together the individual axis filters
+
+# link outputs of y filter to inputs of x
+sp {top-state*perception-monitor*predicate-monitor*object-test*connect*xy
+   (state <s> ^perception-monitor.predicate-monitor.predicate-info <pred-info>)
+   (<pred-info> ^object-test <test>)
+   (<test> ^x <x> ^y <y>)
+-->
+   (<x> ^b <y>)
+}
+
+# link outputs of z filter to inputs of y
+sp {top-state*perception-monitor*predicate-monitor*object-test*connect*yz
+   (state <s> ^perception-monitor.predicate-monitor.predicate-info <pred-info>)
+   (<pred-info> ^object-test <test>)
+   (<test> ^y <y> ^z <z>)
+-->
+   (<y> ^b <z>)
+}
+
+# Feed in belief objects to inputs of z
+sp {top-state*perception-monitor*predicate-monitor*object-test*connect*z*belief-nodes
+   (state <s> ^perception-monitor.predicate-monitor.predicate-info <pred-info>)
+   (<pred-info> ^object-test <test>)
+   (<test> ^z <z>)
+-->
+   (<z> ^b <belief-nodes>)
+   (<belief-nodes> ^type tag_select
+                   ^a.type all_nodes
+                   ^tag_name object-source
+                   ^tag_value belief)
+}
+
+# Copy the extract command onto the svs.command link
+sp {top-state*perception-monitor*predicate-monitor*object-test*put*on*svs*command
+   (state <s> ^perception-monitor.predicate-monitor.predicate-info <pred-info>
+              ^svs.command <cmd>)
+   (<pred-info> ^object-test <test>)
+   (<test> ^x <filter>)
+-->
+   (<cmd> ^extract <filter>)
+   (<filter> ^mark test)
+}
+
+# Elaborate all matching objects
+sp {top-state*perception-monitor*predicate*monitor*object-test*elaborate*match
+   (state <s> ^perception-monitor.predicate-monitor.predicate-info <pred-info>
+              ^world.objects <objs>)
+   (<pred-info> ^object-test <test>)
+   (<test> ^object <obj>
+           ^x.result.record.params.b <id>)
+   (<objs> ^object { <obj2> <> <obj> })
+   (<obj2> ^svs-obj.id <id>)
+-->
+   (<test> ^match <obj2>)
+}
+

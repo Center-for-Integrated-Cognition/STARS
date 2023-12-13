@@ -1,0 +1,3 @@
+condition	relevant_responses
+STARS+O	0.7333333333333333
+TBP+O	0.17857142857142858

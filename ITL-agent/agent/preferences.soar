@@ -1,0 +1,112 @@
+sp {top-state*better-preferences*lookup-preposition
+   (state <s> ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name lookup-preposition)
+   (<o2> ^name << interaction satisfy-purpose execute-task attend-to-perception wait >>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {top-state*better-preferences*interaction
+   (state <s> ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name interaction)
+   (<o2> ^name << satisfy-purpose execute-task attend-to-perception wait >>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {top-state*better-preferences*satisfy-purpose
+   (state <s> ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name satisfy-purpose)
+   (<o2> ^name << execute-task attend-to-perception wait >>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {top-state*better-preferences*execute-task
+   (state <s> ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name execute-task)
+   (<o2> ^name << attend-to-perception wait >>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {top-state*better-preferences*attend-to-perception
+   (state <s> ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name attend-to-perception)
+   (<o2> ^name << wait process-new-sentence >>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {top-state*prefer*interaction*new-segment-info*others*over*process-sentence
+   (state <s> ^superstate nil
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name interaction
+         ^change-type new-segment-info
+         ^change-info.purpose.type <> process-sentence <> handle-command)
+   (<o2> ^name interaction
+         ^change-type new-segment-info
+         ^change-info.purpose.type << process-sentence handle-command >>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+
+#JK2022 temporary
+#fix to not lock/halt on lm request should fix this
+sp {top-state*prefer*interaction*get-next-goal*over*process-lm-response
+   (state <s> ^superstate nil
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name interaction
+         ^change-type new-segment-info
+         ^change-info.purpose.type << get-next-subaction get-next-goal >>)
+   (<o2> ^name interaction
+         ^change-type new-segment-info
+         ^change-info.purpose.type << process-lm-response wait-for-lm-response >>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+#JK2023 process lm response first before removing goal
+sp {top-state*prefer*interaction*process-lm-response*over*goal-description 
+   (state <s> ^superstate nil
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name interaction
+         ^status-type performed
+         ^status-info.dialog-event.type process-lm-response)
+   (<o2> ^name interaction
+         ^status-type performed
+         ^status-info.dialog-event.type goal-description)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+# sp {top-state*prefer*interaction*process-lm-response*over*goal-descriptioninterrupt
+# :interrupt
+#    (state <s> ^superstate nil
+#               ^operator <o1>)
+#    (<o1> ^name interaction
+#          ^status-type performed)
+# -->
+# }
+
+
+# (O8453 ^name interaction ^status-info P850 ^status-type performed
+#        ^type status-change)
+#   (P850 ^dialog-event D432)
+# print --depth 2 O8454
+# (O8454 ^name interaction ^status-info P849 ^status-type performed
+#        ^type status-change)
+#   (P849 ^dialog-event D431)
+# print --depth 2 D432
+# (D432 ^originator instructor ^type goal-description ^type command)
+# print --depth 2 D431
+# (D431 ^originator agent ^type process-lm-response)

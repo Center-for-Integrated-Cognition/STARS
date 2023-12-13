@@ -1,0 +1,96 @@
+# Creates the initial top-state world for different domains
+
+sp {top-state*apply*init-agent*create*world-state*magicbot
+   (state <s> ^superstate nil
+              ^agent-params.domain magicbot
+              ^operator.name init-agent)
+-->
+   (<s> ^world <w>)
+   (<w> ^objects <objs>
+        ^predicates <preds>
+        ^robot <rob>)
+   (<rob> ^arm <arm>
+          ^handle rosie
+          ^predicates.name rosie
+          ^moving-status stopped)
+   (<arm> ^state external)
+}
+
+sp {top-state*apply*init-agent*create*world-state*cozmo
+   (state <s> ^superstate nil
+              ^agent-params.domain cozmo
+              ^operator.name init-agent)
+-->
+   (<s> ^world <w>)
+   (<w> ^objects <objs>
+        ^predicates <preds>
+        ^robot <rob>)
+   (<rob> ^arm <arm>
+          ^handle rosie
+          ^predicates.name rosie
+          ^moving-status stopped)
+   (<arm> ^state external)
+}
+
+
+sp {top-state*apply*init-agent*create*world-state*ai2thor
+   (state <s> ^superstate nil
+              ^agent-params.domain ai2thor
+              ^operator.name init-agent)
+-->
+   (<s> ^world <w>)
+   (<w> ^objects <objs>
+        ^predicates <preds>
+        ^robot <rob>)
+   (<rob> ^arm <arm>
+          ^handle rosie
+          ^predicates.name rosie
+          ^moving-status stopped)
+   (<arm> ^state external)
+}
+
+sp {top-state*apply*init-agent*create*world-state*tabletop
+   (state <s> ^superstate nil
+              ^agent-params.domain tabletop
+              ^operator.name init-agent)
+-->
+   (<s> ^world <w>)
+   (<w> ^objects <objs>
+        ^predicates <preds>
+        ^robot <rob>)
+   (<rob> ^arm <arm>
+          ^handle rosie
+          ^predicates.name rosie)
+   (<arm> ^state external)
+}
+
+sp {top-state*apply*init-agent*create*world-state*internal
+   (state <s> ^superstate nil
+              ^agent-params.domain internal
+              ^agent-params.simulate-perception true
+              ^operator.name init-agent)
+-->
+   (<s> ^world <w>)
+   (<w> ^objects <objs>
+        ^predicates <preds>
+        ^robot <rob>)
+   (<rob> ^handle rosie
+          ^arm <arm>
+          ^predicates.name rosie)
+}
+
+sp {top-state*apply*init-agent*create*world-state*fetch
+   (state <s> ^superstate nil
+              ^agent-params.domain fetch
+              ^operator.name init-agent)
+-->
+   (<s> ^world <w>)
+   (<w> ^objects <objs>
+        ^predicates <preds>
+        ^robot <rob>)
+   (<rob> ^arm <arm>
+          ^handle rosie
+          ^predicates.name rosie)
+   (<arm> ^state external)
+}
+

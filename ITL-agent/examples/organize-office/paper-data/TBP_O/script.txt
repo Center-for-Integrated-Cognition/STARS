@@ -1,0 +1,19 @@
+Organize office.
+Repeat the following tasks while an object is on the desk.
+Clear an object that is on the desk.
+If the object is a book then the goal is that the object is in the bookshelf.
+If the object is a novel then the goal is that the object is in the bookshelf.
+If the object is a dictionary then the goal is that the object is in the bookshelf.
+If the object is a pen then the goal is that the object is in the drawer and the drawer is closed.
+If the object is a pencil then the goal is that the object is in the drawer and the drawer is closed.
+If the object is a stapler then the goal is that the object is in the drawer and the drawer is closed.
+If the object is a plastic-water-bottle then the goal is that the object is in the recycling bin.
+If the object is a sprite-can then the goal is that the object is in the recycling bin.
+If the object is a paper-coffee-cup then the goal is that the object is in the garbage.
+If the object is a tissue then the goal is that the object is in the garbage.
+If the object is a file then the goal is that the object is in the filing cabinet and the filing cabinet is closed.
+If the object is a folder then the goal is that the object is in the filing cabinet and the filing cabinet is closed.
+You are done.
+Repeat.
+You are done.
+

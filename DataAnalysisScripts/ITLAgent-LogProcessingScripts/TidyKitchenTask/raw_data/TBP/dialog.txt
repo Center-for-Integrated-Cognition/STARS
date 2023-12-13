@@ -1,0 +1,29 @@
+Instructor: Tidy kitchen.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Repeat the following tasks while an object is on the table.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Clear an object that is on the table.
+Rosie: What is the next goal or subtask of clear?
+Instructor: You are done.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Repeat.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Repeat the following tasks while an object is on the counter.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Store an object that is on the counter.
+Rosie: What is the next goal or subtask of store?
+Instructor: You are done.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Repeat.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Repeat the following tasks while an object is in the dish rack.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Unload an object that is in the dish rack.
+Rosie: What is the next goal or subtask of unload?
+Instructor: You are done.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: Repeat.
+Rosie: What is the next goal or subtask of tidy?
+Instructor: You are done.
+Rosie: I'm ready for a new task
+

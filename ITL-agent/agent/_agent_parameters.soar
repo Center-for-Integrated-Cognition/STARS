@@ -1,0 +1,123 @@
+##################################################################
+# Agent Parameters                      
+# 
+# These are elaborated onto every state under ^agent-params
+# These should be parameters/constants that control how the agent runs
+#
+# In this folder should only be set parameters that are valid for all agents
+# (parameters that are set per-agent, such as the domain, should be 
+#  set up during agent configuration)
+##################################################################
+
+sp {top-state*elaborate*agent-params
+   (state <s> ^top-state <s>)
+-->
+   (<s> ^agent-params <params>)
+}
+
+sp {top-state*elaborate*agent-params*task
+   (state <s> ^superstate nil
+              ^agent-params <params>)
+-->
+   # Max search depth to use when doing iterative deepending search during task planning
+   # This searching is done in three phases, with different levels of specificity 
+   (<params> ^retrospective-search-depth 4   # Max depth to search during retrospective learning
+   )
+}
+
+# sp {search-for-next-subtask*elaborate*search-phase-info
+#    (state <s> ^name search-for-next-subtask)
+# -->
+#    (<s> ^number-phases 2
+#         ^search-phase-info <p1> <p2>)
+#    # First phase - only consider subtasks with all objects in common with the current task
+#    (<p1> ^num 1 ^max-depth 4 ^require-all-objects-match 1 ^reject-perc-ops 3)
+
+#    # Second phase - level 1: any subtasks, level 2: subtasks with 1+ matching objects, 
+#    #                level 3-4: only subtasks matching all objects
+#    (<p2> ^num 2 ^max-depth 4 ^require-matching-object 2 ^require-all-objects-match 3 ^reject-perc-ops 3)
+# }
+sp {search-for-next-subtask*elaborate*search-phase-info
+   (state <s> ^name search-for-next-subtask
+              ^top-state.agent-params <ap>)
+   (<ap> ^use-search true)
+-->
+   (<s> ^number-phases 1
+        ^search-phase-info <p1>)# <p2>)
+   # First phase - only consider subtasks with all objects in common with the current task
+   (<p1> ^num 1 ^max-depth 4 ^require-all-objects-match 1 ^reject-perc-ops 3)
+
+   # Second phase - level 1: any subtasks, level 2: subtasks with 1+ matching objects, 
+   #                level 3-4: only subtasks matching all objects
+   #(<p1> ^num 1 ^max-depth 4 ^require-matching-object 2 ^require-all-objects-match 3 ^reject-perc-ops 3)
+}
+
+# #no search
+sp {search-for-next-subtask*elaborate*search-phase-info*no-search
+   (state <s> ^name search-for-next-subtask
+              ^top-state.agent-params <ap>)
+   (<ap> -^use-search true)
+-->
+   (<s> ^number-phases 0)
+        #^search-phase-info <p1>)# <p2>)
+   # First phase - only consider subtasks with all objects in common with the current task
+   #(<p1> ^num 1 ^max-depth 4 ^require-all-objects-match 1 ^reject-perc-ops 3)
+
+   # Second phase - level 1: any subtasks, level 2: subtasks with 1+ matching objects, 
+   #                level 3-4: only subtasks matching all objects
+   #(<p2> ^num 2 ^max-depth 4 ^require-matching-object 2 ^require-all-objects-match 3 ^reject-perc-ops 3)
+}
+
+# Constants to tune for handling perception
+# sp {top-state*elaborate*agent-params*perception
+#    (state <s> ^top-state <s>
+#               ^agent-params <params>)
+# -->
+#    (<params> ^minimum-property-confidence 0.2)  # The minimum confidence an input-link object property can have before being accepted
+#    (<params> ^property-ambiguity-threshold 0.8) # If an input-link object property has more than 1 value, 
+#                                                 #   don't accept the best if another is within this percentange of its confidence
+# #Property learning flags
+#    # (<params> ^use-puzzle-based-teaching true)
+#    # (<params> ^use-default-primitive-actions true)
+#    # (<params> ^learn-without-grounding true)
+#    # (<params> ^learn-multiple-versions true)
+#    (<params> ^use-learning-visualization false)
+# #####################
+ 
+#    (<params> ^use-language-model true)
+#    ##(<params> ^store-prompts true)
+#    ##(<params> ^retry-human-reject true)
+   
+#    (<params> ^use-search true)
+#    (<params> ^use-lm-selection true)
+#    (<params> ^agent-lm-evaluation true)
+#    (<params> ^lm-condition lm) #lm-human human lm
+
+#    (<params> ^stability-check-duration 0)#2)#1	# How many seconds to wait before checking whether an object is stable (and thus not noise)
+#    (<params> ^pos-diff-threshold .02)		# How far an object should have moved before the difference is considered significant
+#    (<params> ^vol-low-ratio-threshold .8) #.8	# How much an object must have shrunk before the difference is considered significant
+#    (<params> ^vol-high-ratio-threshold 1.2)#1.2  # How much an object must have grown before the difference is considered significant
+#    (<params> ^max-stability-checks 5)		# How many times an object will be checked for stability before concluding that it must exist
+#    (<params> ^occlusion-threshold .15) #.1		# How much an object must be occluded before we determine we shouldn't be able to see it well
+#    (<params> ^occlusion-check-period 3)		# How often (in seconds) an occluded object will be rechecked to see if we can see it now
+# #   (<params> ^clear-view-distance .01)		# How far away the closest object must be from the target before it's considered clear
+# #   (<params> ^stale-match-distance .1)		# How close an object has to be to be considered a match for a stale object
+# #   (<params> ^maximum-stale-distance .1)	# How close a stale object is to a new object to be considered a possible match (convex distance)
+#    (<params> ^contained-threshold .33)		# How much of a given object should be overlapped by another before it's considered inside it
+#    (<params> ^contained-by-threshold .5)	# How much an existing object should be overlapped by another before it's considered a match
+# #   (<params> ^update-object-period 3)		# How often (in seconds) a non-occluded object should be rechecked (update pos/bbox)
+#    (<params> ^recheck-growth-delay 5)		#
+# #   (<params> ^aggressive-match-distance .05)
+# #   (<params> ^vol-low-candidate-match .6)
+# #   (<params> ^vol-high-candidate-match 1.4)
+# }
+
+sp {top-state*elaborate*agent-params*robot
+   (state <s> ^top-state <s>
+              ^agent-params <params>)
+-->
+   (<params> ^magicbot-reachable-distance 1.5) # For the simulated magicbot, how close an object is to be considered in reach
+   (<params> ^magicbot-skip-face false)         # For the simulated magicbot, when doing go-to-xy skip the face command
+   (<params> ^navigation-ignore-doors false)    # When navigating a waypoint map, ignore doors along edges (directly go from start to end)
+}
+

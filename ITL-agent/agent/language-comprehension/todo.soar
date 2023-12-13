@@ -1,0 +1,176 @@
+###    Need to change that in right-left.soar
+
+################################################################################
+
+#### Soar stuff
+### 2. Get chunking working correctly with ground-object
+### 3. Get terminate-sentence working with chunking
+### 4. Spreading activation experimentation
+####
+#### Rosie Structural Stuff
+### 0. The name of "....".
+### 1. Get repair working again and better so can handle lexical ambiguity better.
+### 2. Reparse with unknown word.
+### 3. More robust to all of the failures - still produce semantics if fail. 
+### 4. Make comprehend-word one operator.
+### 5. Exclusive should also be able to be required
+### 6. Conjunctions for VP and VP - need VP to promote to CP
+### 7. Learn new comprehend-word operators so can learn control knowledge to select between them (including RL).
+### 8. For constraints such as movable - need more consistent representation and need to be able to have objects
+###      objects inherit such features - such as from a category (block1). For now, comment on these constraints.
+### 9. Take advantage of termination for ambiguity in merging - if have hit "." merge with required.
+###10. Found some places where assigners have referent - don't think that makes sense.
+
+###
+#### Linguistic stuff
+### 3. right as adjective work with right as noun - handle both uses of left and right
+### 1. "that location" should work (instead of it thinking it is getting a relative clause). That as a specifier - followed by a naked noun or adj N
+### 2. there are more [Xs] than [Ys]
+### 4. Get skipped sentences working (Turn the stove on. The stove is on. The stove is turned on.)
+### 5. more uses of conjunction  move x and y 
+### 6. has the same rank as. Has a higher rank than; has more X than Y's 
+### 7. 138 fails with missing DET - does a merge instead of a comprehend construction. Flipping this causes problems elsewhere.
+
+
+################################################################################
+### Change Log
+### 8/23/2015
+# 1. Replaced ground-referent/failed-grounding.soar: ground-referent*apply*failed-grounding*indefinite*non-location ...*location with 
+#    ground-referent*apply*failed-grounding*indefinite*non-category ...*category. These now test that the entity has property.handle 
+#    to determine if should create a new object. Should not impact any existing sentences. Should make generalization to 
+#    other categories easier (pieces...)  Might interfere with ground-referent*apply*failed-grounding*location
+# 2. Modified ground-referent/index-scene-objects.soar: ground-referent*apply*index-scene-objects*create*candidates*dialog*it
+#    ground-referent*apply*index-scene-objects*create*candidates*dialog*it*arg1
+#    ground-referent*apply*index-scene-objects*create*candidates*dialog*it*next. Will 
+#    now use referent in ^arg1 if exists at "it". Otherwise will look for one
+#    that has property.handle category (supposed to be more general).
+# 3. Added piece/pieces/card/cards to properties.soar and nouns.soar
+#
+# 8/24/2015
+# 4. Add ground-referent/process-plural. This handles the case where a plural was used (all the red blocks) but there is a single 
+#    grounded referent. In that case, it throws away that as a possible grounding, which causes a non visual object to be created
+#    with property ^multiple true on it.
+# 5. Changed goal1 to goal 
+# 6. Add |quant-your| to smem - this handles "... all your pieces ..."
+# 7. Added "matched" to smem/adjectives
+# 8. Added |but| to conjunctives.soar - same as |and| needs some modifier...
+# 9. Added adjacent and equal diagonal to relations.soar and prepositions.soar
+#10. Modified verbs.soar so stack works with multiple objects using and
+#
+# 8/25/2015
+# 1. created mobile-task-instructions-v2.soar - most of today's changes are to make those sentences work.
+# 2. add "remember .. as ..." to verbs; "recall DP"; "stapler" as noun; visible as adjective; message as noun; Bob; heard; said; response; question;  current; soar (adj) main (adj).
+# 3. remove ground-referent*apply*index-scene-objects*create*current-location*object and add ^property current for the current location and ^property starting for the starting location.
+# 4. modify comprehension*propose*process-missing-assigner*before*x so it doesn't apply if the 
+#    assigner that is being removed has a potential receiver with the structure as a subpart.
+# 5. Add remember-if because too hard to get working as combination of existing construction
+# 6. modify comprehension*elaborate*possible-merge so it won't apply if there is another require
+#    assigner that must come before the assigner being considered for the merge.
+#
+# 8/27/2015
+# 1. Modify ground-referent*apply*failed-grounding*property16 so it doesn't copy handle so often. REquires updating expectations. 
+# 2. Change how "it" is used - cover missing cases.
+
+#
+# 9/1/2015
+# 1. Added rules to copy constraints in ground-referent from the ^parameter to constraint - had some constraints (especially relations in "to the right of" lost.
+# 2. Modify merge to reject merge with right/left-noun that don't make sense
+
+# 9/2/2015
+# 1. For new games added lots of new nouns, verbs, prepositions (between) - need to do more on between.
+# 2. Add special flag ^strip-assigners true for "named" so that what follows it is just picked up without it having to fill any assigners.
+# 3. added apply*merge*constraint*preposition-noun-special to handle special case of named preposition - this is surely a hack.
+# 4. Add ^hypothetical true to parent receiver - when encounter, add ^hypothetical true to segment. Change to if.soar and comprehend-word. 
+# 5. If ^hypothetical true, on multiple grounding, assume need a description, not a grounding. Modify process-multiple-grounding.soar to mark prototype-referents none. [restricted to only multiples on 9/4]
+# 6. Disabled *-DP-V as it was causing problems.
+
+# 9/3/2015 
+# 1. Modified If construction so it is C and then converts to CP - otherwise it merges too early
+# 2. Modify selection rules in comprehend-construction to subtly change when it is selected relative to merge.
+# 3. Eliminate "," as option in IF - so Then can be required.
+
+# 9/4/2015 
+# 1. Constrained comprehension*propose*process-missing-assigner*new so doesn't knock out possible future matches.
+# 2. Modify change from 9/2: 5 - need to restrict to only when expecting multiples. If definitive - try to pick one.
+# 3. Add propose*process-semantics*DP-with-of-DP*referent so it picks up a referent if one exists for a relation
+
+# 9/6/2015
+# 1. Remove referent literal from there-is constructions. Not sure why it was there (sic).
+
+#9/8/2015
+# 1. Modify merge-apply.soar and process-semantics and process-semantics.soar to support ternary relations (between)
+# 2. Removed place as a noun and made it a verb
+# 3. To make it so can skip a determiner: Add rejection for process-phrase-end if still unfulfilled required (turns out not necessary).
+# 4. Change "on" so requires DP - not sure why this was optional - need to rerun tests to figure out why.  
+
+# 9/9/2015
+# 1. Add reject to merge so reject a possible merge if there is an earlier potential merge for an exclusive item - this is for
+#    when there is a missing determiner and the following adjective can merge with an adjective that should be part of a PP ???
+# 2. Remove apply*compare-count-differences*both-go-to-zero*no-required*exclusive which overlaps conflicts with others.
+
+# 9/14/2015
+# 1. Add rule to prefer merge to comprehend-construction if the current word it a T - makes merges happen to get to most abstract CP before look for T. 
+#    Probably a more general principle, but can't think of it right now.
+
+# 9/18/2015
+# 1. Try to handle the case of "equal to the color of the block ..." where "of the block gets completely lost. Add
+#   apply*merge*constraint*PP*merge*of so adds a constraint when "of the block" merges. Worried this overlaps
+#   with some processing in process-semantics already there to hand "of the ..." but the problem is
+#   in this case process-semantics never comes in because there is no semantic structure on the assigner.
+
+# 9/21/2015
+# 1. For all lt.referent, need to copy the referent to the sti so that modifications (constraints) can be added
+#    without a. modifying the referent lti if we ever go to mirroring and b. so that if the same referent is
+#    used more than once in a sentence we don't get invalid transfer. Multiple changes to create-receiver to copy the referent.
+# 2. Modified all access using lt.referent to use lt-referent. 
+
+# 9/22/2015
+# 1. Modified merge-apply to handle case of of where there is a definite referent. 
+# 2. Fixed bug in merge-apply from above.
+# 3. Add more (than) and great
+# 4. Added negation test to comprehension*propose*process-missing-assigner*new so it doesn't remove possible merges because of possible exclusive matches 
+#    that won't arise because there is something more recent they will match with.
+# 5. Add quantifier to ground-referent for processing some, all, ...
+
+# 9/23/2015
+# 1. Fix greater than/more than/larger than so these are distinct
+# 2. Add lots of handling for unknown words so the right signal is sent on only when it isn't processed.
+
+# 9/25/2015
+# 1. Restrict propose*process-semantics*DP-with-of-DP*referent so doesn't fire if there is already a referent. 
+# 2. apply*ground-new-constraint*dialog-object modified action so uses <r-1> instead of <r-2>
+
+# 9/26/2015
+# 1. Fix failed-grounding so is handles possessives - puts a flag on the object.
+# 2. Also added a case it was missing for when nothing gets copied.
+
+# 9/28/2015
+# 1. Added specifier distinct for "another" - don't retrieve from dialog is have specifier distince
+# 2. Don't select "another" as a match in ground-referent for a later definitive referent - ... "another card then the card" - the card doesn't match another.
+# 3. Added "they" - needs to catch a prior multiple referent!
+
+# 10/5/2015
+# 1. cleaned up prefer and avoid
+# 2. comprehension*propose*comprehend-construction2 - must have unmerged receiver for p-item to suggest a retrieval. Might break stuff - need to test!
+
+# 10/20/2015
+# 1. Try to eliminate two-word phrases - causes chunking to crash - put down, pick up, go forward, go down - depend on adverbs instead
+
+# Lots left out.
+
+# 11/24/2015
+# 1. some adjectives should not be immediate - if they can be determiner free...
+#
+# 12/1/2015
+# 1. Add puzzle so like game (name of the game is ...)
+# 2. Modify |has| so there is a new verb type for it that can have C-ADJ-P (more than) instead of a DP
+# 3. Added more sources for finding an it - .agent from a unmerged-assigner
+# 4. Add attachment immediate-after for RC - "That is PP" so the PP doesn't jump to an early assigner (from the Verb)
+# 
+#
+# 2/16/2015
+# 1. Need to handle retrievals where there are alternative structures - now just avoid by not chunking those retrievals
+#
+# 2/17/2015
+# 1. Fixed so retrieve lti gets relations.
+# 2. Made "there" a DPX so it never matches "DP ISV" - not a great solution.

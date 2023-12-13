@@ -1,0 +1,267 @@
+
+#copy response to top-state structure
+
+#this copy might not be necessary
+sp {dialog-event*apply*process-lm-actions
+   (state <s> ^name dialog-event
+              ^top-state.lm-responses <lmr>
+              ^operator <o>)
+   (<o> ^name process-lm-actions
+	    ^parameter.update-node <r>)
+-->
+   (<lmr> ^update-node <r>)
+   (write |LM action response:|)
+   (write (cmd |print | <r> |-d 10|))
+}
+
+
+sp {process-lm-actions*elaborate*update-node 
+   (state <s> ^name process-lm-actions
+              ^superstate.operator <o>)
+   (<o> ^name process-lm-actions
+	    ^parameter.update-node <r>)
+-->
+   (<s> ^update-node <r>)
+}
+
+sp {process-lm-actions*elaborate*update-node*mark-applied
+   (state <s> ^name process-lm-actions
+              ^update-node <r>
+              ^superstate.operator <o>)
+   (<o> ^name process-lm-actions
+	    ^parameter.update-node <r>)
+   (<r> ^<< goal completion >> <g>)
+-->
+   (<g> ^applied true)
+}
+sp {dialog-event*apply*process-lm-actions*mark-applied*lmr*response
+   (state <s> ^name dialog-event
+              ^top-state.lm-responses <lmr>
+              ^operator <o>)
+   (<lmr> ^response.goal <g>)
+   (<g> ^id <id>)
+   (<o> ^name process-lm-actions
+	    ^parameter.update-node.goal <r>)
+   (<r> ^id <id>)
+-->
+   (<g> ^applied true)
+}
+sp {dialog-event*apply*process-lm-actions*mark-applied*lmr*update-node*goal
+   (state <s> ^name dialog-event
+              ^top-state.lm-responses <lmr>
+              ^operator <o>)
+   (<lmr> ^update-node.goal.step.completion <un>)
+   (<un> ^id <id>)
+   (<o> ^name process-lm-actions
+	    ^parameter.update-node.completion <r>)
+   (<r> ^id <id>)
+-->
+   (<un> ^applied true)
+}
+sp {dialog-event*apply*process-lm-actions*mark-applied*lmr*update-node*goal*completion
+   (state <s> ^name dialog-event
+              ^top-state.lm-responses <lmr>
+              ^operator <o>)
+   (<lmr> ^update-node.completion.step.completion <un>)
+   (<un> ^id <id>)
+   (<o> ^name process-lm-actions
+	    ^parameter.update-node.completion <r>)
+   (<r> ^id <id>)
+-->
+   (<un> ^applied true)
+}
+sp {process-lm-actions*propose*select-step-to-try
+   (state <s> ^name process-lm-actions
+              ^update-node.<< goal completion >>.step <step>)
+   (<step> ^completion <c>)
+   (<c> ^human-response yes)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name select-step-to-try
+	    ^step <step>
+       ^completion <c>)
+}
+
+# final operator (for both goal and step, when all have nos)
+#need to test problemspace too?
+#operator overlap problem?
+sp {process-lm-actions*propose*verify-lm-action-human
+   (state <s> ^name process-lm-actions
+              ^update-node.<< goal completion >>.step <step>)
+   (<step> ^completion <c>)
+   (<c> -^tested -^human-response)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name verify-lm-step-human
+	    ^step <step>
+       ^completion <c>)
+}
+
+
+sp {process-lm-actions*prefer*verify-lm-step-human
+   (state <s> ^name process-lm-actions
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name verify-lm-step-human ^step <step>)
+   (<o2> ^name verify-lm-step-human ^step <step2>)
+   (<step> ^prob-order <p1>)
+   (<step2> ^prob-order {<p2> > <p1>})
+-->
+   (<s> ^operator <o> > <o2>)
+}
+sp {process-lm-actions*prefer*verify-lm-step-human*completion
+   (state <s> ^name process-lm-actions
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name verify-lm-step-human ^step <step> ^completion <c1>)
+   (<o2> ^name verify-lm-step-human ^step <step2> ^completion <c2>)
+   (<step> ^prob-order <p1>)
+   (<step2> ^prob-order <p1>)
+   (<c1> ^prob-order <p2>)
+   (<c2> ^prob-order {<p3> > <p2>})
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+
+sp {process-lm-actions*prefer*select-step-to-try*over*verify-lm-step-human
+   (state <s> ^name process-lm-actions
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name select-step-to-try)
+   (<o2> ^name verify-lm-step-human)
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+#satisfy process-lm-respone too? if they say no, then no..
+#wait until they say yes?
+
+sp {process-lm-actions*apply*verify-lm-step-human
+   (state <s> ^name process-lm-actions
+              ^top-state.interaction.changes <c>
+              ^operator <o>)
+   (<o> ^name verify-lm-step-human
+       ^completion <comp>
+	    ^step <step>)
+   (<comp> ^complete-sentence <sent> ^object-handle <obj>)
+-->
+   (<c> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+           ^originator agent) #change to lm
+   (<p> ^type attempt-lm-step
+        ^parameters.step-completion <comp>
+        ^satisfaction <sat>)
+   (<sat> ^dialog-event <de>)
+   (<de> ^type single-word-response
+          ^originator instructor)
+   (<c> ^outgoing-message <out-msg>)
+   (<out-msg> ^type attempt-lm-step
+              ^complete-message true
+              ^fields <f>)
+   (<f> ^sentence <sent>
+        ^object-handle <obj>)
+}
+
+
+sp {process-lm-actions*apply*select-step-to-try
+   (state <s> ^name process-lm-actions
+              ^top-state.interaction.changes <c>
+              ^operator <o>)
+   (<o> ^name select-step-to-try
+	    ^completion <comp>
+	    ^step <step>)
+   (<comp> ^sentence <m> ^complete-sentence <cs>)
+-->
+   #(<sent> ^segment-proposed true)
+   (write |LM sourced action: | <cs>)
+   (<c> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+           ^originator instructor) #chnage to lm?
+   (<p> ^type process-sentence 
+        ^parameters.sentence (deep-copy <m>)
+        ^satisfaction <sat>)
+   (<sat> ^dialog-event <de>)
+   (<de> ^type process-sentence
+          ^originator agent)
+}
+
+sp {process-lm-actions*apply*select-step-to-try*performed*segment
+   (state <s> ^name process-lm-actions
+              ^top-state.interaction.status <status>
+              ^operator <o>)
+   (<o> ^name select-step-to-try
+	    ^step <step>)
+-->
+   (<status> ^performed.dialog-event <de>)
+   (<de> ^type process-lm-response
+         ^originator agent)
+}
+
+
+############################
+#exhausted
+#worst preference for exhausted-lm-steps
+sp {process-lm-actions*propose*exhausted-lm-steps
+   (state <s> ^name process-lm-actions
+              ^update-node <r>)
+-->
+   (<s> ^operator <o> + < )
+   (<o> ^name exhausted-lm-steps
+	    ^update-node <r>)
+}
+sp {process-lm-actions*prefer*any*over*exhausted-lm-steps
+   (state <s> ^name process-lm-actions
+              ^operator <o> +
+              ^operator <o2> + )
+   (<o> ^name << verify-lm-step-human select-step-to-try >>)
+   (<o2> ^name exhausted-lm-steps)
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+
+
+
+sp {process-lm-actions*apply*exhausted-lm-steps*performed*segment
+   (state <s> ^name process-lm-actions
+              ^top-state.interaction.status <status>
+              ^operator <o>)
+   (<o> ^name exhausted-lm-steps)
+-->
+   (<status> ^performed.dialog-event <de>)
+   (<de> ^type process-lm-response
+         ^originator agent)
+}
+
+# issue for repeated with response (just need to clean at end...)
+sp {process-lm-actions*apply*exhausted-lm-steps
+   (state <s> ^name process-lm-actions
+              ^top-state.interaction.changes <c>
+              ^top-state.lm-responses.response <r>
+              ^top-state.world.objects.object <obj>
+              ^operator <o>)
+   (<o> ^name exhausted-lm-steps)
+   (<r> ^task-handle <task-h> ^object-handle <handle>)
+   (<obj> ^handle <handle>)
+-->
+   (<c> ^outgoing-message <msg>)
+   (<msg> ^type get-next-subaction
+          ^complete-message true
+          ^task-handle <task-h>
+          ^fields <f>)
+   (<f> ^task-handle <task-h> ^object <obj>)
+}
+
+sp {process-lm-actions*apply*exhausted-lm-steps*instructor-step
+   (state <s> ^name process-lm-actions
+              ^top-state.lm-responses <lmr>
+              ^operator <o>)
+   (<lmr> ^response.object-handle <handle>)
+   (<o> ^name exhausted-lm-steps)
+ -{(<lmr> ^instructor-step <is>)
+   (<is> -^sentence <sen>)}
+-->
+   (<lmr> ^instructor-step <g>)
+   (<g> ^type step ^object-handle <handle>)
+}

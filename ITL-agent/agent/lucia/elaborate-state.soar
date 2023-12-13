@@ -1,0 +1,104 @@
+###########################################################################
+#
+# This first part of the file is copied from the OntoSoar project
+# without any changes (so far on 5/29/2015).
+#
+###########################################################################
+
+# File: elaborate-state.soar
+# Authors: Peter 
+# Created: Oct 14, 2013
+# Modified: 22 May 2017     To work within Rosie
+#
+
+#    When an operator is selected on any state
+#    and it has no direct apply productions,
+#    there will be an operator no change impasse
+#    and a new sub-state will be created.
+#
+#    These productions will label that new sub-state
+#    with a problem-state name and a pointer
+#    to the top state, as well as all the arguments
+#	 of the operator that caused the impasse.
+#
+#   On 8 May 2020 this file is being updated so that
+#   when run in Rosie some elaborations only happen
+#   while we're doing comprehension in Lucia.
+#
+#   On 14 May 2020 a rule was added from deep in the
+#   laird parser that seems needed to get the game-search
+#   algorithm to work.
+#
+#   On 15 May 2020 that rule was commented out here and
+#   moved to rosie/agent/elaborations/elaborate-state.soar.
+#
+
+sp {lucia*elaborate*sub-state*top
+   (state <s> ^superstate <ss>)
+   (<ss> ^superstate nil
+         ^operator <op>)
+   (<op> ^name { << comprehend interpret act comprehend-word >>
+         <name> })
+-->
+    (<s> ^name <name>
+         ^problem-space <name>
+         ^top-state <ss>)
+}
+
+sp {lucia*elaborate*sub-state*lower
+   (state <s> ^superstate <ss>)
+   (<ss> -^superstate nil
+         ^operator <op>
+         ^top-state <ts>)
+   (<op> ^name { << comprehend interpret act comprehend-word >>
+         <name> })
+-->
+    (<s> ^name <name>
+         ^problem-space <name>
+         ^top-state <ts>)
+}
+
+#   Copy the arguments of the superstate operator
+#   onto the substate.
+#   Do this only for the main Lucia operators.
+sp {lucia*elaborate*sub-state*args
+   (state <s> ^superstate <ss>)
+   (<ss> ^operator <op>)
+   (<op> ^{<arg> <> name} <value>
+         ^name << comprehend interpret act comprehend-word >>)
+-->
+    (<s> ^<arg> <value>)
+}
+
+#sp {any*apply*print-debug-info
+#   (state <s> ^operator <o>)
+#   (<o> ^name <any>
+#        ^debug-info <info>)
+#-->
+#   (write (crlf) (concat |        | <info>))
+#}
+
+###########################################################################
+#
+# PL  14 May 2020
+#
+# An elaboration rule built into the Laird language-comprehension
+# that are needed elsewhere in the Rosie agent.
+#
+#   This rule is necessary to make game-search work.
+#   It is being moved to rosie/agent/elaborations/elaborate-state.soar 
+#   to be readily available regardless of the parser,
+#   and commented out here.
+#   PL  5/15/2020
+#
+###########################################################################
+
+##   From:
+##   rosie\agent\language-comprehension\comprehension
+##   \Impasse__Operator_Tie\evaluate-operator\elaborations.soar
+#sp {elaborate*top-state*pass-down-evaluate
+#   (state <s> ^name evaluate-operator
+#              ^superstate.top-state <ts>)
+#-->
+#   (<s> ^top-state <ts>)
+#}

@@ -1,0 +1,76 @@
+//	A unique lexical for quoted strings
+//	Special code is generated for this.
+construction QUOTED-STRING	//	For 028
+   form
+      constraints
+	     //	The actual orth will be added
+		 // at run time
+         self.f.orth <-- ""
+         self.f.is-quoted <-- "true"
+
+//  Objects
+construction FORK  //  For 001
+   subcase of CommonNoun
+   form
+      constraints
+         self.f.orth <-- "fork"
+   meaning: Fork
+
+construction DRAWER  //  For 003
+   subcase of CommonNoun
+   form
+      constraints
+         self.f.orth <-- "drawer"
+   meaning: Drawer
+
+construction MUG  //  For 004
+   subcase of CommonNoun
+   form
+      constraints
+         self.f.orth <-- "mug"
+   meaning: Mug
+
+construction FRIDGE  //  For 004
+   subcase of CommonNoun
+   form
+      constraints
+         self.f.orth <-- "fridge"
+   meaning: Fridge
+
+construction DEGREES  //  For 014
+   subcase of UnitsName
+   form
+      constraints
+         self.f.orth <-- "degrees"
+   meaning
+      constraints
+         self.m.type <-- "angle"
+         self.m.concept-handle <-- "degrees"
+
+construction APPLE   //  For 021
+   subcase of CommonNoun
+   form
+      constraints
+         self.f.orth <-- "apple"
+   meaning: Apple
+
+construction JUICE   //  For 023
+   subcase of CommonNoun
+   form
+      constraints
+         self.f.orth <-- "juice"
+   meaning: Juice
+
+construction WATER   //  For 024, 025
+   subcase of CommonNoun
+   form
+      constraints
+         self.f.orth <-- "water"
+   meaning: Water
+
+construction MILK   //  For 026
+   subcase of CommonNoun
+   form
+      constraints
+         self.f.orth <-- "milk"
+   meaning: Milk

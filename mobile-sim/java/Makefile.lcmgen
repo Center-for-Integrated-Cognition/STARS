@@ -1,0 +1,41 @@
+LCM = lcm-gen
+
+LCMTYPES_NAMES := $(shell cd ../lcmtypes && ls *.lcm)
+
+# Construct the pathnames to the java types
+LCMTYPES_JAVA := $(LCMTYPES_NAMES:%.lcm=%.java)
+LCMTYPES_JAVA := $(addprefix src/soargroup/mobilesim/lcmtypes/,$(LCMTYPES_JAVA))
+
+LCMTYPES_JAR = lcmtypes.jar
+
+# Construct the pathnames to the python types
+LCMTYPES_PYTHON := $(LCMTYPES_NAMES:%.lcm=%.py)
+LCMTYPES_PYTHON := $(addprefix ../python/mobilesim/lcmtypes/,$(LCMTYPES_PYTHON))
+
+BUILD_PATH = build
+
+JAVAC = javac
+LCM_JAR = /usr/local/share/java/lcm.jar
+
+all: $(LCMTYPES_JAVA) $(LCMTYPES_PYTHON)
+
+src/soargroup/mobilesim/lcmtypes/%.java: ../lcmtypes/%.lcm
+	@echo "\tjava: $<"
+	@$(LCM) -j --jpath=src --jdefaultpkg=soargroup.mobilesim.lcmtypes $<
+
+../python/mobilesim/lcmtypes/%.py: ../lcmtypes/%.lcm
+	@echo "\tpython: $<"
+	@$(LCM) -p --ppath=../python --package-prefix=mobilesim.lcmtypes $<
+
+$(LCMTYPES_JAR): | builddir
+	@echo "[$(LCMTYPES_JAR)]"
+	@javac -cp $(LCM_JAR) -d $(BUILD_PATH) $(LCMTYPES_JAVA)
+	@jar cf $(LCMTYPES_JAR) -C $(BUILD_PATH) .
+
+builddir:
+	@echo "[$(BUILD_PATH)]"
+	@mkdir -p $(BUILD_PATH)
+
+clean:
+	@rm -rf *~ src/soargroup/mobilesim/lcmtypes/* *.jar
+	@rm -rf *~ ../python/mobilesim/lcmtypes/*

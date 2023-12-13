@@ -1,0 +1,47 @@
+
+# [PARAM] goal-message
+#   The parsed goal representation from language comprehension
+sp {task-utils*construct-task-goal*elaborate*message*from*superoperator
+   (state <s> ^name construct-task-goal
+              ^superstate.operator.goal-message <msg>)
+-->
+   (<s> ^goal-message <msg>)
+}
+
+# [PARAM] conditions
+#   An if-clause from the language comprehension message
+sp {task-utils*construct-task-goal*elaborate*conditions*from*superoperator
+   (state <s> ^name construct-task-goal
+              ^superstate.operator.conditions <conds>)
+-->
+   (<s> ^conditions <conds>)
+}
+
+# [PARAM] result-name
+#   The attribute name to use when copying the goal result to the superstate
+sp {task-utils*construct-task-goal*elaborate*result-name*from*superoperator
+   (state <s> ^name construct-task-goal
+              ^superstate.operator.result-name <res-name>)
+-->
+   (<s> ^result-name <res-name>)
+}
+
+
+##### Elaborations
+
+# goal-clause
+sp {task-utils*construct-task-goal*elaborate*goal-clause*from*goal-message
+   (state <s> ^name construct-task-goal
+              ^goal-message.subclause <cl>)
+-->
+   (<s> ^goal-clause <cl>)
+}
+
+sp {task-utils*construct-task-goal*elaborate*goal-clause*recurse
+   (state <s> ^name construct-task-goal
+              ^goal-clause.subclause <cl>)
+-->
+   (<s> ^goal-clause <cl>)
+}
+
+

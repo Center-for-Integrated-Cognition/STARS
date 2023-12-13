@@ -1,0 +1,7 @@
+Task name: deliver package. Task context: I am in mailroom. Aware of package addressed to Gary, package is in mailroom.
+(RESULT)The goal is that the package is in Gary's office(END RESULT)
+Response: Ok.
+Steps:
+1. Pick up package addressed to Gary
+2. Go to Gary's office
+3. Put package onto desk in Gary's office

@@ -1,0 +1,110 @@
+####### task-stack
+
+# Elaborate: task-stack from superstate (link to top-state.task-stack)
+sp {subproblem*execute*elaborate*task-stack*from*superstate
+   (state <s> ^problem-space.subproblem execute
+              ^superstate.task-stack <stack>)
+-->
+   (<s> ^task-stack <stack>)
+}
+
+# Elaborate: current-task-segment, the segment from the task-stack for the task-operator
+sp {subproblem*execute*elaborate*current-task-segment*from*superstate*child-task-segment
+   (state <s> ^problem-space.subproblem execute
+              ^task-operator <o>
+              ^superstate.child-task-segment <seg>)
+   (<seg> ^task-operator <o>)
+-->
+   (<s> ^current-task-segment <seg>)
+}
+
+# Elaborate: parent-task-segment, the previous task segment on the task-stack
+sp {subproblem*execute*elaborate*parent-task-segment
+   (state <s> ^problem-space.subproblem execute
+              ^current-task-segment.prev { <parent> <> none })
+-->
+   (<s> ^parent-task-segment <parent>)
+}
+
+# Elaborate: child-task-segment, the next task segment on the task-stack 
+sp {subproblem*execute*elaborate*child-task-segment
+   (state <s> ^problem-space.subproblem execute
+              ^current-task-segment.next { <child> <> none })
+-->
+   (<s> ^child-task-segment <child>)
+}
+
+sp {subproblem*execute*bottom*elaborate*new-task-segment
+   (state <s> ^problem-space.subproblem execute
+              ^task-stack <stack>
+              ^current-task-segment <cur-seg>)
+   (<stack> ^bottom <cur-seg>
+            ^new-task-segment <new-seg>)
+-->
+   (<s> ^new-task-segment <new-seg>)
+}
+
+### active-ongoing-goal true
+# If the current goal is an ongoing one (has the modifier always)
+#   and we haven't been told to stop or the end clause is unmet
+#   then elaborate this flag
+sp {subproblem*execute*elaborate*active-ongoing-goal
+   (state <s> ^problem-space.subproblem execute
+              ^desired.modifiers.handle always1
+              ^current-task-segment <seg>
+              ^task-operator <task-op>)
+   (<seg> -^finish-task true)
+   (<task-op> -^end-clause <cl>)
+-->
+   (<s> ^active-ongoing-goal true)
+}
+
+sp {subproblem*execute*elaborate*active-ongoing-goal*unsatisfied*end-clause
+   (state <s> ^problem-space.subproblem execute
+              ^desired.modifiers.handle always1
+              ^current-task-segment <seg>
+              ^task-operator.end-clause <cl>
+             -^satisfied <cl>)
+   (<seg> -^finish-task true)
+-->
+   (<s> ^active-ongoing-goal true)
+}
+
+### learning-composite-goal, create a placeholder goal
+sp {subproblem*execute*elaborate*desired*learning-composite-goal
+   (state <s> ^problem-space.subproblem execute
+              ^current-task-segment <seg>)
+   (<seg> ^current-goal.handle <node-h>
+          ^learning-composite-goal <node-h>)
+-->
+   (<s> ^desired <des>)
+   (<des> ^item-type task-goal
+          ^handle <node-h>)
+}
+
+###### conditions
+# TODO: rework how conditional actions are handled
+#sp {subproblem*execute*current*subgoal*execute*subtask*with*conditions*elaborate*predicate-test
+#   (state <s> ^problem-space.subproblem execute
+#              ^desired <des>
+#              ^task-concept-network.procedural.subtasks.subtask <subt>)
+#   (<des> ^<pnum> <pred>)
+#   (<pred> ^type subtask
+#           ^subtask-handle <subh>)
+#   (<subt> ^handle <subh>
+#           ^conditions <conds>)
+#-->
+#   (<s> ^instantiate-task-argument <arg>)
+#   (<arg> ^arg-type predicate-set
+#          ^general-arg-rep <conds>)
+#   (<s> ^evaluate-subtask-conditions <arg>)
+#}
+#
+#sp {subproblem*execute*evaluate-subtask-conditions*elaborate*predicate-test
+#   (state <s> ^problem-space.subproblem execute
+#              ^evaluate-subtask-conditions.instantiation <i>)
+#-->
+#   (<s> ^predicate-test <i>)
+#}
+#
+##

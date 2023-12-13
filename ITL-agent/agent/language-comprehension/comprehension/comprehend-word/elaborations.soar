@@ -1,0 +1,43 @@
+sp {comprehend-word*elaborate*substate
+   (state <s> ^name comprehend-word
+             -^name comprehend-construction
+              ^superstate.operator <so>)
+   (<so> ^name comprehend-word
+         ^current-word <cw>)
+-->
+   #(force-learn <s>)
+   (<s> ^current-word <cw>
+        ^created-assigners 0
+        ^retrievals 0)
+}
+
+sp {comprehend-word*elaborate*substate2
+   (state <s> ^name comprehend-word
+             -^name comprehend-construction)
+-->
+   (<s> ^comprehension-structure <cs>)
+   (<cs> ^type word)
+}
+
+
+sp {comprehend-word*expand-structure*retrieved-lexical-item 
+   (state <s> ^name << comprehend-word comprehend-construction >>
+              ^comprehension-structure.retrieved-lexical-item <x>)
+-->
+   (<s> ^retrieved-lexical-item <x>)
+}
+
+#sp {comprehend-word*expand-structure*c-s
+#   (state <s> ^name << comprehend-word comprehend-construction >>
+#              ^comprehension-structure.retrieved-lexical-item <x>)
+#-->
+#   (<s> ^expand <x>)
+#}
+#
+#sp {comprehend-word*expand-structure*super-type*c-s
+#   (state <s> ^name << comprehend-word comprehend-construction >>
+#              ^comprehension-structure.retrieved-lexical-item.super-type <x>)
+#-->
+#   (<s> ^expand <x>)
+#}
+

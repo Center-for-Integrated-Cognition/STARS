@@ -1,0 +1,286 @@
+sp {comprehend-word*propose*create-receiver
+ # :interrupt
+   (state <s> ^name << comprehend-word comprehend-construction >>
+              ^current-word <cw>
+              ^superstate <ss>
+              ^retrieved-lexical-item <id>)
+  -{(<s> ^comprehension-structure.not-merged-receiver <uri>
+         ^receiver-created <uri>)
+    (<uri> ^current-word <cw>)}
+   (<ss> -^retry)
+   (<id> -^alternative-structure)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name create-receiver
+         ^item <item>)
+}
+
+sp {comprehend-word*propose*create-receiver*alternative-structure
+ # :interrupt
+   (state <s> ^name << comprehend-word comprehend-construction >>
+              ^current-word <cw>
+              ^quiescence t
+              ^retrieved-lexical-item <id>)
+  -{(<s> ^comprehension-structure.not-merged-receiver <uri>
+         ^receiver-created <uri>)
+    (<uri> ^current-word <cw>)}
+   (<ss> -^retry)
+   (<id> ^alternative-structure)
+-->
+   (<s> ^operator <op> + =)
+   (<op> ^name create-receiver
+         ^item <item>)
+}
+
+sp {comprehend-word*compare*create-receiver
+   (state <s> ^name << comprehend-word comprehend-construction >>
+              ^operator <op1> +
+                        <op2> +)
+   (<op1> ^name create-receiver)
+   (<op2> ^name retrieve-semantic-substructure 
+         -^feature super-type)
+-->
+   (<s> ^operator <op1> < <op2>)
+}
+
+sp {comprehend-word*compare*elaborations
+   (state <s> ^name comprehend-word
+              ^operator <op1> +
+                        <op2> +)
+   (<op1> ^name retrieve-semantic-substructure
+          ^feature super-type) 
+   (<op2> ^name create-receiver)
+-->
+   (<s> ^operator <op1> > <op2>)
+}
+sp {comprehend-word*compare*create-receiver2
+   (state <s> ^name << comprehend-word comprehend-construction >>
+              ^operator <op1> +
+                        <op2> +)
+   (<op1> ^name create-receiver)
+   (<op2> ^name << remove-stale-receiver >>)
+-->
+   (<s> ^operator <op1> < <op2>)
+}
+
+sp {apply*create-receiver*create-item
+   (state <s> ^operator <op>
+              ^current-word <cw>
+              ^retrieved-lexical-item <id>
+             -^name comprehend-construction
+              ^comprehension-structure <cs>)
+   (<op> ^name create-receiver
+         ^item <item>)
+   (<id> -^super-type)
+-->
+   (<s> ^created-receiver true)
+   (<cs> ^not-merged-receiver <item>)
+   (<item> ^current-word <cw>
+           ^lt <id>
+           ^semantics <sem>)}
+
+sp {apply*create-receiver*mark-hypothetical
+   (state <s> ^operator <op>
+              ^segment <seg>
+              ^current-word <cw>
+              ^retrieved-lexical-item <id>)
+   (<op> ^name create-receiver
+         ^item <item>)
+   (<id> ^hypothetical true)
+-->
+   (<seg> ^hypothetical true)}
+
+
+
+############## Super-type ####### Must merge <id> structures (spelling and referent) with all other structures from <st>
+
+sp {apply*create-receiver*create-item*super-type
+ #:interrupt
+   (state <s> ^operator <op>
+              ^current-word <cw>
+              ^retrieved-lexical-item <id>
+             -^name comprehend-construction
+              ^comprehension-structure <cs>)
+   (<op> ^name create-receiver
+         ^item <item>)
+   (<id> ^super-type <st>
+         ^spelling <spell>)
+-->
+   (<s> ^created-receiver true)
+   (<cs> ^not-merged-receiver <item>)
+   (<item> ^current-word <cw>
+           ^original-id <id>   ## JEL Added to maintain original ID for spreading
+           ^super-type <st>
+           ^proto-lt <proto-lt>
+           ^semantics <sem>)
+   (<proto-lt> ^spelling <spell>)}
+
+sp {apply*create-receiver*create-item*super-type*copy-lt
+   (state <s> ^operator <op>
+              ^comprehension-structure.not-merged-receiver <item>)
+   (<op> ^name create-receiver
+         ^item <item>)
+   (<item> ^super-type <st>
+           ^proto-lt <plt>)
+   (<st> ^<att> <val>)
+-->
+   (<plt> ^<att> <val>
+          ^copied yes)}
+
+sp {apply*create-receiver*create-item*super-type*copy-can-be-part-of
+   (state <s> ^operator <op>
+              ^retrieved-lexical-item <id>
+              ^comprehension-structure.not-merged-receiver <item>)
+   (<op> ^name create-receiver
+         ^item <item>)
+   (<item> ^proto-lt <proto>)
+   (<id> ^{ << attachment can-be-part-of constraint relation referent referent2 quantity semantic-structure 
+               semantic-structure2 directional directional-maybe alternative-structure number tense possessive specifier >> <att> } <cbpo>)
+-->
+   (<proto> ^<att> <cbpo>)}
+
+sp {apply*create-receiver*create-item*super-type*finish
+   (state <s> ^operator <op>
+              ^comprehension-structure.not-merged-receiver <item>)
+   (<op> ^name create-receiver
+         ^item <item>)
+   (<item> ^super-type <st>
+           ^proto-lt <plt>)
+   (<plt> ^copied yes)
+-->
+   (<item> ^lt <plt>)}
+
+######### Copy Referent (so it can be modified)
+   
+sp {apply*create-receiver*create-item*copy-lt*referent
+  # :interrupt
+   (state <s> ^operator <op>
+              ^comprehension-structure.not-merged-receiver <item>)
+   (<op> ^name create-receiver
+         ^item <item>)
+   (<item> ^lt.referent <ref>)
+-->
+   (<item> ^lt-referent <nref>)}  # need a new symbol - not the lti
+
+sp {apply*create-receiver*create-item*copy-lt*referent2
+  # :interrupt
+   (state <s> ^operator <op>
+              ^comprehension-structure.not-merged-receiver <item>)
+   (<op> ^name create-receiver
+         ^item <item>)
+   (<item> ^lt.referent2 <ref>)
+-->
+   (<item> ^lt-referent2 <nref>)}  # need a new symbol - not the lti
+
+  # might need to move to higher level...
+sp {apply*create-receiver*create-item*copy-lt*referent*substructure
+   (state <s> ^operator <op>
+              ^comprehension-structure.not-merged-receiver <item>)
+   (<op> ^name create-receiver
+         ^item <item>)
+   (<item> ^lt.referent <ref>
+           ^lt-referent <ref2>)
+   (<ref> ^<att> <value>)
+-->
+   (<ref2> ^<att> <value>)}
+
+  # might need to move to higher level...
+sp {apply*create-receiver*create-item*copy-lt*referent2*substructure
+   (state <s> ^operator <op>
+              ^comprehension-structure.not-merged-receiver <item>)
+   (<op> ^name create-receiver
+         ^item <item>)
+   (<item> ^lt.referent2 <ref>
+           ^lt-referent2 <ref2>)
+   (<ref> ^<att> <value>)
+-->
+   (<ref2> ^<att> <value>)}
+
+######### Constructions
+
+sp {apply*create-receiver*create-item*construction
+   (state <s> ^operator <op>
+              ^current-word <cw>
+              ^retrieved-lexical-item <id>
+              ^name comprehend-construction
+              ^comprehension-structure <cs>)
+   (<op> ^name create-receiver
+         ^item <item>)
+  -(<cs> ^remove-receiver)
+-->
+   (<s> ^created-receiver true)
+   (<cs> ^not-merged-receiver <item>)
+   (<item> ^current-word <cw>
+           ^lt <id>)}
+
+#####
+## Use old decision count so it stays older than others that
+                           ##  have been created in the mean time.
+sp {apply*create-receiver*create-item*construction*none
+  #:interrupt
+   (state <s> ^operator <op>
+              ^current-word <cw>
+              ^retrieved-lexical-item <id>
+              ^name comprehend-construction
+              ^comprehension-structure <cs>)
+   (<op> ^name create-receiver
+         ^item <item>)
+   (<cs> ^remove-receiver.decision-count <dc>
+        -^remove-receiver.decision-count < <dc>)
+-->
+   (<s> ^created-receiver true)
+   #(write (crlf) | use old decision-count | <dc>)
+   (<cs> ^not-merged-receiver <item>)
+   (<item> ^current-word <cw>
+           ^lt <id>
+           ^decision-count <dc>)}
+
+#####
+sp {apply*create-receiver*copy-structure-type
+   (state <s> ^name << comprehend-word comprehend-construction >>
+              ^comprehension-structure.not-merged-receiver <item>)
+   (<item> ^lt.structure-type <stype>)
+-->    
+   (<item> ^structure-type <stype>)}
+
+sp {apply*create-receiver*copy-constraint
+   (state <s> ^name << comprehend-word comprehend-construction >>
+              ^comprehension-structure.not-merged-receiver <item>)
+   (<item> ^lt.constraint <stype>)
+-->    
+   (<item> ^constraint <stype>)}
+
+####
+## Add first-word true from current-word
+
+sp {apply*create-receiver*copy*first-word-true
+   (state <s> ^operator <op>
+              ^current-word.first-word true
+             -^name comprehend-construction)
+    (<op> ^name create-receiver
+          ^item <item>)
+-->
+    (<item> ^first-word true)
+}
+
+
+######## FInish
+
+sp {apply*create-receiver*create-item*finish*no-referent
+   (state <s> ^operator <op>
+              ^comprehension-structure.not-merged-receiver <item>)
+   (<op> ^name create-receiver
+         ^item <item>)
+   (<item> ^lt <lt>)
+   (<lt> -^referent)
+-->
+   (<s> ^receiver-created <item>)}
+
+sp {apply*create-receiver*create-item*finish*referent
+   (state <s> ^operator <op>
+              ^comprehension-structure.not-merged-receiver <item>)
+   (<op> ^name create-receiver
+         ^item <item>)
+   (<item> ^lt-referent)
+-->
+   (<s> ^receiver-created <item>)}

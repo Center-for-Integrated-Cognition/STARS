@@ -1,0 +1,46 @@
+Rosie: I'm ready for a new task
+Instructor: Organize office.
+Rosie: What is the next goal or subtask of organize?
+Instructor: Repeat the following tasks while an object is on the desk.
+Rosie: What is the next goal or subtask of organize?
+Instructor: Clear an object that is on the desk.
+Rosie: [LM] For pen on the desk is the goal is that the pen is in the drawer and the drawer is closed?
+Instructor: yes.
+Rosie: [LM] For paper-coffee-cup on the desk is the goal is that the paper-coffee-cup is in the trash?
+Instructor: yes.
+Rosie: [LM] For pencil on the desk is the goal is that the pencil is in the drawer and the drawer is closed?
+Instructor: yes.
+Rosie: [LM] For folder on the desk is the goal is that the folder is in the filing cabinet and the filing cabinet is closed?
+Instructor: yes.
+Rosie: [LM] For book on the desk is the goal is that the book is in the bookshelf?
+Instructor: yes.
+Rosie: [LM] For tissue on the desk is the goal is that the tissue is in the trash?
+Instructor: yes.
+Rosie: [LM] For sprite-can on the desk is the goal is that the sprite-can is in the recycling bin?
+Instructor: yes.
+Rosie: [LM] For dictionary on the desk is the goal is that the dictionary is in the drawer and the drawer is closed?
+Instructor: no.
+Rosie: [LM] For dictionary on the desk is the goal is that the dictionary is in the cabinet and the cabinet is closed?
+Instructor: no.
+Rosie: [LM] For dictionary on the desk is the goal is that the dictionary is in the drawer?
+Instructor: no.
+Rosie: [LM] For dictionary on the desk is the goal is that the dictionary is on the desk?
+Instructor: no.
+Rosie: What is the next goal or subtask of clear?
+Instructor: If the object is a dictionary then the goal is that the object is in the bookshelf.
+Rosie: [LM] For novel on the desk is the goal is that the novel is in the bookshelf?
+Instructor: yes.
+Rosie: [LM] For plastic-water-bottle on the desk is the goal is that the plastic-water-bottle is in the recycling bin?
+Instructor: yes.
+Rosie: [LM] For stapler on the desk is the goal is that the stapler is in the drawer and the drawer is closed?
+Instructor: yes.
+Rosie: [LM] For file on the desk is the goal is that the file is in the filing cabinet and the filing cabinet is closed?
+Instructor: yes.
+Rosie: What is the next goal or subtask of clear?
+Instructor: You are done.
+Rosie: What is the next goal or subtask of organize?
+Instructor: Repeat.
+Rosie: What is the next goal or subtask of organize?
+Instructor: You are done.
+Rosie: I'm ready for a new task
+

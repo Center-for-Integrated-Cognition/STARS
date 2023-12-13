@@ -1,0 +1,6 @@
+sp {satisfy-purpose*elaborate*purpose
+   (state <s> ^name satisfy-purpose
+							 ^top-state.interaction.stack.segment.purpose <purp>)
+-->
+   (<s> ^purpose <purp>)
+}

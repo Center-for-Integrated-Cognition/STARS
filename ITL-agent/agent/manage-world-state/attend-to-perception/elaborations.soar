@@ -1,0 +1,15 @@
+sp {attend-to-perception*elaborate*default-problem-space*no
+   (state <s> ^name attend-to-perception)
+-->
+   (<s> ^default-problem-space no)
+}
+
+sp {attend-to-perception*elaborate*discrepancy*info
+   (state <s> ^name attend-to-perception
+              ^superstate.operator <o>)
+   (<o> ^discrepancy-type <type>
+        ^discrepancy-info <disc>)
+-->
+   (<s> ^discrepancy-type <type>
+        ^discrepancy-info <disc>)
+}

@@ -1,0 +1,81 @@
+<?xml version="1.0" ?>
+
+<project name="mobilesim" default="build" basedir=".">
+
+  <!-- Build everything -->
+  <target name="build" depends="generate-lcmtypes,build-java,build-jar"/>
+
+  <!-- Clean everything -->
+  <target name="clean" depends="clean-lcmtypes,clean-java"/>
+
+  <!-- Dist Clean everyting -->
+  <target name="distclean" depends="clean">
+    <delete dir="build"/>
+    <delete dir="docs"/>
+    <delete file="mobilesim.jar"/>
+    <delete dir="depcache"/>
+  </target>
+
+  <!-- Build docs -->
+  <target name="docs">
+    <javadoc sourcepath="src/"
+             packagenames="*"
+             defaultexcludes="yes"
+             destdir="docs/api"
+             Public="yes"
+             source="1.6"
+	     />
+  </target>
+
+  <target name="clean-lcmtypes">
+    <exec executable="make" dir="${basedir}">
+      <arg line="-f Makefile.lcmgen clean" />
+    </exec>
+  </target>
+
+  <target name="generate-lcmtypes">
+    <exec executable="make" dir="${basedir}">
+      <arg line="-f Makefile.lcmgen" />
+    </exec>
+  </target>
+
+  <!-- Build Jar -->
+  <target name="build-jar">
+    <jar destfile="mobilesim.jar">
+
+      <fileset dir="build">
+	<include name="**/*.class" />
+	<include name="*.class" />
+      </fileset>
+
+      <manifest>
+      </manifest>
+    </jar>
+    <copy file="mobilesim.jar" todir="." />
+  </target>
+
+  <target name="build-java">
+    <mkdir dir="build"/>
+    <javac
+       srcdir="src"
+       includes="**/*.java"
+       debug="on"
+       optimize="off"
+       destdir="build"
+       compiler="extJavac"
+       deprecation="yes"
+       source="1.6"
+       target="1.6"
+       >
+    </javac>
+  </target>
+
+  <target name="clean-java" >
+    <delete>
+      <fileset dir="build" includes="**/*.class"/>
+      <fileset dir="." includes="**/*~" defaultexcludes="no"/>
+      <fileset dir="." includes="mobilesim.jar"/>
+    </delete>
+  </target>
+
+</project>

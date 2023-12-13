@@ -1,0 +1,77 @@
+### add-object-to-world
+# Add the new-object-rep to the world + perception-monitor
+
+# Add to the world
+#TTTTTTTT
+sp {anystate*apply*change-world-state*add-object-to-world*add*to*world
+#:interrupt
+   (state <s> ^operator <o>
+              ^top-state.world.objects <objs>)
+   (<o> ^name change-world-state
+        ^add-object-to-world <info>)
+   (<info> ^object <obj>)
+-->
+   (<objs> ^object <obj>)
+}
+
+# create a belief object in svs (if given perception-id)
+sp {anystate*elaborate*change-world-state*add-object-to-world*create-belief-object
+   (state <s> ^operator <o> +)
+   (<o> ^name change-world-state
+        ^add-object-to-world <info>)
+   (<info> ^object.handle <h>
+           ^perception-id <perc-id>)
+-->
+   (<o> ^create-belief-object <create-bel>)
+   (<create-bel> ^belief-id (concat |bel-| <h>)
+                 ^perception-id <perc-id>)
+}
+
+# Add to the object-monitor
+sp {anystate*apply*change-world-state*add-object-to-world*create*object-info
+   (state <s> ^operator <o>
+              ^top-state.perception-monitor.object-monitor <obj-mon>)
+   (<o> ^name change-world-state
+        ^add-object-to-world <info>)
+   (<info> ^object <obj>
+           ^perception-id <perc-id>)
+   (<obj> ^handle <h>)
+-->
+   (<obj-mon> ^object-info <obj-info>)
+   (<obj-info> ^object-handle <h>
+               ^world-obj <obj>
+               ^belief-id (concat |bel-| <h>)
+               ^perception-id <perc-id>)
+}
+
+#TTTTTTTTTTTTTTTTT
+sp {anystate*apply*change-world-state*add-object-to-world*create*object-info*no*perception-id
+#:interrupt
+   (state <s> ^operator <o>
+              ^top-state.perception-monitor.object-monitor <obj-mon>)
+   (<o> ^name change-world-state
+        ^add-object-to-world <info>)
+   (<info> ^object <obj>
+          -^perception-id)
+   (<obj> ^handle <h>)
+-->
+#(interrupt)
+   (<obj-mon> ^object-info <obj-info>)
+   (<obj-info> ^object-handle <h>
+               ^world-obj <obj>
+               ^belief-id (concat |bel-| <h>)
+               ^new-belief-object true)
+}
+
+
+###### if print-perception is on, print info
+sp {anystate*apply*change-world-state*add-object-to-world*print-perception*print
+   (state <s> ^operator <o>
+              ^agent-params.print-perception true)
+   (<o> ^name change-world-state
+        ^add-object-to-world.object <obj>)
+   (<obj> ^handle <h>)
+-->
+   (write |Adding object | <h> (crlf))
+   (write (cmd print <obj> -d 2) (crlf))
+}

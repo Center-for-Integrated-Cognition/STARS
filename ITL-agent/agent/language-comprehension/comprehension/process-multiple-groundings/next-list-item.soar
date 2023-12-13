@@ -1,0 +1,30 @@
+sp {process-multiple-groundings*propose*next-list-item
+   (state <s> ^name process-multiple-groundings
+              ^dialog-object-list { <> nil <dol> })
+-->
+   (<s> ^operator <op> + =, <)
+   (<op> ^name next-list-item
+         ^item <dol>)
+}
+
+sp {process-multiple-groundings*apply*next-list-item
+   (state <s> ^operator <op>
+              ^dialog-object-list <dol>)
+   (<op> ^name next-list-item
+         ^item <dol>)
+   (<dol> ^next <ndol>)
+-->
+   (<s> ^dialog-object-list <dol> -
+                            <ndol>)
+}
+
+## If picking the former or origianl, skip over the first item stored in dialog (which is the most recent and the latter) that matches
+sp {process-multiple-groundings*apply*next-list-item*skip
+   (state <s> ^operator <op>
+              ^object <obj> 
+              ^segment.last-merge.assigner.parent-receiver.constraint.handle << original former >>
+              ^dialog-object-list.referent <obj>)
+   (<op> ^name next-list-item)
+-->
+   (<s> ^skipped-latter true)
+}

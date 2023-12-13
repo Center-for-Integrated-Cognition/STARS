@@ -1,0 +1,317 @@
+# object-monitor.object-info.status <status>
+#   Contains information about the status of the object (visible/in-view/etc)
+
+# Elaborate the status identifier
+sp {top-state*perception-monitor*object-monitor*object-info*elaborate*status
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor.{ << object-info new-object-info >> } <obj-info>)
+-->
+   (<obj-info> ^status <status>)
+}
+
+##################################################################
+#
+# is-confirmed1 << confirmed1 not-confirmed1 >>
+#   true for objects/people if there is a belief-obj for the object (known model)
+#   true for locations if it has a known waypoint
+#
+##################################################################
+
+# For normal environments, confirmed if there is a belief object (known place in the world)
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*confirmed1
+   (state <s> ^superstate nil
+              ^agent-params.domain <> internal
+              ^perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> ^belief-obj <bel-obj>
+               ^world-obj.predicates.category << object person >>
+               ^status <status>)
+-->
+   (<status> ^is-confirmed1 confirmed1)
+}
+
+# For an internal environment, all input link objects are confirmed
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*confirmed1*internal
+   (state <s> ^superstate nil
+              ^agent-params.domain internal
+              ^perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> ^input-link-obj <il-obj>
+               ^world-obj.predicates.category << object person >>
+               ^status <status>)
+-->
+   (<status> ^is-confirmed1 confirmed1)
+}
+
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*confirmed1*location*has-waypoint
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> ^world-obj <loc>
+               ^status <status>)
+   (<loc> ^predicates.category location
+          ^waypoint <wp>)
+-->
+   (<status> ^is-confirmed1 confirmed1)
+}
+
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*not-confirmed1
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> ^status <status>)
+   (<status> -^is-confirmed1 confirmed1)
+-->
+   (<status> ^is-confirmed1 not-confirmed1)
+}
+
+##################################################################
+#
+# in-view << true false >>
+#   true if the belief object is in the robot's view volume (should be visible)
+#
+#################################################################
+
+# Fully Observable Environments, objects are always in view
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*in-view*true*tabletop
+   (state <s> ^superstate nil
+              ^agent-params.domain << tabletop fetch >>
+              ^perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> ^status <status>)
+-->
+   (<status> ^in-view true)
+}
+
+# Fully Observable Within Room - only the current room is fully visible (essentially just test if on input-link)
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*in-view*true
+   (state <s> ^superstate nil
+              ^agent-params.domain << internal ai2thor >>
+              ^perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> ^input-link-obj <il-obj>
+               ^status <status>)
+-->
+   (<status> ^in-view true)
+}
+
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*in-view*false
+   (state <s> ^superstate nil
+              ^agent-params.domain << internal ai2thor >>
+              ^perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> -^input-link-obj <il-obj>
+               ^status <status>)
+-->
+   (<status> ^in-view false)
+}
+
+# Partially Observable Domains, objects are in view if they intersect the view volume
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*in-view*from*filter
+   (state <s> ^superstate nil
+              ^agent-params.domain << magicbot cozmo >>
+              ^perception-monitor.object-monitor.object-info <obj-info>
+              ^perception-monitor.robot-view-filter.result.record <r>)
+   (<obj-info> ^belief-obj.id <bel-id>
+               ^status <status>)
+   (<r> ^params.b <bel-id>
+        ^value { <value> << true false >> })
+-->
+   (<status> ^in-view <value>)
+}
+
+
+
+##################################################################
+#
+# is-visible1 << visible1 not-visible1 >>
+#   true if there is an input-link-obj for the object
+#
+##################################################################
+
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*visible1
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> ^input-link-obj <il-obj>
+               ^status <status>)
+-->
+   (<status> ^is-visible1 visible1)
+}
+
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*visible1*current-location
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor.object-info <obj-info>
+              ^world.robot.current-location <loc>)
+   (<obj-info> ^world-obj <loc>
+               ^status <status>)
+-->
+   (<status> ^is-visible1 visible1)
+}
+
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*not-visible1
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> ^status <status>)
+   (<status> -^is-visible1 visible1)
+-->
+   (<status> ^is-visible1 not-visible1)
+}
+
+##################################################################
+#
+# distance <num>
+#   How far away the object is
+#
+##################################################################
+
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*distance
+   (state <s> ^superstate nil
+              ^perception-monitor <perc-mon>)
+   (<perc-mon> ^obj-distance-filter.result.record <rec>
+               ^object-monitor.object-info <obj-info>)
+   (<obj-info> ^perception-id <perc-id>
+               ^status <status>)
+   (<rec> ^params.b <perc-id>
+          ^value <dist>)
+-->
+   (<status> ^distance <dist>)
+}
+
+##################################################################
+#
+# is-reachable1 << reachable1 not-reachable1 >>
+#   whether the object is in reach of the arm (can pick-up)
+#
+##################################################################
+
+# For some domains, if an object is visible it is reachable
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*reachable1*if*visible
+   (state <s> ^superstate nil
+              ^agent-params.domain << fetch tabletop cozmo >>
+              ^perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> ^status <status>)
+   (<status> ^is-visible1 visible1)
+-->
+   (<status> ^is-reachable1 reachable1)
+}
+
+# For some domains, we get the reachable info from the input-link
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*reachable1*ai2thor
+   (state <s> ^superstate nil
+              ^agent-params.domain << internal ai2thor >>
+              ^perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> ^input-link-obj.property <prop>
+               ^status <status>)
+   (<prop> ^property-handle is-reachable1
+           ^predicate-handle <is-reachable>)
+-->
+   (<status> ^is-reachable1 <is-reachable>)
+}
+
+# For some domains, it is reachable if within a certain distance
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*reachable1*if*within*distance
+   (state <s> ^superstate nil
+              ^agent-params.domain magicbot
+              ^agent-params.magicbot-reachable-distance <dist>
+              ^perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> ^status <status>)
+   (<status> ^is-visible1 visible1
+             ^distance < <dist>)
+-->
+   (<status> ^is-reachable1 reachable1)
+}
+
+# Default: not-reachable
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*not-reachable1
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> ^status <status>)
+   (<status> -^is-reachable1 reachable1)
+-->
+   (<status> ^is-reachable1 not-reachable1)
+}
+
+##################################################################
+#
+# is-grabbed1 << grabbed1 not-grabbed1 >>
+#   whether the object is currently held by the arm
+#
+##################################################################
+
+# Grabbed if the arm is holding the object
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*grabbed1
+   (state <s> ^superstate nil
+              ^perception-monitor.input-link.self.arm.holding-object <id>
+              ^perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> ^perception-id <id>
+               ^status <status>)
+-->
+   (<status> ^is-grabbed1 grabbed1)
+}
+
+# Default: not-grabbed 
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*not-grabbed1
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> ^status <status>)
+   (<status> -^is-grabbed1 grabbed1)
+-->
+   (<status> ^is-grabbed1 not-grabbed1)
+}
+
+
+##################################################################
+#
+# Monitoring occluded objects
+#   is-occluded << true false >> - based on the last time occlusion was checked
+#   occlusion-timeout <secs> - says the object is occluded until the given time
+#
+##################################################################
+
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*is-occluded*true
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor.object-info <obj-info>
+              ^io.input-link.time.seconds <t>)
+   (<obj-info> ^status <status>
+               ^occlusion-timeout > <t>)
+-->
+   (<status> ^is-occluded true)
+}
+
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*is-occluded*true*in*receptacle
+   (state <s> ^superstate nil
+              ^agent-params.domain << magicbot >>
+              ^perception-monitor.object-monitor.object-info <obj-info>
+              ^world.predicates.predicate <in-pred>)
+   (<obj-info> ^status <status>
+               ^world-obj <obj>)
+   (<in-pred> ^handle in1
+              ^instance <i>)
+   (<i> ^1 <obj> ^2 <rec>)
+   (<rec> ^predicates <rec-preds>)
+   (<rec-preds> ^affordance1 receptacle1
+                ^is-open1 not-open1)
+-->
+   (<status> ^is-occluded true)
+}
+
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*is-occluded*false
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor.object-info.status <status>)
+   (<status> -^is-occluded true)
+-->
+   (<status> ^is-occluded false)
+}
+
+##################################################################
+#
+# shared-input-link-obj true
+#   true if the object shares a perception-obj with another object
+#
+#################################################################
+
+sp {top-state*perception-monitor*object-monitor*object-info*status*elaborate*shared-input-link-obj*true
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor <obj-mon>)
+   (<obj-mon> ^object-info <obj-info>
+              ^object-info { <other-info> <> <obj-info> })
+   (<obj-info> ^perception-obj <perc-obj>
+               ^status <status>)
+   (<other-info> ^perception-obj <perc-obj>)
+-->
+   (<status> ^shared-input-link-obj true)
+}
+

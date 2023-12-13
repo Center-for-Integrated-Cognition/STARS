@@ -1,0 +1,10 @@
+sp {learn-whenever-task*elaborate*parameters*superoperator
+   (state <s> ^name learn-whenever-task
+              ^superstate.operator <ssop>)
+   (<ssop> ^conditions <conds>
+           ^command-message <command>)
+-->
+   (<s> ^command-conditions <conds>
+        ^command-message <command>)
+}
+

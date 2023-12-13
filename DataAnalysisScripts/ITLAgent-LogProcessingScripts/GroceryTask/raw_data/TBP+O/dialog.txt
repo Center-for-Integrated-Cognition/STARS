@@ -1,0 +1,60 @@
+Rosie: I'm ready for a new task
+Instructor: Store groceries.
+Rosie: What is the next goal or subtask of store?
+Instructor: Repeat the following tasks while an object is in the bag.
+Rosie: What is the next goal or subtask of store?
+Instructor: Unload an object that is in the bag.
+Rosie: [LM] For cream in the bag is the goal is that the cream is in the fridge and the fridge is closed?
+Instructor: yes.
+Rosie: [LM] For orange-juice in the bag is the goal is that the orange-juice is in the fridge and the fridge is closed?
+Instructor: yes.
+Rosie: [LM] For chips in the bag is the goal is that the chips are in the pantry and the pantry is closed?
+Instructor: yes.
+Rosie: [LM] For boxed-pasta in the bag is the goal is that the boxed-pasta is in the pantry and the pantry is closed?
+Instructor: yes.
+Rosie: [LM] For yogurt in the bag is the goal is that the yogurt is in the fridge and the fridge is closed?
+Instructor: yes.
+Rosie: [LM] For eggs in the bag is the goal is that the eggs are in the fridge and the fridge is closed?
+Instructor: yes.
+Rosie: [LM] For flour in the bag is the goal is that the flour is in the cupboard and the cupboard is closed?
+Instructor: no.
+Rosie: [LM] For flour in the bag is the goal is that the flour is in the pantry and the pantry is closed?
+Instructor: yes.
+Rosie: [LM] For plastic-cups in the bag is the goal is that the plastic-cups are in the cabinet and the cabinet is closed?
+Instructor: no.
+Rosie: [LM] For plastic-cups in the bag is the goal is that the plastic-cups are in cupboard and the cupboard is closed?
+Instructor: yes.
+Rosie: [LM] For paper-plates in the bag is the goal is that the paper-plates are in the cabinet and the cabinet is closed?
+Instructor: no.
+Rosie: [LM] For paper-plates in the bag is the goal is that the paper-plates are in the pantry and the pantry is closed?
+Instructor: no.
+Rosie: [LM] For paper-plates in the bag is the goal is that the bag is in the pantry and the pantry is closed?
+Instructor: no.
+Rosie: What is the next goal or subtask of unload?
+Instructor: If the object is paper-plates then the goal is that the object is in the cupboard and the cupboard is closed.
+Rosie: [LM] For can-of-beans in the bag is the goal is that the can-of-beans is in the cupboard and the cupboard is closed?
+Instructor: no.
+Rosie: [LM] For can-of-beans in the bag is the goal is that the can-of-beans is in the cabinet and the cabinet is closed?
+Instructor: no.
+Rosie: [LM] For can-of-beans in the bag is the goal is that the can-of-beans are in the cabinet and the cabinet is closed?
+Instructor: no.
+Rosie: What is the next goal or subtask of unload?
+Instructor: If the object is a can-of-beans then the goal is that the object is in the pantry and the pantry is closed.
+Rosie: [LM] For granola in the bag is the goal is that the granola is in the pantry and the pantry is closed?
+Instructor: yes.
+Rosie: [LM] For cheese in the bag is the goal is that the cheese is in the fridge and the fridge is closed?
+Instructor: yes.
+Rosie: [LM] For butter in the bag is the goal is that the butter is in the fridge and the fridge is closed?
+Instructor: yes.
+Rosie: [LM] For apple-cider in the bag is the goal is that the apple-cider is in the fridge and the fridge is closed?
+Instructor: yes.
+Rosie: [LM] For hummus in the bag is the goal is that the hummus is in the fridge and the fridge is closed?
+Instructor: yes.
+Rosie: What is the next goal or subtask of unload?
+Instructor: You are done.
+Rosie: What is the next goal or subtask of store?
+Instructor: Repeat.
+Rosie: What is the next goal or subtask of store?
+Instructor: You are done.
+Rosie: I'm ready for a new task
+

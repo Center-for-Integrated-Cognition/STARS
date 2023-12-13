@@ -1,0 +1,73 @@
+### Operator: add-goal-predicate
+
+# once a goal predicate was constructed via construct-task-argument, 
+#   add it to the task-goal structure being created
+
+sp {task-utils*construct-task-goal*propose*add-goal-predicate
+#:interrupt
+   (state <s> ^name construct-task-goal
+              ^construct-task-argument <cta>
+              ^task-goal <goal>)
+   (<cta> ^arg-type clause
+          ^result-type goal-clause
+          ^created-arg.{1} <pred>
+         -^added-to-goal true)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name add-goal-predicate
+        ^goal-clause <cta>
+        ^predicate <pred>)
+}
+
+# The number of the predicate we are adding to the goal
+sp {task-utils*construct-task-goal*add-goal-predicate*elaborate*pred-number
+   (state <s> ^name construct-task-goal
+              ^operator <o> +
+              ^task-goal <goal>)
+   (<o> ^name add-goal-predicate)
+   (<goal> ^pred-count <n>)
+-->
+   (<o> ^pred-number (+ <n> 1))
+}
+
+#JK2023 rules to prefer order of attaching goals (made to fix bug, but may not be required, results in more consistent chunks/tcn)
+sp {task-utils*construct-task-goal*prefer*add-goal-predicate*relation*first
+   (state <s> ^name construct-task-goal
+              ^quiescence t
+              ^operator <o> +
+              ^operator <o2> +)
+   (<o> ^name add-goal-predicate
+        ^predicate.type relation)
+   (<o2> ^name add-goal-predicate
+        ^predicate.type unary)
+-->
+   (<s> ^operator <o> > <o2>)
+}
+sp {task-utils*construct-task-goal*prefer*construct-task-argument*over*add-goal-predicate
+   (state <s> ^name construct-task-goal
+              ^quiescence t
+              ^operator <o> +
+              ^operator <o2> +)
+   (<o> ^name << add-goal-conditions construct-task-argument >>)
+   (<o2> ^name add-goal-predicate)
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+# Add the predicate to the goal and increment pred-count
+sp {task-utils*construct-task-goal*apply*add-goal-predicate
+   (state <s> ^name construct-task-goal
+              ^operator <o>
+              ^task-goal <goal>)
+   (<o> ^name add-goal-predicate
+        ^goal-clause <gcl>
+        ^predicate <pred>
+        ^pred-number <pred-num>)
+   (<goal> ^pred-count <n>)
+-->
+   (<goal> ^<pred-num> <pred>
+           ^pred-count <n> -
+           ^pred-count (+ <n> 1))
+   (<gcl> ^added-to-goal true)
+}
+

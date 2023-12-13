@@ -1,0 +1,252 @@
+##!
+# @file
+#
+# @created p 20150608
+# File: lexical-access.soar
+# Author: Peter 
+# Created: 8 June 2015
+#
+# Desc: Retrieves a new input word and puts it on the state.
+#       Then various apply rules build the lexical construction.
+#
+#   This operator has a bunch of apply rules in other files
+#   that each match a specific word or list of words
+#   and create a lexical construction.
+#
+#   Lexical constructions can be normal single words, or
+#   they can be multi-word items. The apply rule for each
+#   lexical item puts a ^first-lex wme on the cxn that it
+#   creates. For single word items the value of this is nil.
+#
+#   For multi-word items it points to the lexical construction
+#   that was previously created for the fist word of this
+#   multi-word item. This is needed to connect up the stack
+#   properly after anything built from the previous words of
+#   this item is blown away.
+#
+#
+
+#    Propose an operator to process a new word
+sp {comprehend-word*propose*lexical-access
+   (state <s> ^problem-space comprehend-word
+             -^lexical-access done)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name lexical-access
+        ^type construction
+        ^debug-info (concat |Capture a new word and get its meaning.|))
+}
+
+#   Create a construction set to be used later
+sp {comprehend-word*apply*lexical-access*create-cxn-set
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>)
+   (<o> ^name lexical-access)
+-->
+   (<s> ^cxn-set <c-set>)
+}
+
+#   This apply rule sees a lexical cxn and ingests it
+#   It adds the source and stubs for the various standard
+#   parts of a lexical construction
+sp {comprehend-word*apply*lexical-access
+   (state <s> ^superstate <ss>
+              ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <lex>
+              ^input <input>)
+   (<o> ^name lexical-access)
+   (<input> ^word <word>)
+   (<word> ^word-count <count>
+           ^content <text>)
+   #	This should not be a multi-word
+   (<lex> ^m <meaning>
+          ^first-lex nil)
+   #    Find the previous stack and lexical
+   (<ss> ^comprehension.cxn-stack <stack>
+         ^comprehension.lex-stack <previous-lex>)
+-->
+   #   Add various needed augmentations
+   (<lex> ^word <word>	# A link to the input word, can serve to mark as lexical
+          ^source <source>
+          ^previous <stack>
+          ^previous-lex <previous-lex>)	# A link to the previous lexical
+   (<source> ^left <count>
+             ^right <count>)
+   (<meaning> ^source <source>
+              ^text <text>)
+   #    Mark this as the current lexical on the state
+   (<s> ^lexical <lex>)
+}
+
+#	Trivial implementation of handling evokes-ext
+#	THIS APPEARS TO NEVER FIRE
+sp {comprehend-word*apply*lexical-access*evokes-ext
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^name lexical-access)
+   (<cxn> ^source <source>
+          ^evokes-ext <evoked>)
+   (<evoked> ^schema <schema>
+             ^target <target>)
+   (<target> ^is <a>)
+-->
+   #    Put the type on the target
+   (<a> ^a-ext <schema>)
+   #    Delete the hook
+   (<cxn> ^evokes-ext <evoked> -)
+}
+
+#	Terminate lexical access when all subcases, evokes,
+#	and constraints have been resolved
+sp {comprehend-word*apply*lexical-access*all-done
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <lex>
+              ^cxn-set <c-set>)
+   (<o> ^name lexical-access)
+   #    Make sure this lexical is really done
+   (<lex> ^m <meaning>
+          ^previous <previous>
+         -^subcase-of 
+         -^evokes )
+   (<meaning> -^constraint )
+   #    Make sure no other lexical is NOT really done
+ -{(<s> ^cxn { <lex2> <> <lex> })
+   (<lex2> ^evokes )}
+ -{(<s> ^cxn { <lex3> <> <lex> })
+   (<lex3> ^subcase-of )}
+-->
+   #   Add this new construction to the construction set
+   (<c-set> ^cxn <lex>)
+   #   Set the done flag
+   (<s> ^lexical-access done)
+}
+
+
+#   This is a general rule for all  self.f.orth <-- "---" constraints
+sp {comprehend-word*apply*lexical-access*ASSIGN-orth
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^orth <orth>
+          ^f <l-slot1>)
+   (<l-slot1> ^orth nil)
+-->
+   (<l-slot1> ^orth nil -
+              ^orth <orth>)
+}
+
+#   A special rule to remove extra nil links
+sp {comprehend-word*apply*lexical-access*remove-extra-nil-link
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^m <meaning>)
+   (<meaning> ^<attr> nil
+              ^<attr> { <g> <> nil }
+              -^constraint )
+-->
+   (<meaning> ^<attr> nil -)
+}
+
+
+###########    THE FOLLOWING RULES DEAL WITH MULTI-WORD LEXICALS
+
+
+#   This apply rule sees a lexical cxn and ingests it
+#   It adds the source and stubs for the various standard
+#   parts of a lexical construction
+#   MULTI-WORD VERSION
+sp {comprehend-word*apply*lexical-access*multi-word
+   (state <s> ^superstate <ss>
+              ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <lex>
+              ^input <input>)
+   (<o> ^name lexical-access)
+   (<input> ^word <word>)
+   (<word> ^word-count <right>)
+   (<lex> ^m <meaning>
+          ^first-lex <first-lex>
+          ^text <text>)
+  (<first-lex> ^word.word-count <left>
+                ^previous <previous>
+                ^previous-lex <previous-lex>)
+-->
+   #   Add various needed augmentations
+   (<lex> ^word <word>    # A link to the last input word, can serve to mark as lexical
+          ^source <source>
+          ^previous <previous>
+          ^previous-lex <previous-lex>)    # A link to the previous lexical
+   (<source> ^left <left>
+             ^right <right>)
+   (<meaning> ^source <source>
+              ^text <text>)
+   #    Mark this as the current lexical on the state
+   (<s> ^lexical <lex>)
+}
+
+#   Snip a single word lexical that competes with the multi-word
+sp {comprehend-word*apply*lexical-access*multi-word*remove-competitor
+   (state <s> ^superstate <ss>
+              ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <lex1>
+              ^cxn { <lex2> <> <lex1> }
+              ^lexical <lex1>
+              ^lexical <lex2>)
+   (<o> ^name lexical-access)
+   (<lex1> ^first-lex { <first-lex> <> nil }
+           ^word <word>)
+   (<lex2> ^word <word>
+           ^first-lex nil)
+-->
+   #    Remove the competitor and mark it as snipped
+   (<s> ^cxn <lex2> -
+        ^lexical <lex2> -)
+   (<lex2> ^snipped true)
+}
+
+#    Terminate lexical access when all subcases, evokes,
+#    and constraints have been resolved
+#   MULTI-WORD VERSION
+sp {comprehend-word*apply*lexical-access*all-done*multi-word
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <lex>
+              ^cxn-set <c-set>)
+   (<o> ^name lexical-access)
+   (<lex> ^previous-lex <previous>
+          ^first-lex <first-lex>
+         -^subcase-of 
+         -^evokes )
+   #    Make sure we've found the right previous-lex
+   (<first-lex> ^word.word-count <left>)
+   (<previous> ^source.right { <right> < <left> })
+-->
+   #   Add this new construction to the construction set
+   (<c-set> ^cxn <lex>)
+   #   Set the done flag
+   (<s> ^lexical-access done)
+}
+
+sp {comprehend-word*apply*lexical-access*all-done*multi-word*at-start
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <lex>
+              ^cxn-set <c-set>)
+   (<o> ^name lexical-access)
+   (<lex> ^previous-lex nil
+          ^first-lex <first-lex>
+         -^subcase-of 
+         -^evokes )
+-->
+   #   Add this new construction to the construction set
+   (<c-set> ^cxn <lex>)
+   #   Set the done flag
+   (<s> ^lexical-access done)
+}

@@ -1,0 +1,8 @@
+Pick up the apple
+Put the apple on the table.
+Pick up the mug
+Open the microwave
+Put the mug in the microwave
+Close the microwave
+Set-timer the microwave for thirty
+

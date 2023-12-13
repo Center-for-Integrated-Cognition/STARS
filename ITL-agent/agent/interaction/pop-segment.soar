@@ -1,0 +1,62 @@
+sp {interaction*apply*pop-segment
+   (state <s> ^name interaction
+              ^operator <o>
+              ^top-state.interaction.stack <stack>)
+   (<o> ^name pop-segment
+        ^segment <top-seg>)
+   (<stack> ^segment <top-seg>)
+   (<top-seg> ^next <next-seg>)
+-->
+   (<stack> ^segment <top-seg> -
+            ^segment <next-seg>)
+   (<next-seg> ^prev <top-seg> -)
+}
+
+sp {interaction*apply*pop-segment*remove*terminate-segment
+   (state <s> ^name interaction
+              ^operator.name pop-segment
+              ^change-type terminate-segment
+              ^top-state.interaction.changes <c>)
+   (<c> ^terminate-segment <any>)
+-->
+   (<c> ^terminate-segment <any> -)
+}
+
+sp {interaction*apply*pop-segment*remove*clear-interaction-stack
+   (state <s> ^name interaction
+              ^operator <o>
+              ^top-state.interaction.changes <c>)
+   (<o> ^name pop-segment
+        ^segment.next.purpose none)
+   (<c> ^clear-interaction-stack true)
+-->
+   (<c> ^clear-interaction-stack true -)
+}
+
+sp {interaction*apply*pop-segment*pop*task-stack
+   (state <s> ^name interaction
+              ^operator <o>
+              ^top-state.task-stack.next <seg>)
+   (<o> ^name pop-segment
+        ^segment.purpose <p>)
+   (<p> ^type execute-task
+        ^satisfaction.task-event <e>)
+   (<e> ^type execute
+        ^task-handle <handle>)
+   (<seg> ^task-operator.task-handle <handle>)
+-->
+   (<seg> ^status success)
+}
+   
+sp {interaction*apply*pop-segment*print-interaction-stack*print
+   (state <s> ^name interaction
+              ^operator <o>
+              ^agent-params.print-interaction-stack true)
+   (<o> ^name pop-segment
+        ^segment <seg>)
+   (<seg> ^purpose <purp>)
+-->
+   (write (concat (crlf) |Popping Interaction Segment:| (crlf)))
+   (write (cmd print <seg>) (crlf))
+   (write (cmd print <purp> -d 3) (crlf))
+}

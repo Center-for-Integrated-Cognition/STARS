@@ -1,0 +1,15 @@
+# Elaborate child-task-segment from superoperator.task-segment
+sp {execute-task*elaborate*child-task-segment*superoperator
+   (state <s> ^name execute-task
+              ^superstate.operator.task-segment <seg>)
+-->
+   (<s> ^child-task-segment <seg>)
+}
+
+sp {execute-task*elaborate*task-stack*from*top-state
+   (state <s> ^name execute-task
+              ^top-state.task-stack <stack>)
+-->
+   (<s> ^task-stack <stack>)
+}
+              

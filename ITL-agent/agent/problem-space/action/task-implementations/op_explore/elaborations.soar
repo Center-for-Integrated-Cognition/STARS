@@ -1,0 +1,109 @@
+sp {op_explore1*elaborate*end-clause*from*task-operator
+   (state <s> ^name op_explore1
+              ^task-operator.end-clause <end>)
+-->
+   (<s> ^end-clause <end>)
+}
+
+#### CUSTOM GOAL HANDLING ####
+
+sp {op_explore1*elaborate*desired
+   (state <s> ^name op_explore1
+             -^copy-task-goal
+              ^current-task-segment.current-goal.handle explore1goal1)
+-->
+   (<s> ^desired <des>)
+   (<des> ^handle explore1goal1)
+}
+
+## If end-clause is satisfied, then the goal is finished
+#sp {op_explore1*execute*elaborate*desired*satisfied
+#   (state <s> ^name op_explore1
+#              ^problem-space.execution-type external
+#              ^desired <des>
+#              ^end-clause <end>
+#              ^satisfied <end>)
+#   (<des> ^handle explore1goal1)
+#-->
+#   (<des> ^satisfied true)
+#}
+#
+# If there is no end clause, wait end all waypoints are visited
+sp {op_explore1*execute*elaborate*desired*satisfied*no*end
+   (state <s> ^name op_explore1
+              ^problem-space.execution-type external
+              ^desired <des>
+             -^end-clause
+             -^unvisited-waypoint)
+   (<des> ^handle explore1goal1)
+-->
+   (<des> ^satisfied true)
+}
+
+### Failure ###
+
+sp {op_explore1*elaborate*all-waypoints-elaborated
+   (state <s> ^name op_explore1
+              ^distance-map <dist-map>
+              ^top-state.maps.map <wp-map>
+              ^world.robot.current-waypoint.handle <cur-wph>)
+   (<dist-map> ^<cur-wph>)
+   (<wp-map> ^waypoint.handle <cur-wph>)
+   # There are no waypoints that have not yet been added to the distance map
+   # (No waypoints have next waypoints not on the distance-map)
+  -{(<dist-map> ^<wph>
+               -^<next-wph>)
+   (<wp-map> ^waypoint <wp>)
+   (<wp> ^handle <wph>
+         ^next.handle <next-wph>)}
+-->
+   (<s> ^all-waypoints-elaborated true)
+}
+
+# There are no unvisited waypoints
+sp {op_explore1*elaborate*current-segment*status*failure*unsatisfied*end-clause
+   (state <s> ^name op_explore1
+              ^all-waypoints-elaborated true
+              ^current-task-segment <seg>
+             -^unvisited-waypoint)
+-->
+   (<seg> ^unrecoverable-failure explore-exhausted)
+}
+
+### Waypoint Distance Map Elaborations
+
+sp {execute-explore*elaborate*distance-map
+   (state <s> ^name op_explore1)
+-->
+   (<s> ^distance-map <map>)
+}
+
+sp {execute-explore*elaborate*distance-map*distance*0
+   (state <s> ^name op_explore1
+              ^distance-map <map>
+              ^world.robot.current-waypoint.handle <wp-handle>)
+-->
+   (<map> ^<wp-handle> 0)
+}
+
+sp {execute-explore*elaborate*distance-map*neighbors
+   (state <s> ^name op_explore1
+              ^distance-map <map>
+              ^top-state.maps.map.waypoint <wp>
+              ^world.robot.current-waypoint.handle <any>)
+   (<map> ^<wp-handle> <d>)
+   (<wp> ^handle <wp-handle>
+         ^next.handle <next-handle>)
+   -{(<map> ^<next-handle> <= <d>)}
+-->
+   (<map> ^<next-handle> (+ <d> 1))
+}
+
+sp {execute-explore*elaborate*unvisited-waypoint
+   (state <s> ^name op_explore1
+              ^distance-map.<wph> <dist>
+             -^current-task-segment.visited <wph>)
+-->
+   (<s> ^unvisited-waypoint <wph>)
+}
+

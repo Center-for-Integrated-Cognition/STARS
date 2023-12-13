@@ -1,0 +1,13 @@
+Instructor: Store groceries.
+Rosie: What is the next goal or subtask of store?
+Instructor: Repeat the following tasks while an object is in the bag.
+Rosie: What is the next goal or subtask of store?
+Instructor: Unload an object that is in the bag.
+Rosie: What is the next goal or subtask of unload?
+Instructor: You are done.
+Rosie: What is the next goal or subtask of store?
+Instructor: Repeat.
+Rosie: What is the next goal or subtask of store?
+Instructor: You are done.
+Rosie: I'm ready for a new task
+

@@ -1,0 +1,32 @@
+# Gets property information about the object from the input-link 
+#    and does some reasoning over its confidence
+#
+# io.input-link.objects.object
+#    ^property
+#      ^property-handle <prop-handle>
+#      ^predicate-handle <pred-handle>
+
+# Creates the following on the object-info
+# object-monitor.object-info.properties
+#   ^<prop-handle> <pred-handle>
+
+# Elaborate the properties identifier
+sp {top-state*perception-monitor*object-monitor*object-info*elaborate*properties
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor.{ << object-info new-object-info >> } <obj-info>)
+-->
+   (<obj-info> ^properties <props>)
+}
+
+# Elaborate predicates from the input link object
+sp {top-state*perception-monitor*object-monitor*object-info*elaborate*properties*predicate
+   (state <s> ^superstate nil
+              ^perception-monitor.object-monitor.<any-type> <obj-info>)
+   (<obj-info> ^input-link-obj.property <prop>
+               ^properties <props>)
+   (<prop> ^property-handle <prop-handle>
+           ^predicate-handle <pred-handle>)
+-->
+   (<props> ^<prop-handle> <pred-handle>)
+}
+

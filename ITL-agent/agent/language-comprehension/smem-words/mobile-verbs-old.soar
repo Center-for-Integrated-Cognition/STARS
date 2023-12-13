@@ -1,0 +1,363 @@
+#   @60999  Move DP PP 
+#   @60998  Pick DP (movable)
+#   @60997  Clean (not movable)
+#   @60996  Store DP (PP optional)
+#   @60995  Point PP
+#   @60994  Stop
+
+    
+## STOP at the intersection/t-intersection/hall/door/hallway on the left.
+smem --add {  
+           (<stop> ^spelling |stop|
+                   ^referent @101209
+                   ^super-type @60995)
+           
+           
+            (<stopx> ^spelling-single-word |stop|
+                     ^structure-type CP
+                     ^semantic-structure action
+                     ^message-type command
+                     ^referent @101209)
+            
+           (<deliver> ^spelling |deliver|
+                   ^referent @101104
+                   ^super-type @60999)
+           
+           (<fetch> ^spelling |fetch|
+                   ^referent @101105
+                   ^super-type @60998)
+           
+           (<find> ^spelling |find|
+                   ^referent @101020
+                   ^super-type @60998) 
+            
+}
+## Drive forward, down the hall
+
+## Turn left
+
+smem --add {
+           (<turn-left>  ^prior-word |turn|
+                         ^current-word |left|
+                         ^spelling |turn-left|
+                         ^structure-type CP
+                         ^semantic-structure action
+                         ^referent @101201
+                         ^semantic-structure2 arg1
+                         ^referent2 @409002
+                         ^prior-word-first true
+                         ^message-type command)
+         }
+
+## Turn right
+smem --add {
+           (<turn-right> ^prior-word |turn|
+                         ^current-word |right|
+                         ^spelling |turn-right|
+                         ^structure-type CP
+                         ^semantic-structure action
+                         ^referent @101201
+                         ^semantic-structure2 arg1
+                         ^referent2 @409001
+                         ^prior-word-first true
+                         ^message-type command)
+         }
+
+
+## Turn around
+smem --add {
+           (<turn-around> ^prior-word |turn|
+                          ^current-word |around|
+                          ^spelling |turn-around|
+                          ^structure-type CP
+                          ^semantic-structure action
+                          ^referent @101201
+                         ^semantic-structure2 arg1
+                         ^referent2 @409003
+                          ^prior-word-first true
+                          ^message-type command)
+         }
+
+########## SENSING VERBS
+# detect/see/encounter/sense DP
+smem --add {  
+           (<see> ^spelling |see|
+                  ^referent @101111
+                  ^super-type @60997)
+           
+           (<detect> ^spelling |detect|
+                     ^referent @101111
+                     ^super-type @60997)           
+            
+           (<sensex> ^spelling |sense|
+                     ^referent @101111
+                     ^super-type @60997)             
+           
+           (<encounter> ^spelling |encounter|
+                        ^referent @101111
+                      ^super-type @60997)  
+             
+           (<reach> ^spelling |reach|
+                    ^referent @101111
+                    ^super-type @60997)
+}
+##################### Different ways to say: Drive Forward 
+## Go down the hall, go forward, go to the end of the hall, go until you ...: Go PP
+smem --add {     
+           (<explore> ^spelling |explore|
+                      ^referent @101110
+                      ^super-type @60992)
+                   
+          (<go> ^spelling |go|
+                 ^referent @101206
+                 ^super-type @60992)
+           
+            (<gox> ^spelling-single-word |go|
+                   ^structure-type CP
+                   ^semantic-structure action
+                   ^message-type command
+                   ^referent @101206)          
+           ## GO
+
+#     forward
+           (<forward> ^spelling |forward|
+                      ^super-type @60995
+                      ^referent @101206) 
+
+           (<forwardx> ^spelling-single-word |forward|
+                       ^structure-type CP
+                       ^semantic-structure action
+                       ^message-type command
+                       ^referent @101206) 
+
+           (<go-forward> ^prior-word |go|
+                         ^current-word |forward|
+                         ^spelling |go-forward|
+                         ^super-type @60992
+                         ^referent @101206
+                         ^prior-word-first true)
+           
+           (<go-down> ^prior-word |go|
+                      ^current-word |down|
+                      ^spelling |go-down|
+                      ^super-type @60993
+                      ^referent @101206
+                      ^prior-word-first true)
+
+#     drive
+           (<drive> ^spelling |drive|
+                      ^super-type @60992
+                      ^referent @101206)
+
+           (<drivex> ^spelling-single-word |drive|
+                       ^structure-type CP
+                       ^semantic-structure action
+                       ^message-type command
+                       ^referent @101206) 
+
+           (<drive-forward> ^prior-word |drive|
+                            ^current-word |forward|
+                         ^spelling |drive-forward|
+                         ^super-type @60992
+                         ^referent @101206
+                         ^prior-word-first true)
+           
+
+           (<drive-down> ^prior-word |drive|
+                      ^current-word |down|
+                      ^spelling |drive-down|
+                      ^super-type @60993
+                      ^referent @101206
+                      ^prior-word-first true)
+
+}
+
+######### Follow A1202
+
+## Follow the left wall / Follow the right wall
+smem --add {
+           (<folllow> ^spelling |follow|
+                      ^super-type @60993
+                      ^referent @101202) 
+}
+   
+smem --add {
+           (<orient> ^spelling |orient|
+                      ^semantic-structure action
+                      ^referent @101203
+                      ^converts-to VP
+                      ^structure-type V
+                      ^semantic-structure action
+                      ^tense present
+                      ^number singular
+                      ^assigners  <VT1>
+                      ^converts-to VP)  
+          (<VT1> ^structure-type CARDINAL
+                 ^syntactic-structure head
+                 ^referent-type literal
+                 ^semantic-structure arg1
+                 ^required true)
+}                         
+    
+smem --add {
+           (<orient> ^spelling |face|
+                      ^semantic-structure action
+                      ^referent @101203
+                      ^converts-to VP
+                      ^structure-type V
+                      ^semantic-structure action
+                      ^tense present
+                      ^number singular
+                      ^assigners <VT1>
+                      ^converts-to VP) 
+          (<VT1> ^structure-type CARDINAL
+                 ^syntactic-structure head
+                 ^referent-type literal
+                 ^semantic-structure arg1
+                 ^required true)
+}     
+                               
+#############################################
+           
+smem --add {           
+         
+#### Wall
+           (<wall>  ^spelling |wall|
+                    ^structure-type N
+                    ^referent @4012002
+                    ^number singular)
+                      
+           (<end> ^spelling |end|
+                   ^structure-type N
+                   ^number singular
+                   ^referent @4012001)
+
+                 
+## CARDINAL DIRECTIONS: N, S, E, W
+
+           (<north>  ^spelling |north| 
+                     ^structure-type CARDINAL
+                     ^number singular
+                     ^referent @408001)
+
+           (<south>  ^spelling |south| 
+                    ^structure-type CARDINAL
+                    ^number singular
+                    ^referent @408003)
+
+          (<east>  ^spelling |east| 
+                    ^structure-type CARDINAL
+                    ^number singular
+                    ^referent  @408002)
+
+           (<west>  ^spelling |west| 
+                    ^structure-type CARDINAL
+                    ^number singular
+                    ^referent @408004)
+}
+smem --add {   
+           (<north>  ^spelling  |n|
+                    ^structure-type CARDINAL
+                    ^number singular
+                    ^referent @408001)
+
+           (<south>  ^spelling  |s|
+                    ^structure-type CARDINAL
+                    ^number singular
+                    ^referent @408003)
+           
+          (<east>  ^spelling  |e|
+                    ^structure-type CARDINAL
+                    ^number singular
+                    ^referent @408002)
+
+           (<west>  ^spelling  |w|
+                    ^structure-type CARDINAL
+                    ^number singular
+                    ^referent @408004)
+
+                      
+   
+## Adverbs in adverb.soar
+##  forward, around, backward
+
+## Adjectives;
+##  Next (the next), 
+    
+
+#### Hall
+           (<waypoint>  ^spelling |waypoint|
+                        ^structure-type N
+                        ^number singular
+                        ^referent @4012009)
+
+#### Hall
+           (<hall>  ^spelling |hall|
+                    ^structure-type N
+                    ^number singular
+                    ^referent @4012003)
+#### Hallway
+           (<hallway>  ^spelling |hallway|
+                    ^structure-type N
+                    ^number singular
+                    ^referent @4012003)
+           
+#### intersection
+           (<intersection> ^spelling |intersection|
+                    ^structure-type N
+                    ^number singular
+                    ^referent @4012005)
+
+         (<intersections> ^spelling |intersections|
+                    ^structure-type N
+                    ^number plural
+                    ^referent @4012005)
+           
+           (<junction> ^spelling |junction|
+                    ^structure-type N
+                    ^number singular
+                    ^referent @4012005)
+           
+#### door
+           (<door>  ^spelling |door|
+                    ^structure-type N
+                    ^number singular
+                    ^referent @4012004)
+           
+          (<doors>  ^spelling |doors|
+                    ^structure-type N
+                    ^number plural
+                    ^referent @4012004)
+           
+           
+                      
+#### door
+           (<doorway>  ^spelling |doorway|
+                    ^structure-type N
+                    ^number singular
+                    ^referent @4012004)
+           
+           (<doorways>  ^spelling |doorways|
+                    ^structure-type N
+                    ^number plural
+                    ^referent @4012004)
+           
+#### opening
+           (<opening>  ^spelling |opening|
+                    ^structure-type N
+                    ^number singular
+                    ^referent @4012006)
+           
+                      
+#### t-intersection
+           (<t-intersection> ^spelling |t-intersection|
+                    ^structure-type N
+                    ^number singular
+                    ^referent @4012007)
+           
+            (<room> ^spelling |room|
+                    ^structure-type N
+                    ^number singular
+                    ^referent @4012008)
+       
+}

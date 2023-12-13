@@ -1,0 +1,26 @@
+## Do an smem query to lookup the smem info about the task
+sp {task-state-no-change*elaborate*smem-query*task*handle
+   (state <s> ^name task-state-no-change
+              ^task-operator.task-handle <task-handle>
+             -^task-concept-network)
+-->
+   (<s> ^smem-query <query>)
+   (<query> ^cue <cue>
+            ^destination <s>
+            ^result-name task-concept-network
+            ^depth 160)
+   (<cue> ^handle <task-handle>)
+}
+
+# look up the goal
+sp {task-state-no-change*elaborate*smem-query*goal-id
+   (state <s> ^name task-state-no-change
+              ^current-goal-handle <goal-h>)
+-->
+   (<s> ^smem-query <query>)
+   (<query> ^cue <cue>
+            ^destination <s>
+            ^result-name goal-id
+            ^depth 60)
+   (<cue> ^handle <goal-h>)
+}

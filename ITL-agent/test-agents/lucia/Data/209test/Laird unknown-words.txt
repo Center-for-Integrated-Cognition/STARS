@@ -1,0 +1,17 @@
+triangles
+unknown
+doors
+doorway
+octagon
+study
+mauve
+taupe
+hall
+trash
+patrol
+interrogate
+transport
+in-a-row
+newverb
+newverb2
+newverb3

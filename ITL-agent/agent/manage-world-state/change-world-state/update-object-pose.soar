@@ -1,0 +1,41 @@
+##### update-object-pose
+# Change the pose of the belief object in SVS to that of the perception version
+
+# Send command to svs (not grabbed1)
+sp {anystate*apply*change-world-state*update-object-pose*svs*copy_node
+   (state <s> ^operator <o>
+              ^top-state.svs.command <cmd>)
+   (<o> ^name change-world-state
+        ^update-object-pose <obj-info>)
+   (<obj-info> ^perception-obj.id <perc-id>
+               ^belief-obj.id <bel-id>)
+-->
+   (<cmd> ^copy_transform <copy>)
+   (<copy> ^source <perc-id>
+           ^destination <bel-id>
+           ^position yes
+           ^rotation yes
+           ^scale yes)
+   (<obj-info> ^copy-command <copy>)
+}
+
+sp {topstate*apply*anyop*remove*completed*copy-command
+   (state <s> ^superstate nil
+              ^operator <o>
+              ^perception-monitor.object-monitor.object-info <obj-info>)
+   (<obj-info> ^copy-command <cmd>)
+   (<cmd> ^status success)
+-->
+   (<obj-info> ^copy-command <cmd> -)
+}
+
+# If print-perception is on, print a message
+sp {anystate*apply*change-world-state*update-object-pose*print-perception
+   (state <s> ^operator <o>
+              ^agent-params.print-perception true)
+   (<o> ^name change-world-state
+        ^update-object-pose.object-info.object-handle <obj-handle>)
+-->
+   (write |change-world-state: update-object-pose on object | <obj-handle> (crlf))
+}
+   

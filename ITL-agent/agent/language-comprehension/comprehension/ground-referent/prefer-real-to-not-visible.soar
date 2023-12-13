@@ -1,0 +1,21 @@
+sp {comprehend*apply*process-multiple-groundings
+   (state <s> ^operator <op>             
+              ^candidate-set <cs>)
+   (<cs> ^proto-referent <pr2>)
+   (<pr2> ^object <pr-d>)
+   (<pr-d> ^predicates.is-visible1 not-visible1
+          -^predicates.status live)
+   (<op> ^name prefer-real-to-not-visible)
+-->
+   (<cs> ^proto-referent <pr2> -)
+  # #(write (crlf) |Remove not visible referent: | <pr2> | when live one is available|)
+}
+sp {ground-referent*compare*prefer-real-to-not-visible
+   (state <s> ^name ground-referent
+              ^operator <op1> +
+                        <op2> +)
+   (<op1> ^name prefer-real-to-not-visible)
+   (<op2> ^name tested-referent)
+-->
+   (<s> ^operator <op1> > <op2>)
+}

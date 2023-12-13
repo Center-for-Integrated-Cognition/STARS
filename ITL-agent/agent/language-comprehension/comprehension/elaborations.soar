@@ -1,0 +1,93 @@
+#ensure original sentence is not changed
+sp {comprehension*elaborate*sentence
+   (state <s> ^superstate.operator.sentence <sentence>
+              ^segment <seg>)
+-->
+   (<seg> ^input-sentence (deep-copy <sentence>)
+          ^current-word (deep-copy <sentence>)
+          ^original-sentence (deep-copy <sentence>))
+}
+
+sp {pass-down-segment*elaborate*substate
+   (state <s> ^impasse no-change
+              ^name << print-semantics termination-processing comprehend-word comprehend-construction ground-referent process-multiple-groundings >>
+              ^superstate.segment <seg>)
+-->
+   (<s> ^segment <seg>)
+}
+
+sp {pass-down-world*elaborate*substate
+   (state <s> ^superstate <ss>
+              ^name comprehension
+              ^top-state.world-usage external
+              ^impasse no-change)
+-->
+   (<s> ^world <ss>)
+}
+
+sp {pass-down-world*elaborate*substate*ground-referent
+   (state <s> ^superstate <ss>
+              ^name ground-referent
+              ^top-state.world-usage external
+              ^impasse no-change)
+  (<ss> ^world <world>)
+-->
+   (<s> ^world <world>)
+}
+sp {comprehension*elaborate-problem-space
+   (state <s> ^name comprehension)
+-->
+   (<s> ^problem-space <ps>
+        ^desired <d>)
+   (<ps> ^default-operator-copy no
+         ^default-state-copy no
+         ^dont-copy-anything true
+         ^name comprehend)}
+
+sp {comprehension*elaborate-segment
+   (state <s> ^name comprehension
+             -^name evaluate-operator)
+-->
+   (<s> ^segment <seg>)
+   (<seg> ^semantics <sem>
+          ^last-merge <lm>)
+   (<lm> ^receiver nil
+         ^assigner nil
+         ^structure-type none)}
+
+sp {top-state*elaborate*objects*property
+   (state <s> ^superstate nil
+              ^world <w>)
+   (<w> ^object <obj>)
+   (<obj> ^property <prop>)
+   (<prop> ^name <name> ^value <value>)
+   (<value> ^label <label>)
+-->
+   (<obj> ^<name> <label>)
+}
+     
+sp {elaborate*comprehend*dialog-object-list-access*copy
+   (state <s> ^name comprehension
+              ^segment <seg>
+              ^top-state.dialog-object-list-saved <dol>)
+-->
+   (<seg> ^dialog-object-list-access <dol>)
+}
+
+#hypothetical rule for learning games
+sp {elaborate*comprehend*hypothetical*game-learning
+    :o-support
+   (state <s> ^segment <seg>
+              ^top-state.dialog-context.learning true)
+-->
+   (<seg> ^hypothetical true)}
+
+
+#hypothetical rule for parser testing
+sp {elaborate*comprehend*hypothetical*parser-testing
+    :o-support
+   (state <s> ^segment <seg>
+              ^top-state.agent-params.parser-test true
+              ^top-state.agent-params.hypothetical true)
+-->
+   (<seg> ^hypothetical true)}

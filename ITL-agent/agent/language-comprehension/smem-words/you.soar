@@ -1,0 +1,64 @@
+smem --add {
+           (<you> ^spelling |you|
+                  ^structure-type DP
+                  ^number singular
+                  ^specifier personal
+                  ^referent <id>
+                  )#^super-converts-to CP)
+            (<id> ^handle rosie 
+                  ^property <prop>)
+            (<prop> ^handle handle
+                    ^type visual)
+            
+
+           (<they> ^spelling |they|
+                    ^structure-type DP 
+                    ^specifier it
+                    #^referent <theyx> 
+                    ^number plural
+                   ^super-converts-to CP)
+#           (<theyx> ^handle they 
+#                 ^property <prop>
+#                 ^item-type object)
+
+           (<anyone> ^spelling |anyone|
+                  ^structure-type DP
+                  ^number singular
+                  ^specifier indefinite
+                  ^referent <anyone1>
+                   ^super-converts-to CP)
+            (<anyone1> ^handle anyone 
+                  ^property <prop>)
+            
+
+           (<someone> ^spelling |someone|
+                  ^structure-type DP
+                  ^number singular
+                  ^specifier indefinite
+                  ^referent <someone1>
+                   ^super-converts-to CP)
+            (<someone1> ^handle anyone 
+                  ^property <prop>)
+
+            # you sense/detect/...
+
+           (<Y-VP> ^construction |You-VP|
+                   ^structure-type CP 
+                   ^current-word VP
+                   ^prior-word |you|	
+                   ^assigners <ass1>
+                   ^prior-word-first false   # by having both - means it doesn't matter whether first or not.
+                   ^prior-word-first true)
+ #          (<ass0> ^structure-type DP
+ #                  ^lexical-item-spelling |you|
+ #                  ^before <ass1>
+ #                  ^syntactic-structure head
+ #                  ^semantic-structure agent
+ #                  ^required true)
+           (<ass1> ^structure-type VP
+                   ^required true
+                   ^syntactic-structure predicate
+                   ^semantic-structure *copy*
+                   )
+}
+                    

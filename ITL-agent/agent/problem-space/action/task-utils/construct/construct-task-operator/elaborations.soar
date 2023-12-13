@@ -1,0 +1,71 @@
+
+# [PARAM] command-message <msg>
+#   The parsed command representation from language comprehension
+sp {task-utils*construct-task-operator*elaborate*message*from*superoperator
+   (state <s> ^name construct-task-operator
+              ^superstate.operator.command-message <msg>)
+-->
+   (<s> ^command-message <msg>)
+}
+
+# [PARAM] result-name <str>
+#   The name to use when returning the result to the superstate
+sp {task-utils*construct-task-operator*elaborate*result-name*from*superoperator
+   (state <s> ^name construct-task-operator
+              ^superstate.operator.result-name <res-name>)
+-->
+   (<s> ^result-name <res-name>)
+}
+
+# [PARAM] update-tcn <bool>
+#       If true, will update the TCN with procedural information from the task-operator
+sp {task-utils*construct-task-operator*elaborate*update-tcn*from*superoperator
+   (state <s> ^name construct-task-operator
+              ^superstate.operator.update-tcn <flag>)
+-->
+   (<s> ^update-tcn <flag>)
+}
+
+### construct-task-argument elaborations
+
+
+# [FLAG] construct-task-argument.abstract true
+# abstract arguments will have an object representation that is not a world object
+#   and should not be grounded or added to the world
+
+# Elaborate abstract flag from the TCN
+sp {task-utils*construct-task-operator*elaborate*cta*object*abstract*true
+   (state <s> ^name construct-task-operator
+              ^construct-task-argument <arg>
+              ^task-concept-network <tcn>)
+   (<arg> ^arg-name <arg-name>)
+   (<tcn> ^procedural.<arg-name>.id.abstract true)
+-->
+   (<arg> ^abstract true)
+}
+
+### Special Case: Remember -> arg2 is abstract if arg3 is present
+sp {task-utils*construct-task-operator*remember*elaborate*construct-task-argument*arg2*abstract
+   (state <s> ^name construct-task-operator
+              ^command-message <msg>
+              ^construct-task-argument <arg2>)
+   (<msg> ^action.handle remember1
+          ^arg3 <arg3>)
+   (<arg2> ^arg-type object
+           ^arg-name arg2)
+-->
+   (<arg2> ^abstract true)
+}
+
+
+## Elaborate abstract flag to children structures
+#sp {task-utils*construct-task-operator*elaborate*cta*abstract*children
+#   (state <s> ^name construct-task-operator
+#              ^construct-task-argument <arg>
+#              ^construct-task-argument <child>)
+#   (<arg> ^abstract true
+#          ^<child-arg> <child>)
+#-->
+#   (<child> ^abstract true)
+#}
+

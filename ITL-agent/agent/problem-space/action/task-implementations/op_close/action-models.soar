@@ -1,0 +1,22 @@
+### Internally modeling the close task ###
+
+sp {problem-space*action*internal*elaborate*op_close1*dont-learn-action-model
+   (state <s> ^problem-space.execution-type internal
+              ^operator <o> +)
+   (<o> ^name op_close1)
+-->
+   (<o> ^dont-learn-action-model true)
+}
+
+# Change the predicate from open2 to not-open1
+sp {problem-space*action*internal*apply*op_close1*make*closed
+   (state <s> ^problem-space.name action
+              ^problem-space.execution-type internal
+              ^operator <op>)
+   (<op> ^name op_close1 
+         ^arg1.id.predicates <preds>)
+   (<preds> ^is-open1 open2)
+-->
+   (<preds> ^is-open1 open2 -
+            ^is-open1 not-open1)
+}

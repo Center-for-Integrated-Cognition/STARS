@@ -1,0 +1,32 @@
+//	The following constructions were in the separate Rosie grammar
+schema RosieLocation
+   roles
+     rosie-category
+	 name
+	 category  		//  PL 10/8/2020 Needed for Robot stuff
+	 root-category  //  PL 12/29/2020 Needed for Robot stuff
+
+schema Stove
+   subcase of RosieLocation
+   constraints
+      rosie-category <-- location
+	  name <-- stove
+
+schema Pantry
+   subcase of RosieLocation
+   constraints
+      rosie-category <-- location
+	  name <-- pantry
+
+schema Garbage
+   subcase of RosieLocation
+   constraints
+      rosie-category <-- location
+	  name <-- garbage
+
+schema Table
+   subcase of RosieLocation
+   constraints
+      rosie-category <-- location
+      name <-- table
+      category <--  table1  //  PL 10/8/2020 Needed for Robot stuff

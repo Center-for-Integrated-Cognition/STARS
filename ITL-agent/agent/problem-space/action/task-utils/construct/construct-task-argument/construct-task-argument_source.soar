@@ -1,0 +1,18 @@
+source clause.soar
+source clocktime-predicate.soar
+source concept.soar
+source conditions.soar
+source duration-predicate.soar
+source measure.soar
+source modifiers.soar
+source number.soar
+source object.soar
+source object-exists-predicate.soar
+source object-missing-predicate.soar
+source partial-predicate.soar
+#source predicate-set.soar
+source relation-predicate.soar
+source unary-predicate.soar
+source status-predicate.soar
+source temporal-clause.soar
+

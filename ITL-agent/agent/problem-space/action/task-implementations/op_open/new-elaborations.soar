@@ -1,0 +1,35 @@
+sp {op_open1*elaborate*target-object*superoperator
+   (state <s> ^name op_open1
+              ^task-operator.arg1.id <obj>)
+-->
+   (<s> ^target-object <obj>)
+}
+
+### CHECK PRECONDITIONS
+# If these are violated, quit the current task and re-plan in the parent task
+
+# violated-precondition: the target object is missing
+sp {op_open1*elaborate*violated-precondition*missing-object*target
+   (state <s> ^name op_open1
+              ^target-object <obj>)
+   (<obj> ^predicates.is-confirmed1 not-confirmed1)
+-->
+   (<s> ^violated-precondition <vp>)
+   (<vp> ^type missing-object
+         ^object <obj>)
+   (write |op_open1 fails: | <obj> | is not confirmed.|)
+}
+
+#    PL 8/10/2022
+# violated-precondition: the arm is holding an object, it is not free
+sp {op_open1*elaborate*violated-precondition*holding-object
+:interrupt
+   (state <s> ^name op_open1
+              ^top-state.world <world>)
+   (<world> ^robot <rosie>)
+   (<rosie> ^arm.holding-object true)
+-->
+   (<s> ^violated-precondition <vp>)
+   (<vp> ^type holding-object)
+   (write |op_open1 fails: the arm is holding an object.|)
+}

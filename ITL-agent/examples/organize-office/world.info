@@ -1,0 +1,48 @@
+scale 0.5
+robot 30.0 20.0 0.0
+# Building map with an outer ring of rooms surrounding inner rooms and a ring hallway in between
+# Recommend scale = 0.5
+
+#         CX CY Y  W  H
+# Rooms
+region  4 28 20 0 16 12 
+
+# Halls
+
+
+# Room 4: Mess Hall
+#         category    X     Y     Z     ROT    LEN   WID   HGT   R   G   B   # preds
+
+Desk                24.00  19.30  0.00   0   2.80  6.80  1.00               0
+Chair               22.00  21.30  0.00   0   1.30  1.30  1.30   30  30 150  1 color=blue1
+Drawer2              32.00  25.00  0.01  270   2.00  4.00  2.00               0
+Cabinet2             28.00  25.00  0.01  270   2.00  2.00  3.00               1 property=filing1
+Bin                  29.70 15.30 0.02     90   2.00  2.00  1.00 0 0 255      1 property=recycling1
+Garbage              32.50 15.30 0.02     90   2.00  2.00  1.00  80 150  80   0 
+Bookshelf             34.75  19.00  0.01   180   2.00  4.00  4.00               0
+
+SimObject stapler1         24.80 18.50  1.01     0   0.20  0.40  0.20   0  0  0  0
+SimObject file1     25.10  18.00  1.01     0   0.60  0.40  0.10   200 200 200  0
+SimObject pen1    24.75  16.25  1.01      0   0.40  0.10  0.10   100  20  20  1 rectangle
+SimObject paper-coffee-cup1  25.15  21.25 1.01     0   0.20  0.20  0.30   200 200 200 1 cylinder
+SimObject pencil1    25.20  20.75 1.01      0   0.40  0.10  0.10   241 213 146  1 rectangle
+SimObject folder1     24.20 22.00  1.01     0   0.60  0.40  0.20   241 213 146  0
+SimObject book1     24.90  19.30  1.01     0   0.40  0.60  0.20   105 105 105  0
+SimObject tissue1    24.90  22.00 1.01      0   0.40  0.40  0.1  200 200 200   1 rectangle
+SimObject sprite-can1      25.20  17.00 1.01      0   0.25  0.25  0.5  0  100  10   1 cylinder
+SimObject dictionary1     24.80 20.00  1.01     0   0.60  0.40  0.20   0 0 0  0
+SimObject novel1     24.60 17.20  1.01     0   0.60  0.40  0.20   20  20 100  0
+SimObject plastic-water-bottle1     24.80  21.25 1.01      0   0.25  0.25  0.5  200  200  200   1 cylinder
+
+
+
+#### WAYPOINT MAP 
+
+##### WALLS
+
+wallchain 4
+20 26
+36 26
+36 14
+20 14
+20 26

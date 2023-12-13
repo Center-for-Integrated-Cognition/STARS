@@ -1,0 +1,104 @@
+sp {learn-subtask-policy*elaborate*subtask-episode*superoperator
+   (state <s> ^name learn-subtask-policy
+              ^superstate.operator.subtask-episode <ep>)
+-->
+   (<s> ^subtask-episode <ep>)
+}
+
+sp {learn-subtask-policy*elaborate*goal-handle-subs*from*superstate
+   (state <s> ^name learn-subtask-policy
+              ^superstate.goal-handle-subs <subs>)
+-->
+   (<s> ^goal-handle-subs <subs>)
+}
+
+sp {learn-subtask-policy*elaborate*retrospective-learning-result*skip
+   (state <s> ^name learn-subtask-policy
+              ^subtask-operator.modifiers.handle skip-learning1)
+-->
+   (<s> ^retrospective-learning-result skip)
+}
+
+sp {learn-subtask-policy*elaborate*retrospective-learning-result*skip*whenever
+   (state <s> ^name learn-subtask-policy
+              ^subtask-operator.whenever-handle <h>)
+-->
+   (<s> ^retrospective-learning-result skip)
+}
+
+#### RECREATE THE STATE #####
+
+# deep-copy the world from the subtask-episode to the state
+sp {learn-subtask-policy*elaborate*deep-copy-world*subtask-episode
+   (state <s> ^name learn-subtask-policy
+              ^subtask-episode.world <w>)
+-->
+   (<s> ^problem-space <ps>)
+   (<ps> ^name action
+         ^world <ps-world>)
+   (<ps-world> ^source <w>
+               ^copy-type deep)
+}
+
+# deep-copy the parent task operator with respect to the copied world
+sp {learn-subtask-policy*copy-task-operator*task-operator
+   (state <s> ^name learn-subtask-policy
+              ^subtask-episode.task-stack.bottom.prev.task-operator <task-op>
+              ^deep-copy-world.copy-objects-map <map>)
+-->
+   (<s> ^copy-task-operator <cto>)
+   (<cto> ^task-operator <task-op>
+          ^destination <s>
+          ^copy-name task-operator
+          ^object-map <map>)
+}
+
+# deep-copy the subtask we want to learn with respect to the copied world
+sp {learn-subtask-policy*copy-task-operator*subtask-operator
+   (state <s> ^name learn-subtask-policy
+              ^subtask-episode.task-stack.bottom.task-operator <subtask-op>
+              ^deep-copy-world.copy-objects-map <map>)
+-->
+   (<s> ^copy-task-operator <cto>)
+   (<cto> ^task-operator <subtask-op>
+          ^destination <s>
+          ^copy-name subtask-operator
+          ^object-map <map>)
+}
+
+### current-goal-handle
+
+# elaborate the current-goal-handle from the parent task segment
+sp {learn-subtask-policy*elaborate*retrieved-goal-handle
+   (state <s> ^name learn-subtask-policy
+              ^subtask-episode.task-stack.bottom.prev.current-goal.handle <goal-h>)
+-->
+   (<s> ^retrieved-goal-handle <goal-h>)
+}
+
+# if the retrieved goal handle is not in the substitution list, elaborate it as current-goal-handle
+sp {learn-subtask-policy*elaborate*current-goal-handle*retrieved
+   (state <s> ^name learn-subtask-policy
+              ^retrieved-goal-handle <goal-h>
+              ^goal-handle-subs <subs>)
+   (<subs> -^<goal-h>)
+-->
+   (<s> ^current-goal-handle <goal-h>)
+}
+
+# if the retrieved goal handle is in the substitutions map, use the mapped value
+sp {learn-subtask-policy*elaborate*current-goal-handle*substitutions
+   (state <s> ^name learn-subtask-policy
+              ^retrieved-goal-handle <goal-h>
+              ^goal-handle-subs.<goal-h> <sub-h>)
+-->
+   (<s> ^current-goal-handle <sub-h>)
+}
+
+### performed-subtask
+sp {learn-subtask-policy*elaborate*performed-subtask
+   (state <s> ^name learn-subtask-policy
+              ^subtask-episode.task-stack.bottom.prev.performed-subtask <sub-h>)
+-->
+   (<s> ^performed-subtask <sub-h>)
+}

@@ -1,0 +1,26 @@
+sp {comprehend-construction*elaborate*substate
+   (state <s> ^name comprehend-construction
+              ^superstate.operator <so>)
+   (<so> ^name comprehend-construction
+         ^current-item <c-item>
+         ^prior-item <p-item>)
+-->
+ #  (force-learn <s>)
+   (<s> ^current-item <c-item>
+        ^prior-item <p-item>
+        ^created-assigners 0
+        ^retrievals 0)
+}
+
+sp {comprehend-construction*elaborate*substate2
+   (state <s> ^name comprehend-construction)
+-->
+   (<s> ^comprehension-structure <cs>)
+   (<cs> ^type construction)
+}
+sp {comprehend-construction*current-word
+   (state <s> ^name comprehend-construction
+              ^comprehension-structure.retrieved-lexical-item <x>)
+-->
+   (<s> ^current-word <x>)
+}

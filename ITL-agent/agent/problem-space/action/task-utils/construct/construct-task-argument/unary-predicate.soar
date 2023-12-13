@@ -1,0 +1,115 @@
+### construct unary-predicate
+
+sp {task-utils*construct-task-argument*retrieve*unary-predicate*property
+   (state <s> ^construct-task-argument <arg>)
+   (<arg> ^arg-type predicate
+          ^source <src>)
+   (<src> ^type unary
+          ^handle <handle>
+         -^property-handle)
+-->
+   (<s> ^smem-query <query>)
+   (<query> ^cue <cue>
+            ^depth 12
+            ^destination <arg>
+            ^result-name smem-content)
+   (<cue> ^handle <handle>)
+}
+
+sp {task-utils*construct-task-argument*expand*unary-predicate
+   (state <s> ^construct-task-argument <arg>)
+   (<arg> ^arg-type predicate
+          ^source <src>)
+   (<src> ^type unary
+          ^1 <obj1>)
+-->
+   (<arg> ^pred-type unary)
+
+   (<s> ^construct-task-argument <obj1-arg>)
+   (<obj1-arg> ^arg-type object
+               ^source <obj1>)
+   (<arg> ^create-obj1 <obj1-arg>)
+}
+
+sp {task-utils*construct-task-argument*unary-predicate*copy*reference-info*source
+   (state <s> ^construct-task-argument <arg>)
+   (<arg> ^arg-type predicate
+          ^source.reference-info <ref-info>)
+-->
+   (<arg> ^reference-info <ref-info>)
+}
+
+sp {task-utils*construct-task-argument*unary-predicate*copy*object1*reference-info
+   (state <s> ^construct-task-argument <arg>)
+   (<arg> ^arg-type predicate
+          ^source.type unary
+          ^reference-info <ref-info>
+          ^create-obj1 <obj1-arg>)
+   (<ref-info> ^1 <ref1>)
+-->
+   (<obj1-arg> ^reference-info <ref1>)
+}
+
+sp {task-utils*construct-task-argument*propose*construct-task-argument*unary-predicate*property*given
+   (state <s> ^construct-task-argument <arg>)
+   (<arg> ^pred-type unary
+          ^source <src>
+          ^create-obj1.created-arg <obj1arg>
+         -^created-arg)
+   (<src> ^handle <handle>
+          ^property-handle <prop-h>)
+   (<obj1arg> ^id <obj1>
+              ^reference-info <ref1>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name construct-task-argument
+        ^argument <arg>
+        ^arg-type predicate
+        ^pred-type unary
+        ^handle <handle>
+        ^property-handle <prop-h>
+        ^1 <obj1>
+        ^ref1 <ref1>)
+}
+
+sp {task-utils*construct-task-argument*propose*construct-task-argument*unary-predicate*property*from*smem
+   (state <s> ^construct-task-argument <arg>)
+   (<arg> ^pred-type unary
+          ^source.handle <handle>
+          ^smem-content.property.handle <prop-h>
+          ^create-obj1.created-arg <obj1arg>
+         -^created-arg)
+   (<obj1arg> ^id <obj1>
+              ^reference-info <ref1>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name construct-task-argument
+        ^argument <arg>
+        ^arg-type predicate
+        ^pred-type unary
+        ^handle <handle>
+        ^property-handle <prop-h>
+        ^1 <obj1>
+        ^ref1 <ref1>)
+}
+
+sp {task-utils*construct-task-argument*apply*construct-task-argument*unary-predicate
+   (state <s> ^operator <o>)
+   (<o> ^name construct-task-argument
+        ^argument <arg>
+        ^arg-type predicate
+        ^pred-type unary
+        ^handle <handle>
+        ^property-handle <prop-h>
+        ^1 <obj1>
+        ^ref1 <ref1>)
+-->
+   (<arg> ^created-arg <carg>)
+   (<carg> ^type unary
+           ^handle <handle>
+           ^property-handle <prop-h>
+           ^1 <obj1>
+           ^reference-info <ref-info>)
+   (<ref-info> ^1 <ref1>)
+}
+

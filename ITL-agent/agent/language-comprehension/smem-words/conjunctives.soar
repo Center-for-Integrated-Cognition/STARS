@@ -1,0 +1,186 @@
+# Conjunctions: for, and, but, or, nor, because, while, if, whenever, so, and yet
+#1. Coordinating conjunctions join things that are the same, and there are only seven of these. (for, and, nor, but, or, yet, so)
+#2. Correlative conjunctions are always used in pairs. (either...or, both...and)
+#3. Subordinating conjunctions join dependent clauses with independent clauses. There are many subordinating conjunctions. (because, while, whenever, since, if...)
+
+
+## The DP being predicate causes an issue with "This is red and a triangle." The
+## triangle will be ^arg1 and not ^predicate. This is because it conflicts with 
+## the use in "Stack the red block, the green block, and the orange block." which 
+## needs the conjunction DP's to be arg1.
+
+smem --add {
+           (<and> ^spelling |and|
+                  ^structure-type CONJ
+                  ^semantic-structure conjunction
+                 #^converts-to-any true
+                 #^merge-delay true
+                  )
+           
+           (<or> ^spelling |or|
+                  ^structure-type CONJ
+                  ^semantic-structure disjunction)
+           
+           (<but> ^spelling |but|
+                  ^structure-type CONJ
+                  ^semantic-structure conjunction)
+           
+           (<and2> ^current-word |and|
+                   ^prior-word |,|
+                   ^spelling |, and|
+                   ^structure-type CONJ
+                   ^semantic-structure conjunction
+                  ^converts-to-any true
+                  ^merge-delay true)
+         
+           (<and3> ^spelling |,|
+                   ^structure-type CONJ
+                   ^semantic-structure conjunction
+                   ^converts-to-any true
+                   ^merge-delay true)
+                    
+           (<and4> ^spelling |;|
+                   ^structure-type CONJ
+                   ^semantic-structure conjunction)  
+                  
+           (<and5> ^spelling |or|
+                   ^structure-type CONJ
+                   ^semantic-structure disjunction)
+           }
+
+smem --add {
+           (<CP-AND-CP> ^construction |CP-AND-CP|
+                        ^structure-type C  
+                        ^converts-to CP    # did not exist
+                        ^current-word CONJ
+                        ^prior-word CP    
+                        ^prior-word-first false   # by having both - means it doesn't matter whether first or not.
+                        ^prior-word-first true	
+                        ^assigners <ass1> <ass2> <ass3>)# <ass4>) used to include T
+           (<ass1> ^structure-type CP
+                   ^required true
+                   ^syntactic-structure sentence
+                   ^semantic-structure *embed*
+                   ^embed-structure subclause
+                   ^before <ass2>
+                   ^before <ass3>)
+           (<ass2> ^structure-type CONJ
+                   ^before <ass3>
+                   ^required true
+                   ^syntactic-structure CONJ
+                   )
+           (<ass3> ^structure-type CP
+                   ^required true
+                   ^syntactic-structure sentence
+                   ^semantic-structure *embed*
+                   ^embed-structure subclause
+                   )
+}
+
+smem --add {
+           (<CP-AND-CP> ^construction |VP-AND-VP|
+                        ^structure-type C  # was S
+                        ^converts-to CP    # did not exist
+                        ^current-word CONJ
+                        ^prior-word VP    
+                        ^prior-word-first false   # by having both - means it doesn't matter whether first or not.
+                        ^prior-word-first true	
+                        ^assigners <ass1> <ass2> <ass3>)# <ass4>) used to include T
+           (<ass1> ^structure-type VP
+                   ^required true
+                   ^syntactic-structure sentence
+                   ^semantic-structure *embed*
+                   ^embed-structure subclause
+                   ^before <ass2>
+                   ^before <ass3>
+                   )
+           (<ass2> ^structure-type CONJ
+                   ^before <ass3>
+                   ^required true
+                   ^syntactic-structure CONJ
+                   )
+           (<ass3> ^structure-type VP
+                   ^required true
+                   ^syntactic-structure sentence
+                   ^semantic-structure *embed*
+                   ^embed-structure subclause
+                   )
+           }
+
+smem --add {
+           (<VP-AND> ^construction |*-VP-AND|
+                   ^structure-type CP-AND
+                   #^current-word |and|  COMMENT out for testing CP AND CP
+                   ^prior-word VP
+                   ^prior-word-first true
+                   ^message-type command	
+                   ^assigners <ass1> )
+           (<ass1> ^structure-type VP
+                   ^required true
+                   ^syntactic-structure sentence
+                   ^semantic-structure *embed*
+                   ^embed-structure subclause
+                   )
+}
+
+smem --add {
+           (<CP-AND-CP> ^construction |CP-AND-VP-T|
+                        ^structure-type S 
+                        ^current-word VP
+                        ^prior-word CP-AND
+                        ^prior-word-first false   # by having both - means it doesn't matter whether first or not.
+                        ^prior-word-first true	
+                        ^assigners <ass1> <ass2> <ass3>)
+           (<ass1> ^structure-type CP-AND
+                   ^required true
+                   ^syntactic-structure sentence
+                   ^semantic-structure *embed*
+                   ^embed-structure subclause)
+           (<ass2> ^structure-type VP
+                   ^after <ass1>
+                   ^required true
+                   ^semantic-structure *embed*
+                   ^embed-structure subclause)
+          (<ass3> ^structure-type T
+                  ^after <ass2>
+                  ^required true
+                  ^syntactic-structure terminator)
+}
+
+####### Comment out for conjunction between two CPs. 
+
+smem --add {
+           (<and> ^structure-type C-CONJ
+                  ^spelling |Conj-ADJ|
+                #  ^current-word CONJ
+                  ^converts-to CONJP
+                 # ^prior-word C
+                  ^prior-word-first false   # by having both - means it doesn't matter whether first or not.
+                  ^prior-word-first true	
+                  ^assigners <ass0> <ass1> <ass2> <ass3>)
+           (<ass0> ^structure-type CONJ
+                   ^before <ass1> <ass2> <ass3>
+                   ^required true
+                   ^syntactic-structure CONJ
+                   )
+           (<ass1> ^structure-type ADJ
+                   ^exclusive <ass2> <ass3>
+                   ^relative-position after
+                   ^syntactic-structure nil
+                   ^semantic-structure predicate
+                   ^referent-type literal
+                   ^optional true)
+           (<ass2> ^structure-type DP
+                   ^exclusive <ass1> <ass3>
+                   ^relative-position after
+                   ^syntactic-structure nil
+                   ^semantic-structure predicate
+                   ^optional true)
+           (<ass3> ^structure-type PP
+                   ^exclusive <ass1> <ass2> 
+                   ^relative-position after
+                   ^syntactic-structure complement
+                   ^semantic-structure predicate
+                   ^optional true)
+}
+

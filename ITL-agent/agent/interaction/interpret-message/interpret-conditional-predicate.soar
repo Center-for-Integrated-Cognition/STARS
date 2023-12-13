@@ -1,0 +1,785 @@
+###################################################################
+#
+# interpret-conditional-predicate
+#   Occurs when 
+#
+###################################################################
+
+############################
+sp {interpret-message*propose*interpret-done-teaching
+   (state <s> ^name interpret-message
+   		  	  ^top-state.dialog-context <dc>
+              -^top-state.dialog-context.learn-link
+              ^instructor-message <msg>)
+   (<msg> ^message-type finished
+          -^interaction-status.failure
+         -^interpreted true)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name interpret-done-teaching
+        ^message <msg>)
+}
+
+sp {interpret-message*apply*interpret-done-teaching*create*segment*finished-game-teaching
+   (state <s> ^name interpret-message
+              ^operator <o>)
+   (<o> ^name interpret-done-teaching
+        ^message <msg>)
+-->
+   (<s> ^new-segment-info <info>
+        ^mark-interpreted <msg>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type finished-game-teaching
+        ^parameters.message <msg>
+        ^satisfaction <sat>)
+   (<sat> ^learning-event.type game)
+}
+
+#######
+# OPERATOR PROPOSAL
+#######
+
+# ASKJAMES
+sp {interpret-message*propose*interpret-conditional-predicate
+   (state <s> ^name interpret-message
+              ^instructor-message <msg>)
+   (<msg> ^message-type conditional
+         -^interpreted true)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name interpret-conditional-predicate
+        ^message <msg>)
+}
+
+######
+# OPERATOR ELABORATIONS
+######
+
+# Elaborate useful information from the message onto the operator
+
+
+#####
+# MESSAGE CATEGORIZATION
+#####
+
+sp {interpret-message*elaborate*interpret-conditional-predicate*purpose*learn-action-predicate-definition
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context.type game-learning
+              -^top-state.dialog-context.learning-predicate
+              ^operator <o> +)
+   (<o> ^name interpret-conditional-predicate)
+-->
+   (<o> ^purpose learn-action-predicate-definition)
+}
+
+sp {interpret-message*elaborate*interpret-conditional-predicate*purpose*learn-predicate-definition
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context.learning-predicate
+              ^operator <o> +)
+   (<o> ^name interpret-conditional-predicate)
+-->
+   (<o> ^purpose learn-predicate-definition)
+}
+
+sp {interpret-message*elaborate*interpret-conditional-predicate*purpose*conditional-task
+   (state <s> ^name interpret-message
+              ^top-state.interaction.stack.segment.purpose.type << get-next-subaction get-next-goal >>
+              ^operator <o> +)
+   (<o> ^name interpret-conditional-predicate
+        ^message.then-subclause <then>)
+   (<then> -^arg1.handle goal)
+-->
+   (<o> ^purpose conditional-task)
+}
+
+sp {interpret-message*elaborate*interpret-conditional-predicate*purpose*conditional-goal
+   (state <s> ^name interpret-message
+              ^top-state.interaction.stack.segment.purpose.type << get-next-subaction get-next-goal >>
+              ^operator <o> +)
+   (<o> ^name interpret-conditional-predicate
+        ^message.then-subclause <then>)
+   (<then> ^arg1.handle goal)
+-->
+   (<o> ^purpose conditional-goal)
+}
+
+
+###########################
+# Purpose: learn-predicate-definition
+sp {interpret-message*apply*interpret-conditional-predicate*create*segment*learn-property-predicate
+   (state <s> ^name interpret-message
+              ^top-state.interaction.status <status>
+            -^agent-params.learn-multiple-versions true
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-predicate-definition
+        ^message <msg>)
+-->
+   (<status> ^performed.dialog-event <de>)
+   (<de> ^type process-unknown-word
+         ^originator instructor)
+   (<s> ^new-segment-info <info>
+        ^mark-interpreted <msg>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type learn-property-predicate
+        ^parameters.message <msg>
+        ^satisfaction <sat>)
+   (<sat> ^learning-event.type game)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*create*segment*learn-property-predicate*multi-versions
+   (state <s> ^name interpret-message
+              ^top-state.interaction.status <status>
+              ^top-state.dialog-context.learning-predicate <lp>
+              ^smem.command <sc>
+              ^agent-params.learn-multiple-versions true
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-predicate-definition
+        ^message <msg>)
+   (<lp> ^name <name> ^spelling <spelling>)
+-->
+   (<sc> ^store <h1> <prop>) 
+   (<h1> ^handle <name> ^handle-spelling <spelling> ^property <prop>)
+   (<prop> ^handle property ^type visual) #todo maybe problem storing multiple of these
+   (<status> ^performed.dialog-event <de>)
+   (<de> ^type process-unknown-word
+         ^originator instructor)
+   (<s> ^new-segment-info <info>
+        ^mark-interpreted <msg>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type learn-property-predicate
+        ^parameters.message <msg>
+        ^satisfaction <sat>)
+   (<sat> ^learning-event.type game)
+}
+
+###########################
+# Purpose: learn-action-predicate-defintion
+sp {interpret-message*apply*interpret-conditional-predicate*create*segment*learn-action-predicate-definition
+   (state <s> ^name interpret-message
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-action-predicate-definition
+        ^message <msg>)
+   (<msg> -^then-subclause.action.handle lose -^then-subclause.action.handle lose1 -^action.handle << avoid has consider prefer avoid1 has1 consider1 prefer1 >> -^then-subclause.action.handle << avoid consider prefer avoid1 consider1 prefer1 >>)
+-->
+   (<s> ^new-segment-info <info>
+        ^mark-interpreted <msg>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type learn-action-predicate
+        ^parameters.message <msg>
+        ^satisfaction <sat>)
+   (<sat> ^learning-event.type game)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*create*segment*learn-start-depth
+   (state <s> ^name interpret-message
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-action-predicate-definition
+        ^message <msg>)
+   (<msg> ^agent.handle solution1 ^action.handle << has1 has >> -^then-subclause.action.handle << lose lose1 avoid consider prefer avoid1 consider1 prefer1 >>)
+-->
+   (<s> ^new-segment-info <info>
+        ^mark-interpreted <msg>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type learn-start-depth
+        ^parameters.message <msg>
+        ^satisfaction <sat>)
+   (<sat> ^learning-event.type game)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*create*segment*learn-start-depth2
+   (state <s> ^name interpret-message
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-action-predicate-definition
+        ^message <msg>)
+   (<msg> ^agent.predicates.category solution1 ^action.handle << has1 has >> -^then-subclause.action.handle << lose lose1 avoid consider prefer avoid1 consider1 prefer1 >>)
+-->
+   (<s> ^new-segment-info <info>
+        ^mark-interpreted <msg>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type learn-start-depth
+        ^parameters.message <msg>
+        ^satisfaction <sat>)
+   (<sat> ^learning-event.type game)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*create*segment*learn-heuristic-predicate-definition*then
+   (state <s> ^name interpret-message
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-action-predicate-definition
+        ^message <msg>)
+   (<msg> -^then-subclause.action.handle << lose1 lose >> ^then-subclause.action.handle << avoid consider prefer avoid1 consider1 prefer1 >>)
+-->
+   (<s> ^new-segment-info <info>
+        ^mark-interpreted <msg>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type learn-heuristic-predicate
+        ^parameters.message <msg>
+        ^satisfaction <sat>)
+   (<sat> ^learning-event.type game)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*create*segment*learn-heuristic-predicate-definition
+   (state <s> ^name interpret-message
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-action-predicate-definition
+        ^message <msg>)
+   (<msg> -^then-subclause.action.handle << lose lose1 >> ^action.handle << avoid consider prefer avoid1 consider1 prefer1 >>)
+-->
+   (<s> ^new-segment-info <info>
+        ^mark-interpreted <msg>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type learn-heuristic-predicate
+        ^parameters.message <msg>
+        ^satisfaction <sat>)
+   (<sat> ^learning-event.type game)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*create*segment*learn-failure-predicate
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc>
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-action-predicate-definition
+        ^message <msg>)
+    (<dc> -^needs-failure-setup ^type game-learning ^learn-link)
+   (<msg> ^then-subclause.action.handle << lose1 lose >>)
+-->
+   (<s> ^new-segment-info <info>
+        ^mark-interpreted <msg>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type learn-failure-predicate
+        ^parameters.message <msg>
+        ^satisfaction <sat>)
+   (<sat> ^learning-event.type game)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*create*segment*learn-action-predicate-definition*setup-failure
+   (state <s> ^name interpret-message
+              ^top-state.interaction.changes <changes>
+              ^top-state.dialog-context <dc>
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-action-predicate-definition
+        ^message <msg>)
+    (<dc> ^needs-failure-setup ^type game-learning ^learn-link)
+   (<msg> ^then-subclause.action.handle << lose1 lose >>)
+-->
+    (<dc> ^parsed-failure <msg>)
+    (<msg> ^interpreted true)
+   (<changes> ^outgoing-message <msg2>)
+   (<msg2> ^type setup-failure
+              ^complete-message true)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*default-name
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> #^name interpret-conditional-predicate
+       # ^purpose learn-action-predicate-definition
+        ^message <msg>)
+   (<dc> -^learn-link -^store-learn-link ^structure.actions <a> ^type game-learning)
+   (<msg> ^action -^action.handle << avoid has consider prefer avoid1 has1 consider1 prefer1 >> -^then-subclause.action.handle << avoid consider prefer avoid1 consider1 prefer1 >>)
+-->
+    (<dc> ^learn-link <ll>)
+    (<a> ^action <ll>)
+    (<ll> ^handle (make-constant-symbol action-default) 
+         ^item-type predicate ^predicate-structure <p>
+       ^type action ^word-structure <n>)
+  (<n> ^referent <ll> ^spelling default)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*default-name*heuristic
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> #^name interpret-conditional-predicate
+       # ^purpose learn-action-predicate-definition
+        ^message <msg>)
+   (<dc> -^learn-link -^store-learn-link ^type game-learning)
+   (<msg> ^action.handle << avoid consider prefer avoid1 consider1 prefer1 >>)
+-->
+    (<dc> ^learn-link <ll>)
+    (<ll> ^handle (make-constant-symbol heuristic-default) 
+         ^item-type predicate ^predicate-structure <ps> #
+         ^ntype heuristic ^word-structure <n>) #
+    (<n> ^referent <ll> ^spelling default)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*default-name*heuristic*then
+#:interrupt
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> #^name interpret-conditional-predicate
+       # ^purpose learn-action-predicate-definition
+        ^message <msg>)
+   (<dc> -^learn-link -^store-learn-link ^type game-learning)
+   (<msg> ^then-subclause.action.handle << avoid consider prefer avoid1 consider1 prefer1 >>)
+-->
+    (<dc> ^learn-link <ll>)
+    (<ll> ^handle (make-constant-symbol heuristic-default) 
+         ^item-type predicate #^predicate-structure <ps>
+         ^ntype heuristic)# ^word-structure <n>)
+ # (<n> ^referent <ll> ^spelling default)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*default-name*then-cluase
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> #^name interpret-conditional-predicate
+       # ^purpose learn-action-predicate-definition
+        ^message <msg>)
+   (<dc> -^learn-link -^store-learn-link ^structure.actions <a> ^type game-learning)
+   (<msg> ^then-subclause.action <act> -^action.handle << avoid consider prefer avoid1 consider1 prefer1 >> -^then-subclause.action.handle << avoid consider prefer avoid1 consider1 prefer1 >>)
+   (<act> -^handle << has is1 lose lose1 has1 >>)
+-->
+    (<dc> ^learn-link <ll>)
+    (<a> ^action <ll>)
+    (<ll> ^handle (make-constant-symbol action-default) 
+         ^item-type predicate ^predicate-structure <p>
+       ^type action ^word-structure <n>)
+  (<n> ^referent <ll> ^spelling default)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*default-name*then-clause*two*action
+#:interrupt
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> #^name interpret-conditional-predicate
+       # ^purpose learn-action-predicate-definition
+        ^message <msg>)
+   (<dc> -^learn-link -^store-learn-link ^structure.actions <a> ^type game-learning)
+   (<msg> ^then-subclause <ts1> -^action.handle << avoid consider prefer avoid1 consider1 prefer1 >> -^then-subclause.action.handle << avoid consider prefer avoid1 consider1 prefer1 >>)
+   (<ts1> ^subclause.action <act> ^subclause.action <act2> > <act>)
+   (<act> -^handle << has is1 lose has1 lose1 >>)
+-->
+    (<dc> ^learn-link <ll>)
+    (<a> ^action <ll>)
+    (<ll> ^handle (make-constant-symbol action-default) 
+         ^item-type predicate ^predicate-structure <p>
+       ^type action ^word-structure <n>)
+  (<n> ^referent <ll> ^spelling default)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*default-name*goal
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> #^name interpret-conditional-predicate
+       # ^purpose learn-action-predicate-definition
+        ^message <msg>)
+   (<dc> -^learn-link -^store-learn-link ^structure.goals <a> ^type game-learning)
+   (<msg> ^arg1.handle goal)
+-->
+    (<dc> ^learn-link <ll> ^needs-goal-setup true)
+    (<a> ^goal <ll>)
+    (<ll> ^handle (make-constant-symbol goal-default) 
+         ^item-type predicate ^predicate-structure <p>
+       ^type goal ^word-structure <n>)
+  (<n> ^referent <ll> ^spelling default)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*default-name*failure
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> #^name interpret-conditional-predicate
+       # ^purpose learn-action-predicate-definition
+        ^message <msg>)
+   (<dc> -^learn-link -^store-learn-link ^structure.failures <a> ^type game-learning)
+   (<msg> ^then-subclause.action.handle << lose1 lose >>)
+-->
+    (<dc> ^learn-link <ll> ^needs-failure-setup true)
+    (<a> ^failure <ll>)
+    (<ll> ^handle (make-constant-symbol failure-default) 
+         ^item-type predicate ^predicate-structure <p>
+       ^type failure ^word-structure <n>)
+  (<n> ^referent <ll> ^spelling default)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*default-name*goal-demo
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> #^name interpret-conditional-predicate
+       # ^purpose learn-action-predicate-definition
+        ^message <msg>)
+   (<dc> -^learn-link -^store-learn-link ^structure.goals <a> ^type game-learning)
+   (<msg> ^arg1 <arg1>)
+   (<arg1> ^handle state1 ^predicates.property << current1 current >>)
+-->
+    (<dc> ^learn-link <ll>)
+    (<a> ^goal <ll>)
+    (<ll> ^handle (make-constant-symbol goal-default) 
+         ^item-type predicate ^predicate-structure <p>
+       ^type goal ^word-structure <n>)
+  (<n> ^referent <ll> ^spelling default)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*copy-old-link
+#:interrupt
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-predicate-definition
+        ^message <msg>)
+   (<dc> ^learn-link <ll>)
+   (<ll> ^type << action goal failure >>)
+-->
+    (<dc> ^store-learn-link <ll>)
+    (<dc> ^learn-link <ll> -)
+}
+
+#clear results from stored-learn-link, on any interpret-message
+
+sp {interpret-message*apply*clean-results-from*store-learn-link*remove-instance
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<dc> ^store-learn-link <ll>)
+   (<ll> ^predicate-structure.conditions <c>)
+   (<c> ^result.set <res> -^name number)
+   (<res> ^instance <i>)
+-->
+   (<res> ^instance <i> -)
+}
+
+sp {interpret-message*apply*clean-results-from*store-learn-link*remove-instance2
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<dc> ^store-learn-link <ll>)
+    (<ll> ^predicate-structure.conditions.args.<n> <c>)
+    (<c> ^result.set <res> -^name number)
+    (<res> ^instance <i>)
+-->
+    (<res> ^instance <i> -)
+}
+
+sp {interpret-message*apply*clean-results-from*store-learn-link*remove-instance3
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<dc> ^store-learn-link <ll>)
+    (<ll> ^predicate-structure.conditions.args.<n>.args.<n1> <c>)
+    (<c> ^result.set <res> -^name number)
+    (<res> ^instance <i>)
+-->
+    (<res> ^instance <i> -)
+}
+
+sp {interpret-message*apply*clean-results-from*store-learn-link*remove-instance4
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<dc> ^store-learn-link <ll>)
+    (<ll> ^predicate-structure.conditions.args.<n>.args.<n1>.args.<n2> <c>)
+    (<c> ^result.set <res> -^name number)
+    (<res> ^instance <i>)
+-->
+    (<res> ^instance <i> -)
+}
+
+sp {interpret-message*apply*clean-results-from*store-learn-link*remove-instance5
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<dc> ^store-learn-link <ll>)
+    (<ll> ^predicate-structure.conditions.args.<n>.args.<n1>.args.<n2>.args.<n3> <c>)
+    (<c> ^result.set <res> -^name number)
+    (<res> ^instance <i>)
+-->
+    (<res> ^instance <i> -)
+}
+
+#link between grammar and multi terms needs to be better defined
+sp {interpret-message*apply*interpret-conditional-predicate*create*context-links
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-predicate-definition
+        ^message <msg>)
+   (<dc> ^learning-predicate <lp>)
+   (<msg> ^then-subclause <tc>)
+   (<tc> ^arg1 <obj> ^predicate <pred> -^arg2)
+   (<pred> ^handle <name> -^2 ^property <p>)
+   (<lp> ^name <name>)
+-->
+   (<dc> ^learn-link <ll>)
+   (<ll> ^handle <name> ^item-type predicate ^property <p> ^predicate-structure <pss>)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*create*context-links*in*set
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-predicate-definition
+        ^message <msg>)
+   (<dc> ^learning-predicate <lp>)
+   (<msg> ^then-subclause <tc>)
+   (<tc> ^arg1 <obj> ^predicate <pred> -^arg2)
+   (<pred> ^handle in1 ^2 <arg2> ^item-type predicate -^property)
+   (<lp> ^name <name>)
+   (<arg2> ^item-type object ^predicates <pp>)
+   (<pp> ^property <name>)
+-->
+   (<dc> ^learn-link <ll>)
+   (<ll> ^handle <name> ^item-type predicate ^property <prop> ^predicate-structure <pss>)
+   (<prop> ^handle property ^item-type property ^type visual)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*create*context-links*in*set*spelling
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-predicate-definition
+        ^message <msg>)
+   (<dc> ^learning-predicate <lp>)
+   (<msg> ^then-subclause <tc>)
+   (<tc> ^arg1 <obj> ^predicate <pred> -^arg2)
+   (<pred> ^handle in1 ^2 <arg2> ^item-type predicate -^property)
+   (<lp> ^spelling <name> ^name {<name2> <> <name>})
+   (<arg2> ^item-type object ^predicates <pp>)
+   (<pp> ^property <name>)
+-->
+   (<dc> ^learn-link <ll>)
+   (<ll> ^handle <name2> ^item-type predicate ^property <prop> ^predicate-structure <pss>)
+   (<prop> ^handle property ^item-type property ^type visual)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*create*context-links*visual-unary
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-predicate-definition
+        ^message <msg>)
+   (<dc> ^learning-predicate <lp>)
+   (<msg> ^then-subclause <tc>)
+   (<tc> ^arg1 <obj> ^predicate <pred> -^arg2)
+   (<pred> ^handle <name> -^2 ^item-type predicate -^property)
+   (<lp> ^name <name>)
+-->
+   (<dc> ^learn-link <ll>)
+   (<ll> ^handle <name> ^item-type predicate ^property <prop> ^predicate-structure <pss>)
+   (<prop> ^handle property ^item-type property ^type visual)
+}
+#here
+sp {interpret-message*apply*interpret-conditional-predicate*create*context-links*spelling
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-predicate-definition
+        ^message <msg>)
+   (<dc> ^learning-predicate <lp>)
+   (<msg> ^then-subclause <tc>)
+   (<tc> ^arg1 <obj> ^predicate <pred> -^arg2)
+   (<pred> ^handle <name> -^2 ^property <p>)
+   (<lp> ^spelling <name> ^name <name2>)
+-->
+   (<dc> ^learn-link <ll>)
+   (<ll> ^handle <name2> ^item-type predicate ^property <p> ^predicate-structure <pss>)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*create*context-links*2args*spelling
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-predicate-definition
+        ^message <msg>)
+   (<dc> ^learning-predicate <lp>)
+   (<msg> ^then-subclause <tc>)
+   (<tc> ^arg1 <obj> ^predicate <pred> -^arg2)
+   (<pred> ^handle <name> ^2 <obj2> -^handle of1)
+   (<lp> ^spelling <name> ^name {<name2> <> <name>})
+-->
+   (<dc> ^learn-link <ll>)
+   (<ll> ^handle <name2> ^item-type predicate ^predicate-structure <pss>)
+} 
+sp {interpret-message*apply*interpret-conditional-predicate*create*context-links*2args
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-predicate-definition
+        ^message <msg>)
+   (<dc> ^learning-predicate <lp>)
+   (<msg> ^then-subclause <tc>)
+   (<tc> ^arg1 <obj> ^predicate <pred> -^arg2)
+   (<pred> ^handle <name> ^2 <obj2> -^handle of1)
+   (<lp> ^name <name>)
+   (<dc> -^learn-link.handle <name>)
+-->
+   (<dc> ^learn-link <ll>)
+   (<ll> ^handle <name> ^item-type predicate ^predicate-structure <pss>)
+}
+
+#teaching attribute-of predicate-function
+sp {interpret-message*apply*interpret-conditional-predicate*create*context-links*2args*attribute-of
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-predicate-definition
+        ^message <msg>)
+   (<dc> ^learning-predicate <lp>)
+   (<msg> ^then-subclause <tc>)
+   (<tc> ^arg1 <obj> ^predicate <pred> -^arg2)
+   (<pred> ^handle of1 ^2 <pred2> ^item-type predicate)
+   (<pred2> ^handle <name> ^2 <obj2>)
+   (<lp> ^name <name>)
+   (<dc> -^learn-link.handle <name>)
+-->
+   (<dc> ^learn-link <ll>)
+   (<ll> ^handle <name> ^item-type predicate ^predicate-structure <pss>)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*create*context-links*2args*attribute-of*spelling
+   (state <s> ^name interpret-message
+              ^top-state.dialog-context <dc> 
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-predicate-definition
+        ^message <msg>)
+   (<dc> ^learning-predicate <lp>)
+   (<msg> ^then-subclause <tc>)
+   (<tc> ^arg1 <obj> ^predicate <pred> -^arg2)
+   (<pred> ^handle of1 ^2 <pred2> ^item-type predicate)
+   (<pred2> ^handle <name> ^2 <obj2>)
+   (<lp> ^spelling <name> ^name {<name2> <> <name>})
+-->
+   (<dc> ^learn-link <ll>)
+   (<ll> ^handle <name2> ^item-type predicate ^predicate-structure <pss>)
+} 
+
+#TODO need this rule?
+sp {interpret-message*apply*interpret-conditional-predicate*learn-goal-definition*terminate*segment
+   (state <s> ^name interpret-message
+              ^operator <o>
+	      		^current-purpose.satisfaction.dialog-event <de>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose learn-predicate-definition)
+   (<de> ^type goal-description
+         ^originator instructor)
+-->
+   (<s> ^terminate-segment true)
+}
+
+#TODO need this rule?
+sp {interpret-message*apply*interpret-conditional-predicate*remove*unknown-word*failure
+   (state <s> ^name interpret-message
+              ^operator <o>
+              ^top-state.interaction.status <status>)
+   (<o> ^name interpret-conditional-predicate
+        ^predicate.spelling <word>)
+   (<status> ^failure <f>)
+   (<f> ^type unknown-word
+        ^word <word>)
+-->
+   (<status> ^failure <f> -)
+}
+
+###########################
+# Purpose: conditional-task
+sp {interpret-message*apply*interpret-conditional-predicate*conditional-task*create*segment
+   (state <s> ^name interpret-message
+              ^top-state.interaction.status <status>
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose conditional-task
+        ^message <msg>)
+   (<msg> ^if-subclause <if-clause>
+          ^then-subclause <command>)
+-->
+   (<s> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type execute-task
+        ^parameters <params>
+        ^satisfaction.task-event <e>)
+   (<params> ^conditions <if-clause>
+             ^command-message <command>)
+   (<command> ^task-source instruction)
+   (<e> ^type completed-task
+        ^task-handle <task-handle>)
+   (<msg> ^interpreted true)
+}
+
+
+###########################
+# Purpose: conditional-goal
+
+sp {interpret-message*apply*interpret-conditional-predicate*conditional-goal*create*segment
+   (state <s> ^name interpret-message
+              ^message-context.parameters.task-operator <task-op>
+              ^top-state.interaction.status <status>
+              ^operator <o>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose conditional-goal
+        ^message <msg>)
+   (<msg> ^if-subclause <conds>
+          ^then-subclause <goal>)
+-->
+   (<s> ^new-segment-info <info>
+        ^mark-interpreted <msg>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type learn-task-goal
+        ^parameters <params>
+        ^satisfaction <sat>)
+   (<params> ^task-operator <task-op>
+             ^conditions <conds>
+             ^goal-message <goal>)
+   (<sat> ^task-event.type learned-task-goal)
+}
+#TODO ugly rule make less specific
+# sp {debugging-rules*print-used-task*top-state*print*new-message
+#    (state <s> ^superstate nil
+#               ^interaction.stack.segment <seg>
+#               -^agent-params.use-language-model true
+#               ^current-sentence.original-sentence.complete-sentence <text>)
+#    (<seg> )
+# -->
+#    (write (concat |Interpreting Instructor Message: | (crlf) ) ||)
+#    (write (concat <text> (crlf) ))
+#    (write (concat (cmd print <msg> -d 10)) ||)
+# }
+# #(write |used_response;| <handle> |;| <cs> |;| <pt> (crlf))
+
+sp {interpret-message*apply*interpret-conditional-predicate*conditional-goal*terminate*segment
+   (state <s> ^name interpret-message
+              ^operator <o>
+              ^current-purpose.satisfaction.dialog-event <de>)
+   (<o> ^name interpret-conditional-predicate
+        ^purpose conditional-goal)
+   (<de> ^type goal-description
+         ^originator instructor)
+-->
+   (<s> ^terminate-segment true)
+}
+

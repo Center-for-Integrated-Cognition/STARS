@@ -1,0 +1,5 @@
+Task name: store object. Task context: I am in mailroom. Aware of package on table.
+Question: Which is the most reasonable goal for package on table?
+1. The goal is that the package is on the floor.
+2. The goal is that the package is in the closet.
+Answer: 2.

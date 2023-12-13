@@ -1,0 +1,61 @@
+smem --add {
+           (<not> ^spelling |not|
+                  ^structure-type ADV
+                  ^referent <negid>)
+
+           (<negid> ^handle negation
+                    ^modifier true)
+
+           (<up> ^spelling |up|
+                 ^structure-type ADV 
+                 ^referent <upid>)
+           (<upid> ^handle upwards)
+           
+           (<down> ^spelling |down|
+                   ^structure-type ADV 
+                   ^referent <down-lti>)
+           (<down-lti> ^handle down1)
+                                 
+           (<forward> ^spelling |forward|
+                      ^structure-type ADV  
+                      ^referent <forid>)
+           (<forid> ^handle forward)           
+                      
+           (<backward> ^spelling |backward|
+                       ^structure-type ADV  
+                       ^referent <backid>)
+           (<backid> ^handle backward)    
+                             
+           (<around> ^spelling |around|
+                     ^structure-type ADV  
+                     ^referent <aroundid>)
+           (<aroundid> ^handle around)
+      
+           (<carefully> ^spelling |carefully|
+                 ^structure-type ADV   
+                  ^referent <careful>)
+           (<careful> ^handle careful1)
+
+           (<permanently> ^spelling |permanently|
+                          ^structure-type ADV   
+                          ^referent <permanent>)
+           (<permanent> ^handle permanent1)
+                            
+           (<slowly> ^spelling |slowly|
+                 ^structure-type ADV   
+                  ^referent <slowid>)
+           (<slowid> ^handle slow1)
+                            
+           (<away> ^spelling |away|
+                 ^structure-type ADV   
+                  ^referent <awayid>)
+           (<awayid> ^handle away1)
+           
+           (<prev> ^spelling |previously|
+                 ^structure-type ADV 
+                 ^referent <prid>)
+           (<prid> ^handle previously
+                    ^modifier true)
+           
+           
+}     

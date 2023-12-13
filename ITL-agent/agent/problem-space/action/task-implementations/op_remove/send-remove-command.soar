@@ -1,0 +1,34 @@
+### Perform remove command for the object ###
+
+sp {op_remove1*propose*send-remove-command
+   (state <s> ^name op_remove1
+              ^target-object <obj>
+              ^world.objects.object <obj>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name send-remove-command
+        ^item-type command-operator
+        ^command-name remove-command
+        ^arg1.id <obj>)
+}
+
+
+### execute send-remove-command ###
+
+sp {op_remove1*external*apply*send-remove-command
+   (state <s> ^name op_remove1
+              ^problem-space.execution-type external
+              ^operator <o>
+              ^io.output-link <ol>
+              ^current-task-segment <seg>)
+   (<o> ^name send-remove-command
+        ^command-name <cmd-name>
+        ^arg1.id <obj>)
+-->
+   (<ol> ^perform-action <pa>)
+   (<pa> ^item-type output-command
+         ^name remove
+         ^object <obj>)
+   (<seg> ^<cmd-name> <pa>)
+}
+

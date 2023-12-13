@@ -1,0 +1,100 @@
+############################# smem-common.txt ################################
+# These are common smem words and concepts that are used across most domains
+# This file is intended to be sourced by a test-agent during configuration
+# (Add line 'config-file init-smem/smem-common.txt' to smem config file)
+
+template color _HANDLE_ _WORD_* {
+    red1 red
+    orange1 orange
+    yellow1 yellow
+    green1 green 
+    blue1 blue 
+    purple1 purple
+    black1 black
+    brown1 brown
+    white1 white
+    gray1 gray
+}
+
+template shape _HANDLE_ _WORD_* {
+    rectangle1 rectangle
+    triangle1 triangle
+    arch1 arch
+    square1 square
+    line1 line
+    l-block1 l-block
+    t-block1 t-block
+    sphere1 sphere
+	cube1 cube
+}
+
+template size _HANDLE_ _WORD_* {
+    tiny1 tiny
+    small1 small little
+    medium1 medium
+    large1 large big
+    giant1 giant
+}
+
+template material _HANDLE_ _WORD_* {
+    plastic1 plastic
+    ceramic1 ceramimc
+    metal1 metal
+    paper1 paper
+}
+
+template weight _HANDLE_ _WORD_* {
+    heavy1 heavy
+    light1 light
+    heaviest1 heaviest
+    lightest1 lightest
+}
+
+template temperature _HANDLE_ _WORD_* {
+    hot1 hot
+    warm1 warm
+	room-temp1 room-temperature
+    cool1 cool
+    cold1 cold
+    hottest1 hottest
+    coldest1 coldest
+}
+
+template name _HANDLE_ _WORDTYPE_ _WORD_* {
+    top N
+    wild N
+    state1 N
+}
+
+template modifier _HANDLE_ _TYPE_ _WORD_* {
+	only1 ADJ only
+	entire1 ADJ entire
+    starting1 ADJ starting
+    desired1 ADJ desired
+    favorite1 ADJ favorite
+    current1 ADJ current
+    storage1 ADJ storage
+	answered1 N answer
+	answered1 ADJ answered
+	recalled1 ADJ recalled
+	preferred1 ADJ preferred
+	end1 ADJ end
+	finished1 ADJ finished2
+	following1 ADJ following
+}
+
+template adverb _HANDLE_ _WORD_* {
+	always1 always
+}
+
+template concept _HANDLE_ _WORD_* {
+    game1 game
+    time time
+    puzzle1 puzzle
+    task1 task
+    tour1 tour
+    goal goal
+    failure failure
+	list1 list
+}
+

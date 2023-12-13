@@ -1,0 +1,83 @@
+scale 0.5
+robot 30.0 20.0 0.0
+# Building map with an outer ring of rooms surrounding inner rooms and a ring hallway in between
+# Recommend scale = 0.5
+
+#         CX CY Y  W  H
+# Rooms
+region  4 30 21 0 24 16 
+
+# Halls
+
+
+# Room 4: Mess Hall
+#         category    X     Y     Z     ROT    LEN   WID   HGT   R   G   B   # preds
+Bin                  26.00 14.50 0.02     90   2.00  2.00  1.20 0 0 255      1 property=recycling1
+Table               21.00 19.00 0.00      0   3.00  8.00  1.00               0
+Dishwasher           33.50 27.75 0.02    270   1.75  3.00  2.50             0
+Counter             40.50 21.80 0.00    180   2.00  6.40  1.50               0 
+Cupboard             29.50  28.00  0.01   270   1.50  3.50  3.00               0
+Drawer2              33.50  14.25  0.01  90   1.50  3.00  2.00               0
+Fridge              37.00 27.75 0.00    270   1.50  3.00  4.00               0
+Pantry             24.75  27.50  0.01   270   2.00  4.00  4.00               0
+Sink                40.50 17.05 0.50    180   2.00  3.05  0.50               0
+Garbage             29.50 14.50 0.02     90   2.00  2.00  1.20  80 150  80   0 
+Rack                38.00 14.50 0.50     90   2.00  3.00  0.50                1 property=dish1
+
+
+#For image
+#SimObject paper-cup1      22.30  18.75  1.02     0   0.20  0.20  0.30   200 200 200 1 cylinder
+
+#SimObject ceramic-bowl1  39.0 15.20 0.70      0   0.35  0.35  0.2  100 100 205   1 cylinder
+#SimObject plastic-fork1   22.30  18.75  1.02     0   0.10  0.30  0.10   200 200 200  0
+#SimObject plate1          22.30  17.00 1.02     0   0.40  0.40  0.1  225 225 225   1 cylinder
+#SimObject cereal-box1     22.30  20.00 1.02      0   0.10  0.50  0.60   255 215 0  1 rectangle
+
+SimObject plastic-bottle1 22.30 20.00 1.02      0   0.25  0.25  0.6  220 220 220   1 cylinder
+SimObject soda-can1       21.50  19.00  1.02     0   0.25  0.30  0.5  160 180 170   1 cylinder
+SimObject coke-can1      40.25  20.75 1.62      0   0.25  0.25  0.5  255 0 0   1 cylinder
+SimObject pepsi-can1      21.50  16.00 1.02      0   0.25  0.25  0.5  50  50  50   1 cylinder
+SimObject newspaper1            39.75  21.75  1.62     0   0.30  0.50  0.10   200 200 200  1 rectangle
+SimObject apple-core1           39.75  19.75 1.62      0   0.15  0.15  0.30  200 200 200   1 rectangle
+SimObject paper-plate1    22.30  22.00 1.02      0   0.40  0.40  0.1  200 200 200   1 cylinder
+SimObject plastic-fork1   22.30  17.00  1.02     0   0.10  0.30  0.10   200 200 200  0
+SimObject plastic-cup1    21.50  17.00 1.02      0   0.25  0.25  0.5  255   0   0   1 cylinder
+SimObject paper-cup1            39.75  18.75  1.62     0   0.20  0.20  0.30   200 200 200 1 cylinder
+SimObject paring-knife1  38.00 15.20 0.90      0   0.10  0.50  0.10   50  50  50  1 rectangle
+SimObject metal-fork1    37.00 15.20 0.90      0   0.40  0.10  0.10   50  50  50  1 rectangle
+SimObject steak-knife1   37.00 14.60 0.90      0   0.10  0.50  0.10   50  50  50  1 rectangle
+SimObject bottle-opener1  21.50  18.00  1.02     0   0.10  0.30  0.10   50  50  50  0
+SimObject corkscrew1     40.25  19.75 1.62      0   0.10  0.50  0.10   50  50  50  1 rectangle
+SimObject ceramic-plate1  22.30 19.00  1.02     0   0.40  0.40  0.1  160 180 170   1 cylinder
+SimObject plate1                39.75  24.75  1.62     0   0.40  0.40  0.1  225 225 225   1 cylinder
+SimObject glass-tumbler1  21.50  21.00  1.02     0   0.25  0.25  0.50  168 204 215  1 cylinder
+SimObject steak-knife1   40.25  21.75  1.62     0   0.10  0.50  0.10   50  50  50  1 rectangle
+SimObject mug1           40.25  24.75  1.62     0   0.25  0.25  0.50   10 255 10 1 cylinder
+SimObject mug1           38.50 14.60 0.90      0   0.25  0.25  0.50   10 255 10 1 cylinder
+SimObject glass-tumbler1 39.00 15.20 0.90      0   0.25  0.25  0.50  168 204 215  1 cylinder
+SimObject ceramic-plate1 39.25 14.60 0.90      0   0.40  0.40  0.1  100 100 225   1 cylinder
+SimObject ceramic-bowl1  37.75 14.60 0.90      0   0.35  0.35  0.2  100 100 205   1 cylinder
+SimObject coffee-grinder1       39.75  20.75 1.62      0   0.35  0.35  0.6  0 0 0   1 cylinder
+SimObject cereal-box1     21.50  20.00 1.02      0   0.10  0.50  0.60   255 215 0  1 rectangle
+SimObject box-of-aluminum-foil1 39.75  22.75  1.62     0   0.15  0.70  0.20   255 215 0  1 rectangle
+SimObject pop-tart-box1   21.50  22.00 1.02      0   0.50  0.20  0.60   250 249 246  1 rectangle
+SimObject granola-bars1         39.75  23.75  1.62     0   0.20  0.50  0.50   150  75 0  1 rectangle
+SimObject crackers1      40.25  19.0  1.62     0   0.10  0.50  0.60   255 215 0  1 rectangle
+SimObject milk1           22.30  16.00 1.02      0   0.35  0.35  0.79  200 200 200   1 rectangle
+SimObject half-and-half1 40.25  22.75  1.62     0   0.25  0.25  0.50  160 180 170  1 cylinder
+SimObject ketchup1        22.30  18.00 1.02      0   0.30  0.30  0.7  255   0   0   1 cylinder
+SimObject jar-of-salsa1  40.25  23.75  1.62     0   0.25  0.25  0.30  255 10  0  1 cylinder
+SimObject apple-juice1    22.30 21.00  1.02     0   0.35  0.35  0.60  255 127   0  1 cylinder
+
+
+
+#### WAYPOINT MAP 
+
+##### WALLS
+
+wallchain 4
+18 29
+42 29
+42 13
+18 13
+18 29

@@ -1,0 +1,9 @@
+
+
+# Souce file "elaborations.soar"
+source elaborations.soar
+
+source remove-old-objects.soar
+
+# Souce file "complete-pop-task-segment.soar"
+source complete-pop-task-segment.soar

@@ -1,0 +1,18 @@
+struct robot_command_t
+{
+    // unique robot ids according to index of MAC address in config file.
+    int8_t robotid;
+
+    // rolling counter of task assignments per robot. A robot's first task
+    // is zero.
+    robot_task_t task;
+    int8_t taskid;
+
+    // double parameters
+    int8_t ndparams;
+    double dparams[ndparams];
+
+    // integer parameters
+    int8_t niparams;
+    int8_t iparams[niparams];
+}

@@ -1,0 +1,18 @@
+data type;object handle;response;prompt type;mismatch type;mismatch;detail
+unviable_response;cream1_instance_15;the goal is that the cream is in the refrigerator and the refrigerator door is closed;initial_prompt;uninterpretable;parser;NA
+unviable_response;chips1_instance_17;the goal is that the chips are in the pantry and the pantry door is closed;initial_prompt;uninterpretable;parser;NA
+unviable_response;boxed-pasta1_instance_18;the goal is that the bag is in the cabinet and the cabinet is closed;initial_prompt;ungrounded-object;cabinet1;NA
+unviable_response;boxed-pasta1_instance_18;the goal is that the bag is in the cabinet and the cabinet is closed;initial_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;boxed-pasta1_instance_18;the goal is that the bag is in the cabinet and the cabinet is closed;initial_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;boxed-pasta1_instance_18;the goal is that the bag is in the cabinet and the cabinet is closed;initial_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;eggs1_instance_20;the goal is that the eggs are in the refrigerator and the door is closed;initial_prompt;ungrounded-object;door1;NA
+unviable_response;flour1_instance_21;the goal is that the flour is in the closet and the closet is closed;initial_prompt;unknown-word;closet;NA
+unviable_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the cabinet and the cabinet is closed;initial_prompt;ungrounded-object;cabinet1;NA
+unviable_response;plastic-cups1_instance_22;the goal is that the plastic-cups are in the kitchen and the kitchen is clean;initial_prompt;uninterpretable;parser;NA
+unviable_response;paper-plates1_instance_23;the goal is that the paper-plates are in the cabinet and the cabinet is closed;initial_prompt;ungrounded-object;cabinet1;NA
+unviable_response;paper-plates1_instance_23;the goal is that the paper-plates are in the kitchen cupboard and the cupboard is closed;initial_prompt;uninterpretable;parser;NA
+unviable_response;can-of-beans1_instance_24;the goal is that the can-of-beans is in the kitchen cupboard and the kitchen cupboard is closed;initial_prompt;uninterpretable;parser;NA
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the recycling bin;initial_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the recycling bin;initial_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;granola1_instance_25;the goal is that the granola is in the pantry and the bag is in the recycling bin;initial_prompt;affordance-mismatch;grabbable;bag1
+unviable_response;apple-cider1_instance_28;the goal is that the apple-cider is in the fridge, and the fridge is closed;initial_prompt;uninterpretable;parser;NA

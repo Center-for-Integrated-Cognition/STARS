@@ -1,0 +1,149 @@
+
+# Best preference for command operators, because they will likely finish the search
+sp {subproblem*search*best*preference*command*operators
+   (state <s> ^problem-space.subproblem search
+              ^operator <o> +)
+   (<o> ^item-type command-operator)
+-->
+   (<s> ^operator <o> >)
+}
+
+# Even if the depth is exceeded, allow command-operators to fire
+sp {subproblem*search*prefer*command-operator*over*exceed-depth
+   (state <s> ^problem-space.subproblem search
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^item-type command-operator)
+   (<o2> ^name exceed-depth)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+# Reject an operator with the same name as the parent task
+sp {subproblem*search*reject*same*task*as*supertask
+   (state <s> ^problem-space.subproblem search
+              ^task-operator <task-op>
+              ^operator { <o> <> <task-op> } +)
+   (<task-op> ^task-handle <handle>)
+   (<o> ^task-handle <handle>)
+-->
+   (<s> ^operator <o> -)
+}
+
+# Reject a 'first' task if the depth is greater than 1
+sp {subproblem*search*reject*same*task*as*supertask
+   (state <s> ^problem-space.subproblem search
+              ^operator <o> +
+              ^current-search-depth > 1
+             -^look-ahead-operator <o>)
+   (<o> ^task-handle <handle>
+        ^modifiers.handle first1)
+-->
+   (<s> ^operator <o> -)
+}
+
+##### evaluate-operator - prefer better matches to task objects
+
+sp {subproblem*search*selection*elaborate*evaluate-operator*has-matching-object
+   (state <s> ^name selection
+              ^problem-space.subproblem search
+              ^operator <o> +)
+   (<o> ^name evaluate-operator
+        ^superoperator.matching-info.has-matching-object true)
+-->
+   (<o> ^has-matching-object true)
+}
+
+sp {subproblem*search*selection*elaborate*evaluate-operator*all-objects-match
+   (state <s> ^name selection
+              ^problem-space.subproblem search
+              ^operator <o> +)
+   (<o> ^name evaluate-operator
+        ^superoperator.matching-info.has-matching-object true)
+-->
+   (<o> ^all-objects-match true)
+}
+
+sp {subproblem*search*selection*prefer*evaluate-operator*where*all-objects-match
+   (state <s> ^name selection
+              ^problem-space.subproblem search
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name evaluate-operator
+         ^all-objects-match true)
+   (<o2> ^name evaluate-operator
+        -^all-objects-match true)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {subproblem*search*selection*prefer*evaluate-operator*with*matching-object
+   (state <s> ^name selection
+              ^problem-space.subproblem search
+              ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name evaluate-operator
+         ^has-matching-object true)
+   (<o2> ^name evaluate-operator
+        -^has-matching-object true)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+#sp {subproblem*search*selection*prefer*evaluate-operator*others*over*find
+#   (state <s> ^name selection
+#              ^problem-space.subproblem search
+#              ^operator <o1> +
+#              ^operator <o2> +)
+#   (<o1> ^name evaluate-operator
+#         ^superoperator.name <> op_find1)
+#   (<o2> ^name evaluate-operator
+#         ^superoperator.name op_find1)
+#-->
+#   (<s> ^operator <o1> > <o2>)
+#}
+
+#JK2023 fix for chunking bug
+#Would occasionally learn proposal rule to prefer operators with subtask-handles which cause a problem during learning
+#Specifically caused the secondary learning of chunks that ignore object categories, causing overgeneral rules
+# and subsequent failure to propose close actions for closing fridges/dishwashers/cabinets
+# Needs further debugging for why this could happen, and why operators with subtask handles are proposed initially
+sp {subproblem*search*selection*prefer*evaluate-operator*try-no-substask-handle*first
+   (state <s> ^name selection
+              ^operator <o> +
+              ^operator <o2> +
+              ^quiescence t)
+   (<o> ^name evaluate-operator
+        ^superoperator <so1>)
+   (<o2> ^name evaluate-operator
+         ^superoperator <so2>)
+   (<so1> ^subtask-handle <sh> -^name force-operator-tie ^task-handle <th> ^matching-info.object-arg <obj>)
+   (<so2> -^subtask-handle <sh2> -^name force-operator-tie ^task-handle <th> ^matching-info.object-arg <obj>)
+-->
+   (<s> ^operator <o2> > <o>)
+}
+
+#revisit
+
+#fix to one order of search
+#matching task handle object1 over object1
+#different task handle one first
+#matching task handle object2 over object2
+
+# sp {subproblem*search*selection*prefer*evaluate-operator*one-order
+#    (state <s> ^name selection
+#               ^operator <o> +
+#               ^operator <o2> +
+#               ^quiescence t)
+#    (<o> ^name evaluate-operator
+#         ^superoperator <so1>)
+#    (<o2> ^name evaluate-operator
+#          ^superoperator <so2>)
+#    (<so1> -^evaluation -^subtask-handle -^name force-operator-tie ^task-handle <th> ^matching-info.object-arg <obj>)
+#    (<so2> -^evaluation -^subtask-handle -^name force-operator-tie ^task-handle {<th2> > <th>} ^matching-info.object-arg <obj>)
+# -->
+#    (<s> ^operator <o2> > <o>)
+# }
+
+#maybe same the have the same task-handle
+#and matching-info.object-arg ?

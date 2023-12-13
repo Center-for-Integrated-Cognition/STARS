@@ -1,0 +1,112 @@
+sp {comprehend-word*elaborate*single-wordx
+   (state <s> ^name comprehend-word
+              ^segment <seg>)
+   (<seg> ^current-word <cw>
+          ^prior-word.spelling |*|)
+   (<cw> ^spelling <spell>
+         ^next.spelling |.|)
+-->
+   (<s> ^single-word true)}
+
+sp {comprehend-word*propose*process-single-wordx
+   (state <s> ^name comprehend-word
+              ^segment <seg>
+             -^retrieved-lexical-item
+             -^failed-single-word-retrieval true
+              ^single-word true)
+   (<seg> ^current-word <cw>)
+   (<cw> ^spelling <spell>)
+-->
+  (<s> ^operator <op> +, >, =)
+  (<op> ^name process-single-word
+        ^spell <spell>
+        ^current-word <cw>)
+}
+
+sp {comprehend-word*apply*process-single-word
+   (state <s> ^operator <o>
+              ^smem.command <cmd>)
+   (<o> ^name process-single-word
+        ^spell <x>
+       -^current-word.quoted true)
+-->   
+ #  #(write (crlf) |Attempt retrieval for single word: | <x>)
+   (<cmd> ^query <q> ^depth 9)
+   (<q> ^spelling-single-word <x>)
+}
+
+sp {comprehend-word*apply*process-single-word*success
+   (state <s> ^operator.name process-single-word
+              ^comprehension-structure <cs>
+              ^smem <smem>)
+   (<smem> ^result.retrieved <rli>
+           ^command <c>)
+   (<c> ^query <q>)
+   (<q> ^spelling-single-word <x>)
+   (<rli> ^spelling-single-word <x>)
+-->
+   (<c> ^query <q> -
+        ^depth 9 -)
+   (<cs> ^retrieved-lexical-item <rli>)
+}
+
+#sp {comprehend-word*apply*process-single-word*success*monitor
+#   (state <s> ^operator.name process-single-word
+#              ^smem <smem>)
+#   (<smem> ^result.retrieved <rli>
+#           ^command <c>)
+#   (<c> ^query <q>)
+#   (<q> ^spelling-single-word <x>)
+#   (<rli> ^structure-type <st>)
+#-->
+#   #(write (crlf) |Retrieval Single Word Success: | <x> |, | <st>)
+#}
+
+sp {comprehend-word*apply*process-single-word*fail
+   (state <s> ^superstate.operator <so>
+              ^segment <seg> 
+              ^operator.name process-single-word
+              ^smem.result.failure <t>)
+   (<seg> ^original-sentence <os>
+          ^semantics <sem>)
+-->
+  # #(write (crlf) |No lexical item found in semantic memory.|)
+   (<s> ^failed-single-word-retrieval true
+              ^failed-retrieval true)
+   (<sem> ^interaction-status.failure.type failed-to-interpret-message
+          ^message-type failed-comprehension)
+   ##(write (crlf) <sem> | ^interaction-status.failure.type failed-to-interpret-message|)
+   (<os> ^processed-sentence true
+         ^processing-result failure)
+}
+
+#### Quoted single word
+
+sp {comprehend-word*apply*process-single-word*quoted
+   (state <s> ^operator <o>
+              ^comprehension-structure <cs>)
+   (<o> ^name process-single-word
+        ^spell <x>
+        ^current-word <cw>)
+   (<cw> ^quoted true)
+-->   
+#   #(write (crlf) |Encountered single word that is a string: | <x>)
+   (<cs> ^not-merged-receiver <item>)
+   (<s> ^receiver-created <item>
+        ^created-receiver true
+        ^retrieved-lexical-item <item>)
+   (<item> ^current-word <cw>
+           ^lt-referent <ref>
+           ^structure-type CP
+           ^lt <id>
+           ^semantics <sem>)
+ #  (<cw> ^processed true)
+   (<id> ^structure-type CP
+         ^spelling <x>
+         ^message-type quoted-sentence
+         ^semantic-structure arg1
+         ^referent <ref>)
+   (<ref> ^handle  (make-constant-symbol string-object-handle)
+          ^sentence <x>)
+}
+         

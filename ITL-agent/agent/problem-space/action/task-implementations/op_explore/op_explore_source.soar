@@ -1,0 +1,12 @@
+source elaborations.soar
+source preferences.soar
+source action-models.soar
+
+source propose-subtasks.soar
+
+source mark-waypoint-visited.soar
+
+source handle-execution-failure.soar
+
+
+

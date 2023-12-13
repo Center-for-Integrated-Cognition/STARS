@@ -1,0 +1,69 @@
+sp {interpret-failure*propose*complete-interpret-failure
+   (state <s> ^name interpret-failure)
+-->
+   (<s> ^operator <o> + <)
+   (<o> ^name complete-interpret-failure)
+}
+
+# Remove failure status from the interaction stack
+sp {interpret-failure*apply*complete-interpret-failure*clear*status
+   (state <s> ^name interpret-failure
+              ^operator.name complete-interpret-failure
+              ^failure <failure>
+              ^top-state.interaction.status <status>)
+   (<status> ^failure <failure>)
+-->
+   (<status> ^failure <failure> -)
+}
+
+# If there is a ^new-segment-info on the state, add it to interaction.changes
+sp {interpret-failure*apply*complete-interpret-failure*copy*new-segment-info
+   (state <s> ^name interpret-failure
+   	      ^operator.name complete-interpret-failure
+	      ^new-segment-info <info>
+	      ^top-state.interaction.changes <c>)
+-->
+   (<c> ^new-segment-info <info>)
+}
+
+# If there is an ^outgoing-message on the state, add it to interaction.changes
+sp {interpret-failure*apply*complete-interpret-failure*copy*outgoing-message
+   (state <s> ^name interpret-failure
+   	      ^operator.name complete-interpret-failure
+	      ^outgoing-message <msg>
+	      ^top-state.interaction.changes <c>)
+-->
+   (<c> ^outgoing-message <msg>)
+}
+
+# If there is a ^terminate-segment on the state, mark it on interaction.changes
+sp {interpret-failure*apply*complete-interpret-failure*terminate-segment
+   (state <s> ^name interpret-failure
+   	      ^operator.name complete-interpret-failure
+	      ^terminate-segment true
+	      ^top-state.interaction.changes <c>)
+-->
+   (<c> ^terminate-segment true)
+}
+
+# If there is a ^remove-message on the state, remove the message from interaction.status
+sp {interpret-failure*apply*complete-interpret-failure*remove-message
+   (state <s> ^name interpret-failure
+              ^operator.name complete-interpret-failure
+              ^remove-message true
+              ^top-state.interaction.status <status>)
+   (<status> ^new-message <msg>)
+-->
+   (<status> ^new-message <msg> -)
+}
+
+# If there is a ^pop-current-task on the state, pop the task-stack
+sp {interpret-failure*apply*complete-interpret-failure*pop-current-task
+   (state <s> ^name interpret-failure
+              ^operator.name complete-interpret-failure
+              ^pop-current-task true
+              ^top-state.task-stack.bottom { <seg> <> none })
+-->
+   (<seg> ^status failure)
+}
+          

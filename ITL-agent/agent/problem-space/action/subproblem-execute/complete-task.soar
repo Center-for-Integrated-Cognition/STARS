@@ -1,0 +1,35 @@
+sp {subproblem*execute*propose*complete-task*success*desired*satisfied*terminal*goal
+   (state <s> ^problem-space.subproblem execute
+              ^desired <des>
+              ^current-task-segment <seg>)
+   (<des> ^item-type terminal-goal
+          ^satisfied true)
+   (<seg> -^status)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name complete-task
+        ^status success)
+}
+
+sp {subproblem*execute*propose*complete-task*failure
+   (state <s> ^problem-space.subproblem execute
+              ^current-task-segment <seg>)
+   (<seg> ^failure-info <f>
+         -^status)
+-->
+   (<s> ^operator <o> + >)
+   (<o> ^name complete-task
+        ^status failure
+        ^failure-info <f>)
+}
+
+sp {subproblem*execute*apply*complete-task*copy*status
+   (state <s> ^problem-space.subproblem execute
+              ^operator <o>
+              ^current-task-segment <seg>)
+   (<o> ^name complete-task
+        ^status <status>)
+-->
+   (<seg> ^status <status>)
+}
+

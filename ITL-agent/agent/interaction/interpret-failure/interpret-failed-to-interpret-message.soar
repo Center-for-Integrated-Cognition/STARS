@@ -1,0 +1,29 @@
+sp {interpret-failure*propose*interpret-failed-to-interpret-message
+   (state <s> ^name interpret-failure
+   	      ^failure.type failed-to-interpret-message
+         -^terminate-segment)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name interpret-failed-to-interpret-message)
+}
+
+sp {interpret-failure*apply*interpret-failed-to-interpret-message*terminate-segment
+   (state <s> ^name interpret-failure
+   	      ^operator.name interpret-failed-to-interpret-message)
+-->
+   (<s> ^terminate-segment true)
+}
+#JK2022/ JKXYZ
+sp {interpret-failure*apply*interpret-failed-to-interpret-message*send*message
+   (state <s> ^name interpret-failure
+              ^top-state.interaction.stack.segment <iseg>
+              ^operator.name interpret-failed-to-interpret-message)
+  -{(<iseg> ^purpose.type process-sentence ^next.purpose <cp>)
+    (<cp> ^parameters <p> ^type process-lm-response)}
+  -{(<iseg> ^purpose.type process-lm-response)}
+-->
+   (<s> ^outgoing-message <msg>)
+   (<msg> ^type unable-to-interpret-message
+          ^complete-message true
+          ^fields <f>)
+}

@@ -1,0 +1,15 @@
+(L6 ^failure F65 ^failure F60)
+  (F65 ^evaluation E9614 ^handle |23| ^object-desc |a paper-plates in the bag|
+         ^sentence |the goal is that the paper-plates are in the cabinet and the cabinet is closed|)
+    (E9614 ^interpreted true ^issue-count 1 ^type ungrounded-obj1
+           ^ungrounded-object P19008)
+      (P19008 ^handle new-object-id73 ^item-type object ^predicates P19009
+             ^predicates-copied true)
+  (F60 ^evaluation E8672 ^handle |22| ^object-desc |a plastic-cups in the bag|
+         ^sentence |the goal is that the plastic-cups are in the cabinet and the cabinet is closed|)
+    (E8672 ^interpreted true ^issue-count 1 ^type ungrounded-obj1
+           ^ungrounded-object P17798)
+      (P17798 ^handle new-object-id60 ^item-type object ^predicates P17799
+             ^predicates-copied true)
+
+

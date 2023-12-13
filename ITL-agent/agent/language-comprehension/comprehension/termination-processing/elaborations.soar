@@ -1,0 +1,15 @@
+#sp {termination-processing*elaborate*learn
+#   (state <s> ^name termination-processing)
+#-->
+#  (force-learn <s>)}
+   
+
+#sp {termination-processing*copy*semantics-segment
+#   (state <s> ^name termination-processing
+#              ^segment <seg>)
+#   (<seg> ^not-merged-receiver <uri>)
+#   (<uri> ^semantics <sem>
+#          ^structure-type S)
+#--> 
+#   (<seg> ^semantics <sem>)
+#}

@@ -1,0 +1,69 @@
+## Unknown Single Word in constructions-unknown-words
+
+smem --add {
+           (<yeah> ^spelling-single-word |yeah|
+                   ^structure-type CP
+                   ^message-type yes)
+
+           (<ok> ^spelling-single-word |ok|
+                 ^structure-type CP
+                 ^message-type yes)
+
+           (<yes> ^spelling-single-word |yes|
+                  ^structure-type CP
+                  ^message-type yes)
+
+           (<no> ^spelling-single-word |no|
+                 ^structure-type CP
+                 ^message-type no)
+
+           (<nope> ^spelling-single-word |nope|
+                   ^structure-type CP
+                   ^message-type no)
+           
+            (<go> ^spelling-single-word |go|
+                   ^structure-type CP
+                   ^message-type finished)
+
+           (<done> ^spelling-single-word |done|
+                   ^structure-type CP
+                   ^message-type finished)
+           
+           (<fini> ^spelling-single-word |finished|
+                   ^structure-type CP
+                   ^message-type finished)
+           
+           
+           
+           (<retry> ^spelling-single-word |retry|
+                   ^structure-type CP
+                   ^message-type retry)
+           (<rest> ^spelling-single-word |restart|
+                   ^structure-type CP
+                   ^message-type restart)
+           #interjections
+           (<hi1> ^spelling-single-word |hi|
+                   ^structure-type CP
+                   ^message-type hello)
+           (<hello1> ^spelling-single-word |hello|
+                   ^structure-type CP
+                   ^message-type hello)
+           (<bye1> ^spelling-single-word |bye|
+                   ^structure-type CP
+                   ^message-type bye)
+           (<goodbye1> ^spelling-single-word |goodbye|
+                   ^structure-type CP
+                   ^message-type bye)
+           
+
+           
+  (<unknown> ^spelling-single-word |unknown|
+          ^structure-type CP
+          ^message-type dont-know)
+
+  (<cancel> ^spelling-single-word |cancel|
+             ^structure-type CP
+             ^message-type cancel)
+
+
+}

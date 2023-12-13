@@ -1,0 +1,29 @@
+
+###################################################
+#
+# Discrepancy: grown-object
+#   The volume of the perception object is significantly larger than the belief object
+# Handling: attend-to-perception/grown-object
+#
+# object-info.differences
+#   belief-vol <vol> - filter to extract belief-obj volume
+#   perception-vol <vol> - filter to extract perception-obj volume
+#   vol-diff <diff> - perception-vol/belief-vol
+#
+###################################################
+
+### NOTE: vol-diff elaboration is in shrunken-object.soar
+
+sp {perception-monitor*detect-discrepancies*grown-object
+   (state <s> ^superstate nil
+              ^agent-params.vol-high-diff-threshold <high>
+              ^perception-monitor <perc-mon>)
+   (<perc-mon> ^object-monitor.object-info <obj-info>
+               ^discrepancies <discs>)
+   (<obj-info> ^differences <diffs>)
+   (<diffs> ^vol-diff > <high>)
+-->
+   (<discs> ^grown-object <disc>)
+   (<disc> ^object-info <obj-info>)
+}
+

@@ -1,0 +1,13 @@
+source add-object-to-world.soar
+
+source create-belief-object.soar
+
+source change-perception-id.soar
+
+source update-object-pose.soar
+
+source delete-object.soar
+
+source merge-perception-objects.soar
+
+source merge-belief-objects.soar

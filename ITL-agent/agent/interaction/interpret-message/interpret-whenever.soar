@@ -1,0 +1,59 @@
+###################################################################
+#
+# interpret-whenever
+#   A whenever given by the instructor to the agent to do something
+#     E.g. 'Whenever you see trash, then discard the trash'
+#
+###################################################################
+
+#######
+# OPERATOR PROPOSAL
+#######
+
+sp {interpret-message*propose*interpret-whenever
+   (state <s> ^name interpret-message
+              ^instructor-message <msg>
+             -^top-state.dialog-context
+             -^new-segment-info
+             -^task-operator <op>)
+   (<msg> ^message-type whenever
+          ^if-subclause <cond>
+          ^then-subclause <command>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name interpret-whenever
+        ^message <msg>
+        ^conditions <cond>
+        ^command <command>)
+}
+
+sp {interpret-message*apply*interpret-whenever
+   (state <s> ^name interpret-message
+              ^operator <o>)
+   (<o> ^name interpret-whenever
+        ^message <msg>
+        ^conditions <conds>
+        ^command <command>)
+   (<command> ^action.handle <task-handle>		
+             -^agent-explanation)
+-->
+   (<s> ^new-segment-info <info>)
+   (<info> ^purpose <p>
+           ^originator instructor)
+   (<p> ^type learn-whenever-task
+        ^parameters <params>
+        ^satisfaction.learning-event.type whenever-task)
+   (<params> ^command-message <command>
+             ^conditions <conds>)
+   (<command> ^task-source instruction)
+   (<msg> ^interpreted true)
+}
+
+sp {interpret-message*apply*interpret-whenever*terminate-segment*get-next-task
+   (state <s> ^name interpret-message
+              ^operator <o>
+              ^top-state.interaction.stack.segment.purpose.type get-next-task)
+   (<o> ^name interpret-whenever)
+-->
+   (<s> ^terminate-segment true)
+}

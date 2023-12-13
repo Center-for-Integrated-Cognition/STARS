@@ -1,0 +1,111 @@
+//	The following schemas were in the separate Rosie grammar
+// Top-level schemas
+schema Entity
+   roles
+      rosie-category
+
+schema PropertyClass
+   roles
+      name
+
+//	COMPLEX GROUNDING SCHEMAS
+//	Rosie objects will be grounded to the world.
+//  Known objects will be looked up in smem.
+//	Some objects will be both RosieObjects
+//	and KnownObjects. For these, first an attempt
+//	is made to ground to the world, and if that
+//	fails a lookup in smem is attempted.
+//	If both fail, a new-object-id is created.
+
+schema RosieObject
+   subcase of Entity
+   roles
+      handle
+      movable
+
+schema KnownObject
+   subcase of RefDesc
+   roles
+      handle
+
+// Objects
+schema Block
+   subcase of RosieObject
+   roles
+      shape
+      color
+      size
+      state
+   constraints
+      rosie-category <-- block
+      movable <-- true
+
+schema Sphere
+   subcase of Block
+   constraints
+      shape <-- sphere1
+
+schema Triangle
+   subcase of Block
+   constraints
+      shape <-- triangle1
+
+schema Rectangle
+   subcase of Block
+   constraints
+      shape <-- rectangle1
+
+schema Box
+   subcase of RosieObject
+   roles
+      shape
+      color
+      size
+      state
+   constraints
+      rosie-category <-- block
+      shape <-- box1
+
+schema Object
+   subcase of RosieObject
+   roles
+      shape
+      color
+      size
+      state
+   constraints
+      rosie-category <-- object
+
+schema Location
+   subcase of RosieObject
+   roles
+   constraints
+      rosie-category <-- location
+
+// Spatial shapes
+schema SpatialShape
+   subcase of RosieObject
+   roles
+      spatial-shape
+
+schema Wall
+   subcase of SpatialShape
+   roles
+   constraints
+      rosie-category <-- spatial-shape
+      spatial-shape <-- wall1
+
+schema Waypoint
+   subcase of SpatialShape
+   roles
+   constraints
+      rosie-category <-- spatial-shape
+      spatial-shape <-- waypoint
+
+schema Doorway
+   subcase of SpatialShape
+   roles
+   constraints
+      rosie-category <-- spatial-shape
+      spatial-shape <-- door
+      

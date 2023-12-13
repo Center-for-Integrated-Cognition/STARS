@@ -1,0 +1,39 @@
+### desired-location ###
+# If arg2 is a location, then elaborate it as desired-location
+
+sp {op_go-to-location1*elaborate*desired-location
+   (state <s> ^name op_go-to-location1
+              ^task-operator.arg2 <arg2>)
+   (<arg2> ^arg-type partial-predicate
+           ^2 <loc>)
+   (<loc> ^predicates.category location)
+-->
+   (<s> ^desired-location <loc>)
+}
+
+### desired-waypoint ###
+# The waypoint the robot should go to
+
+# waypoint comes from the desired-location
+sp {op_go-to*elaborate*desired-waypoint
+   (state <s> ^name op_go-to-location1
+              ^desired-location.waypoint <wp-handle>
+              ^top-state.maps.map.waypoint <wp>)
+   (<wp> ^handle <wp-handle>)
+-->
+   (<s> ^desired-waypoint <wp>)
+}
+
+### CHECK PRECONDITIONS
+# If these are violated, quit the current task and re-plan in the parent task
+
+# violated-precondition: the desired-location is not-confirmed (don't know where it is)
+sp {op_go-to-location1*elaborate*violated-precondition*missing-object*desired-location
+   (state <s> ^name op_go-to-location1
+              ^desired-location <loc>)
+   (<loc> ^predicates.is-confirmed1 not-confirmed1)
+-->
+   (<s> ^violated-precondition <vp>)
+   (<vp> ^type missing-object
+         ^object <loc>)
+}

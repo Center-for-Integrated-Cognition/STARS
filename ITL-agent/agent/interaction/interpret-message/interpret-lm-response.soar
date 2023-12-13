@@ -1,0 +1,169 @@
+ # interpret-message*apply*interpret-conditional-predicate*conditional-goal*terminate*segment  [S438] 
+ # interpret-message*apply*interpret-conditional-predicate*conditional-goal*create*segment  [S438] 
+
+
+# (S405 ^agent-params P37 ^attribute operator ^choices none
+#        ^current-purpose P749 ^epmem E442 ^impasse no-change
+#        ^instructor-message I417 ^io I1 ^message-context P746
+#        ^name interpret-message ^operator O4230 ^operator O4230 +
+#        ^operator O4229 + ^quiescence t ^reward-link R1855 ^smem L1358
+#        ^superstate S404 ^svs V517 ^top-state S1 ^type state)
+# print --depth 2 P749
+# (P749 ^parameters P750 ^satisfaction I395 ^type process-lm-response)
+#   (P750 ^response R1333)
+#   (I395 ^dialog-event D182)
+###########################
+# Purpose: conditional-goal
+
+#todo look at task-operator, anything useful for verification?
+#todo look at parameters.response, need to add more/node so can append easily?
+
+#parameters.response should have X
+sp {interpret-message*apply*interpret-conditional-predicate*process-lm-response*create*segment
+#:interrupt
+   (state <s> ^name << interpret-failure interpret-message >>
+              #^message-context <task-op>
+              ^top-state.interaction.status <status>
+              ^top-state.lm-responses.parse-goal <g>
+              ^current-purpose <cp>
+              ^operator <o>)
+   (<o> #^name interpret-conditional-predicate
+        #^purpose process-lm-response #or only on current purpose?
+        ^message <msg>)
+    (<cp> ^parameters.response.goal <g> ^type process-lm-response)
+    (<g> -^parse)
+#   (<msg> ^if-subclause <conds>
+#          ^then-subclause <goal>)
+-->
+   (<s> #^new-segment-info <info>
+        ^mark-interpreted <msg>)
+    (<g> ^parse <msg>)# ^message-context <task-op>)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*process-lm-response*create*segment*update-node
+#:interrupt
+   (state <s> ^name << interpret-failure interpret-message >>
+              #^message-context <task-op>
+              ^top-state.interaction.status <status>
+              ^top-state.lm-responses.parse-goal <g>
+              ^current-purpose <cp>
+              ^operator <o>)
+   (<o> #^name interpret-conditional-predicate
+        #^purpose process-lm-response #or only on current purpose?
+        ^message <msg>)
+    (<cp> ^parameters.update-node.goal.goal <g> ^type process-lm-response)
+    (<g> -^parse)
+#   (<msg> ^if-subclause <conds>
+#          ^then-subclause <goal>)
+-->
+   (<s> #^new-segment-info <info>
+        ^mark-interpreted <msg>)
+    (<g> ^parse <msg>)# ^message-context <task-op>)
+}
+
+sp {interpret-message*apply*interpret-conditional-predicate*process-lm-response*create*segment*update-node2
+#:interrupt
+   (state <s> ^name interpret-failure
+              #^message-context <task-op>
+              ^top-state.interaction.status <status>
+              ^top-state.interaction.stack.segment <iseg>
+              ^top-state.lm-responses.parse-goal <g>
+              #^current-purpose <cp>
+              ^operator <o>)
+   (<o> #^name interpret-conditional-predicate
+        #^purpose process-lm-response #or only on current purpose?
+        -^message <msg>)
+    (<iseg> ^purpose.type process-sentence ^next.purpose <cp>)
+    (<cp> ^parameters.update-node.goal.goal <g> ^type process-lm-response)
+    (<g> -^parse)
+#   (<msg> ^if-subclause <conds>
+#          ^then-subclause <goal>)
+-->
+   #(<s> #^new-segment-info <info>
+     #   ^mark-interpreted <msg>)
+    (<g> ^parse <msg>)# ^message-context <task-op>)
+    (<msg> ^interaction-status.failure failed-interpretation)
+}
+
+sp {interpret-message*apply*interpret-unknown-word-LM*process-lm-response*create*segment
+#:interrupt
+   (state <s> ^name << interpret-failure interpret-message >>
+              #^message-context <task-op>
+              ^top-state.interaction.status <status>
+              ^top-state.lm-responses.parse-goal <g>
+              ^current-purpose <cp>
+              ^operator <o>)
+   (<o> ^name interpret-unknown-word-LM
+        #^purpose process-lm-response #or only on current purpose?
+        ^message <msg>)
+    (<g> -^parse)
+#   (<msg> ^if-subclause <conds>
+#          ^then-subclause <goal>)
+-->
+   (<s> #^new-segment-info <info>
+        ^mark-interpreted <msg>)
+    (<g> ^parse <msg>)# ^message-context <task-op>)
+}
+
+
+
+sp {interpret-message*apply*interpret-failure*process-lm-response
+#:interrupt
+   (state <s> ^name interpret-failure
+              #^message-context <task-op>
+              ^top-state.interaction.status <status>
+              ^top-state.lm-responses.parse-goal <g>
+              ^top-state.interaction.stack.segment <iseg>
+              ^operator <o>)
+   #(<o> #^name interpret-conditional-predicate
+        #^purpose process-lm-response #or only on current purpose?
+    #    ^message <msg>)
+    (<iseg> ^purpose.type process-sentence ^next.purpose <cp>)
+    (<cp> ^parameters.response.goal <g> ^type process-lm-response)
+    (<g> -^parse)
+#   (<msg> ^if-subclause <conds>
+#          ^then-subclause <goal>)
+-->
+  # (<s> #^new-segment-info <info>
+        #^mark-interpreted <msg>)
+    (<g> ^parse <msg>)# ^message-context <task-op>)
+    (<msg> ^interaction-status.failure failed-interpretation)
+}
+
+#    (<info> ^purpose <p>
+#            ^originator instructor)
+#    (<p> ^type learn-task-goal
+#         ^parameters <params>
+#         ^satisfaction <sat>)
+#    (<params> ^task-operator <task-op>
+#              ^conditions <conds>
+#              ^goal-message <goal>)
+#    (<sat> ^task-event.type learned-task-goal)
+#}
+#just want to return to analyze-lm-response, which should...
+
+#unsure if wantthis...
+# sp {interpret-message*apply*interpret-conditional-predicate*conditional-goal*terminate*segment
+#    (state <s> ^name interpret-message
+#               ^current-purpose.type process-lm-response
+#               ^operator <o>)
+#               #^current-purpose.satisfaction.dialog-event <de>)
+#    # (<o> ^name #interpret-conditional-predicate
+#    #      ^purpose process-lm-response)
+#    #(<de> ^type goal-description
+#    #      ^originator instructor)
+# -->
+#    (<s> ^terminate-segment true)
+# }
+
+#LM version
+#   interpret-message*apply*complete-interpret-message*copy*new-segment-info  [S405] 
+#   interpret-message*apply*complete-interpret-message*delete*nl-il  [S405] 
+#   interpret-message*apply*any-op*mark*message*interpreted  [S405] 
+
+
+#OLD version
+#   interpret-message*apply*complete-interpret-message*copy*new-segment-info  [S438] 
+#   interpret-message*apply*complete-interpret-message*delete*nl-il  [S438] 
+#   interpret-message*apply*complete-interpret-message*terminate-segment  [S438] 
+#   interpret-message*apply*any-op*mark*message*interpreted  [S438] 

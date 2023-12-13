@@ -1,0 +1,10 @@
+
+sp {op_look1*elaborate*direction*from*task-operator
+   (state <s> ^name op_look1
+              ^task-operator.arg1 <arg1>)
+   (<arg1> ^arg-type concept
+           ^handle <h>)
+-->
+   (<s> ^direction <h>)
+}
+

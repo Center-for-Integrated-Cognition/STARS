@@ -1,0 +1,31 @@
+# Operator: complete-learn-preposition
+# Marks a preposition learning-event as having been performed
+#   on the interaction stack
+
+sp {learn-preposition*propose*complete-learn-preposition
+   (state <s> ^name learn-preposition)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name complete-learn-preposition)
+}
+
+sp {learn-preposition*apply*complete-learn-preposition*mark*performed
+   (state <s> ^name learn-preposition
+              ^operator.name complete-learn-preposition
+              ^io.output-link <ol>
+              ^top-state.interaction.status <status>)
+-->
+   (<status> ^performed.learning-event.type relation)
+   (<ol> ^send-message <msg>)
+   (<msg> ^type confirmation)
+}
+
+sp {learn-preposition*apply*complete-learn-preposition*store*preps
+   (state <s> ^name learn-preposition
+              ^operator.name complete-learn-preposition
+              ^top-state.prepositions <preps>
+              ^predicate.name <name>)
+   (<preps> -^prep.name <name>)
+-->
+   (<preps> ^prep.name <name>)
+}

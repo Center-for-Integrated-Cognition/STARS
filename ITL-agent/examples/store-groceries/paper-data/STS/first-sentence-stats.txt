@@ -1,0 +1,32 @@
+Soar 9.6.0 on jr-VirtualBox at Tue Aug  8 22:50:14 2023
+
+6694 productions (102 default, 6592 user, 0 chunks)
+   + 62 justifications
+                                                        |   Computed
+Phases:      Input   Propose   Decide   Apply    Output |     Totals
+========================================================|===========
+Kernel:      0.100    0.033    0.077    0.176    0.158  |      0.545
+========================================================|===========
+Input fn:    0.006                                      |      0.006
+========================================================|===========
+Outpt fn:                                        0.000  |      0.000
+========================================================|===========
+Callbcks:    0.107    0.000    0.000    0.031    0.000  |      0.138
+========================================================|===========
+Computed------------------------------------------------+-----------
+Totals:      0.213    0.033    0.077    0.207    0.158  |      0.689
+
+Values from single timers:
+ Kernel CPU Time:       0.545 sec. 
+ Total  CPU Time:       0.693 sec.
+
+621 decisions (0.877 msec/decision)
+2303 elaboration cycles (3.709 ec's per dc, 0.237 msec/ec)
+2802 inner elaboration cycles
+603 p-elaboration cycles (0.971 pe's per dc, 0.904 msec/pe)
+11825 production firings (5.135 pf's per ec, 0.046 msec/pf)
+122117 wme changes (64818 additions, 57299 removals)
+WM size: 7519 current, 4431.410 mean, 8170 maximum
+
+
+

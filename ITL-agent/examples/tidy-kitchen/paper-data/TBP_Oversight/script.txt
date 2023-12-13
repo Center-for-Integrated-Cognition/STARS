@@ -1,0 +1,49 @@
+Tidy kitchen.
+Repeat the following tasks while an object is on the table.
+Clear an object that is on the table.
+If the object is a apple-juice then the goal is that the object is in the fridge and the fridge is closed.
+If the object is a bottle-opener then the goal is that the object is in the drawer and the drawer is closed.
+If the object is a ceramic-plate then the goal is that the object is in the dishwasher and the dishwasher is closed.
+If the object is a cereal-box then the goal is that the object is in the pantry and the pantry is closed.
+If the object is a glass-tumbler then the goal is that the object is in the dishwasher and the dishwasher is closed.
+If the object is a ketchup then the goal is that the object is in the fridge and the fridge is closed.
+If the object is a milk then the goal is that the object is in the fridge and the fridge is closed.
+If the object is a paper-plate then the goal is that the object is in the garbage.
+If the object is a pepsi-can then the goal is that the object is in the bin.
+If the object is a plastic-bottle then the goal is that the object is in the bin.
+If the object is a plastic-cup then the goal is that the object is in the garbage.
+If the object is a plastic-fork then the goal is that the object is in the garbage.
+If the object is a pop-tart-box then the goal is that the object is in the pantry and the pantry is closed.
+If the object is a soda-can then the goal is that the object is in the bin.
+You are done.
+Repeat.
+Repeat the following tasks while an object is on the counter.
+Store an object that is on the counter.
+If the object is a apple-core then the goal is that the object is in the garbage.
+If the object is a box-of-aluminum-foil then the goal is that the object is in the pantry and the pantry is closed.
+If the object is a coffee-grinder then the goal is that the object is in the cupboard and the cupboard is closed.
+If the object is a coke-can then the goal is that the object is in the bin.
+If the object is a corkscrew then the goal is that the object is in the drawer and the drawer is closed.
+If the object is a crackers then the goal is that the object is in the pantry and the pantry is closed.
+If the object is a granola-bars then the goal is that the object is in the pantry and the pantry is closed.
+If the object is a half-and-half then the goal is that the object is in the fridge and the fridge is closed.
+If the object is a jar-of-salsa then the goal is that the object is in the fridge and the fridge is closed.
+If the object is a mug then the goal is that the object is in the dishwasher and the dishwasher is closed.
+If the object is a newspaper then the goal is that the object is in the bin.
+If the object is a paper-cup then the goal is that the object is in the garbage.
+If the object is a plate then the goal is that the object is in the dishwasher and the dishwasher is closed.
+If the object is a steak-knife then the goal is that the object is in the drawer and the drawer is closed.
+You are done.
+Repeat.
+Repeat the following tasks while an object is in the dish rack.
+Unload an object that is in the dish rack.
+If the object is a ceramic-bowl then the goal is that the object is in the cupboard and the cupboard is closed.
+If the object is a ceramic-plate then the goal is that the object is in the dishwasher and the dishwasher is closed.
+If the object is a glass-tumbler then the goal is that the object is in the dishwasher and the dishwasher is closed.
+If the object is a metal-fork then the goal is that the object is in the drawer and the drawer is closed.
+If the object is a mug then the goal is that the object is in the dishwasher and the dishwasher is closed.
+If the object is a paring-knife then the goal is that the object is in the drawer and the drawer is closed.
+If the object is a steak-knife then the goal is that the object is in the drawer and the drawer is closed.
+You are done.
+Repeat.
+You are done.

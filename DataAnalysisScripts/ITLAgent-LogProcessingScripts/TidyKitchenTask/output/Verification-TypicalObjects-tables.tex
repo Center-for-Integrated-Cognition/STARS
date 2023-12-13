@@ -1,0 +1,29 @@
+Table for main body:
+\begin{tabular}{c ccccc|}
+\hline
+completion_rate & retrieved goals & total tokens & instructions & instructor_words \\
+\hline
+TBP & 0.525 & 93.0 & 41407.0 & 14.0 & 76.0 \\
+TBP+O & 1.0 & 89.0 & 42469.0 & 92.0 & 403.0 \\
+ST & 0.5 & 243.0 & 56874.0 & 14.0 & 76.0 \\
+STS & 0.4 & 247.0 & 66458.0 & 14.0 & 76.0 \\
+STAR & 0.775 & 353.0 & 126086.0 & 14.0 & 76.0 \\
+STARS & 0.775 & 368.0 & 139871.0 & 14.0 & 76.0 \\
+STARS+O & 1.0 & 361.0 & 138096.0 & 65.0 & 127.0 \\
+\hline
+\end{tabular}
+
+Table for appendix:
+\begin{tabular}{c cccccccccc|}
+\hline
+completion_rate & retrieved goals & proposed goals & sourced goals & prompt tokens & completion tokens & total tokens & instructions & yes/no_instructions & instructor_words \\
+\hline
+TBP & 0.525 & 93.0 & 0.0 & 25.0 & 35622.0 & 5785.0 & 41407.0 & 14.0 & 0.0 & 76.0 \\
+TBP+O & 1.0 & 89.0 & 64.0 & 21.0 & 36606.0 & 5863.0 & 42469.0 & 92.0 & 64.0 & 403.0 \\
+ST & 0.5 & 243.0 & 0.0 & 24.0 & 55491.0 & 1383.0 & 56874.0 & 14.0 & 0.0 & 76.0 \\
+STS & 0.4 & 247.0 & 0.0 & 18.0 & 65016.0 & 1442.0 & 66458.0 & 14.0 & 0.0 & 76.0 \\
+STAR & 0.775 & 353.0 & 0.0 & 33.0 & 122531.0 & 3555.0 & 126086.0 & 14.0 & 0.0 & 76.0 \\
+STARS & 0.775 & 368.0 & 0.0 & 35.0 & 136043.0 & 3828.0 & 139871.0 & 14.0 & 0.0 & 76.0 \\
+STARS+O & 1.0 & 361.0 & 51.0 & 35.0 & 134372.0 & 3724.0 & 138096.0 & 65.0 & 51.0 & 127.0 \\
+\hline
+\end{tabular}

@@ -1,0 +1,122 @@
+# Entered substate via a state no-change (will learn elaboration rule)
+sp {task-utils*copy-task-operator*state*no-change*elaborate*copy-task-op-workspace
+   (state <s> ^superstate.copy-task-operator <sscto>
+              ^impasse no-change
+              ^attribute state)
+-->
+   (<s> ^copy-task-op-workspace <ws>)
+   (<ws> ^ss-copy-task-operator <sscto>
+         ^learning elaboration-rule)
+}
+
+# Entered substate via an operator no-change (will learn application rule)
+sp {task-utils*copy-task-operator*op-no-change*elaborate*ss-copy-task-operator*superoperator
+   (state <s> ^name copy-task-operator
+              ^superstate.operator <o>)
+-->
+   (<s> ^copy-task-op-workspace <ws>)
+   (<ws> ^ss-copy-task-operator <o>
+         ^learning application-rule)
+}
+
+sp {task-utils*copy-task-operator*elaborate*name*learn-copy-task-op-elaboration-rule
+   (state <s> ^copy-task-op-workspace <ws>)
+   (<ws> -^is-copied true)
+-->
+   (<s> ^name learn-copy-task-op-elaboration-rule)
+}
+
+sp {task-utils*copy-task-operator*elaborate*learning-task-utils-rule
+   (state <s> ^name learn-copy-task-op-elaboration-rule
+              ^copy-task-op-workspace <ws>)
+   (<ws> ^copy-name <name>
+         ^destination <dest>
+        -^is-copied true)
+-->
+   (<s> ^learning-task-utils-rule true)
+}
+
+sp {task-utils*copy-task-operator*elaborate*workspace*is-copied
+   (state <s> ^copy-task-op-workspace <ws>)
+   (<ws> ^copy-name <name>
+         ^destination.<name> <copy>)
+-->
+   (<ws> ^is-copied true)
+}
+
+sp {task-utils*copy-task-operator*elaborate*info
+   (state <s> ^copy-task-op-workspace <ws>)
+   (<ws> ^ss-copy-task-operator <sscto>)
+   (<sscto> ^task-operator <src-top>
+           ^destination <dest>
+           ^copy-name <name>)
+-->
+   (<ws> ^task-operator <src-top>
+         ^destination <dest>
+         ^copy-name <name>)
+}
+
+sp {task-utils*copy-task-operator*elaborate*copy-task-operator*not-copied*true
+   (state <s> ^copy-task-op-workspace <ws>)
+   (<ws> ^copy-name <name>
+        -^destination.<name>)
+-->
+   (<ws> ^not-copied true)
+}
+
+sp {task-utils*copy-task-operator*elaborate*object-map*superoperator
+   (state <s> ^copy-task-op-workspace <ws>)
+   (<ws> ^ss-copy-task-operator <sscto>)
+   (<sscto> ^object-map <map>)
+-->
+   (<ws> ^object-map <map>)
+}
+
+sp {task-utils*copy-task-operator*elaborate*object-map*none
+   (state <s> ^copy-task-op-workspace <ws>)
+   (<ws> ^ss-copy-task-operator <sscto>)
+   (<sscto> -^object-map <map>)
+-->
+   (<ws> ^object-map none)
+}
+
+###### Copy workspace onto arguments
+sp {task-utils*copy-task-operator*elaborate*workspace*onto*argument
+   (state <s> ^copy-task-op-workspace <ws>
+              ^copy-task-argument <arg>)
+   (<ws> ^<arg-name> <arg>)
+-->
+   (<arg> ^workspace <ws>)
+}
+
+sp {task-utils*copy-task-operator*elaborate*workspace*onto*sub*argument
+   (state <s> ^copy-task-argument <arg>
+              ^copy-task-argument <sub-arg>)
+   (<arg> ^workspace <ws>
+          ^<sub-name> <sub-arg>)
+-->
+   (<sub-arg> ^workspace <ws>)
+}
+
+###### Copy Operator Attributes
+
+#sp {task-utils*copy-task-operator*elaborate*current-goal
+#   (state <s> ^copy-task-operator <ws>)
+#   (<ws> ^task-operator.current-goal.handle <goal-handle>
+#         ^destination <dest>
+#         ^copy-name <name>)
+#   (<dest> ^<name> <copy>)
+#-->
+#   (<copy> ^current-goal.handle <goal-handle>)
+#}
+#
+#sp {task-utils*copy-task-operator*elaborate*performed-subtask
+#   (state <s> ^copy-task-operator <ws>)
+#   (<ws> ^task-operator.performed-subtask <sub-handle>
+#         ^destination <dest>
+#         ^copy-name <name>)
+#   (<dest> ^<name> <copy>)
+#-->
+#   (<copy> ^performed-subtask <sub-handle>)
+#}
+

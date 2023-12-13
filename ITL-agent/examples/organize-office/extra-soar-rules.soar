@@ -1,0 +1,479 @@
+sp {top-state*elaborate*agent-params*custom
+   (state <s> ^superstate nil
+              ^agent-params <p>)
+-->
+   (<p> ^debug-ids true
+#       ^report-tasks-to-output-link true
+#       ^debug-op-ties true
+#       ^debug-wait-limit 3
+
+#       ^interrupt-operator interpret-message 
+#       ^interrupt-end-of-sentence true
+#       ^interrupt-new-task true
+#       ^interrupt-task-search true
+        
+#       ^print-perception true
+       ^print-new-task true
+#       ^print-new-task-shorthand true
+#       ^print-wp-search-path-costs true
+       ^print-parsed-messages true
+#       ^print-outgoing-messages true
+#       ^print-interaction-stack true
+
+   )
+}
+
+#Enforce order of object learning for testing
+sp {debug*select-next-goal*enforce-object-order
+   (state <s> ^operator <o> +
+              ^operator <o2> +
+              ^top-state.task-stack <ts>
+              ^quiescence t)
+   (<ts> ^top <stack> ^bottom <stack>)
+   (<stack> ^learning-repeat-block <q> ^depth 1 -^performed-subtask)# -^loop-counter)
+   (<o> ^task-handle <c> ^task-handle << clear1 unload1 store1 >> ^arg1.id <obj>)
+   (<o2> ^task-handle <c> ^arg1.id <obj2>)
+   (<obj> ^handle <i>)
+   (<obj2> ^handle {<i2> > <i>})
+-->
+   (<s> ^operator <o> > <o2>)
+}
+#Enforce order of object for clearing objects during repeat
+sp {debug*select-next-goal*enforce-object-order*during-repeat
+   (state <s> ^operator <o> +
+              ^operator <o2> +
+              ^top-state.task-stack <ts>
+              ^quiescence t)
+   (<ts> ^top <stack> ^bottom <stack>)
+   (<stack> -^learning-repeat-block <q> ^loop-counter > 0 ^depth 1 -^performed-subtask)# -^loop-counter)
+   (<o> ^task-handle <c> ^task-handle << clear1 unload1 store1 >> ^arg1.id <obj>)
+   (<o2> ^task-handle <c> ^arg1.id <obj2>)
+   (<obj> ^handle <i>)
+   (<obj2> ^handle {<i2> > <i>})
+-->
+   (<s> ^operator <o> > <o2>)
+}
+
+#will give it two attempts at correct parse for multi objects
+#seems to delete ok (still on input link... but nowhere else..)
+# sp {top-state*delete*bad*object*failed-parse
+#    (state <s> ^operator.name interpret-failure
+#               ^top-state <ts>)
+#    (<ts> ^lm-failures <lf> 
+#          ^world.objects <objs> 
+#          ^agent-params.prevent-failures true
+#          ^interaction.stack.segment.purpose.parameters <p>)
+#    (<p> ^sentence.complete-sentence <cs>)
+#    (<objs> ^object <o>)
+#    (<o> ^handle plate1_5)
+# -->
+#    (<lf> ^failure <f>)
+#    (<f> ^handle plate1_5 ^reason parse ^sentence <cs>)
+#    (<objs> ^object <o> -)
+# }
+
+# occurs in two places
+# #best if could have same approach though might need 2
+
+
+#try to prevent new stack from being pushed?
+# and delete object?
+#for initial prompting.. doing on wait or get next task?
+
+
+
+# Load chunks for fetch
+#source fetch-chunks.soar
+#source full-training-chunks.soar
+
+#explain all on
+
+############################
+#STAT/DATA collection
+sp {capture-stats*init
+   (state <s> ^superstate nil
+              ^operator.name init-agent)
+-->
+   (write (cmd |ctf initial-stats.txt stats|))
+   (write (cmd |ctf initial-statsm.txt statsm|))
+}
+
+
+#on scripted
+# (O136 ^name process-new-sentence ^sentence I146)
+#   (I146 ^current-word F1 ^expected nil ^input-sentence F1
+#          ^original-sentence F1)
+# print --depth 2 I146
+# (I146 ^current-word F1 ^expected nil ^input-sentence F1 ^original-sentence F1)
+#   (F1 ^complete-sentence |Tidy kitchen.| ^next W7 ^spelling *)
+#no io...
+
+#on non scripted
+# (O2196 ^name process-new-sentence ^original-sentence I617)
+#   (I617 ^complete-sentence |Tidy kitchen.| ^next N1 ^sentence-number 1
+#          ^spelling *)
+#does have io...
+
+#doesn't fire????
+sp {capture-stats*init*world*root-task*non-scripted
+   (state <s> ^superstate nil
+             -^root-task 
+              ^world <w>
+              ^operator <o>)
+   (<o> ^name process-new-sentence
+        ^sentence.original-sentence.complete-sentence <sentence>)
+-->
+   (<s> ^root-task <sentence>)
+   (write (cmd |ctf initial-world.txt print | <w> |-d 5|))
+   (write (cmd |ctf first-sentence-stats.txt stats|))
+}
+sp {capture-stats*init*world*root-task*scripted
+   (state <s> ^superstate nil
+             -^root-task 
+              ^world <w>
+              ^operator <o>)
+   (<o> ^name process-new-sentence
+        ^original-sentence.complete-sentence <sentence>)
+-->
+   (<s> ^root-task <sentence>)
+   (write (cmd |ctf initial-world.txt print | <w> |-d 5|))
+   (write (cmd |ctf first-sentence-stats.txt stats|))
+}
+
+#need different rule for unscripted versions
+#huh yeah...
+sp {capture-final-stats*use-language-model
+   (state <s> ^top-state <ts>
+              ^operator.name wait-for-response)
+   (<ts> ^lm-failures <lmf> ^interaction.stack.segment.purpose <p> 
+         ^io.input-link.language.sentence.next.spelling you ^world <w> ^agent-params.use-language-model true ^agent-params.lm-condition lm-human)
+   (<p> ^parameters <para> ^type get-next-task)
+   (<para> -^task-operator)
+-->
+   (write (cmd |ctf final-world.txt print | <w> |-d 6|))
+   (write (cmd |ctf final-failures.txt print | <lmf> |-d 4|))
+   (write (cmd |ctf final-stats.txt stats|))
+   (write (cmd |ctf final-statsm.txt statsm|))
+   (write (cmd |ctf final-chunks.txt print -fc|))
+   (write (cmd |ctf final-tcn-tidy.txt print -d 200 @100045|))
+   (write (cmd |ctf final-tcn-unload.txt print -d 200 @100058|))
+   (write (cmd |ctf final-tcn-store.txt print -d 200 @100022|))
+   (write (cmd |ctf final-tcn-clear.txt print -d 200 @100057|))
+   (write (cmd |ctf final-search-states.txt fc selection*apply*state*evaluation|)) 
+   (interrupt)
+}
+
+sp {capture-final-stats*scripted
+   (state <s> ^top-state <ts>
+              ^operator.name wait-for-response)
+   (<ts> ^lm-failures <lmf> ^max-sentence-number <mn> ^current-sentence-number > <mn> ^world <w>)# ^agent-params.use-language-model true)
+-->
+   (write (cmd |ctf final-world.txt print | <w> |-d 6|))
+   (write (cmd |ctf final-failures.txt print | <lmf> |-d 4|))
+   (write (cmd |ctf final-stats.txt stats|))
+   (write (cmd |ctf final-statsm.txt statsm|))
+   (write (cmd |ctf final-chunks.txt print -fc|))
+   (write (cmd |ctf final-tcn-tidy.txt print -d 200 @100045|))
+   (write (cmd |ctf final-tcn-unload.txt print -d 200 @100058|))
+   (write (cmd |ctf final-tcn-store.txt print -d 200 @100022|))
+   (write (cmd |ctf final-tcn-clear.txt print -d 200 @100057|))
+   (write (cmd |ctf final-search-states.txt fc selection*apply*state*evaluation|)) 
+   (interrupt)
+}
+
+# sp {capture-final-stats*phase1
+#    (state <s> ^top-state <ts>
+#               ^operator.name wait-for-response)
+#    (<ts> ^phase 1 ^phase <p> ^lm-failures <lmf> ^world <w> ^n-sentence-number 42)
+# -->
+#    (<ts> ^phase <p> -)
+#    (<ts> ^phase (+ 1 <p>))
+#    (write (cmd |ctf final-clear.txt print | <w> |-d 6|))
+# }
+
+# sp {capture-final-stats*phase1
+#    (state <s> ^top-state <ts>
+#               ^operator.name wait-for-response)
+#    (<ts> ^phase 2 ^phase <p> ^lm-failures <lmf> ^world <w> ^n-sentence-number 81)
+# -->
+#    (<ts> ^phase <p> -)
+#    (<ts> ^phase (+ 1 <p>))
+#    (write (cmd |ctf final-store.txt print | <w> |-d 6|))
+# }
+
+
+# sp {top-state*world*elaborate*initial*relations*on*table1_11*remove
+#    (state <s> ^superstate nil
+#               ^phase 2
+#               ^operator.name process-new-sentence
+#               ^agent-params.domain internal
+#               ^world <w>)
+#    (<w> ^objects <objs>
+#         ^predicates.predicate <on>)
+#    (<on> ^handle on1)
+#    (<objs> ^object <almond-milk_99> <aluminum-foil-box_73> <apple-core_25> <apple-juice_83>
+#            <bottle-of-mustard_85> <box-of-little-debbies_77> <box-of-pasta_79> <box-of-saran-wrap_75>
+#            <bread-knife_46> <bubly-can_103> <bubly-can_13> <can-of-soup_81>
+#            <coke-can_109> <coke-can_19> <cutting-board_41> <donut_27>
+#            <glass-tumbler_61> <glass1_43> <half-and-half_87> <horseradish_101>
+#            <ketchup1_89> <metal-fork_52> <mug1_55> <mustard1_91>
+#            <napkin1_29> <paper-cup_31> <pineapple_93> <plastic-bottle_105>
+#            <plastic-bottle_15> <plastic-fork_33> <pop-tart-wrapper_35> <salad-tongs_70>
+#            <san-pellegrino-can_23> <slotted-serving-spoon_64> <soda-bottle_111> <soda-bottle_21>
+#            <solo-cup_37> <sour-cream_97> <tub-of-margarine_95> <vernors-can_107>
+#            <vernors-can_17>)
+#    (<almond-milk_99> ^handle almond-milk_99)
+#    (<aluminum-foil-box_73> ^handle aluminum-foil-box_73)
+#    (<apple-core_25> ^handle apple-core_25)
+#    (<apple-juice_83> ^handle apple-juice_83)
+#    (<bottle-of-mustard_85> ^handle bottle-of-mustard_85)
+#    (<box-of-little-debbies_77> ^handle box-of-little-debbies_77)
+#    (<box-of-pasta_79> ^handle box-of-pasta_79)
+#    (<box-of-saran-wrap_75> ^handle box-of-saran-wrap_75)
+#    (<bread-knife_46> ^handle bread-knife_46)
+#    (<bubly-can_103> ^handle bubly-can_103)
+#    (<bubly-can_13> ^handle bubly-can_13)
+#    (<can-of-soup_81> ^handle can-of-soup_81)
+#    (<coke-can_109> ^handle coke-can_109)
+#    (<coke-can_19> ^handle coke-can_19)
+#    (<cutting-board_41> ^handle cutting-board_41)
+#    (<donut_27> ^handle donut_27)
+#    (<glass-tumbler_61> ^handle glass-tumbler_61)
+#    (<glass1_43> ^handle glass1_43)
+#    (<half-and-half_87> ^handle half-and-half_87)
+#    (<horseradish_101> ^handle horseradish_101)
+#    (<ketchup1_89> ^handle ketchup1_89)
+#    (<metal-fork_52> ^handle metal-fork_52)
+#    (<mug1_55> ^handle mug1_55)
+#    (<mustard1_91> ^handle mustard1_91)
+#    (<napkin1_29> ^handle napkin1_29)
+#    (<paper-cup_31> ^handle paper-cup_31)
+#    (<pineapple_93> ^handle pineapple_93)
+#    (<plastic-bottle_105> ^handle plastic-bottle_105)
+#    (<plastic-bottle_15> ^handle plastic-bottle_15)
+#    (<plastic-fork_33> ^handle plastic-fork_33)
+#    (<pop-tart-wrapper_35> ^handle pop-tart-wrapper_35)
+#    (<salad-tongs_70> ^handle salad-tongs_70)
+#    (<san-pellegrino-can_23> ^handle san-pellegrino-can_23)
+#    (<slotted-serving-spoon_64> ^handle slotted-serving-spoon_64)
+#    (<soda-bottle_111> ^handle soda-bottle_111)
+#    (<soda-bottle_21> ^handle soda-bottle_21)
+#    (<solo-cup_37> ^handle solo-cup_37)
+#    (<sour-cream_97> ^handle sour-cream_97)
+#    (<tub-of-margarine_95> ^handle tub-of-margarine_95)
+#    (<vernors-can_107> ^handle vernors-can_107)
+#    (<vernors-can_17> ^handle vernors-can_17)
+# -->
+#    (<objs> ^object <almond-milk_99> - <aluminum-foil-box_73> - <apple-core_25> - <apple-juice_83> -
+#            <bottle-of-mustard_85> - <box-of-little-debbies_77> - <box-of-pasta_79> - <box-of-saran-wrap_75> -
+#            <bread-knife_46> - <bubly-can_103> - <bubly-can_13> - <can-of-soup_81> -
+#            <coke-can_109> - <coke-can_19> - <cutting-board_41> - <donut_27> -
+#            <glass-tumbler_61> - <glass1_43> - <half-and-half_87> - <horseradish_101> -
+#            <ketchup1_89> - <metal-fork_52> - <mug1_55> - <mustard1_91> -
+#            <napkin1_29> - <paper-cup_31> - <pineapple_93> - <plastic-bottle_105> -
+#            <plastic-bottle_15> - <plastic-fork_33> - <pop-tart-wrapper_35> - <salad-tongs_70> -
+#            <san-pellegrino-can_23> - <slotted-serving-spoon_64> - <soda-bottle_111> - <soda-bottle_21> -
+#            <solo-cup_37> - <sour-cream_97> - <tub-of-margarine_95> - <vernors-can_107> -
+#            <vernors-can_17> -)
+# }
+
+# sp {top-state*world*elaborate*initial*relations*on*counter1_2*remove
+#    (state <s> ^superstate nil
+#               ^phase 3
+#               ^operator.name process-new-sentence
+#               ^agent-params.domain internal
+#               ^world <w>)
+#    (<w> ^objects <objs>
+#         ^predicates.predicate <on>)
+#    (<on> ^handle on1)
+#    (<objs> ^object <apple1_82> <aquafina-bottle_102> <aquafina-bottle_12> <avocado_84>
+#            <banana-peel_26> <box-of-crackers_76> <box-of-twinkies_78> <bunch-of-grapes_100>
+#            <butter_96> <can-of-beans_80> <ceramic-cereal-bowl_39> <cereal-box_74>
+#            <coke-bottle_110> <coke-bottle_20> <grape-juice_86> <jar-of-pickles_88>
+#            <la-croix-can_22> <metal-can_104> <metal-can_14> <metal-spoon_54>
+#            <milk1_90> <muffin_28> <orange-juice_92> <paper-napkin_30>
+#            <paper-plate_32> <pepsi-bottle_24> <pepsi-can_106> <pepsi-can_16>
+#            <pie-plate_66> <plastic-spoon_34> <porcelain-serving-bowl_63> <serving-spoon_45>
+#            <soy-milk_98> <spatula_72> <steak-knife_57> <tissue_36>
+#            <tomato_94> <tupperware-container_58> <water-bottle_108> <water-bottle_18>)
+#    (<counter1_2> ^handle counter1_2)
+#    (<apple1_82> ^handle apple1_82)
+#    (<aquafina-bottle_102> ^handle aquafina-bottle_102)
+#    (<aquafina-bottle_12> ^handle aquafina-bottle_12)
+#    (<avocado_84> ^handle avocado_84)
+#    (<banana-peel_26> ^handle banana-peel_26)
+#    (<box-of-crackers_76> ^handle box-of-crackers_76)
+#    (<box-of-twinkies_78> ^handle box-of-twinkies_78)
+#    (<bunch-of-grapes_100> ^handle bunch-of-grapes_100)
+#    (<butter_96> ^handle butter_96)
+#    (<can-of-beans_80> ^handle can-of-beans_80)
+#    (<ceramic-cereal-bowl_39> ^handle ceramic-cereal-bowl_39)
+#    (<cereal-box_74> ^handle cereal-box_74)
+#    (<coke-bottle_110> ^handle coke-bottle_110)
+#    (<coke-bottle_20> ^handle coke-bottle_20)
+#    (<grape-juice_86> ^handle grape-juice_86)
+#    (<jar-of-pickles_88> ^handle jar-of-pickles_88)
+#    (<la-croix-can_22> ^handle la-croix-can_22)
+#    (<metal-can_104> ^handle metal-can_104)
+#    (<metal-can_14> ^handle metal-can_14)
+#    (<metal-spoon_54> ^handle metal-spoon_54)
+#    (<milk1_90> ^handle milk1_90)
+#    (<muffin_28> ^handle muffin_28)
+#    (<orange-juice_92> ^handle orange-juice_92)
+#    (<paper-napkin_30> ^handle paper-napkin_30)
+#    (<paper-plate_32> ^handle paper-plate_32)
+#    (<pepsi-bottle_24> ^handle pepsi-bottle_24)
+#    (<pepsi-can_106> ^handle pepsi-can_106)
+#    (<pepsi-can_16> ^handle pepsi-can_16)
+#    (<pie-plate_66> ^handle pie-plate_66)
+#    (<plastic-spoon_34> ^handle plastic-spoon_34)
+#    (<porcelain-serving-bowl_63> ^handle porcelain-serving-bowl_63)
+#    (<serving-spoon_45> ^handle serving-spoon_45)
+#    (<soy-milk_98> ^handle soy-milk_98)
+#    (<spatula_72> ^handle spatula_72)
+#    (<steak-knife_57> ^handle steak-knife_57)
+#    (<tissue_36> ^handle tissue_36)
+#    (<tomato_94> ^handle tomato_94)
+#    (<tupperware-container_58> ^handle tupperware-container_58)
+#    (<water-bottle_108> ^handle water-bottle_108)
+#    (<water-bottle_18> ^handle water-bottle_18)
+# -->
+#    (<objs> ^object <apple1_82> - <aquafina-bottle_102> - <aquafina-bottle_12> - <avocado_84> - 
+#            <banana-peel_26> - <box-of-crackers_76> - <box-of-twinkies_78> - <bunch-of-grapes_100> - 
+#            <butter_96> - <can-of-beans_80> - <ceramic-cereal-bowl_39> - <cereal-box_74> - 
+#            <coke-bottle_110> - <coke-bottle_20> - <grape-juice_86> - <jar-of-pickles_88> - 
+#            <la-croix-can_22> - <metal-can_104> - <metal-can_14> - <metal-spoon_54> - 
+#            <milk1_90> - <muffin_28> - <orange-juice_92> - <paper-napkin_30> - 
+#            <paper-plate_32> - <pepsi-bottle_24> - <pepsi-can_106> - <pepsi-can_16> - 
+#            <pie-plate_66> - <plastic-spoon_34> - <porcelain-serving-bowl_63> - <serving-spoon_45> - 
+#            <soy-milk_98> - <spatula_72> - <steak-knife_57> - <tissue_36> - 
+#            <tomato_94> - <tupperware-container_58> - <water-bottle_108> - <water-bottle_18> - )
+# }
+#or ^n-sentence-number 3 
+#which does refer to the line.. maybe easiest yeah
+
+#current sentence on process new-sentence
+# (I854 ^current-word F4 ^expected nil ^input-sentence F4 ^original-sentence F4)
+# print --depth 2 I854
+# (I854 ^current-word F4 ^expected nil ^input-sentence F4 ^original-sentence F4)
+#   (F4
+#          ^complete-sentence |Repeat the following tasks while an object is on the table.|
+#          ^next W31 ^spelling *)
+# print W31
+# (W31 ^next W32 ^spelling repeat)
+# print W32
+# (W32 ^next W33 ^spelling the)
+###########################
+
+####
+
+sp {top-state*perception-monitor*predicate-monitor*elaborate*default*predicates*internal
+   (state <s> ^superstate nil
+              ^agent-params.domain internal
+              ^world.predicates <preds>
+              ^perception-monitor.predicate-monitor <pred-mon>)
+-->
+   (<preds> ^predicate.handle in1)
+   (<preds> ^predicate.handle on1)
+   (<preds> ^predicate.handle holding1)
+   (<preds> ^predicate.handle heard2)
+}
+
+sp {top-state*perception-monitor*predicate-monitor*elaborate*default*predicates*magicbot
+   (state <s> ^superstate nil
+              ^agent-params.domain magicbot
+              ^world.predicates <preds>
+              ^perception-monitor.predicate-monitor <pred-mon>)
+-->
+   # Extract predicates via SVS
+   (<pred-mon> ^predicate-info.predicate-handle in1)
+   (<pred-mon> ^predicate-info.predicate-handle on1)
+
+   (<preds> ^predicate.handle holding1)
+   (<preds> ^predicate.handle heard2)
+}
+
+# Remove modifiers relieiving or emergency when the top task segment is popped
+sp {problem-space*action*pop-task-segment*apply*complete-pop-task-segment*remove*modifiers*relieving
+   (state <s> ^name pop-task-segment
+              ^operator.name complete-pop-task-segment
+              ^segment-to-pop <seg>
+              ^task-stack.top <seg>
+              ^top-state.world.objects.object.predicates <preds>)
+   (<preds> ^modifier1 { <mod> << relieving1 emergency1 >> })
+-->
+   (<preds> ^modifier1 <mod> -)
+}
+
+
+###### Rules for printing events
+sp {complete-push-task-segment*report*time*info
+   (state <s> ^name push-task-segment
+              ^operator.name complete-push-task-segment
+              ^segment-to-push.task-operator.task-handle <task-h>
+              ^io.input-link.time <t>)
+   (<t> ^steps <steps>
+        ^milliseconds <ms>)
+-->
+   (write (crlf) |$START-TASK$ | <task-h> | | <steps> | | <ms> (crlf))
+}
+
+sp {complete-pop-task-segment*report*time*info
+   (state <s> ^name pop-task-segment
+              ^operator.name complete-pop-task-segment
+              ^segment-to-pop.task-operator.task-handle <task-h>
+              ^io.input-link.time <t>)
+   (<t> ^steps <steps>
+        ^milliseconds <ms>)
+-->
+   (write (crlf) |$END-TASK$ | <task-h> | | <steps> | | <ms> (crlf))
+}
+
+sp {search-for-next-subtask*start*report*time*info
+   (state <s> ^operator.name search-for-next-subtask
+              ^superstate.task-operator.task-handle <task-h>
+              ^io.input-link.time <t>
+             -^reported-time)
+   (<t> ^steps <steps>
+        ^milliseconds <ms>)
+-->
+   (write (crlf) |$BEGIN-SEARCH$ | <task-h> | | <steps> | | <ms> (crlf))
+   (<s> ^reported-time true)
+}
+
+sp {search-for-next-subtask*finish*report*time*info
+   (state <s> ^name search-for-next-subtask
+              ^superstate.superstate.task-operator.task-handle <task-h>
+              ^operator.name << return-successful-operator initiate-interaction >>
+              ^io.input-link.time <t>)
+   (<t> ^steps <steps>
+        ^milliseconds <ms>)
+-->
+   (write (crlf) |$END-SEARCH$ | <task-h> | | <steps> | | <ms> (crlf))
+}
+
+sp {apply*select-next-goal*report*goal*handle
+   (state <s> ^problem-space.subproblem execute
+              ^operator <o>
+              ^apply-select-next-goal true
+              ^task-operator.task-handle <task-h>
+              ^io.input-link.time <t>)
+   (<o> ^name select-next-goal
+        ^next-goal-handle <goal-h>)
+   (<t> ^steps <steps>
+        ^milliseconds <ms>)
+-->
+   (write (crlf) |$SELECTED-GOAL$ | <goal-h> | | <steps> | | <ms> (crlf))
+}
+
+#sp {interrupt*mltiple*objs
+#   (state <s> ^superstate nil
+#              ^world.objects <objs>)
+#   (<objs> ^object <obj1>
+#           ^object { <obj2> <> <obj1> })
+#   (<obj1> ^handle <h>)
+#   (<obj2> ^handle <h>)
+#-->
+#   (interrupt)
+#   (write |DUPLICATE HANDLE: | <h>)
+#}

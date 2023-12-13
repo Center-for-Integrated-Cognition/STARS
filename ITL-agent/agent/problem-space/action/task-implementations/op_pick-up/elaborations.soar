@@ -1,0 +1,43 @@
+sp {op_pick-up1*elaborate*target-object*superoperator
+   (state <s> ^name op_pick-up1
+              ^task-operator.arg1.id <obj>)
+-->
+   (<s> ^target-object <obj>)
+}
+
+# If the object is inside a receptacle, elaborate it
+sp {op_pick-up1*elaborate*inside-receptacle
+   (state <s> ^name op_pick-up1
+              ^target-object <obj>
+              ^world.predicates.predicate <in-pred>)
+   (<in-pred> ^handle in1
+              ^instance <i>)
+   (<i> ^1 <obj> ^2 <rec>)
+   (<rec> ^predicates.affordance1 receptacle1)
+-->
+   (<s> ^inside-receptacle <rec>)
+}
+
+### CHECK PRECONDITIONS
+# If these are violated, quit the current task and re-plan in the parent task
+
+# violated-precondition: the target object is missing
+sp {op_pick-up1*elaborate*violated-precondition*missing-object*target
+   (state <s> ^name op_pick-up1
+              ^target-object <obj>)
+   (<obj> ^predicates.is-confirmed1 not-confirmed1)
+-->
+   (<s> ^violated-precondition <vp>)
+   (<vp> ^type missing-object
+         ^object <obj>)
+}
+
+#JK-merge
+#JK-dev rule
+# accessible if not inside a receptacle
+sp {op_pick-up1*elaborate*accessible*true*no*receptacle
+   (state <s> ^name op_pick-up1
+             -^receptacle)
+-->
+   (<s> ^accessible true)
+}

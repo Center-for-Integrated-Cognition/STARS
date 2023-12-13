@@ -1,0 +1,15 @@
+source init-perception-monitor.soar
+
+source monitoring-filters.soar
+
+source elaborate-input-link.soar
+source elaborate-binned-predicates.soar
+
+pushd object-monitor
+source object-monitor_source.soar
+popd
+
+pushd predicate-monitor
+source predicate-monitor_source.soar
+popd
+

@@ -1,0 +1,436 @@
+###################################
+# Code for using Analysis and Repair strategy (evaluting interpretability) (Paper Section 4.2)
+#######################################
+
+sp {evaluate-parse-of-lm*elaborate*goal
+   (state <s> ^name evaluate-parse-of-lm
+              ^superstate.operator <o>)
+   (<o> ^name evaluate-parse-of-lm
+	    ^goal <g>)
+-->
+   (<s> ^goal <g>)
+}
+
+sp {evaluate-parse-of-lm*elaborate*evaluation
+   (state <s> ^name evaluate-parse-of-lm)
+-->
+   (<s> ^evaluation <e>)
+   (<e> ^issue-count 0)
+}
+
+sp {evaluate-parse-of-lm*elaborate*parse
+   (state <s> ^name evaluate-parse-of-lm
+              ^superstate.operator <o>)
+   (<o> ^name evaluate-parse-of-lm
+	    ^goal.parse <p>)
+-->
+   (<s> ^parse <p>)
+}
+
+sp {evaluate-parse-of-lm*propose*ungrounded-object
+   (state <s> ^name evaluate-parse-of-lm
+              ^goal <g>
+              ^evaluation <e>
+              ^top-state.dialog-world.objects.object <obj>)
+    (<e> -^ungrounded-object <obj>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name ungrounded-object
+        ^object <obj>)
+}
+
+sp {evaluate-parse-of-lm*apply*ungrounded-object*ungrounded-object
+   (state <s> ^name evaluate-parse-of-lm
+              ^evaluation <e>
+              ^operator <o>)
+   (<o> ^name ungrounded-object
+        ^object <obj>)
+   (<e> ^issue-count <ic>)
+-->
+   (<e> ^issue-count <ic> -)
+   (<e> ^issue-count (+ <ic> 1))
+   (<e> ^ungrounded-object <obj> ^type ungrounded-obj1)
+}
+
+sp {evaluate-parse-of-lm*propose*interpreted-message
+   (state <s> ^name evaluate-parse-of-lm
+              ^evaluation <e>
+              ^parse <p>)
+   (<e> -^interpreted)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name interpreted-message
+        ^parse <p>)
+}
+
+sp {evaluate-parse-of-lm*apply*interpreted-message*interpreted
+   (state <s> ^name evaluate-parse-of-lm
+              ^evaluation <e>
+              ^operator.name interpreted-message
+              ^parse <p>)
+   (<p> ^message-type <r> -^interaction-status.failure)
+-->
+   (<e> ^interpreted true)
+}
+
+sp {evaluate-parse-of-lm*apply*interpreted-message*interpreted2
+   (state <s> ^name evaluate-parse-of-lm
+              ^evaluation <e>
+              ^operator.name interpreted-message
+              ^parse <p>)
+   (<p> ^interpreted true -^interaction-status.failure)
+-->
+   (<e> ^interpreted true)
+}
+sp {evaluate-parse-of-lm*elaborate*interpreted*failed
+   (state <s> ^name evaluate-parse-of-lm
+              ^evaluation <e>
+              ^operator.name interpreted-message
+              ^parse <p>)
+   (<p> ^interaction-status.failure <f>)
+   (<e> ^issue-count <ic>)
+-->
+   (<e> ^issue-count <ic> -)
+   (<e> ^issue-count (+ <ic> 1))
+   (<e> ^interpreted false ^failure <f> ^type uninterpreted)
+}
+
+
+
+sp {evaluate-parse-of-lm*propose*unknown-word
+   (state <s> ^name evaluate-parse-of-lm
+              ^evaluation <e>
+              ^parse <p>)
+   (<e> -^unknown-word)
+   (<p> ^type unknown-word)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name unknown-word
+        ^parse <p>)
+}
+
+sp {evaluate-parse-of-lm*apply*unknown-word
+   (state <s> ^name evaluate-parse-of-lm
+              ^evaluation <e>
+              ^operator.name unknown-word
+              ^parse <p>)
+   (<p> ^type unknown-word ^word <w>)
+   (<e> ^issue-count <ic>)
+-->
+   (<e> ^issue-count <ic> -)
+   (<e> ^issue-count (+ <ic> 1))
+   (<e> ^unknown-word <w> ^type unknown-word)
+}
+
+
+        
+sp {evaluate-parse-of-lm*propose*evaluate-affordance*then-subclause
+   (state <s> ^name evaluate-parse-of-lm
+              ^goal <g>
+             -^evaluated-clause <sc>
+              ^parse.then-subclause.subclause <sc>)
+    (<sc> ^arg1 <a1> ^predicate <p>)
+    (<a1> ^item-type object)
+    (<p> ^item-type predicate ^2 <rel>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name evaluate-affordance
+        ^type relation
+        ^clause <sc>)
+}
+
+sp {evaluate-parse-of-lm*propose*evaluate-affordance*then-subclause*property
+#:interrupt
+   (state <s> ^name evaluate-parse-of-lm
+              ^goal <g>
+             -^evaluated-clause <sc>
+              ^parse.then-subclause.subclause <sc>)
+    (<sc> ^arg1 <a1> ^predicate <p>)
+    (<a1> ^item-type object)
+    (<p> ^item-type predicate ^property <prop>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name evaluate-affordance
+        ^type property
+        ^clause <sc>)
+}
+
+
+
+sp {evaluate-parse-of-lm*propose*evaluate-affordance*then-subclause*subclause
+#:interrupt
+   (state <s> ^name evaluate-parse-of-lm
+              ^goal <g>
+             -^evaluated-clause <sc>
+              ^parse.then-subclause.subclause.subclause <sc>)
+    (<sc> ^arg1 <a1> ^predicate <p>)
+    (<a1> ^item-type object)
+    (<p> ^item-type predicate ^2 <rel>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name evaluate-affordance
+        ^type relation
+        ^clause <sc>)
+}
+
+sp {evaluate-parse-of-lm*propose*evaluate-affordance*then-subclause*subclause*property
+   (state <s> ^name evaluate-parse-of-lm
+              ^goal <g>
+             -^evaluated-clause <sc>
+              ^parse.then-subclause.subclause.subclause <sc>)
+    (<sc> ^arg1 <a1> ^predicate <p>)
+    (<a1> ^item-type object)
+    (<p> ^item-type predicate ^property <prop>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name evaluate-affordance
+        ^type property
+        ^clause <sc>)
+}
+
+
+########################3
+#version 2
+sp {evaluate-parse-of-lm*propose*evaluate-affordance*then-subclause2
+   (state <s> ^name evaluate-parse-of-lm
+              ^goal <g>
+             -^evaluated-clause <sc>
+              ^parse.subclause <sc>)
+    (<sc> ^arg1 <a1> ^predicate <p>)
+    (<a1> ^item-type object)
+    (<p> ^item-type predicate ^2 <rel>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name evaluate-affordance
+        ^type relation
+        ^clause <sc>)
+}
+
+sp {evaluate-parse-of-lm*propose*evaluate-affordance*then-subclause*property2
+#:interrupt
+   (state <s> ^name evaluate-parse-of-lm
+              ^goal <g>
+             -^evaluated-clause <sc>
+              ^parse.subclause <sc>)
+    (<sc> ^arg1 <a1> ^predicate <p>)
+    (<a1> ^item-type object)
+    (<p> ^item-type predicate ^property <prop>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name evaluate-affordance
+        ^type property
+        ^clause <sc>)
+}
+
+
+
+sp {evaluate-parse-of-lm*propose*evaluate-affordance*then-subclause*subclause2
+#:interrupt
+   (state <s> ^name evaluate-parse-of-lm
+              ^goal <g>
+             -^evaluated-clause <sc>
+              ^parse.subclause.subclause <sc>)
+    (<sc> ^arg1 <a1> ^predicate <p>)
+    (<a1> ^item-type object)
+    (<p> ^item-type predicate ^2 <rel>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name evaluate-affordance
+        ^type relation
+        ^clause <sc>)
+}
+
+sp {evaluate-parse-of-lm*propose*evaluate-affordance*then-subclause*subclause*property2
+   (state <s> ^name evaluate-parse-of-lm
+              ^goal <g>
+             -^evaluated-clause <sc>
+              ^parse.subclause.subclause <sc>)
+    (<sc> ^arg1 <a1> ^predicate <p>)
+    (<a1> ^item-type object)
+    (<p> ^item-type predicate ^property <prop>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name evaluate-affordance
+        ^type property
+        ^clause <sc>)
+}
+#######################
+
+
+
+############################################################################################
+#commenting out here
+sp {evaluate-parse-of-lm*apply*evaluate-affordance
+   (state <s> ^name evaluate-parse-of-lm
+              ^operator <o>)
+   (<o> ^name evaluate-affordance
+        ^type relation
+        ^clause <sc>)
+-->
+   (<s> ^evaluated-clause <sc>)
+}
+
+# sp {evaluate-parse-of-lm*apply*evaluate-affordanceinterrupt
+#    (state <s> ^operator <o>)
+#    (<o> ^name evaluate-parse-of-lm)
+# -->
+# (interrupt)
+# }
+#relation in affordance
+sp {evaluate-parse-of-lm*apply*evaluate-affordance*relation*grabbable
+   (state <s> ^name evaluate-parse-of-lm
+              ^evaluation <e>
+              ^operator <o>)
+   (<o> ^name evaluate-affordance
+        ^type relation
+        ^clause <sc>)
+   (<sc> ^arg1 <a1> ^predicate <p> ^reference-info <r>)
+   (<a1> ^item-type object ^predicates <pp> ^root-category <rc>)
+   (<pp> -^affordance1 grabbable1)
+   (<p> ^item-type predicate ^2 <obj>)
+   (<r> ^arg-name arg1)# ^constraint <c>)
+   (<e> ^issue-count <ic>)
+-->
+   (<e> ^issue-count <ic> -)
+   (<e> ^issue-count (+ <ic> 1))
+   (<e> ^affordance-mismatch <am>)
+   (<am> ^type affordance3 ^object <a1> ^property grabbable ^clause <sc> ^object-desc <r> ^obj-desc <rc>)
+}
+sp {evaluate-parse-of-lm*apply*evaluate-affordance*relation*receptacle
+   (state <s> ^name evaluate-parse-of-lm
+              ^evaluation <e>
+              ^operator <o>)
+   (<o> ^name evaluate-affordance
+        ^type relation
+        ^clause <sc>)
+   (<sc> ^arg1 <a1> ^predicate <p> ^reference-info <r>)
+   (<a1> ^item-type object)
+   (<p> ^handle in1 ^item-type predicate ^2 <obj>)
+   (<obj> ^item-type object ^predicates <preds2> ^root-category <rc>)
+   (<preds2> -^affordance1 receptacle1)
+   (<r> ^arg-name relation)# ^constraint <c>)
+   (<e> ^issue-count <ic>)
+-->
+   (<e> ^issue-count <ic> -)
+   (<e> ^issue-count (+ <ic> 1))
+   (<e> ^affordance-mismatch <am>)
+   (<am> ^type affordance1 ^object <obj> ^property receptacle ^clause <sc> ^object-desc <r> ^obj-desc <rc>)
+}
+
+
+sp {evaluate-parse-of-lm*apply*evaluate-affordance*relation*on*receptacle
+   (state <s> ^name evaluate-parse-of-lm
+              ^evaluation <e>
+              ^operator <o>)
+   (<o> ^name evaluate-affordance
+        ^type relation
+        ^clause <sc>)
+   (<sc> ^arg1 <a1> ^predicate <p> ^reference-info <r>)
+   (<a1> ^item-type object)
+   (<p> ^handle on1 ^item-type predicate ^2 <obj>)
+   (<obj> ^item-type object ^predicates <preds2> ^root-category <rc>)
+   (<preds2> ^affordance1 receptacle1)
+   (<r> ^arg-name relation)# ^constraint <c>)
+   (<e> ^issue-count <ic>)
+-->
+   (<e> ^issue-count <ic> -)
+   (<e> ^issue-count (+ <ic> 1))
+   (<e> ^affordance-mismatch <am>)
+   (<am> ^type affordance1 ^object <obj> ^property surface ^clause <sc> ^object-desc <r> ^obj-desc <rc>)
+}
+##############################################################################
+
+
+#complete analysis
+sp {evaluate-parse-of-lm*propose*complete-evaluate-parse
+   (state <s> ^name evaluate-parse-of-lm)
+-->
+   (<s> ^operator <o> + < =)
+   (<o> ^name complete-evaluate-parse)
+}
+
+sp {evaluate-parse-of-lm*apply*complete-evaluate-parse
+   (state <s> ^name evaluate-parse-of-lm
+              ^evaluation <e>
+              ^goal <g>
+              ^superstate <ss>
+              ^operator.name complete-evaluate-parse)
+   (<g> ^complete-sentence <cs>)
+-->
+#(interrupt)
+   (<g> ^evaluation <e>)
+   (write |Evaluation of LM-sourced goal: | <cs> (crlf))
+   (write (cmd print <e> -d 5))
+}
+
+sp {evaluate-parse-of-lm*apply*complete-evaluate-parse*debug*unknown-word
+   (state <s> ^name evaluate-parse-of-lm
+              ^evaluation <e>
+              ^goal <g>
+              ^superstate <ss>
+              ^operator.name complete-evaluate-parse)
+   (<g> ^complete-sentence <cs> ^object-handle <handle> ^prompt-type <pt>)
+   (<e> ^interpreted true ^{<x> << unknown-word >>} <y>)
+-->
+#(interrupt)
+   (write (crlf) |unviable_response;| <handle> |;| <cs> |;| <pt> |;| <x> |;| <y> |;NA| (crlf))
+}
+
+sp {evaluate-parse-of-lm*apply*complete-evaluate-parse*debug*uninterpreted
+   (state <s> ^name evaluate-parse-of-lm
+              ^evaluation <e>
+              ^goal <g>
+              ^superstate <ss>
+              ^operator.name complete-evaluate-parse)
+   (<g> ^complete-sentence <cs> ^object-handle <handle> ^prompt-type <pt>)
+   (<e> ^interpreted false)
+-->
+#(interrupt)
+   #(write (crlf) |BADSENT:| <cs> |;uninterpretable;parser|(crlf))
+   (write (crlf) |unviable_response;| <handle> |;| <cs> |;| <pt> |;uninterpretable;parser;NA| (crlf))
+}
+
+sp {evaluate-parse-of-lm*apply*complete-evaluate-parse*debug*ungrounded-object
+   (state <s> ^name evaluate-parse-of-lm
+              ^evaluation <e>
+              ^goal <g>
+              ^superstate <ss>
+              ^operator.name complete-evaluate-parse)
+   (<g> ^complete-sentence <cs> ^object-handle <handle> ^prompt-type <pt>)
+   (<e> ^interpreted true ^{<x> << ungrounded-object >>} <y>)
+   (<y> ^predicates.category <rc>)
+-->
+#(interrupt)
+   #(write (crlf) |BADSENT:| <cs> |;| <x> |;| <rc> (crlf))
+   (write (crlf) |unviable_response;| <handle> |;| <cs> |;| <pt> |;| <x> |;| <rc> |;NA| (crlf))
+}
+
+sp {evaluate-parse-of-lm*apply*complete-evaluate-parse*debug*affordance
+   (state <s> ^name evaluate-parse-of-lm
+              ^evaluation <e>
+              ^goal <g>
+              ^superstate <ss>
+              ^operator.name complete-evaluate-parse)
+   (<g> ^complete-sentence <cs> ^object-handle <handle> ^prompt-type <pt>)
+   (<e> ^interpreted true ^{<x> << affordance-mismatch >>} <y>)
+   (<y> ^property <prop> ^obj-desc <od>)
+-->
+#(interrupt)
+   #(write (crlf) |BADSENT:| <cs> |;| <x> |;| <prop> (crlf))
+   (write (crlf) |unviable_response;| <handle> |;| <cs> |;| <pt> |;| <x> |;| <prop> |;| <od> (crlf))
+}
+
+
+sp {evaluate-parse-of-lm*apply*complete-evaluate-parse*debug*viable
+   (state <s> ^name evaluate-parse-of-lm
+              ^evaluation <e>
+              ^goal <g>
+              ^superstate <ss>
+              ^operator.name complete-evaluate-parse)
+   (<g> ^complete-sentence <cs> ^object-handle <handle> ^prompt-type <pt>)
+   (<e> ^interpreted true ^issue-count 0)
+-->
+#(interrupt)
+   #(write (crlf) |BADSENT:| <cs> |;| <x> |;| <prop> (crlf))
+   (write (crlf) |viable_response;| <handle> |;| <cs> |;| <pt> (crlf))
+}

@@ -1,0 +1,173 @@
+#	# Alice
+#	(<alice> ^handle person-alice1 ^object-instance true ^item-type object
+#		^category person ^name alice1 ^room1 <kit>)
+#		
+#	# Bob
+#	(<bob> ^handle person-bob1 ^object-instance true ^item-type object
+#		^category person ^name bob1 ^room1 <soar>)
+#		
+#	# Charlie
+#	(<charlie> ^handle person-charlie1 ^object-instance true ^item-type object
+#		^category person ^name charlie1 ^room1 <conf>)
+#}
+smem --add {
+	# Quarters
+	(<quar> ^handle loc-quarters1 ^object-instance true ^item-type object ^waypoint wp01
+		^category entity1 location room1 ^name quarters1 ^root-category room1)
+
+	# CO Office
+	(<off> ^handle loc-cooffice1 ^object-instance true ^item-type object ^waypoint wp02
+		^category entity1 location room1 office1 ^root-category office1 ^possessive cos1 ^owner co1)
+
+	# # Messhall
+	# (<mess> ^handle loc-messhall1 ^object-instance true ^item-type object ^waypoint wp04
+	# 	^category entity1 location room1 ^name messhall1 ^root-category room1)
+#setting kitchen to wp04 from wp05
+#	# Kitchen
+	(<kit> ^handle loc-kitchen1 ^object-instance true ^item-type object ^waypoint wp04
+		^category entity1 location room1 kitchen1 ^root-category kitchen1)
+
+	#(<kit> ^handle loc-office1 ^object-instance true ^item-type object ^waypoint wp04
+	#	^category entity1 location room1 office1 ^root-category office1)
+
+	# Supply
+	(<supp> ^handle loc-supply1 ^object-instance true ^item-type object ^waypoint wp07
+		^category entity1 location room1 ^root-category room1 ^modifier1 supply1)
+
+	# Armory
+	(<arm> ^handle loc-armory1 ^object-instance true ^item-type object ^waypoint wp09
+		^category entity1 location room1 ^name armory1 ^root-category room1)
+
+	# Motor Pool
+	(<moto> ^handle loc-motorpool1 ^object-instance true ^item-type object ^waypoint wp08
+		^category entity1 location room1 ^name motorpool1 ^root-category room1)
+
+	# East Sentry Post
+	(<east-sentry> ^handle loc-eastpost1 ^object-instance true ^item-type object ^waypoint wp03
+		^category entity1 location room1 post1 ^root-category post1 ^cardinal-direction1 east1)
+
+	# West Sentry Post
+	(<west-sentry> ^handle loc-westpost1 ^object-instance true ^item-type object ^waypoint wp06
+		^category entity1 location room1 post1 ^root-category post1 ^cardinal-direction1 west1)
+
+	# West Hallway
+	(<west-hall> ^handle loc-westhall1 ^object-instance true ^item-type object ^waypoint wp10
+		^category entity1 location hall1 ^root-category hall1 ^cardinal-direction1 west1)
+
+	# East Hallway
+	(<east-hall> ^handle loc-easthall1 ^object-instance true ^item-type object ^waypoint wp18
+		^category entity1 location hall1 ^root-category hall1 ^cardinal-direction1 east1)
+
+	# CO
+	(<co> ^handle person-co1 ^object-instance true ^item-type object
+		^category entity1 person officer1 ^root-category officer1 ^name co1 ^modifier1 commanding1)
+		
+	# Williams
+	(<will> ^handle person-williams1 ^object-instance true ^item-type object
+		^category entity1 person officer1 ^root-category officer1 ^name williams1)
+
+  (<williams> ^spelling-single-word |williams|
+        ^structure-type CP
+        ^message-type williams)
+		
+	# Mercer
+	(<mercer> ^handle person-mercer1 ^object-instance true ^item-type object
+		^category entity1 person officer1 ^root-category officer1 ^name mercer1)
+
+  (<mercer-word> ^spelling-single-word |mercer|
+        ^structure-type CP
+        ^message-type mercer)
+
+}
+
+#good move internal store!
+# smem --add {
+# (@move1 ^goal-graph <lti999241> ^handle move1 ^procedural <lti999209>)
+#  (<lti999209> ^arg1 <lti999211> ^arg2 <lti999210> ^op_name op_move198 ^subtasks <lti999247>)
+#  (<lti999241> ^handle move1start108 ^item-type start-goal ^next <lti999246>)
+#    (<lti999210> ^2 <lti999214> ^arg-type partial-predicate ^id <lti999213>)
+#    (<lti999211> ^arg-type object ^id <lti999212>)
+#    (<lti999247> ^subtask <lti999248> <lti999250>)
+#    (<lti999246> ^goal <lti999242> ^learned proposal)
+#      (<lti999248> ^arg1 <lti999249> ^handle subtask111 ^op_name op_pick-up1 ^task-handle pick-up1)
+#      (<lti999250> ^arg1 <lti999251> ^arg2 <lti999252> ^handle subtask112 ^op_name op_put-down1 ^task-handle put-down1)
+#      (<lti999242> ^1 <lti999244> ^handle move1goal109 ^item-type task-goal ^next <lti999243> ^pred-count 1)
+#        (<lti999249> ^arg-type object ^id <lti999212>)
+#        (<lti999251> ^arg-type object ^id <lti999212>)
+#        (<lti999252> ^2 <lti999214> ^arg-type partial-predicate ^id <lti999213>)
+#        (<lti999243> ^goal <lti999245> ^learned proposal)
+#        (<lti999244> ^1 <lti999212> ^2 <lti999214> ^id <lti999213> ^type relation)
+#          (<lti999245> ^handle move1term110 ^item-type terminal-goal)
+# }
+
+# smem --add {
+# (<ltimove1> ^goal-graph <lti16> <lti999000> ^handle move1 ^item-type action ^procedural <lti17> )
+#   (<lti16> ^first <lti24> ^goal <lti24> )
+#   (<lti17> ^arg1 <lti18> ^arg2 <lti19> ^op_name op_move1 ^subtasks <lti20> )
+#   (<lti999000> ^handle move1start2 ^item-type start-goal ^next <lti999003> )
+#     (<lti24> ^handle move1goal1 ^item-type task-goal ^next complete ^predicates <lti25> )
+#     (<lti18> ^arg-type object ^id <lti21> ^required true )
+#     (<lti19> ^2 <lti23> ^arg-type partial-predicate ^id <lti22> ^required true )
+#     (<lti20> ^subtask <lti999004> <lti999008> )
+#     (<lti999003> ^goal <lti999001> ^learned proposal )
+#       (<lti25> ^1 <lti26> ^pred-count 1 )
+#       (<lti999004> ^arg1 <lti999005> ^handle subtask4 ^op_name op_pick-up1 ^task-handle pick-up1 )
+#       (<lti999008> ^arg1 <lti999009> ^arg2 <lti999010> ^handle subtask6 ^op_name op_put-down1 ^task-handle put-down1 )
+#       (<lti999001> ^1 <lti999002> ^handle move1goal3 ^item-type task-goal ^next <lti999014> ^pred-count 1 )
+#         (<lti26> ^1 <lti21> ^2 <lti23> ^id <lti22> ^type relation )
+#         (<lti999005> ^arg-type object ^id <lti21> )
+#         (<lti999009> ^arg-type object ^id <lti21> )
+#         (<lti999010> ^2 <lti23> ^arg-type partial-predicate ^id <lti22> )
+#         (<lti999002> ^1 <lti21> ^2 <lti23> ^id <lti22> ^type relation )
+#         (<lti999014> ^goal <lti999013> ^learned proposal )
+#           (<lti999013> ^handle move1term8 ^item-type terminal-goal )
+# }
+
+# smem --add {
+#    # 2 Argument Version: Move the <obj> <rel> <obj2>
+#    #                     Move the red block onto the green block
+
+#    (@move1 ^handle move1 ^procedural <proc101> ^item-type action ^goal-graph <graph101>)
+#    (<proc101> ^op_name op_move1
+#               ^arg1 <parg1011> ^arg2 <parg1012>
+#               ^subtasks <subs101>)
+#    (<parg1011> ^arg-type object ^required true ^id <obj-slot1011>)
+#    (<parg1012> ^arg-type partial-predicate ^required true ^id <pred-slot1012> ^2 <obj-slot1012>)
+#    (<graph101> ^first <goal101> ^goal <goal101>)
+#    (<goal101> ^handle move1goal1 ^item-type task-goal ^predicates <gpreds1011> ^next complete)
+#       (<gpreds1011> ^pred-count 1 ^1 <gpred101g1p1>)
+#          (<gpred101g1p1> ^type relation ^id <pred-slot1012> ^1 <obj-slot1011> ^2 <obj-slot1012>)
+# }
+## RELATIONS USED IN MOBILE DOMAIN FOR EVALUATION
+smem --add {
+(@on1 ^relation <501000x> <501000y> <501000z> )
+   (<501000x> ^avg 0.0 ^axis x ^bottom 0.0 ^count 0 ^squaredsum 0.0 ^sum 0.0 ^top 0.0 ^type aligned )
+   (<501000y> ^avg 0.0 ^axis y ^bottom 0.0 ^count 0 ^squaredsum 0.0 ^sum 0.0 ^top 0.0 ^type aligned )
+   (<501000z> ^avg 0.005 ^axis z ^bottom 0.00001 ^count 3 ^squaredsum 0.0 ^sum 0.0 ^top 0.1 ^type greater ) 
+#top 0.5
+(@in1 ^relation <501001x> <501001y> <501001z> )
+   (<501001x> ^avg 0.0 ^axis x ^bottom 0.0 ^count 0 ^squaredsum 0.0 ^sum 0.0 ^top 0.0 ^type aligned )
+   (<501001y> ^avg 0.0 ^axis y ^bottom 0.0 ^count 0 ^squaredsum 0.0 ^sum 0.0 ^top 0.0 ^type aligned )
+   (<501001z> ^avg 0.0 ^axis z ^bottom 0.0 ^count 0 ^squaredsum 0.0 ^sum 0.0 ^top 0.0 ^type aligned )
+
+(@right-of1 ^relation <501002x> <501002y> <501002z>)
+   (<501002x> ^avg 0.0 ^axis x ^bottom 0.0 ^count 0 ^squaredsum 0.0 ^sum 0.0 ^top 0.0 ^type aligned )
+   (<501002y> ^avg 0.8 ^axis y ^bottom 0.0001 ^count 1 ^squaredsum 0.64 ^sum 0.8 ^top 4.0 ^type less )
+   (<501002z> ^avg 0.0 ^axis z ^bottom 0.0 ^count 0 ^squaredsum 0.0 ^sum 0.0 ^top 0.0 ^type aligned )
+   
+(@left-of1 ^relation <501003x> <501003y> <501003z>)
+   (<501003x> ^avg 0.0 ^axis x ^bottom 0.0 ^count 0 ^squaredsum 0.0 ^sum 0.0 ^top 0.0 ^type aligned )
+   (<501003y> ^avg 0.8 ^axis y ^bottom 0.0001 ^count 1 ^squaredsum 0.64 ^sum 0.8 ^top 4.0 ^type greater )
+   (<501003z> ^avg 0.0 ^axis z ^bottom 0.0 ^count 0 ^squaredsum 0.0 ^sum 0.0 ^top 0.0 ^type aligned )
+
+(@behind1 ^relation <501014x> <501014y> <501014z>)
+   (<501014x> ^avg 0.8 ^axis x ^bottom 0.0001 ^count 1 ^squaredsum 0.64 ^sum 0.8 ^top 4.0 ^type greater )
+   (<501014y> ^avg 0.0 ^axis y ^bottom 0.0 ^count 0 ^squaredsum 0.0 ^sum 0.0 ^top 0.0 ^type aligned )
+   (<501014z> ^avg 0.0 ^axis z ^bottom 0.0 ^count 0 ^squaredsum 0.0 ^sum 0.0 ^top 0.0 ^type aligned )
+   
+(@infront1 ^relation <501016x> <501016y> <501016z>)
+   (<501016x> ^avg 0.8 ^axis x ^bottom 0.0001 ^count 1 ^squaredsum 0.64 ^sum 0.1 ^top 4.0 ^type less )
+   (<501016y> ^avg 0.0 ^axis y ^bottom 0.0 ^count 0 ^squaredsum 0.0 ^sum 0.0 ^top 0.0 ^type aligned )
+   (<501016z> ^avg 0.0 ^axis z ^bottom 0.0 ^count 0 ^squaredsum 0.0 ^sum 0.0 ^top 0.0 ^type aligned )
+}
+

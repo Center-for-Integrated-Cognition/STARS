@@ -1,0 +1,438 @@
+#   Soar code produced automatically 
+#   from file '..\Lucia\Grammars\Rosie\ecg\prepositions.ecg'.
+
+#   ON construction
+sp {comprehend-word*apply*lexical-access*ON-on
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |on|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name ON
+          ^is <a>
+          ^orth |on|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Preposition
+          ^first-lex nil)
+   (<a> ^a ON)
+}
+
+#   ON self.m.name <-- "on1" constraint
+sp {comprehend-word*ON-constraint*self-m-name*ASSIGN*on1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a ON
+          ^orth |on|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |on1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |on1|)
+}
+
+#   IN construction
+sp {comprehend-word*apply*lexical-access*IN-in
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |in|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name IN
+          ^is <a>
+          ^orth |in|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Preposition
+          ^first-lex nil)
+   (<a> ^a IN)
+}
+
+#   IN self.m.name <-- "in1" constraint
+sp {comprehend-word*IN-constraint*self-m-name*ASSIGN*in1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a IN
+          ^orth |in|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |in1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |in1|)
+}
+
+#   TO construction
+sp {comprehend-word*apply*lexical-access*TO-to
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |to|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name TO
+          ^is <a>
+          ^orth |to|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Preposition
+          ^first-lex nil)
+   (<a> ^a TO)
+}
+
+#   TO self.m.name <-- "to1" constraint
+sp {comprehend-word*TO-constraint*self-m-name*ASSIGN*to1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a TO
+          ^orth |to|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |to1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |to1|)
+}
+
+#   NEXT-TO construction
+sp {comprehend-word*apply*lexical-access*NEXT-TO-next-to
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |to|
+           ^content <content2>)
+   (<s> ^superstate.comprehension.lex-stack <previous1>)
+   (<previous1> ^word.orth |next|
+                ^word.content <content1>
+                ^previous <previous2>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name NEXT-TO
+          ^is <a>
+          ^orth |next to|
+          ^text (concat <content1> | | <content2>)
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Preposition
+          ^first-lex <previous1>)
+   (<a> ^a NEXT-TO)
+}
+
+#   NEXT-TO self.m.name <-- "next-to1" constraint
+sp {comprehend-word*NEXT-TO-constraint*self-m-name*ASSIGN*next-to1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a NEXT-TO
+          ^orth |next to|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |next-to1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |next-to1|)
+}
+
+#   IN-FRONT-OF construction
+sp {comprehend-word*apply*lexical-access*IN-FRONT-OF-in-front-of
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |of|
+           ^content <content3>)
+   (<s> ^superstate.comprehension.lex-stack <previous1>)
+   (<previous1> ^word.orth |front|
+                ^word.content <content2>
+                ^previous <previous2>)
+   (<previous2> ^word.orth |in|
+                ^word.content <content1>
+                ^previous <previous3>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name IN-FRONT-OF
+          ^is <a>
+          ^orth |in front of|
+          ^text (concat <content1> | | <content2> | | <content3>)
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Preposition
+          ^first-lex <previous2>)
+   (<a> ^a IN-FRONT-OF)
+}
+
+#   IN-FRONT-OF self.m.name <-- "infront1" constraint
+sp {comprehend-word*IN-FRONT-OF-constraint*self-m-name*ASSIGN*infront1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a IN-FRONT-OF
+          ^orth |in front of|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |infront1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |infront1|)
+}
+
+#   BEHIND construction
+sp {comprehend-word*apply*lexical-access*BEHIND-behind
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |behind|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name BEHIND
+          ^is <a>
+          ^orth |behind|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Preposition
+          ^first-lex nil)
+   (<a> ^a BEHIND)
+}
+
+#   BEHIND self.m.name <-- "behind1" constraint
+sp {comprehend-word*BEHIND-constraint*self-m-name*ASSIGN*behind1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a BEHIND
+          ^orth |behind|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |behind1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |behind1|)
+}
+
+#   INSIDE construction
+sp {comprehend-word*apply*lexical-access*INSIDE-inside
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |inside|
+           ^content <content1>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name INSIDE
+          ^is <a>
+          ^orth |inside|
+          ^text <content1>
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Preposition
+          ^first-lex nil)
+   (<a> ^a INSIDE)
+}
+
+#   INSIDE self.m.name <-- "in1" constraint
+sp {comprehend-word*INSIDE-constraint*self-m-name*ASSIGN*in1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a INSIDE
+          ^orth |inside|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |in1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |in1|)
+}
+
+#   TO-THE-LEFT-OF construction
+sp {comprehend-word*apply*lexical-access*TO-THE-LEFT-OF-to-the-left-of
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |of|
+           ^content <content4>)
+   (<s> ^superstate.comprehension.lex-stack <previous1>)
+   (<previous1> ^word.orth |left|
+                ^word.content <content3>
+                ^previous <previous2>)
+   (<previous2> ^word.orth |the|
+                ^word.content <content2>
+                ^previous <previous3>)
+   (<previous3> ^word.orth |to|
+                ^word.content <content1>
+                ^previous <previous4>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name TO-THE-LEFT-OF
+          ^is <a>
+          ^orth |to the left of|
+          ^text (concat <content1> | | <content2> | | <content3> | | <content4>)
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Preposition
+          ^first-lex <previous3>)
+   (<a> ^a TO-THE-LEFT-OF)
+}
+
+#   TO-THE-LEFT-OF self.m.name <-- "left-of1" constraint
+sp {comprehend-word*TO-THE-LEFT-OF-constraint*self-m-name*ASSIGN*left-of1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a TO-THE-LEFT-OF
+          ^orth |to the left of|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |left-of1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |left-of1|)
+}
+
+#   TO-THE-RIGHT-OF construction
+sp {comprehend-word*apply*lexical-access*TO-THE-RIGHT-OF-to-the-right-of
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |of|
+           ^content <content4>)
+   (<s> ^superstate.comprehension.lex-stack <previous1>)
+   (<previous1> ^word.orth |right|
+                ^word.content <content3>
+                ^previous <previous2>)
+   (<previous2> ^word.orth |the|
+                ^word.content <content2>
+                ^previous <previous3>)
+   (<previous3> ^word.orth |to|
+                ^word.content <content1>
+                ^previous <previous4>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name TO-THE-RIGHT-OF
+          ^is <a>
+          ^orth |to the right of|
+          ^text (concat <content1> | | <content2> | | <content3> | | <content4>)
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Preposition
+          ^first-lex <previous3>)
+   (<a> ^a TO-THE-RIGHT-OF)
+}
+
+#   TO-THE-RIGHT-OF self.m.name <-- "right-of1" constraint
+sp {comprehend-word*TO-THE-RIGHT-OF-constraint*self-m-name*ASSIGN*right-of1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a TO-THE-RIGHT-OF
+          ^orth |to the right of|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |right-of1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |right-of1|)
+}
+
+#   LARGER-THAN construction
+sp {comprehend-word*apply*lexical-access*LARGER-THAN-larger-than
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |than|
+           ^content <content2>)
+   (<s> ^superstate.comprehension.lex-stack <previous1>)
+   (<previous1> ^word.orth |larger|
+                ^word.content <content1>
+                ^previous <previous2>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name LARGER-THAN
+          ^is <a>
+          ^orth |larger than|
+          ^text (concat <content1> | | <content2>)
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Preposition
+          ^first-lex <previous1>)
+   (<a> ^a LARGER-THAN)
+}
+
+#   LARGER-THAN self.m.name <-- "larger-than1" constraint
+sp {comprehend-word*LARGER-THAN-constraint*self-m-name*ASSIGN*larger-than1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a LARGER-THAN
+          ^orth |larger than|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |larger-than1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |larger-than1|)
+}
+
+#   SMALLER-THAN construction
+sp {comprehend-word*apply*lexical-access*SMALLER-THAN-smaller-than
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^input.word <word>)
+   (<o> ^name lexical-access)
+   (<word> ^orth |than|
+           ^content <content2>)
+   (<s> ^superstate.comprehension.lex-stack <previous1>)
+   (<previous1> ^word.orth |smaller|
+                ^word.content <content1>
+                ^previous <previous2>)
+-->
+   (<s> ^cxn <cxn>)
+   (<cxn> ^cxn-name SMALLER-THAN
+          ^is <a>
+          ^orth |smaller than|
+          ^text (concat <content1> | | <content2>)
+          ^f <form>
+          ^m <meaning>
+          ^subcase-of Preposition
+          ^first-lex <previous1>)
+   (<a> ^a SMALLER-THAN)
+}
+
+#   SMALLER-THAN self.m.name <-- "smaller-than1" constraint
+sp {comprehend-word*SMALLER-THAN-constraint*self-m-name*ASSIGN*smaller-than1
+   (state <s> ^problem-space comprehend-word
+              ^operator <o>
+              ^cxn <cxn>)
+   (<o> ^type construction)
+   (<cxn> ^is.a SMALLER-THAN
+          ^orth |smaller than|
+          ^m <l-slot1>)
+   (<l-slot1> ^name { <target> <> |smaller-than1| })
+-->
+   (<l-slot1> ^name <target> -
+              ^name |smaller-than1|)
+}
+
